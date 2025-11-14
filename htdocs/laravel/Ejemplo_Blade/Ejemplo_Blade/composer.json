@@ -1,0 +1,16 @@
+{
+    "name": "vendor/blade",
+    "description": "Description of project Blade.",
+    "authors": [
+        {
+            "name": "santi",
+            "email": "your@email.here"
+        }
+    ],
+    "require": {
+        "jenssegers/blade": "dev-master"    
+    },
+    "require-dev": {
+        "jenssegers/blade": "dev-master"
+    }
+}

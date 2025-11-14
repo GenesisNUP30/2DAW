@@ -1,0 +1,17 @@
+{
+    "name": "prueba/prueba1",
+    "description": "esto es una prueba",
+    "autoload": {
+        "psr-4": {
+            "Prueba\\Prueba1\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "genesis"
+        }
+    ],
+    "require": {
+        "html2text/html2text": "^4.3"
+    }
+}
