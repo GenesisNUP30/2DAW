@@ -1,9 +1,9 @@
 <?php
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$base_de_datos = "instituto";
+$host = "ieslamarisma.net/phpmyadmin";
+$user = "genesisnatalya";
+$password = "jy*fD4@i3CWlgi4h";
+$base_de_datos = "genesisnatalya";
 
 try {
     $conexion = mysqli_connect($host, $user, $password, $base_de_datos);
