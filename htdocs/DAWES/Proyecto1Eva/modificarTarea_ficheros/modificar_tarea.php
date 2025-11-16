@@ -1,5 +1,5 @@
 <?php
-require_once 'conexion.php';
+require_once __DIR__.'/../conexion.php';
 // Obtenemos el ID de la tarea de 2 formas posibles
 // POST si estamos modificando una tarea ya creada
 if (isset($_POST['idTarea'])) {

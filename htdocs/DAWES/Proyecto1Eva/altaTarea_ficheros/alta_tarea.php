@@ -91,7 +91,7 @@ if ($_POST) {
         exit;
     } else {
         // Si no hay errores, guardamos en la base de datos
-        require_once 'conexion.php';
+        require_once __DIR__.'/../conexion.php';
 
         $sql = "INSERT INTO tareas (
             nif_cif, persona_contacto, telefono, email, direccion, poblacion,

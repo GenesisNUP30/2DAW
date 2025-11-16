@@ -1,5 +1,5 @@
 <?php
-require_once 'conexion.php';
+require_once __DIR__.'/../conexion.php';
 
 if ($_POST && isset($_POST['confirmar']) && $_POST['confirmar'] === 'si') {
     $idTarea = isset($_POST['id_tarea']) ? $_POST['id_tarea'] : null;
