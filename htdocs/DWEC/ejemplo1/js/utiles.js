@@ -41,3 +41,21 @@ function cargalista(){
   })
   .catch(error => console.error('Error:', error));
 }
+
+function altaalumno() {
+    //alert("Hola");
+    nombre = document.getElementById("nombre").value;
+    apellidos = document.getElementById("apellidos").value;
+    nota = document.getElementById("nota").value;
+
+    fetch("php/altaalumno.php?nombre=" + nombre + "&apellidos=" + apellidos + "&nota=" + nota)
+        .then(response => response.json()) // Convierte la respuesta a JSON
+        .then(data => {
+            if (data.status === "ok") {
+                alert(data.mensaje);
+            } else {
+                alert(data.mensaje);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
