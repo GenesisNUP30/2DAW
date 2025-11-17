@@ -1,6 +1,6 @@
 <?php
 
-$host = "ieslamarisma.net/phpmyadmin";
+$host = "localhost";
 $user = "genesisnatalya";
 $password = "jy*fD4@i3CWlgi4h";
 $base_de_datos = "genesisnatalya";
