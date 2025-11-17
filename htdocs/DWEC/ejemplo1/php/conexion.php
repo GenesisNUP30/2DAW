@@ -10,7 +10,7 @@ $base_de_datos = "genesisnatalya";
 // $base_de_datos = "instituto";
 
 // Crear conexión
-$conn = new mysqli($host, $usuario, $contraseña, $base_datos);
+$conn = new mysqli($host, $usuario, $password, $base_de_datos);
 
 // Verificar conexión
 if ($conn->connect_error) {
