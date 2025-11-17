@@ -25,4 +25,6 @@ function foo($primero, $segundo)
 foo(segundo:3, primero:43);
 
 
-function cube($n)
+function cube($n) : int {
+    return $n * $n * $n;
+}
