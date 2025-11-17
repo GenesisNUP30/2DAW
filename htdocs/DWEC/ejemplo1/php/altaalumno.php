@@ -18,7 +18,7 @@ $sql = "INSERT INTO alumnos (nombre, apellidos, nota) VALUES ('$nombre', '$apell
 if (mysqli_query($conexion, $sql)) {
     echo json_encode([
         "status" => "ok",
-        "mensaje" => "Alumno guardado correctamente.",
+        "message" => "Alumno guardado correctamente.",
         "data" => [
             "nombre" => $nombre,
             "apellidos" => $apellidos,
@@ -28,6 +28,6 @@ if (mysqli_query($conexion, $sql)) {
 } else {
     echo json_encode([
         "status" => "error",
-        "mensaje" => "Error al guardar el alumno."
+        "message" => "Error al guardar el alumno."
     ]);
 }
