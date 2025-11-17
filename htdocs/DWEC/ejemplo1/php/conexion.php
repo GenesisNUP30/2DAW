@@ -1,9 +1,13 @@
 <?php
 
+// $host = "localhost";
+// $user = "genesisnatalya";
+// $password = "jy*fD4@i3CWlgi4h";
+// $base_de_datos = "genesisnatalya";
 $host = "localhost";
-$user = "genesisnatalya";
-$password = "jy*fD4@i3CWlgi4h";
-$base_de_datos = "genesisnatalya";
+$user = "root";
+$password = "";
+$base_de_datos = "instituto";
 
 // Crear conexión
 $conn = new mysqli($host, $usuario, $contraseña, $base_datos);
