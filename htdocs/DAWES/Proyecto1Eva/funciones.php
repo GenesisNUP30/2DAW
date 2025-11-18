@@ -1,4 +1,8 @@
-<?php function validarNif($dni)
+<?php 
+
+include 'conexion.php';
+
+function validarNif($dni)
 {
     $dni = strtoupper($dni); // Convertir a mayúsculas
 
@@ -129,3 +133,47 @@ function verErrores($errores , $campo) {
     }
     
 }
+
+function cambiarFormato($fechaSinConvertir) {
+    if (!$fechaSinConvertir) return '';
+    $partes = explode('-', $fechaSinConvertir);
+    return $partes[2] . '/' . $partes[1] . '/' . $partes[0];
+}
+
+$sql = "SELECT * FROM tareas";
+$resultado = mysqli_query($conexion, $sql);
+
+
+function mostrarTablaTareas($resultado) {
+    if ($resultado->num_rows > 0) {
+        while ($fila = $resultado->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $fila['id'] . "</td>";
+            echo "<td>" . $fila['nif_cif'] . "</td>";
+            echo "<td>" . $fila['persona_contacto'] . "</td>";
+            echo "<td>" . $fila['telefono'] . "</td>";
+            echo "<td>" . $fila['email'] . "</td>";
+            echo "<td>" . $fila['direccion'] . "</td>";
+            echo "<td>" . $fila['poblacion'] . "</td>";
+            echo "<td>" . $fila['codigo_postal'] . "</td>";
+            echo "<td>" . $fila['provincia'] . "</td>";
+            echo "<td>" . $fila['estado'] . "</td>";
+            echo "<td>" . $fila['operario_encargado'] . "</td>";
+            echo "<td>" . cambiarFormato($fila['fecha_realizacion']) . "</td>";
+            echo "<td>" . $fila['anotaciones_anteriores'] . "</td>";
+            echo "<td>" . $fila['anotaciones_posteriores'] . "</td>";
+            echo "<td>" . $fila['fichero_resumen'] . "</td>";
+            echo "<td>" . $fila['fotos'] . "</td>";
+            echo "<td>
+            <button>
+            <a href='modificarTarea_ficheros/modificar_tarea.php?id=" . $fila['id'] . "'>Modificar</a></button>
+            <button>
+            <a href='eliminarTarea_ficheros/eliminar_tarea_datos.php?id=" . $fila['id'] . "'>Eliminar</a></button>
+            </td>";
+            echo "</tr>";
+        }
+    } else {
+        echo "No hay tareas";
+    }
+}
+

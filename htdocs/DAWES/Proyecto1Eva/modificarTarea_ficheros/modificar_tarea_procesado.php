@@ -1,12 +1,3 @@
-<?php
-// Convertir YYYY-MM-DD → dd/mm/YYYY para mostrar
-function cambiarFormato($fechaSinConvertir) {
-    if (!$fechaSinConvertir) return '';
-    $partes = explode('-', $fechaSinConvertir);
-    return $partes[2] . '/' . $partes[1] . '/' . $partes[0];
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -32,6 +23,6 @@ function cambiarFormato($fechaSinConvertir) {
 
     <br>
     <a href="modificar_tarea.php">Modificar otra vez</a>
-    <!-- <a href="index.php">Volver al inicio</a> -->
+    <a href="index.php">Volver al inicio</a>
 </body>
 </html>
