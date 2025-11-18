@@ -150,21 +150,22 @@
         <table class="tabla-tareas">
             <thead>
                 <th>ID</th>
-                <th>NIF/CIF</th>
-                <th>Persona</th>
+                <!-- <th>NIF/CIF</th> -->
+                <th>Persona de contacto</th>
                 <th>Teléfono</th>
                 <th>Correo</th>
-                <th>Dirección</th>
+                <th>Descripción</th>
+                <!-- <th>Dirección</th>
                 <th>Población</th>
                 <th>Código Postal</th>
-                <th>Provincia</th>
+                <th>Provincia</th> -->
                 <th>Estado</th>
                 <th>Operario</th>
                 <th>Fecha Realización</th>
-                <th>Anotaciones Anteriores</th>
+                <!-- <th>Anotaciones Anteriores</th>
                 <th>Anotaciones Posteriores</th>
                 <th>Fichero Resumen</th>
-                <th>Fotos</th>
+                <th>Fotos</th> -->
                 <th>Acciones</th>
             </thead>
             <tbody>
