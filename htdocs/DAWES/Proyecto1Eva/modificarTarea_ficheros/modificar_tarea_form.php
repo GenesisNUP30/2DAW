@@ -78,7 +78,7 @@
         <textarea id="anotacionesAnteriores" name="anotacionesAnteriores"><?= htmlspecialchars($anotacionesAnteriores) ?></textarea><br><br>
 
         <label for="anotacionesPosteriores">Anotaciones posteriores:</label><br>
-        <textarea id="anotacionesPosteriores" name="anotacionesPosteriores"><?= htmlspecialchars($anotacionesPosteriores) ?></textarea><br><br>
+        <textarea id="anotacionesPosteriores" name="anotacionesPosteriores"><?= htmlspecialchars($anotacionesPosteriores ?? '') ?></textarea><br><br>
 
         <label for="fichero_resumen">Fichero resumen:</label>
         <input type="file" id="fichero_resumen" name="fichero_resumen"><br><br>
