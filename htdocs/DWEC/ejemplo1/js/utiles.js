@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <td>${alumno.nombre}</td>
                     <td>${alumno.apellidos}</td>
                     <td>${alumno.nota}</td>
+                    <td><button onclick="eliminaralumno(this);">Eliminar</button></td>
                 `;
                 tbody.appendChild(fila);
             });
@@ -56,5 +57,4 @@ function altaalumno() {
             console.log(data);
             alert(data.mensaje);
         })
-        .catch(error => console.error('Error:', error));
 }
