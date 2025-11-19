@@ -1,0 +1,18 @@
+@extends('layouts.plantilla01')
+
+@section('titulo', 'Alta de Tarea')
+@section('estilos')
+<style>
+    .error {
+        color: red;
+    }
+</style>
+@endsection('estilos')
+
+@section('cuerpo')
+<h1>Modificación de Tarea</h1>
+<br><br>
+
+@include('form')
+
+@endsection

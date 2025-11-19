@@ -3,7 +3,7 @@
 namespace App\Models;
 
 // Incluir archivo de configuración
-include_once __DIR__ . '/DB.conf.php';
+include_once __DIR__ . '/DB.config.php';
 
 use mysqli;
 
