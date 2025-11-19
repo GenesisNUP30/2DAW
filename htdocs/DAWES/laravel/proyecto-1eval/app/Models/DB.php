@@ -1,12 +1,14 @@
 <?php
+
 namespace App\Models;
 
-include "DB.conf.php";
+// Incluir archivo de configuración
+include_once __DIR__ . '/DB.conf.php';
 
 use mysqli;
 
-class DB {
-
+class DB
+{
     private $link;
     private $result;
     private $regActual;
@@ -66,7 +68,7 @@ class DB {
         return $this->result;
     }
 
-    public function LeeRegistro($result = NULL) : ?object
+    public function LeeRegistro($result = NULL) : ?array
     {
         if (!$result) {
             if (!$this->result) {
@@ -75,7 +77,7 @@ class DB {
             $result = $this->result;
         }
 
-        $this->regActual = $result->fetch_row();
+        $this->regActual = $result->fetch_assoc(); // Cambiado a fetch_assoc para que devuelva un array asociativo
         return $this->regActual;
     }
 
@@ -89,13 +91,13 @@ class DB {
         return $this->link->insert_id;
     }
 
-    public function LeeUnRegistro($tabla, $condicion, $campos='*') : ?object
+    public function LeeUnRegistro($tabla, $condicion, $campos='*') : ?array
     {
         $sql = "SELECT $campos FROM $tabla WHERE $condicion LIMIT 1";
         $rs = $this->link->query($sql);
 
         if ($rs) {
-            return $rs->fetch_row();
+            return $rs->fetch_assoc(); // Devuelve un array asociativo
         }
         return NULL;
     }

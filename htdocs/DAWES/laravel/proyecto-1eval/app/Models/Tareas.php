@@ -28,10 +28,6 @@ class Tareas
 
     public function registraAlta(array $datos)
     {
-        // Conexión BBDD
-        // Sentencia para guardar
-        // $this->bd->insert(......)
-
         $nif_cif = $datos['nifCif'];
         $persona_contacto = $datos['personaNombre'];
         $telefono = $datos['telefono'];
@@ -79,5 +75,38 @@ class Tareas
         $this->bd->query($sql);
     }
 
-    // Otros métodos
+    public function obtenerTareaPorId($id)
+    {
+        $sql = "SELECT * FROM tareas WHERE id = $id";
+        $resultado = $this->bd->query($sql);
+        return $resultado;
+    }
+
+    public function actualizarTarea($id, array $datos)
+    {
+        $sql = "UPDATE tareas SET
+            nif_cif = '$datos[nif_cif]',
+            persona_contacto = '$datos[persona_contacto]',
+            telefono = '$datos[telefono]',
+            correo = '$datos[correo]',
+            descripcion_tarea = '$datos[descripcion_tarea]',
+            direccion_tarea = '$datos[direccion_tarea]',
+            poblacion = '$datos[poblacion]',
+            codigo_postal = '$datos[codigo_postal]',
+            provincia = '$datos[provincia]',
+            estado_tarea = '$datos[estado_tarea]',
+            operario_encargado = '$datos[operario_encargado]',
+            fecha_realizacion = '$datos[fecha_realizacion]',
+            anotaciones_anteriores = '$datos[anotaciones_anteriores]'
+        WHERE id = " . (int)$id;
+
+        $this->bd->query($sql);
+    }
+
+    public function eliminarTarea($id, array $datos) 
+    {
+        $sql = "DELETE FROM tareas WHERE id = $id";
+        $this->bd->query($sql);
+    }
+
 }
