@@ -70,7 +70,7 @@
 <div class="container">
     <h1>Gestión de Tareas</h1>
     <ul class="lista-opciones">
-        <li><a href="altaTarea_ficheros/alta_tarea.php">Alta de Tarea</a></li>
+        <li><a href="{!! url('alta') !!}">Alta de Tarea</a></li>
         <li><a href="modificarTarea_ficheros/modificar_tarea.php">Modificar Tarea</a></li>
         <li><a href="eliminarTarea_ficheros/eliminar_tarea_datos.php">Eliminar Tarea</a></li>
     </ul>

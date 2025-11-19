@@ -1,41 +1,22 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Modificar tarea</title>
-        <style>
-        .error {
-            color: red;
-        }
-    </style>
-</head>
-
-<body>
-    <h1>Modificar Tarea</h1>
-
-    <form action="modificar_tarea.php" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="idTarea" value="<?= htmlspecialchars($idTarea) ?>">
+<form action="alta_tarea.php" method="POST" enctype="multipart/form-data">
+        <label>NIF/CIF:</label><br>
+        <input type="text" name="nifCif" value="<?= htmlspecialchars($nifCif) ?>"><br>
         <?php verErrores($errores, 'nif_cif') ?><br>
 
-        <label>NIF/CIF:</label><br>
-        <input type="text" name="nifCif" value="<?= htmlspecialchars($nifCif) ?>"><br><br>
-        <?php verErrores($errores, 'nombre_persona') ?><br>
-
         <label>Persona de contacto:</label><br>
-        <input type="text" name="personaNombre" value="<?= htmlspecialchars($personaNombre) ?>"><br><br>
+        <input type="text" name="personaNombre" value="<?= htmlspecialchars($personaNombre) ?>"><br>
         <?php verErrores($errores, 'nombre_persona') ?><br>
 
         <label>Teléfono:</label><br>
-        <input type="text" name="telefono" value="<?= htmlspecialchars($telefono) ?>"><br><br>
+        <input type="text" name="telefono" value="<?= htmlspecialchars($telefono) ?>"><br>
         <?php verErrores($errores, 'telefono') ?><br>
 
         <label>Correo electrónico:</label><br>
-        <input type="text" name="correo" value="<?= htmlspecialchars($correo) ?>"><br><br>
+        <input type="text" name="correo" value="<?= htmlspecialchars($correo) ?>"><br>
         <?php verErrores($errores, 'correo') ?><br>
 
         <label>Descripción de la tarea:</label><br>
-        <textarea name="descripcionTarea"><?= htmlspecialchars($descripcionTarea) ?></textarea><br><br>
+        <textarea name="descripcionTarea"><?= htmlspecialchars($descripcionTarea) ?></textarea><br>
         <?php verErrores($errores, 'descripcion_tarea') ?><br>
 
         <label>Dirección:</label><br>
@@ -68,17 +49,17 @@
             <option value="Juan Pérez" <?= $operarioEncargado == "Juan Pérez" ? "selected" : "" ?>>Juan Pérez</option>
             <option value="María López" <?= $operarioEncargado == "María López" ? "selected" : "" ?>>María López</option>
             <option value="Carlos Ruiz" <?= $operarioEncargado == "Carlos Ruiz" ? "selected" : "" ?>>Carlos Ruiz</option>
+            <option value="Ana María Fernández" <?= $operarioEncargado == "Ana María Fernández" ? "selected" : "" ?>>Ana María Fernández</option>
+            <option value="Sara Martínez" <?= $operarioEncargado == "Sara Martínez" ? "selected" : "" ?>>Sara Martínez</option>
+            <option value="Lucía Hurtado" <?= $operarioEncargado == "Lucía Hurtado" ? "selected" : "" ?>>Lucía Hurtado</option>
         </select><br><br>
 
         <label>Fecha de realización:</label><br>
-        <input type="date" name="fechaRealizacion" value="<?= htmlspecialchars($fechaRealizacion) ?>"><br><br>
+        <input type="date" name="fechaRealizacion" value="<?= htmlspecialchars($fechaRealizacion) ?>"><br>
         <?php verErrores($errores, 'fecha_realizacion') ?><br>
-        
+
         <label for="anotacionesAnteriores">Anotaciones anteriores:</label><br>
         <textarea id="anotacionesAnteriores" name="anotacionesAnteriores"><?= htmlspecialchars($anotacionesAnteriores) ?></textarea><br><br>
-
-        <label for="anotacionesPosteriores">Anotaciones posteriores:</label><br>
-        <textarea id="anotacionesPosteriores" name="anotacionesPosteriores"><?= htmlspecialchars($anotacionesPosteriores ?? '') ?></textarea><br><br>
 
         <label for="fichero_resumen">Fichero resumen:</label>
         <input type="file" id="fichero_resumen" name="fichero_resumen"><br><br>
@@ -86,10 +67,7 @@
         <label for="fotos">Fotos del trabajo:</label>
         <input type="file" id="fotos" name="fotos[]" multiple><br><br>
 
-        <input type="submit" value="Guardar cambios">
+        <input type="submit" value="Crear tarea">
         <br><br>
         <a href="../index.php">Cancelar</a>
     </form>
-</body>
-
-</html>
