@@ -33,3 +33,29 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error(error);
     }
 });
+
+function cargalista() {
+    fetch("php/listaralumnosfacil.php")
+        .then(response => response.text()) // Convierte la respuesta a texto
+        .then(data => {
+            document.getElementById('lista-alumnos').innerHTML = data;
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function altaalumno() {
+    //alert("Hola");
+    nombre = document.getElementById("nombre").value;
+    apellidos = document.getElementById("apellidos").value;
+    nota = document.getElementById("nota").value;
+
+    const url = `php/altaalumno.php?nombre=${encodeURIComponent(nombre)}&apellidos=${encodeURIComponent(apellidos)}&nota=${nota}`;
+
+    fetch(url)
+        .then(response => response.json()) // Convierte la respuesta a JSON
+        .then(data => {
+            console.log(data);
+            alert(data.mensaje);
+        })
+}
+
