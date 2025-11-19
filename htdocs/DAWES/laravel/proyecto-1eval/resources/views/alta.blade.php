@@ -11,6 +11,7 @@
 
 @section('cuerpo')
 <h1>Alta de Tarea</h1>
+<br><br>
 
 @include('form')
 

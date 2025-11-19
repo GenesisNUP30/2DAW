@@ -1,27 +1,26 @@
-<form action="" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         <label>NIF/CIF:</label><br>
         <input type="text" name="nifCif" value="{{ $nifCif }}"><br>
-        {!! \App\Models\Funciones::verErrores($errores, 'nif_cif') !!}
+        {!! \App\Models\Funciones::verErrores('nif_cif') !!}
         <br>
 
         <label>Persona de contacto:</label><br>
         <input type="text" name="personaNombre" value="{{ $personaNombre }}"><br>
-        {!! \App\Models\Funciones::verErrores($errores, 'nombre_persona') !!}
+        {!! \App\Models\Funciones::verErrores('nombre_persona') !!}
         <br>
-
         <label>Teléfono:</label><br>
         <input type="text" name="telefono" value="<?= htmlspecialchars($telefono) ?>"><br>
-        {!! \App\Models\Funciones::verErrores($errores, 'telefono') !!}
+             {!! \App\Models\Funciones::verErrores('telefono') !!}
         <br>
 
         <label>Correo electrónico:</label><br>
         <input type="text" name="correo" value="<?= htmlspecialchars($correo) ?>"><br>
-        {!! \App\Models\Funciones::verErrores($errores, 'correo') !!}
+        {!! \App\Models\Funciones::verErrores('correo') !!}
         <br>
 
         <label>Descripción de la tarea:</label><br>
         <textarea name="descripcionTarea"><?= htmlspecialchars($descripcionTarea) ?></textarea><br>
-        {!! \App\Models\Funciones::verErrores($errores, 'descripcion_tarea') !!}
+        {!! \App\Models\Funciones::verErrores('descripcion_tarea') !!}
         <br>
 
         <label>Dirección:</label><br>
@@ -36,9 +35,9 @@
         <label>Provincia:</label><br>
         <select name="provincia">
             <option value="">Seleccione provincia</option>
-            <?php mostrarProvincias($provincia) ?>
-        </select>
-        {!! \App\Models\Funciones::verErrores($errores, 'provincia') !!}
+            <?php \App\Models\Funciones::mostrarProvincias($provincia) ?>
+        </select><br>
+        {!! \App\Models\Funciones::verErrores('provincia') !!}
         <br>
 
         <label>Estado:</label><br>
@@ -62,7 +61,7 @@
 
         <label>Fecha de realización:</label><br>
         <input type="date" name="fechaRealizacion" value="<?= htmlspecialchars($fechaRealizacion) ?>"><br>
-        {!! \App\Models\Funciones::verErrores($errores, 'fechaRealizacion') !!}
+        {!! \App\Models\Funciones::verErrores('fechaRealizacion') !!}
         <br>
 
         <label for="anotacionesAnteriores">Anotaciones anteriores:</label><br>
@@ -74,5 +73,5 @@
         <label for="fotos">Fotos del trabajo:</label>
         <input type="file" id="fotos" name="fotos[]" multiple><br><br>
 
-        <a href="{!! url('/') !!}">Cancelar</a> <input type="submit" value="Crear tarea">
+        <a class="btn btn-cancel" href="{!! url('/') !!}">Cancelar</a>  <input type="submit" value="Crear tarea">
     </form>
