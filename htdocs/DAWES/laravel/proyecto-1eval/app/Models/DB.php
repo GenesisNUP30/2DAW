@@ -1,14 +1,13 @@
 <?php
-
 namespace App\Models;
 
-// Incluir archivo de configuración
-include_once __DIR__ . '/DB.config.php';
+// Carga la configuración aquí
+$config = require 'DBConexion.php';
 
 use mysqli;
 
-class DB
-{
+class DB {
+
     private $link;
     private $result;
     private $regActual;
@@ -19,7 +18,8 @@ class DB
     /* Constructor privado */
     private function __construct()
     {
-        $this->Conectar($GLOBALS['db_conf']);
+        $config = require 'DBConexion.php';
+        $this->Conectar($config);  // <-- Aquí usas la variable $config, no $GLOBALS
     }
 
     /* Evitar clonación */
@@ -77,7 +77,7 @@ class DB
             $result = $this->result;
         }
 
-        $this->regActual = $result->fetch_assoc(); // Cambiado a fetch_assoc para que devuelva un array asociativo
+        $this->regActual = $result->fetch_assoc();
         return $this->regActual;
     }
 
@@ -97,7 +97,7 @@ class DB
         $rs = $this->link->query($sql);
 
         if ($rs) {
-            return $rs->fetch_assoc(); // Devuelve un array asociativo
+            return $rs->fetch_assoc();
         }
         return NULL;
     }
