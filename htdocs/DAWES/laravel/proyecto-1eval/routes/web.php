@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AltaCtrl;
 use App\Http\Controllers\InicioCtrl;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -9,3 +10,5 @@ Route::get('/', function () {
 })->name('home');
 
 Route::any('/', [InicioCtrl::class, 'index']);
+
+Route::any('/alta', [AltaCtrl::class, 'alta']);

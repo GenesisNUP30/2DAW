@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 class Funciones
@@ -8,7 +7,7 @@ class Funciones
     {
         $dni = strtoupper($dni); // Convertir a mayúsculas
 
-        // Comprueba que el NIF tenga 9 caracteres (8 numeros y 1 letra) 
+        // Comprueba que el NIF tenga 9 caracteres (8 numeros y 1 letra)
 
         if (!preg_match('/^[A-Z0-9]{9}$/', $dni)) {
             return 'El NIF/CIF debe tener 9 caracteres';
@@ -47,7 +46,7 @@ class Funciones
             // Sumamos los 2 resultados anteriores
             $sumaTotal = $sumaPar + $sumaImpar;
 
-            //Obtenemos el último número de la suma con el resto de la división entre 10, 
+            //Obtenemos el último número de la suma con el resto de la división entre 10,
             // y le restamos 10 para saber cuanto le queda para llegar a la próxima decena
             // Por último con %10 nos aseguramos que el resultado sea un número entre 0 y 9
             $control = (10 - ($sumaTotal % 10)) % 10;
@@ -155,17 +154,18 @@ class Funciones
 
     public static function mostrarProvincias($provinciaSeleccionada = "")
     {
-        global $provincias;
-        foreach ($provincias as $codigo => $nombre) {
+        foreach (self::$provincias as $codigo => $nombre) {
             $selected = ($codigo == $provinciaSeleccionada) ? 'selected' : '';
             echo "<option value=\"$codigo\" $selected>" . htmlspecialchars($nombre) . "</option>";
         }
     }
 
-    public static function verErrores($errores, $campo)
+    public static $errores = [];
+
+    public static function verErrores($campo)
     {
-        if (isset($errores[$campo])) {
-            echo "<div class=error> " . htmlspecialchars($errores[$campo]) . "</div>";
+        if (isset(self::$errores[$campo])) {
+            echo "<div class=\"error\"> " . htmlspecialchars(self::$errores[$campo]) . "</div>";
         } else {
             return "";
         }

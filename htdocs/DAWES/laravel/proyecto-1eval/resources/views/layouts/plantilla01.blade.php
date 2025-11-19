@@ -16,10 +16,10 @@
 <body>
 
 <div class="container">
-    <div style="float:left; width:5em; background-color:blue;padding:10em 0">&nbsp;</div>
+    <!-- <div style="float:left; width:5em; background-color:blue;padding:10em 0">&nbsp;</div>
     <div class="row alert alert-warning">
       Mostrado desde la plantilla
-    </div>
+    </div> -->
     <div class="row">
       @yield('cuerpo')
     </div>
