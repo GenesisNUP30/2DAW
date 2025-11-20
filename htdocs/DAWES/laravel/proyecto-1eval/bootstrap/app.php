@@ -17,6 +17,13 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
+
+        // Excluir rutas del middleware CSRF
+        $middleware->validateCsrfTokens(except: [
+            '/alta',
+            '/modificar/*',
+            '/eliminar/*',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

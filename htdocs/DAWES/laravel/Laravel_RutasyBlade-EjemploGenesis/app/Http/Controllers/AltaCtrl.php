@@ -14,16 +14,18 @@ class AltaCtrl
     public function alta()
     {
         if ($_POST) {
+            // Limpiar errores anteriores
+            Funciones::$errores = [];
+
             // Tenemos que filtrar
             $this->filtraDatos();
             if (!empty(Funciones::$errores)) {
                 return view('alta', $_POST);
-            }
-            else {
+            } else {
                 // Procedemos a guardar los datos y mostrar la página que proceda
-                $model=new Tareas();
+                $model = new Tareas();
                 $model->registraAlta($_POST);
-                return "Mostramos VENTANA QUE PROCEDA ".print_r($_POST, true);
+                return redirect('/');  // <-- Redirige sin mensaje
             }
         } else {
 
@@ -48,11 +50,9 @@ class AltaCtrl
         }
     }
 
-
     private function filtraDatos()
     {
         extract($_POST);
-
 
         if ($nifCif == "") {
             Funciones::$errores['nif_cif'] = "Debe introducir el NIF/CIF de la persona encargada de la tarea";
@@ -80,7 +80,7 @@ class AltaCtrl
         if ($telefono == "") {
             Funciones::$errores['telefono'] = "Debe introducir el teléfono de la persona encargada de la tarea";
         } else {
-            $resultado = telefonoValido($telefono);
+            $resultado = \App\Models\Funciones::telefonoValido($telefono);  // Corregido aquí
             if ($resultado !== true) {
                 Funciones::$errores['telefono'] = $resultado;
             }

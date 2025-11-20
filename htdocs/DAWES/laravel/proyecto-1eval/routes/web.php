@@ -15,4 +15,4 @@ Route::get('/modificar/{id}', [ModificarCtrl::class, 'mostrarFormulario'])->name
 Route::post('/modificar/{id}', [ModificarCtrl::class, 'actualizar']);
 
 Route::get('/eliminar/{id}', [EliminarCtrl::class, 'confirmar'])->name('eliminar.confirmar');
-Route::post('/eliminar/{id}', [EliminarCtrl::class, 'eliminar']);
+Route::delete('/eliminar/{id}', [EliminarCtrl::class, 'eliminar']);
