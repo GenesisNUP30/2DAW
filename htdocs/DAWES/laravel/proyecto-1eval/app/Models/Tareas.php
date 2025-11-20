@@ -33,7 +33,7 @@ class Tareas
         $telefono = $datos['telefono'];
         $correo = $datos['correo'];
         $descripcion_tarea = $datos['descripcionTarea'];
-        $direccion_tarea = $datos['direccionTarea'];
+        $direccion = $datos['direccionTarea'];
         $poblacion = $datos['poblacion'];
         $codigo_postal = $datos['codigoPostal'];
         $provincia = $datos['provincia'];
@@ -48,7 +48,7 @@ class Tareas
             telefono,
             correo,
             descripcion_tarea,
-            direccion_tarea,
+            direccion,
             poblacion,
             codigo_postal,
             provincia,
@@ -62,7 +62,7 @@ class Tareas
             '$telefono',
             '$correo',
             '$descripcion_tarea',
-            '$direccion_tarea',
+            '$direccion',
             '$poblacion',
             '$codigo_postal',
             '$provincia',
@@ -89,7 +89,7 @@ class Tareas
         $telefono = $datos['telefono'];
         $correo = $datos['correo'];
         $descripcion_tarea = $datos['descripcionTarea'];
-        $direccion_tarea = $datos['direccionTarea'];
+        $direccion = $datos['direccionTarea'];
         $poblacion = $datos['poblacion'];
         $codigo_postal = $datos['codigoPostal'];
         $provincia = $datos['provincia'];
@@ -104,7 +104,7 @@ class Tareas
             telefono = '$telefono',
             correo = '$correo',
             descripcion_tarea = '$descripcion_tarea',
-            direccion_tarea = '$direccion_tarea',
+            direccion = '$direccion',
             poblacion = '$poblacion',
             codigo_postal = '$codigo_postal',
             provincia = '$provincia',

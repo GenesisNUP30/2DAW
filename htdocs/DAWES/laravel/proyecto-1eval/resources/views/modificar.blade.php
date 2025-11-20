@@ -43,7 +43,7 @@
         <br>
 
         <label>Dirección:</label><br>
-        <input type="text" name="direccionTarea" value="{{ $direccion_tarea }}"><br><br>
+        <input type="text" name="direccionTarea" value="{{ $direccion }}"><br><br>
 
         <label>Población:</label><br>
         <input type="text" name="poblacion" value="{{ $poblacion }}"><br><br>
