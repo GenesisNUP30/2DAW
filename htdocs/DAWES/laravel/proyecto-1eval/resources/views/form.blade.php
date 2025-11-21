@@ -19,8 +19,8 @@
         <br>
 
         <label>Descripción de la tarea:</label><br>
-        <textarea name="descripcionTarea"><?= htmlspecialchars($descripcionTarea) ?></textarea><br>
-        {!! \App\Models\Funciones::verErrores('descripcion_tarea') !!}
+        <textarea name="descripcion"><?= htmlspecialchars($descripcion) ?></textarea><br>
+        {!! \App\Models\Funciones::verErrores('descripcion') !!}
         <br>
 
         <label>Dirección:</label><br>
