@@ -37,7 +37,7 @@ class AltaCtrl
                 'poblacion' => "",
                 'codigoPostal' => "",
                 'provincia' => "",
-                'estadoTarea' => "",
+                'estado' => "",
                 'operarioEncargado' => "",
                 'fechaRealizacion' => "",
                 'anotacionesAnteriores' => "",

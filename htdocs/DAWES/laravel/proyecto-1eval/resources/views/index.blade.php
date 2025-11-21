@@ -128,7 +128,7 @@
                     <td>{{ $tarea['telefono'] }}</td>
                     <td>{{ $tarea['correo'] }}</td>
                     <td>{{ $tarea['descripcion'] }}</td>
-                    <td>{{ $tarea['estado_tarea'] }}</td>
+                    <td>{{ $tarea['estado'] }}</td>
                     <td>{{ $tarea['operario_encargado'] }}</td>
                     <td>{{ $tarea['fecha_realizacion'] }}</td>
                     <td>

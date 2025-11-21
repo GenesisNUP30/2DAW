@@ -37,7 +37,7 @@ class Tareas
         $poblacion = $datos['poblacion'];
         $codigo_postal = $datos['codigoPostal'];
         $provincia = $datos['provincia'];
-        $estado_tarea = $datos['estadoTarea'];
+        $estado = $datos['estado'];
         $operario_encargado = $datos['operarioEncargado'];
         $fecha_realizacion = $datos['fechaRealizacion'];
         $anotaciones_anteriores = $datos['anotacionesAnteriores'];
@@ -52,7 +52,7 @@ class Tareas
             poblacion,
             codigo_postal,
             provincia,
-            estado_tarea,
+            estado,
             operario_encargado,
             fecha_realizacion,
             anotaciones_anteriores
@@ -66,7 +66,7 @@ class Tareas
             '$poblacion',
             '$codigo_postal',
             '$provincia',
-            '$estado_tarea',
+            '$estado',
             '$operario_encargado',
             '$fecha_realizacion',
             '$anotaciones_anteriores'
@@ -93,7 +93,7 @@ class Tareas
         $poblacion = $datos['poblacion'];
         $codigo_postal = $datos['codigoPostal'];
         $provincia = $datos['provincia'];
-        $estado_tarea = $datos['estadoTarea'];
+        $estado = $datos['estado'];
         $operario_encargado = $datos['operarioEncargado'];
         $fecha_realizacion = $datos['fechaRealizacion'];
         $anotaciones_anteriores = $datos['anotacionesAnteriores'];
@@ -108,7 +108,7 @@ class Tareas
             poblacion = '$poblacion',
             codigo_postal = '$codigo_postal',
             provincia = '$provincia',
-            estado_tarea = '$estado_tarea',
+            estado = '$estado',
             operario_encargado = '$operario_encargado',
             fecha_realizacion = '$fecha_realizacion',
             anotaciones_anteriores = '$anotaciones_anteriores'

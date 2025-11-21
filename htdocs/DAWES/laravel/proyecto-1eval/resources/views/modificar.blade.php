@@ -60,11 +60,11 @@
         <br>
 
         <label>Estado:</label><br>
-        <select name="estadoTarea">
-            <option value="B" {{ $estado_tarea == "B" ? "selected" : "" }}>Esperando ser aprobada</option>
-            <option value="P" {{ $estado_tarea == "P" ? "selected" : "" }}>Pendiente</option>
-            <option value="R" {{ $estado_tarea == "R" ? "selected" : "" }}>Realizada</option>
-            <option value="C" {{ $estado_tarea == "C" ? "selected" : "" }}>Cancelada</option>
+        <select name="estado">
+            <option value="B" {{ $estado == "B" ? "selected" : "" }}>Esperando ser aprobada</option>
+            <option value="P" {{ $estado == "P" ? "selected" : "" }}>Pendiente</option>
+            <option value="R" {{ $estado == "R" ? "selected" : "" }}>Realizada</option>
+            <option value="C" {{ $estado == "C" ? "selected" : "" }}>Cancelada</option>
         </select><br><br>
 
         <label>Operario encargado:</label><br>
