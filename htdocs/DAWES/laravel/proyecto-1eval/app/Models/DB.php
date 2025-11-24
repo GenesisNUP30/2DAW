@@ -4,6 +4,7 @@ namespace App\Models;
 // Carga la configuración aquí
 $config = require 'DBConexion.php';
 
+use Illuminate\Support\Facades\Log;
 use mysqli;
 
 class DB {
@@ -59,7 +60,14 @@ class DB {
         }
 
         $this->link->select_db($this->base_datos);
+        
+        // Log::debug("InciioCtrl::index\n".print_r($tareas, true));
         $this->link->query("SET NAMES 'utf8'");
+    }
+
+    public function escape($value): string
+    {
+        return $this->link->real_escape_string((string) $value);
     }
 
     public function query(string $sql)

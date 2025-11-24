@@ -54,12 +54,12 @@ class ModificarCtrl
             }
         }
 
-        if ($personaNombre === "") {
-            Funciones::$errores['nombre_persona'] = "Debe introducir el nombre de la persona encargada de la tarea";
+        if ($persona_contacto === "") {
+            Funciones::$errores['persona_contacto'] = "Debe introducir el nombre de la persona encargada de la tarea";
         }
 
         if ($descripcion === "") {
-            Funciones::$errores['descripcion_'] = "Debe introducir la descripción de la tarea";
+            Funciones::$errores['descripcion'] = "Debe introducir la descripción de la tarea";
         }
 
         if ($correo === "") {
@@ -77,7 +77,7 @@ class ModificarCtrl
             }
         }
 
-        if ($codigoPostal != "" && !preg_match("/^[0-9]{5}$/", $codigoPostal)) {
+        if ($codigo_postal != "" && !preg_match("/^[0-9]{5}$/", $codigo_postal)) {
             Funciones::$errores['codigo_postal'] = "El código postal introducido no es válido, debe tener 5 números";
         }
 
@@ -86,10 +86,10 @@ class ModificarCtrl
         }
 
         $fechaActual = date('Y-m-d');
-        if ($fechaRealizacion == "") {
+        if ($fecha_realizacion == "") {
             Funciones::$errores['fecha_realizacion'] = "Debe introducir la fecha de realización de la tarea";
         } else {
-            if ($fechaRealizacion <= $fechaActual) {
+            if ($fecha_realizacion <= $fechaActual) {
                 Funciones::$errores['fecha_realizacion'] = "La fecha de realización debe ser posterior a la fecha actual";
             }
         }

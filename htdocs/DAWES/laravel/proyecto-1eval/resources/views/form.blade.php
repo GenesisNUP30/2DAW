@@ -5,8 +5,8 @@
         <br>
 
         <label>Persona de contacto:</label><br>
-        <input type="text" name="personaNombre" value="{{ $personaNombre }}"><br>
-        {!! \App\Models\Funciones::verErrores('nombre_persona') !!}
+        <input type="text" name="persona_contacto" value="{{ $persona_contacto }}"><br>
+        {!! \App\Models\Funciones::verErrores('persona_contacto') !!}
         <br>
         <label>Teléfono:</label><br>
         <input type="text" name="telefono" value="<?= htmlspecialchars($telefono) ?>"><br>
@@ -24,13 +24,13 @@
         <br>
 
         <label>Dirección:</label><br>
-        <input type="text" name="direccionTarea" value="<?= htmlspecialchars($direccionTarea) ?>"><br><br>
+        <input type="text" name="direccion" value="<?= htmlspecialchars($direccion) ?>"><br><br>
 
         <label>Población:</label><br>
         <input type="text" name="poblacion" value="<?= htmlspecialchars($poblacion) ?>"><br><br>
 
         <label>Código Postal:</label><br>
-        <input type="text" name="codigoPostal" value="<?= htmlspecialchars($codigoPostal) ?>"><br><br>
+        <input type="text" name="codigo_postal" value="<?= htmlspecialchars($codigo_postal) ?>"><br><br>
 
         <label>Provincia:</label><br>
         <select name="provincia">
@@ -49,23 +49,23 @@
         </select><br><br>
 
         <label>Operario encargado:</label><br>
-        <select name="operarioEncargado">
+        <select name="operario_encargado">
             <option value="">Seleccione operario</option>
-            <option value="Juan Pérez" <?= $operarioEncargado == "Juan Pérez" ? "selected" : "" ?>>Juan Pérez</option>
-            <option value="María López" <?= $operarioEncargado == "María López" ? "selected" : "" ?>>María López</option>
-            <option value="Carlos Ruiz" <?= $operarioEncargado == "Carlos Ruiz" ? "selected" : "" ?>>Carlos Ruiz</option>
-            <option value="Ana María Fernández" <?= $operarioEncargado == "Ana María Fernández" ? "selected" : "" ?>>Ana María Fernández</option>
-            <option value="Sara Martínez" <?= $operarioEncargado == "Sara Martínez" ? "selected" : "" ?>>Sara Martínez</option>
-            <option value="Lucía Hurtado" <?= $operarioEncargado == "Lucía Hurtado" ? "selected" : "" ?>>Lucía Hurtado</option>
+            <option value="Juan Pérez" <?= $operario_encargado == "Juan Pérez" ? "selected" : "" ?>>Juan Pérez</option>
+            <option value="María López" <?= $operario_encargado == "María López" ? "selected" : "" ?>>María López</option>
+            <option value="Carlos Ruiz" <?= $operario_encargado == "Carlos Ruiz" ? "selected" : "" ?>>Carlos Ruiz</option>
+            <option value="Ana María Fernández" <?= $operario_encargado == "Ana María Fernández" ? "selected" : "" ?>>Ana María Fernández</option>
+            <option value="Sara Martínez" <?= $operario_encargado == "Sara Martínez" ? "selected" : "" ?>>Sara Martínez</option>
+            <option value="Lucía Hurtado" <?= $operario_encargado == "Lucía Hurtado" ? "selected" : "" ?>>Lucía Hurtado</option>
         </select><br><br>
 
         <label>Fecha de realización:</label><br>
-        <input type="date" name="fechaRealizacion" value="<?= htmlspecialchars($fechaRealizacion) ?>"><br>
-        {!! \App\Models\Funciones::verErrores('fechaRealizacion') !!}
+        <input type="date" name="fecha_realizacion" value="<?= htmlspecialchars($fecha_realizacion) ?>"><br>
+        {!! \App\Models\Funciones::verErrores('fecha_realizacion') !!}
         <br>
 
-        <label for="anotacionesAnteriores">Anotaciones anteriores:</label><br>
-        <textarea id="anotacionesAnteriores" name="anotacionesAnteriores"><?= htmlspecialchars($anotacionesAnteriores) ?></textarea><br><br>
+        <label for="anotaciones_anteriores">Anotaciones anteriores:</label><br>
+        <textarea id="anotaciones_anteriores" name="anotaciones_anteriores"><?= htmlspecialchars($anotaciones_anteriores) ?></textarea><br><br>
 
         <label for="fichero_resumen">Fichero resumen:</label>
         <input type="file" id="fichero_resumen" name="fichero_resumen"><br><br>

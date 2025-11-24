@@ -6,7 +6,6 @@ use App\Models\DB;
 
 class Tareas
 {
-
     private $bd;
 
     public function __construct()
@@ -28,20 +27,6 @@ class Tareas
 
     public function registraAlta(array $datos)
     {
-        $nif_cif = $datos['nif_cif'];
-        $persona_contacto = $datos['personaNombre'];
-        $telefono = $datos['telefono'];
-        $correo = $datos['correo'];
-        $descripcion = $datos['descripcion'];
-        $direccion = $datos['direccionTarea'];
-        $poblacion = $datos['poblacion'];
-        $codigo_postal = $datos['codigoPostal'];
-        $provincia = $datos['provincia'];
-        $estado = $datos['estado'];
-        $operario_encargado = $datos['operarioEncargado'];
-        $fecha_realizacion = $datos['fechaRealizacion'];
-        $anotaciones_anteriores = $datos['anotacionesAnteriores'];
-
         $sql = "INSERT INTO tareas (
             nif_cif,
             persona_contacto,
@@ -57,19 +42,19 @@ class Tareas
             fecha_realizacion,
             anotaciones_anteriores
         ) VALUES (
-            '$datos[nif_cif]',
-            '$datos[persona_contacto]',
-            '$datos[telefono]',
-            '$datos[correo]',
-            '$datos[descripcion]',
-            '$datos[direccion]',
-            '$datos[poblacion]',
-            '$datos[codigo_postal]',
-            '$datos[provincia]',
-            '$datos[estado]',
-            '$datos[operario_encargado]',
-            '$datos[fecha_realizacion]',
-            '$datos[anotaciones_anteriores]'
+            '{$this->bd->escape($datos['nif_cif'])}',
+            '{$this->bd->escape($datos['persona_contacto'])}',
+            '{$this->bd->escape($datos['telefono'])}',
+            '{$this->bd->escape($datos['correo'])}',
+            '{$this->bd->escape($datos['descripcion'])}',
+            '{$this->bd->escape($datos['direccion'])}',
+            '{$this->bd->escape($datos['poblacion'])}',
+            '{$this->bd->escape($datos['codigo_postal'])}',
+            '{$this->bd->escape($datos['provincia'])}',
+            '{$this->bd->escape($datos['estado'])}',
+            '{$this->bd->escape($datos['operario_encargado'])}',
+            '{$this->bd->escape($datos['fecha_realizacion'])}',
+            '{$this->bd->escape($datos['anotaciones_anteriores'])}'
         )";
 
         $this->bd->query($sql);
@@ -85,20 +70,20 @@ class Tareas
     public function actualizarTarea($id, array $datos)
     {
         $sql = "UPDATE tareas SET
-            nif_cif = $datos[nif_cif],
-            persona_contacto = $datos[personaNombre],
-            telefono = $datos[telefono],
-            correo = $datos[correo],
-            descripcion = $datos[descripcion],
-            direccion = $datos[direccionTarea],
-            poblacion = $datos[poblacion],
-            codigo_postal = $datos[codigoPostal],
-            provincia = $datos[provincia],
-            estado = $datos[estado],
-            operario_encargado = $datos[operarioEncargado],
-            fecha_realizacion = $datos[fechaRealizacion],
-            anotaciones_anteriores = $datos[anotacionesAnteriores],
-            anotaciones_posteriores = $datos[anotacionesPosteriores]
+            nif_cif = '{$this->bd->escape($datos['nif_cif'])}',
+            persona_contacto = '{$this->bd->escape($datos['persona_contacto'])}',
+            telefono = '{$this->bd->escape($datos['telefono'])}',
+            correo = '{$this->bd->escape($datos['correo'])}',
+            descripcion = '{$this->bd->escape($datos['descripcion'])}',
+            direccion = '{$this->bd->escape($datos['direccion'])}',
+            poblacion = '{$this->bd->escape($datos['poblacion'])}',
+            codigo_postal = '{$this->bd->escape($datos['codigo_postal'])}',
+            provincia = '{$this->bd->escape($datos['provincia'])}',
+            estado = '{$this->bd->escape($datos['estado'])}',
+            operario_encargado = '{$this->bd->escape($datos['operario'])}',
+            fecha_realizacion = '{$this->bd->escape($datos['fecha_realizacion'])}',
+            anotaciones_anteriores = '{$this->bd->escape($datos['anotaciones_anteriores'])}',
+            anotaciones_posteriores = '{$this->bd->escape($datos['anotaciones_posteriores'])}'
             WHERE id = $id";
         $this->bd->query($sql);
     }
