@@ -56,7 +56,7 @@ if ($_POST) {
     }
 
     if ($descripcionTarea === "") {
-        $errores['descripcion_tarea'] = "Debe introducir la descripción de la tarea";
+        $errores['descripcion'] = "Debe introducir la descripción de la tarea";
     }
 
     if ($correo === "") {

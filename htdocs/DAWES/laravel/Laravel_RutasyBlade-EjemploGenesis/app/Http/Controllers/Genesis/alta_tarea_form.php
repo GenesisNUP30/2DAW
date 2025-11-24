@@ -33,7 +33,7 @@
 
         <label>Descripción de la tarea:</label><br>
         <textarea name="descripcionTarea"><?= htmlspecialchars($descripcionTarea) ?></textarea><br>
-        <?php verErrores($errores, 'descripcion_tarea') ?><br>
+        <?php verErrores($errores, 'descripciona') ?><br>
 
         <label>Dirección:</label><br>
         <input type="text" name="direccionTarea" value="<?= htmlspecialchars($direccionTarea) ?>"><br><br>

@@ -58,8 +58,8 @@ class ModificarCtrl
             Funciones::$errores['nombre_persona'] = "Debe introducir el nombre de la persona encargada de la tarea";
         }
 
-        if ($descripcionTarea === "") {
-            Funciones::$errores['descripcion_tarea'] = "Debe introducir la descripción de la tarea";
+        if ($descripcion === "") {
+            Funciones::$errores['descripcion_'] = "Debe introducir la descripción de la tarea";
         }
 
         if ($correo === "") {

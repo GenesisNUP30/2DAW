@@ -32,12 +32,12 @@ class Tareas
         $persona_contacto = $datos['personaNombre'];
         $telefono = $datos['telefono'];
         $correo = $datos['correo'];
-        $descripcion_tarea = $datos['descripcionTarea'];
-        $direccion_tarea = $datos['direccionTarea'];
+        $descripcion = $datos['descripcion'];
+        $direccion = $datos['direccionTarea'];
         $poblacion = $datos['poblacion'];
         $codigo_postal = $datos['codigoPostal'];
         $provincia = $datos['provincia'];
-        $estado_tarea = $datos['estadoTarea'];
+        $estado = $datos['estado'];
         $operario_encargado = $datos['operarioEncargado'];
         $fecha_realizacion = $datos['fechaRealizacion'];
         $anotaciones_anteriores = $datos['anotacionesAnteriores'];
@@ -47,12 +47,12 @@ class Tareas
             persona_contacto,
             telefono,
             correo,
-            descripcion_tarea,
-            direccion_tarea,
+            descripcion,
+            direccion,
             poblacion,
             codigo_postal,
             provincia,
-            estado_tarea,
+            estado,
             operario_encargado,
             fecha_realizacion,
             anotaciones_anteriores
@@ -61,12 +61,12 @@ class Tareas
             '$persona_contacto',
             '$telefono',
             '$correo',
-            '$descripcion_tarea',
-            '$direccion_tarea',
+            '$descripcion',
+            '$direccion',
             '$poblacion',
             '$codigo_postal',
             '$provincia',
-            '$estado_tarea',
+            '$estado',
             '$operario_encargado',
             '$fecha_realizacion',
             '$anotaciones_anteriores'
@@ -88,12 +88,12 @@ class Tareas
         $persona_contacto = $datos['personaNombre'];
         $telefono = $datos['telefono'];
         $correo = $datos['correo'];
-        $descripcion_tarea = $datos['descripcionTarea'];
-        $direccion_tarea = $datos['direccionTarea'];
+        $descripcion = $datos['descripcion'];
+        $direccion = $datos['direccionTarea'];
         $poblacion = $datos['poblacion'];
         $codigo_postal = $datos['codigoPostal'];
         $provincia = $datos['provincia'];
-        $estado_tarea = $datos['estadoTarea'];
+        $estado = $datos['estado'];
         $operario_encargado = $datos['operarioEncargado'];
         $fecha_realizacion = $datos['fechaRealizacion'];
         $anotaciones_anteriores = $datos['anotacionesAnteriores'];
@@ -103,12 +103,12 @@ class Tareas
             persona_contacto = '$persona_contacto',
             telefono = '$telefono',
             correo = '$correo',
-            descripcion_tarea = '$descripcion_tarea',
-            direccion_tarea = '$direccion_tarea',
+            descripcion = '$descripcion',
+            direccion = '$direccion',
             poblacion = '$poblacion',
             codigo_postal = '$codigo_postal',
             provincia = '$provincia',
-            estado_tarea = '$estado_tarea',
+            estado = '$estado',
             operario_encargado = '$operario_encargado',
             fecha_realizacion = '$fecha_realizacion',
             anotaciones_anteriores = '$anotaciones_anteriores'

@@ -1,15 +1,12 @@
 <?php
 $host = "localhost";
 $usuario = "genesisnatalya";
-$password = "jy*fD4@i3CWlgi4h";
+$contraseña = "jy*fD4@i3CWlgi4h";
 $base_de_datos = "genesisnatalya";
 
+$conexion = new mysqli($host, $usuario, $contraseña, $base_de_datos);
 
-// Crear conexión
-$conexion = new mysqli($host, $usuario, $password, $base_de_datos);
-
-// Verificar conexión
 $conexion->set_charset("utf8mb4");
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
 }
