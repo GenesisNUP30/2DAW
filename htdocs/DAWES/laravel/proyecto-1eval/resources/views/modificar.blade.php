@@ -18,7 +18,7 @@
         <input type="text" name="id" value="{{ $id }}" readonly><br><br>
 
         <label>NIF/CIF:</label><br>
-        <input type="text" name="nifCif" value="{{ $nif_cif }}"><br>
+        <input type="text" name="nif_cif" value="{{ $nif_cif }}"><br>
         {!! \App\Models\Funciones::verErrores('nif_cif') !!}
         <br>
 
@@ -86,6 +86,9 @@
         <label for="anotacionesAnteriores">Anotaciones anteriores:</label><br>
         <textarea id="anotacionesAnteriores" name="anotacionesAnteriores">{{ $anotaciones_anteriores }}</textarea><br><br>
 
+        <label for="anotacionesPosteriores">Anotaciones posteriores:</label><br>
+        <textarea id="anotacionesPosteriores" name="anotacionesPosteriores">{{ $anotaciones_posteriores }}</textarea><br><br>
+        
         <label for="fichero_resumen">Fichero resumen:</label>
         <input type="file" id="fichero_resumen" name="fichero_resumen"><br><br>
 

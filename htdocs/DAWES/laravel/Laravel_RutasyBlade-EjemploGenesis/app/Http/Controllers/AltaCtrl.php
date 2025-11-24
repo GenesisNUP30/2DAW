@@ -14,18 +14,16 @@ class AltaCtrl
     public function alta()
     {
         if ($_POST) {
-            // Limpiar errores anteriores
-            Funciones::$errores = [];
-
             // Tenemos que filtrar
             $this->filtraDatos();
             if (!empty(Funciones::$errores)) {
                 return view('alta', $_POST);
-            } else {
+            }
+            else {
                 // Procedemos a guardar los datos y mostrar la página que proceda
-                $model = new Tareas();
+                $model=new Tareas();
                 $model->registraAlta($_POST);
-                return redirect('/');  // <-- Redirige sin mensaje
+                return "Mostramos VENTANA QUE PROCEDA ".print_r($_POST, true);
             }
         } else {
 
@@ -33,7 +31,7 @@ class AltaCtrl
                 'nifCif' => '',
                 'personaNombre' => '',
                 'telefono' => "",
-                'descripcion' => "",
+                'descripcionTarea' => "",
                 'correo' => "",
                 'direccionTarea' => "",
                 'poblacion' => "",
@@ -50,9 +48,11 @@ class AltaCtrl
         }
     }
 
+
     private function filtraDatos()
     {
         extract($_POST);
+
 
         if ($nifCif == "") {
             Funciones::$errores['nif_cif'] = "Debe introducir el NIF/CIF de la persona encargada de la tarea";
@@ -67,8 +67,8 @@ class AltaCtrl
             Funciones::$errores['nombre_persona'] = "Debe introducir el nombre de la persona encargada de la tarea";
         }
 
-        if ($descripcion === "") {
-            Funciones::$errores['descripcion'] = "Debe introducir la descripción de la tarea";
+        if ($descripcionTarea === "") {
+            Funciones::$errores['descripcion_tarea'] = "Debe introducir la descripción de la tarea";
         }
 
         if ($correo === "") {
@@ -80,7 +80,7 @@ class AltaCtrl
         if ($telefono == "") {
             Funciones::$errores['telefono'] = "Debe introducir el teléfono de la persona encargada de la tarea";
         } else {
-            $resultado = \App\Models\Funciones::telefonoValido($telefono);  // Corregido aquí
+            $resultado = telefonoValido($telefono);
             if ($resultado !== true) {
                 Funciones::$errores['telefono'] = $resultado;
             }

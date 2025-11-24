@@ -1,6 +1,6 @@
     <form action="" method="POST" enctype="multipart/form-data">
         <label>NIF/CIF:</label><br>
-        <input type="text" name="nifCif" value="{{ $nifCif }}"><br>
+        <input type="text" name="nif_cif" value="{{ $nif_cif }}"><br>
         {!! \App\Models\Funciones::verErrores('nif_cif') !!}
         <br>
 

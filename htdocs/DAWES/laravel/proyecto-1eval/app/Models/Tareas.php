@@ -28,7 +28,7 @@ class Tareas
 
     public function registraAlta(array $datos)
     {
-        $nif_cif = $datos['nifCif'];
+        $nif_cif = $datos['nif_cif'];
         $persona_contacto = $datos['personaNombre'];
         $telefono = $datos['telefono'];
         $correo = $datos['correo'];
@@ -57,19 +57,19 @@ class Tareas
             fecha_realizacion,
             anotaciones_anteriores
         ) VALUES (
-            '$nif_cif',
-            '$persona_contacto',
-            '$telefono',
-            '$correo',
-            '$descripcion',
-            '$direccion',
-            '$poblacion',
-            '$codigo_postal',
-            '$provincia',
-            '$estado',
-            '$operario_encargado',
-            '$fecha_realizacion',
-            '$anotaciones_anteriores'
+            '$datos[nif_cif]',
+            '$datos[persona_contacto]',
+            '$datos[telefono]',
+            '$datos[correo]',
+            '$datos[descripcion]',
+            '$datos[direccion]',
+            '$datos[poblacion]',
+            '$datos[codigo_postal]',
+            '$datos[provincia]',
+            '$datos[estado]',
+            '$datos[operario_encargado]',
+            '$datos[fecha_realizacion]',
+            '$datos[anotaciones_anteriores]'
         )";
 
         $this->bd->query($sql);
@@ -84,36 +84,22 @@ class Tareas
 
     public function actualizarTarea($id, array $datos)
     {
-        $nif_cif = $datos['nifCif'];
-        $persona_contacto = $datos['personaNombre'];
-        $telefono = $datos['telefono'];
-        $correo = $datos['correo'];
-        $descripcion = $datos['descripcion'];
-        $direccion = $datos['direccionTarea'];
-        $poblacion = $datos['poblacion'];
-        $codigo_postal = $datos['codigoPostal'];
-        $provincia = $datos['provincia'];
-        $estado = $datos['estado'];
-        $operario_encargado = $datos['operarioEncargado'];
-        $fecha_realizacion = $datos['fechaRealizacion'];
-        $anotaciones_anteriores = $datos['anotacionesAnteriores'];
-
         $sql = "UPDATE tareas SET
-            nif_cif = '$nif_cif',
-            persona_contacto = '$persona_contacto',
-            telefono = '$telefono',
-            correo = '$correo',
-            descripcion = '$descripcion',
-            direccion = '$direccion',
-            poblacion = '$poblacion',
-            codigo_postal = '$codigo_postal',
-            provincia = '$provincia',
-            estado = '$estado',
-            operario_encargado = '$operario_encargado',
-            fecha_realizacion = '$fecha_realizacion',
-            anotaciones_anteriores = '$anotaciones_anteriores'
-            WHERE id = " . (int)$id;
-
+            nif_cif = $datos[nif_cif],
+            persona_contacto = $datos[personaNombre],
+            telefono = $datos[telefono],
+            correo = $datos[correo],
+            descripcion = $datos[descripcion],
+            direccion = $datos[direccionTarea],
+            poblacion = $datos[poblacion],
+            codigo_postal = $datos[codigoPostal],
+            provincia = $datos[provincia],
+            estado = $datos[estado],
+            operario_encargado = $datos[operarioEncargado],
+            fecha_realizacion = $datos[fechaRealizacion],
+            anotaciones_anteriores = $datos[anotacionesAnteriores],
+            anotaciones_posteriores = $datos[anotacionesPosteriores]
+            WHERE id = $id";
         $this->bd->query($sql);
     }
 
