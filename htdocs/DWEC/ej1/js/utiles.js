@@ -146,8 +146,7 @@ function vernotas(codigo) {
         data.forEach(nota => {
             const li = document.createElement("li");
             li.innerHTML = `
-                <p>${nota.asignatura}</p>
-                <p>${nota.nota}</p>
+                <p>${nota.asignatura}: ${nota.nota}</p>
             `;
             ul.appendChild(li);
         });
