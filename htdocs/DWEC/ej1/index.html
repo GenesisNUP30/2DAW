@@ -10,20 +10,36 @@
 </head>
 
 <body>
-<div id="container">
-    <h1>Listado de Alumnos (desde JSON)</h1>
-    <div id="cargando">Cargando alumnos...</div>
-    <table class="table" id="tabla-alumnos" style="display: none;">
-        <thead>
-            <th>Código</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Nota</th>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <br><br>
-</div>
+    <div class="container">
+        <h1>Listado de Alumnos (desde JSON)</h1>
+        <div id="cargando">Cargando alumnos...</div>
+        <table class="table" id="tabla-alumnos" style="display:none">
+            <thead>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Nota</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <br><br>
+        <button onclick="cargarlista();">Cargar lista</button><br>
+        Lista alumnos: 
+        <ul id="lista-alumnos">
+
+        </ul>
+        <hr>
+        Nombre <input type="text" id="nombre"><br>
+        Apellidos <input type="text" id="apellidos"><br>
+        Nota <input type="number" id="nota"><br>
+        <button onclick="altaalumno();">Alta alumno</button>
+        <button onclick="modificaalumno2()">Modificar alumno</button>
+        <div id="notas">
+            
+        </div>
+
+    </div>
 </body>
 <script src="js/utiles.js"></script>
+
 </html>

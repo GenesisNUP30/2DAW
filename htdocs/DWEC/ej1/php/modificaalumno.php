@@ -2,19 +2,20 @@
 // Encabezado para indicar que la respuesta es JSON
 header('Content-Type: application/json; charset=utf-8');
 
-// Incluir el archivo de conexión
-include 'conexion.php'; // o require 'conexion.php';
+//Incluir el archivo de conexión
+include 'conexion.php'; //o require 'conexion.php';
 
-// Verificar conexión
+//Verificar conexión
 if ($conexion->connect_error) {
-    die(json_encode(["error" => "Error de conexión: " . $conn->connect_error]));
+    die(json_encode(["error" => "Error de conexión: " . $conexion->connect_error]));
 }
 
-// Consulta SQL
-$sql = "SELECT * FROM alumnos";
-$resultado = $conexion->query($sql);
+$codigo = $_GET['codigo'];
 
-// Array para guardar los resultados
+//Consulta sql
+$sql = "SELECT * FROM alumnos WHERE codigo=". $codigo;
+$resultado = mysqli_query($conexion, $sql);
+
 $alumnos = [];
 
 if ($resultado && $resultado->num_rows > 0) {
