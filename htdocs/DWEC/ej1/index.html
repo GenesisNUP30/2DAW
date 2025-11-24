@@ -23,8 +23,19 @@
             <tbody></tbody>
         </table>
         <br><br>
+        <table id="tabla-notas" style="display:none">
+            <thead>
+                <th>Asignatura</th>
+                <th>Nota</th>
+            </thead>
+            <tbody id="tbody-notas"></tbody>
+        </table>
+        <br>
+        Asignatura: <input type="text" id="asignatura"><br>
+        Nota: <input type="number" id="nota2"><br>
+        <button onclick="modificanota2()">Modificar nota</button>
         <button onclick="cargarlista();">Cargar lista</button><br>
-        Lista alumnos: 
+        Lista alumnos:
         <ul id="lista-alumnos">
 
         </ul>
@@ -35,7 +46,7 @@
         <button onclick="altaalumno();">Alta alumno</button>
         <button onclick="modificaalumno2()">Modificar alumno</button>
         <div id="notas">
-            
+
         </div>
 
     </div>

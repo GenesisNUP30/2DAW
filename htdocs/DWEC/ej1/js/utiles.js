@@ -137,21 +137,44 @@ function vernotas(codigo) {
     alert(codigo);
     const url = `php/vernotas.php?codigo=${codigo}`;
     fetch(url)
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-        const div = document.getElementById("notas");
-        const ul = document.createElement("ul");
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            const table = document.getElementById("tabla-notas");
+            const tbody = document.getElementById("tbody-notas");
+            const cargando = document.getElementById("cargando-notas");
 
-        data.forEach(nota => {
-            const li = document.createElement("li");
-            li.innerHTML = `
-                <p>${nota.asignatura}: ${nota.nota}</p>
+            data.forEach(nota => {
+                console.log(nota.codigo_alumno);
+                const fila = document.createElement("tr");
+                fila.innerHTML = ``;
+                fila.innerHTML = `
+                <td>${nota.asignatura}</td>
+                <td>${nota.nota}</td>
+                <td><button onclick=eliminanota(${nota.codigo_alumno});>Eliminar nota</button></td>
             `;
-            ul.appendChild(li);
+                tbody.appendChild(fila);
+            });
+            table.style.display = "table";
+            cargando.style.display = "none";
+        })
+        .catch(error => {
+            cargando.textContent = "Error al cargar los datos.";
+            console.error(error);
         });
-        div.appendChild(ul);
-    })
-    .catch(error => {
-    });
+}
+
+function eliminanota(codigo_alumno) {
+    console.log(codigo_alumno);
+    // const url = `php/eliminanota.php?codigo_alumno=${codigo_alumno}`;
+    // fetch(url)
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         console.log(data);
+    //         alert(data.message);
+    //     })
+    //     .catch(error => console.error(error));
+}
+
+function modificanota2() {
 }
