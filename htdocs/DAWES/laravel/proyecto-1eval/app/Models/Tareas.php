@@ -80,7 +80,7 @@ class Tareas
             codigo_postal = '{$this->bd->escape($datos['codigo_postal'])}',
             provincia = '{$this->bd->escape($datos['provincia'])}',
             estado = '{$this->bd->escape($datos['estado'])}',
-            operario_encargado = '{$this->bd->escape($datos['operario'])}',
+            operario_encargado = '{$this->bd->escape($datos['operario_encargado'])}',
             fecha_realizacion = '{$this->bd->escape($datos['fecha_realizacion'])}',
             anotaciones_anteriores = '{$this->bd->escape($datos['anotaciones_anteriores'])}',
             anotaciones_posteriores = '{$this->bd->escape($datos['anotaciones_posteriores'])}'

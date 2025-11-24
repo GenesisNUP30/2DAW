@@ -35,7 +35,7 @@
         <label>Provincia:</label><br>
         <select name="provincia">
             <option value="">Seleccione provincia</option>
-            <?php \App\Models\Funciones::mostrarProvincias($provincia) ?>
+            {!! \App\Models\Funciones::mostrarProvincias($provincia) !!}
         </select><br>
         {!! \App\Models\Funciones::verErrores('provincia') !!}
         <br>
