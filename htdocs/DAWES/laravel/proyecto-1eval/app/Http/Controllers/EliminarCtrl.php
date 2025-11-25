@@ -21,7 +21,7 @@ class EliminarCtrl
     {
         $modelo = new Tareas();
         $modelo->eliminarTarea($id);
-        header('Location: /');
+        header('Location: /DAWES/laravel/proyecto-1eval/public/');
         exit;
     }
 }

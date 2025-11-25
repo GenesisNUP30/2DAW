@@ -6,13 +6,17 @@ use App\Http\Controllers\InicioCtrl;
 use App\Http\Controllers\ModificarCtrl;
 use Illuminate\Support\Facades\Route;
 
+// Página principal
+Route::get('/', [InicioCtrl::class, 'index']);
 
-Route::any('/', [InicioCtrl::class, 'index']);
+// Alta de tarea
+Route::get('/alta', [AltaCtrl::class, 'alta']);
+Route::post('/alta', [AltaCtrl::class, 'alta']);
 
-Route::any('/alta', [AltaCtrl::class, 'alta']);
-
-Route::get('/modificar/{id}', [ModificarCtrl::class, 'mostrarFormulario'])->name('modificar.form');
+// Modificar tarea
+Route::get('/modificar/{id}', [ModificarCtrl::class, 'mostrarFormulario']);
 Route::post('/modificar/{id}', [ModificarCtrl::class, 'actualizar']);
 
-Route::get('/eliminar/{id}', [EliminarCtrl::class, 'confirmar'])->name('eliminar.confirmar');
-Route::delete('/eliminar/{id}', [EliminarCtrl::class, 'eliminar']);
+// Eliminar tarea
+Route::get('/eliminar/{id}', [EliminarCtrl::class, 'confirmar']);
+Route::post('/eliminar/{id}', [EliminarCtrl::class, 'eliminar']);

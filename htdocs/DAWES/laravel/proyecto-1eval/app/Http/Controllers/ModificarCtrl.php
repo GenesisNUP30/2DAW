@@ -36,7 +36,7 @@ class ModificarCtrl
                 return view('modificar', array_merge($_POST, ['id' => $id]));
             } else {
                 $modelo->actualizarTarea($id, $_POST);
-                header('Location: /');
+                header('Location: /DAWES/laravel/proyecto-1eval/public/');
                 exit;
             }
         }
