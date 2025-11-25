@@ -22,7 +22,6 @@ if (mysqli_query($conexion, $sql)) {
         "status" => "success",
         "message" => "Alumno insertado correctamente",
         "data" => [
-            "codigo" => $codigo,
             "nombre" => $nombre,
             "apellidos" => $apellidos,
             "nota" => $nota

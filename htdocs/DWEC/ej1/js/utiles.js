@@ -1,4 +1,5 @@
 var codigo_global = null;
+var id_nota_global = null;
 
 // Cuando la página carga
 document.addEventListener("DOMContentLoaded", async () => {
@@ -21,9 +22,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <td>${alumno.apellidos}</td>
                     <td>${alumno.nota}</td>
                     <td>
-                    <button onclick=eliminaalumno(${alumno.codigo});>Eliminar</button>
-                    <button onclick=modificaalumno(${alumno.codigo});>Modificar</button>
-                    <button onclick=vernotas(${alumno.codigo});>Ver notas</button>
+                    <button onclick="eliminaalumno(${alumno.codigo});">Eliminar</button>
+                    <button onclick="modificaalumno(${alumno.codigo});">Modificar</button>
+                    <button onclick="vernotas(${alumno.codigo})";>Ver notas</button>
                     </td>
                 `;
                 tbody.appendChild(fila);
@@ -99,7 +100,7 @@ function eliminaalumno(codigo) {
 function modificaalumno(codigo) {
     const url = `php/modificaalumno.php?codigo=${codigo}`;
     codigo_global = codigo;
-    
+
     fetch(url)
         .then(res => res.json())
         .then(data => {
@@ -113,7 +114,6 @@ function modificaalumno(codigo) {
 }
 
 
-
 function modificaalumno2() {
     alert('Voy a modificar');
     const nombre = document.getElementById("nombre").value;
@@ -121,21 +121,22 @@ function modificaalumno2() {
     const nota = document.getElementById("nota").value;
 
     const url = `php/modificaalumno2.php?codigo=${codigo_global}&nombre=${encodeURIComponent(nombre)}&apellidos=${encodeURIComponent(apellidos)}&nota=${encodeURIComponent(nota)}`;
-    
-    fetch(url)
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-        alert(data.message);
-        cargarlista();
 
-    })
-    .catch(error => console.error(error));
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            alert(data.message);
+            cargarlista();
+
+        })
+        .catch(error => console.error(error));
 }
 
 function vernotas(codigo) {
     alert(codigo);
     const url = `php/vernotas.php?codigo=${codigo}`;
+
     fetch(url)
         .then(res => res.json())
         .then(data => {
@@ -144,37 +145,74 @@ function vernotas(codigo) {
             const tbody = document.getElementById("tbody-notas");
             const cargando = document.getElementById("cargando-notas");
 
-            data.forEach(nota => {
-                console.log(nota.codigo_alumno);
-                const fila = document.createElement("tr");
-                fila.innerHTML = ``;
-                fila.innerHTML = `
-                <td>${nota.asignatura}</td>
-                <td>${nota.nota}</td>
-                <td><button onclick=eliminanota(${nota.codigo_alumno});>Eliminar nota</button></td>
-            `;
-                tbody.appendChild(fila);
-            });
-            table.style.display = "table";
-            cargando.style.display = "none";
+            tbody.innerHTML = "";
+
+            if (data.length > 0) {
+                data.forEach(nota => {
+                    console.log(nota.codigo_alumno);
+                    const fila = document.createElement("tr");
+                    fila.innerHTML = `
+                    <td>${nota.asignatura}</td>
+                    <td>${nota.nota}</td>
+                    <td><button onclick="modificanota(${nota.id});">Modificar</button>
+                    <button onclick="eliminanota(${nota.id});">Eliminar nota</button>
+                    </td>
+                `;
+                    tbody.appendChild(fila);
+                });
+                table.style.display = "table";
+                cargando.style.display = "none";
+            } else {
+                table.style.display = "none";
+                cargando.style.display = "block";
+                cargando.textContent = "No hay notas para este alumno.";
+            }
         })
-        .catch(error => {
-            cargando.textContent = "Error al cargar los datos.";
-            console.error(error);
-        });
+        .catch(error => console.error(error));
 }
 
-function eliminanota(codigo_alumno) {
-    console.log(codigo_alumno);
-    // const url = `php/eliminanota.php?codigo_alumno=${codigo_alumno}`;
-    // fetch(url)
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         console.log(data);
-    //         alert(data.message);
-    //     })
-    //     .catch(error => console.error(error));
+function eliminanota(id_nota) {
+    console.log(id_nota);
+    const url = `php/eliminanota.php?id_nota=${id_nota}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            alert(data.message);
+        })
+        .catch(error => console.error(error));
+}
+
+function modificanota(id_nota) {
+    const url = `php/modificanota.php?id_nota=${id_nota}`;
+    id_nota_global = id_nota;
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            document.querySelector("input#asignatura").value = data[0].asignatura;
+            document.querySelector("input#nota2").value = data[0].nota;
+            console.log(data);
+        })
+        .catch(error => console.error(error));
 }
 
 function modificanota2() {
+    alert('Voy a modificar');
+    const asignatura = document.getElementById("asignatura").value;
+    const nota = document.getElementById("nota2").value;
+
+    const url = `php/modificanota2.php?id_nota=${id_nota_global}&asignatura=${encodeURIComponent(asignatura)}&nota=${encodeURIComponent(nota)}`;
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            alert(data.message);
+            cargarlista();
+
+        })
+        .catch(error => console.error(error));
 }
+
+
