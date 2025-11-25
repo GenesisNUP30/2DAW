@@ -21,6 +21,7 @@ class EliminarCtrl
     {
         $modelo = new Tareas();
         $modelo->eliminarTarea($id);
-        return redirect('/')->with('mensaje', 'Tarea eliminada correctamente.');
+        header('Location: /');
+        exit;
     }
 }

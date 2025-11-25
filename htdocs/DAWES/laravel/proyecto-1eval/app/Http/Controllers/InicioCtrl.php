@@ -10,7 +10,7 @@ class InicioCtrl {
         $modelo = new Tareas();
         $tareas = $modelo->listarTareas();
         Log::debug("InciioCtrl::index\n".print_r($tareas, true));
-
+        
         return view('index', ['tareas' => $tareas]);
     }
 }

@@ -36,7 +36,8 @@ class ModificarCtrl
                 return view('modificar', array_merge($_POST, ['id' => $id]));
             } else {
                 $modelo->actualizarTarea($id, $_POST);
-                return redirect('/')->with('mensaje', 'Tarea actualizada correctamente.');
+                header('Location: /');
+                exit;
             }
         }
     }

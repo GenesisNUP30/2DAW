@@ -23,7 +23,8 @@ class AltaCtrl
                 // Procedemos a guardar los datos y mostrar la página que proceda
                 $model=new Tareas();
                 $model->registraAlta($_POST);
-                return redirect('/');
+                header('Location: /');
+                exit;
             }
         } else {
 
@@ -78,7 +79,7 @@ class AltaCtrl
         if ($telefono == "") {
             Funciones::$errores['telefono'] = "Debe introducir el teléfono de la persona encargada de la tarea";
         } else {
-            $resultado = \App\Models\Funciones::telefonoValido($telefono);  // Corregido aquí
+            $resultado = Funciones::telefonoValido($telefono);
             if ($resultado !== true) {
                 Funciones::$errores['telefono'] = $resultado;
             }
