@@ -9,7 +9,6 @@
         margin: 20px 0;
         font-size: 13px;
         background: #ffffff;
-        border: 2px solid #cbd5e0;
         border-radius: 12px;
         overflow: hidden;
     }
@@ -103,9 +102,9 @@
 @section('cuerpo')
 <div class="container">
     <h1>Gestión de Tareas</h1>
-
-    <a href="{{ url('alta') }}">Crear Nueva Tarea</a>
-
+    @if($_SESSION['rol'] == 'administrador')
+    <a href="{{ url('alta') }}">Crear nueva tarea</a>
+    @endif
     <table class="tabla-tareas">
         <thead>
             <tr>
@@ -132,8 +131,13 @@
                 <td>{{ $tarea['operario_encargado'] }}</td>
                 <td>{{ $tarea['fecha_realizacion'] }}</td>
                 <td>
+                    @if($_SESSION['rol'] == 'administrador')
                     <button><a href="{!! url('modificar/' . $tarea['id']) !!}">Modificar</a></button>
                     <button><a href="{!! url('eliminar/' . $tarea['id']) !!}">Eliminar</a></button>
+                    @endif
+                    @if($_SESSION['rol'] == 'operario')
+                    <button><a href="{!! url('completar/' . $tarea['id']) !!}">Completar</a></button>
+                    @endif
                 </td>
             </tr>
             @endforeach

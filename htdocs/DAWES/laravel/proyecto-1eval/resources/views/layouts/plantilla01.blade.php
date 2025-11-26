@@ -34,7 +34,7 @@
       <!-- MENÚ LATERAL -->
       <div class="col-md-2 bg-light p-2">
         <ul class="nav flex-column">
-          <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Inicio</a></li>
           @if(!empty($_SESSION['rol']) && $_SESSION['rol'] == 'administrador')
           <li class="nav-item"><a class="nav-link" href="{{ url('alta') }}">Alta de tarea</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Modificar tarea</a></li>

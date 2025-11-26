@@ -88,6 +88,16 @@ class Tareas
         $this->bd->query($sql);
     }
 
+    public function completarTarea($id, array $datos)
+    {
+        $sql = "UPDATE tareas SET
+            estado = '{$this->bd->escape($datos['estado'])}',
+            anotaciones_posteriores = '{$this->bd->escape($datos['anotaciones_posteriores'])}'
+            WHERE id = $id";
+        $this->bd->query($sql);
+    }
+
+
     public function eliminarTarea($id)
     {
         $sql = "DELETE FROM tareas WHERE id = $id";

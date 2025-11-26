@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AltaCtrl;
+use App\Http\Controllers\CompletarCtrl;
 use App\Http\Controllers\EliminarCtrl;
 use App\Http\Controllers\InicioCtrl;
 use App\Http\Controllers\ModificarCtrl;
@@ -25,3 +26,6 @@ Route::post('/modificar/{id}', [ModificarCtrl::class, 'actualizar']);
 // Eliminar tarea
 Route::get('/eliminar/{id}', [EliminarCtrl::class, 'confirmar']);
 Route::post('/eliminar/{id}', [EliminarCtrl::class, 'eliminar']);
+
+Route::get('/completar/{id}', [CompletarCtrl::class, 'mostrarFormulario']);
+Route::post('/completar/{id}', [CompletarCtrl::class, 'completar']);

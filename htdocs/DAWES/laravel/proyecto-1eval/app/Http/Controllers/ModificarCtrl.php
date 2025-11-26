@@ -46,7 +46,7 @@ class ModificarCtrl
     {
         extract($_POST);
 
-        if ($nif_cif == "") {
+        if ($nif_cif === "") {
             Funciones::$errores['nif_cif'] = "Debe introducir el NIF/CIF de la persona encargada de la tarea";
         } else {
             $resultado = Funciones::validarNif($nif_cif);
