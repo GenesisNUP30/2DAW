@@ -4,7 +4,11 @@ use App\Http\Controllers\AltaCtrl;
 use App\Http\Controllers\EliminarCtrl;
 use App\Http\Controllers\InicioCtrl;
 use App\Http\Controllers\ModificarCtrl;
+use App\Http\Controllers\LoginCtrl;
 use Illuminate\Support\Facades\Route;
+
+// Login de usuario
+Route::any('/login', [LoginCtrl::class, 'login']);
 
 // Página principal
 Route::get('/', [InicioCtrl::class, 'index']);

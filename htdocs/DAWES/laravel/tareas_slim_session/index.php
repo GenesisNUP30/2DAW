@@ -17,7 +17,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 //
 // Si utilizamos como servidor el interprete de php ejecutando en el terminal
 // php -S localhost:8000
-define('BASE_URL', 'http://localhost:3000/index.php/');
+define('BASE_URL', 'http://localhost:8000/index.php/');
 
 require __DIR__ . '/vendor/autoload.php'; // Autocargador para los componentes instalados desde composer (en este caso Slim y blade)
 require __DIR__ . '/ctes.php'; // definimos constantes que facilitan el trabajo
@@ -63,45 +63,51 @@ $app->get('/', function (Request $request, Response $response, $args) {
     y finaliza el script (no continua el código)
     */
     Session::getInstance()->onlyLogged();
-    return (new TareasCtrl())->Inicio();
+    $response->getBody()->write(TareasCtrl::getInstance()->Inicio());
+    return $response;
 });
 
 // Listar
 $app->get('/listar', function (Request $request, Response $response, $args) {
     Session::getInstance()->onlyLogged();
-    return (new TareasCtrl())->Listar();
+    $response->getBody()->write(TareasCtrl::getInstance()->Listar());
+    return $response;
 });
 
 // Alta
 // Observad que aquí no se pone 'get' pues la petición puede llegar por GET o por POST
 $app->post('/add', function (Request $request, Response $response, $args) {
     Session::getInstance()->onlyLogged();
-    return (new TareasCtrl())->Add();
+    $response->getBody()->write(TareasCtrl::getInstance()->Add());
+    return $response;
 });
-
 // Alta
 // Repetimos ruta con GET. Lo más sencillo hubiese sido poner $app->any(...)
 $app->get('/add', function (Request $request, Response $response, $args) {
     Session::getInstance()->onlyLogged();
-    return (new TareasCtrl())->Add();
+    $response->getBody()->write(TareasCtrl::getInstance()->Add());
+    return $response;
 });
 
 // Modificar
 $app->any('/edit', function (Request $request, Response $response, $args) {
     Session::getInstance()->onlyLogged();
-    return (new TareasCtrl())->Edit();
+    $response->getBody()->write(TareasCtrl::getInstance()->Edit());
+    return $response;
 });
 
 // Borrar
 $app->get('/del', function (Request $request, Response $response, $args) {
     Session::getInstance()->onlyLogged();
-    return (new TareasCtrl())->Del();
+    $response->getBody()->write(TareasCtrl::getInstance()->Del());
+    return $response;
 });
 
 
-// Página de prueba
+// Página principal
 $app->get('/pag1', function (Request $request, Response $response, $args) {
-    return (new TareasCtrl())->Pag1();
+    $response->getBody()->write(TareasCtrl::getInstance()->Pag1());
+    return $response;
 });
 
 

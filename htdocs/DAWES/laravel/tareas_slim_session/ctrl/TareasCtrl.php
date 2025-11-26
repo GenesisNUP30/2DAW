@@ -160,7 +160,9 @@ class TareasCtrl
             if (!$this->errores->HayErrores()) {
                 // Guardamos la tarea y finalizamos
                 $this->model->Add($tarea);
-                Session::redirect('/listar');
+                return $this->blade->render('msg', [
+                    'descripcion' => "<p>Se ha guardado la tarea ....</p>"
+                ]);
             }
         }
         // Mostramos los datos

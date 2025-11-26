@@ -2,10 +2,7 @@
 ==== EJEMPLO DE CREACIÓN DE WEB USANDO EL PATRÓN MVC ====
 ==== Y CONTROLADOR FRONTAL con el microframework slim ====
 =========================================================
-APROXIMACIÓN CON BASE DE DATOS
-
-Para que el programa funcione sin problemas deberéis crear la base de datos "tareas" utilizando el fichero
-"base_datos_tareas.sql" que tenéis en esta carpeta
+APROXIMACIÓN TERCERA
 
 Ejemplo de creación de una web modular usando el patrón MVC y con un enfoque
 modular y usando el patrón de diseño controlador frontal.
@@ -19,7 +16,7 @@ pues nos estamos centrando en utilizar mecanismos básicos de PHP.
 
 Carpetas
 - ctrl      = Controladores
-- model     = Modelos (Session, y  conector BD)
+- model     = Modelos
 - view      = Vistas
 - plantilla = Partes de la plantilla para web modular
 - helpers   = Funciones libres que facilitaran el trabajo
