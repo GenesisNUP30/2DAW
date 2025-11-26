@@ -14,8 +14,22 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url('/') }}">Mi Aplicación</a>
 
-<div class="container">
+      @if(!empty($_SESSION['logado']))
+      <div class="text-right">
+        <span><strong>Usuario:</strong> {{ $_SESSION['usuario'] }}</span> |
+        <span><strong>Rol:</strong> {{ $_SESSION['rol'] }}</span> |
+        <span><strong>Hora inicio sesión:</strong> {{ $_SESSION['hora_logado'] }}</span> |
+        <a href="{{ url('/logout') }}" class="btn btn-sm btn-outline-danger">Cerrar sesión</a>
+      </div>
+      @endif
+    </div>
+  </nav>
+
+  <div class="container">
     <!-- <div style="float:left; width:5em; background-color:blue;padding:10em 0">&nbsp;</div>
     <div class="row alert alert-warning">
       Mostrado desde la plantilla

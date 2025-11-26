@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 // Login de usuario
 Route::any('/login', [LoginCtrl::class, 'login']);
+Route::any('/logout', [LoginCtrl::class, 'logout']);
 
 // Página principal
 Route::get('/', [InicioCtrl::class, 'index']);

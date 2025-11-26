@@ -2,22 +2,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Login;
-use Illuminate\Support\Facades\Log;
+
 
 class LoginCtrl
 {
     public function login()
     {
-        $model = new Login();
-        $usuario = $_POST['usuario'];
-        $password = $_POST['password'];
+        $model = Login::getInstance();
+        
+        if ($_POST) {
+            $usuario = $_POST['usuario'];
+            $password = $_POST['password'];
 
-        if ($model->validarLogin($usuario, $password)) {
-            // Login exitoso
-            return view('index');
-        } else {
-            // Login fallido
-            return view('login', ['error' => 'Credenciales inválidas.']);
+            if ($model->validarLogin($usuario, $password)) {
+                // Login exitoso
+                header('Location: /DAWES/laravel/proyecto-1eval/public/');
+                exit();
+            } else {
+                // Login fallido
+                return view('login', ['error' => 'Credenciales inválidas.']);
+            }
         }
+        return view('login');
     }
+
+    public function logout()
+    {
+        $model = Login::getInstance();
+        $model->logout();
+        header('Location: /DAWES/laravel/proyecto-1eval/public/login');
+        exit();
+    }
+
 }
