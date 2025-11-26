@@ -10,6 +10,11 @@ class CompletarCtrl
 {
     public function mostrarFormulario($id)
     {
+        //AL HACER $_SESSION ESTOY USANDO LA FUNCION DE LARAVEL Y ME DICE QUE $_SESSION
+        //NO EXISTE, 
+        // COMO LO HAGO, CON ESTO: 
+        //$model = Login::getInstance(); $rol = $model->getRol();
+        
         if ($_SESSION['rol'] != 'operario') {
             abort(404, 'No tiene permiso para completar esta tarea');
         }
