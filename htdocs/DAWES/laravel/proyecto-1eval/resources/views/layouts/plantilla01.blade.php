@@ -14,28 +14,48 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" href="{{ url('/') }}">Mi Aplicación</a>
-
-      @if(!empty($_SESSION['logado']))
-      <div class="text-right">
-        <span><strong>Usuario:</strong> {{ $_SESSION['usuario'] }}</span> |
-        <span><strong>Rol:</strong> {{ $_SESSION['rol'] }}</span> |
-        <span><strong>Hora inicio sesión:</strong> {{ $_SESSION['hora_logado'] }}</span> |
-        <a href="{{ url('/logout') }}" class="btn btn-sm btn-outline-danger">Cerrar sesión</a>
+  <div class="container-fluid">
+    <!-- ENCABEZADO -->
+    <div class="row bg-primary text-white p-2">
+      <div class="col-md-6">
+        <h4>Mi Aplicación de Tareas</h4>
       </div>
-      @endif
+      <div class="col-md-6 text-right">
+        @if(!empty($_SESSION['logado']))
+        Usuario: {{ $_SESSION['usuario'] }} |
+        Rol: {{ $_SESSION['rol'] }} |
+        Hora login: {{ $_SESSION['hora_logado'] }} |
+        <a href="/DAWES/laravel/proyecto-1eval/public/logout" class="text-white">Cerrar sesión</a>
+        @endif
+      </div>
     </div>
-  </nav>
 
-  <div class="container">
-    <!-- <div style="float:left; width:5em; background-color:blue;padding:10em 0">&nbsp;</div>
-    <div class="row alert alert-warning">
-      Mostrado desde la plantilla
-    </div> -->
-    <div class="row">
-      @yield('cuerpo')
+    <div class="row mt-2">
+      <!-- MENÚ LATERAL -->
+      <div class="col-md-2 bg-light p-2">
+        <ul class="nav flex-column">
+          <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+          @if(!empty($_SESSION['rol']) && $_SESSION['rol'] == 'administrador')
+          <li class="nav-item"><a class="nav-link" href="{{ url('alta') }}">Alta de tarea</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Modificar tarea</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Eliminar tarea</a></li>
+          @elseif(!empty($_SESSION['rol']) && $_SESSION['rol'] == 'operario')
+          <li class="nav-item"><a class="nav-link" href="#">Completar tarea</a></li>
+          @endif
+        </ul>
+      </div>
+
+      <!-- CUERPO PRINCIPAL -->
+      <div class="col-md-10">
+        @yield('cuerpo')
+      </div>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <div class="row bg-secondary text-white text-center mt-3 p-2">
+      <div class="col-12">
+        &copy; 2025 Mi Aplicación de Tareas
+      </div>
     </div>
   </div>
   <!-- Scripts de Bootstrap -->
