@@ -10,10 +10,10 @@ if ($conexion->connect_error) {
     die(json_encode(["error" => "Error de conexión: " . $conexion->connect_error]));
 }
 
-$codigo = $_GET['codigo_alumno'];
+$id_nota = $_GET['id_nota'];
 
 //Consulta sql
-$sql = "DELETE FROM notas WHERE codigo_alumno=". $codigo;
+$sql = "DELETE FROM notas WHERE id=". $id_nota;
 
 //Ejecutar
 if (mysqli_query($conexion, $sql)) {
