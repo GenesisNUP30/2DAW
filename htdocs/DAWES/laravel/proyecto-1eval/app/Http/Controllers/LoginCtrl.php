@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Login;
+use App\Models\Sesion;
 
 
 class LoginCtrl
 {
     public function login()
     {
-        $model = Login::getInstance();
+        $model = Sesion::getInstance();
         
         if ($_POST) {
             $usuario = $_POST['usuario'];
@@ -16,8 +16,7 @@ class LoginCtrl
 
             if ($model->validarLogin($usuario, $password)) {
                 // Login exitoso
-                header('Location: /DAWES/laravel/proyecto-1eval/public/');
-                exit();
+                miredirect('/');
             } else {
                 // Login fallido
                 return view('login', ['error' => 'Credenciales inválidas.']);
@@ -28,10 +27,9 @@ class LoginCtrl
 
     public function logout()
     {
-        $model = Login::getInstance();
+        $model = Sesion::getInstance();
         $model->logout();
-        header('Location: /DAWES/laravel/proyecto-1eval/public/login');
-        exit();
+        miredirect('login');
     }
 
 }

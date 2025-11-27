@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Login;
+use App\Models\Sesion;
 use App\Models\Tareas;
 use Illuminate\Support\Facades\Log;
 
 class InicioCtrl {
     public function index()
     {
-        $login = Login::getInstance();
+        $login = Sesion::getInstance();
         $login->onlyLogged();
 
         $modelo = new Tareas();

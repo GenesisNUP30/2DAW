@@ -23,8 +23,7 @@ class AltaCtrl
                 // Procedemos a guardar los datos y mostrar la página que proceda
                 $model=new Tareas();
                 $model->registraAlta($_POST);
-                header('Location: /DAWES/laravel/proyecto-1eval/public/');
-                exit;
+                miredirect('/');
             }
         } else {
 

@@ -102,9 +102,6 @@
 @section('cuerpo')
 <div class="container">
     <h1>Gestión de Tareas</h1>
-    @if($_SESSION['rol'] == 'administrador')
-    <a href="{{ url('alta') }}">Crear nueva tarea</a>
-    @endif
     <table class="tabla-tareas">
         <thead>
             <tr>

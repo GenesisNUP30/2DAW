@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Funciones;
-
+use App\Models\Sesion;
 use App\Models\Tareas;
 
 class CompletarCtrl
 {
     public function mostrarFormulario($id)
     {
-        //AL HACER $_SESSION ESTOY USANDO LA FUNCION DE LARAVEL Y ME DICE QUE $_SESSION
-        //NO EXISTE, 
-        // COMO LO HAGO, CON ESTO: 
-        //$model = Login::getInstance(); $rol = $model->getRol();
+        Sesion::getInstance();
         
         if ($_SESSION['rol'] != 'operario') {
             abort(404, 'No tiene permiso para completar esta tarea');
@@ -51,8 +48,7 @@ class CompletarCtrl
                 'anotaciones_posteriores' => $_POST['anotaciones_posteriores'],
             ];
             $modelo->completarTarea($id, $datos);
-            header('Location: /DAWES/laravel/proyecto-1eval/public/');
-            exit;
+            miredirect('/');
         }
     }
 

@@ -8,6 +8,19 @@ use App\Http\Controllers\ModificarCtrl;
 use App\Http\Controllers\LoginCtrl;
 use Illuminate\Support\Facades\Route;
 
+define('BASE_URL', '/DAWES/laravel/proyecto-1eval/public/');
+
+function miurl($ruta = '')
+{
+    return BASE_URL . $ruta;
+}
+
+function miredirect($ruta)
+{
+    header('Location: ' . miurl($ruta));
+    exit();
+}
+
 // Login de usuario
 Route::any('/login', [LoginCtrl::class, 'login']);
 Route::any('/logout', [LoginCtrl::class, 'logout']);
