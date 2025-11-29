@@ -10,11 +10,9 @@ class CompletarCtrl
 {
     public function mostrarFormulario($id)
     {
-        Sesion::getInstance();
-        
-        if ($_SESSION['rol'] != 'operario') {
-            abort(404, 'No tiene permiso para completar esta tarea');
-        }
+        $login = Sesion::getInstance();
+        $login->onlyLogged();
+        $login->onlyOperario();
 
         $modelo = new Tareas();
         $tarea = $modelo->obtenerTareaPorId($id);

@@ -2,15 +2,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuarios;
-use App\Models\Funciones;
+use App\Models\Sesion;
 
-class UsuarioCtrl
+
+class VerUsuariosCtrl
 {
     public function index()
     {
+        $login = Sesion::getInstance();
+        $login->onlyLogged();
+        $login->onlyAdministrador();
+
         $modelo = new Usuarios();
         $usuarios = $modelo->listarUsuarios();
         return view('usuarios', ['usuarios' => $usuarios]);
     }
-    
+ 
 }

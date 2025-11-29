@@ -9,6 +9,10 @@ class LoginCtrl
     public function login()
     {
         $model = Sesion::getInstance();
+
+        if($model->isLogged()) {
+            miredirect('/');
+        }
         
         if ($_POST) {
             $usuario = $_POST['usuario'];

@@ -66,14 +66,14 @@ class Sesion
     public function onlyOperario(): void
     {
         if ($this->getRol() !== 'operario') {
-            miredirect('/');
+            abort(403, 'No tienes permisos para acceder a esta funcionalidad.');
         }
     }
 
     public function onlyAdministrador(): void
     {
         if ($this->getRol() !== 'administrador') {
-            miredirect('/');
+            abort(403, 'No tienes permisos para acceder a esta funcionalidad.');
         }
     }
 
@@ -89,6 +89,6 @@ class Sesion
 
     public function getHoraLogeada(): string
     {
-        return $_SESSION['hora_logeada'];
+        return $_SESSION['hora_logado'];
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\EliminarCtrl;
 use App\Http\Controllers\InicioCtrl;
 use App\Http\Controllers\ModificarCtrl;
 use App\Http\Controllers\LoginCtrl;
+use App\Http\Controllers\VerUsuariosCtrl;
 use Illuminate\Support\Facades\Route;
 
 define('BASE_URL', '/DAWES/laravel/proyecto-1eval/public/');
@@ -42,3 +43,6 @@ Route::post('/eliminar/{id}', [EliminarCtrl::class, 'eliminar']);
 
 Route::get('/completar/{id}', [CompletarCtrl::class, 'mostrarFormulario']);
 Route::post('/completar/{id}', [CompletarCtrl::class, 'completar']);
+
+// Listar usuarios
+Route::get('/listarusuarios', [VerUsuariosCtrl::class, 'index']);

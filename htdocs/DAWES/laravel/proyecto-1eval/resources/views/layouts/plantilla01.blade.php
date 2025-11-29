@@ -25,7 +25,7 @@
         Usuario: {{ $_SESSION['usuario'] }} |
         Rol: {{ $_SESSION['rol'] }} |
         Hora login: {{ $_SESSION['hora_logado'] }} |
-        <a href="/DAWES/laravel/proyecto-1eval/public/logout" class="text-white">Cerrar sesión</a>
+        <a href="{{miurl('logout')}}" class="text-white">Cerrar sesión</a>
         @endif
       </div>
     </div>
@@ -34,13 +34,12 @@
       <!-- MENÚ LATERAL -->
       <div class="col-md-2 bg-light p-2">
         <ul class="nav flex-column">
-          <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ miurl('/') }}">Inicio</a></li>
           @if(!empty($_SESSION['rol']) && $_SESSION['rol'] == 'administrador')
-          <li class="nav-item"><a class="nav-link" href="{{ url('alta') }}">Alta de tarea</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Modificar tarea</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Eliminar tarea</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ miurl('alta') }}">Crear nueva tarea</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ miurl('listarusuarios') }}">Ver lista de usuarios</a></li>
           @elseif(!empty($_SESSION['rol']) && $_SESSION['rol'] == 'operario')
-          <li class="nav-item"><a class="nav-link" href="#">Completar tarea</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Editar mi usuario</a></li>
           @endif
         </ul>
       </div>

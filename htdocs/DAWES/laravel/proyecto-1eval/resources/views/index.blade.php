@@ -129,11 +129,11 @@
                 <td>{{ $tarea['fecha_realizacion'] }}</td>
                 <td>
                     @if($_SESSION['rol'] == 'administrador')
-                    <button><a href="{!! url('modificar/' . $tarea['id']) !!}">Modificar</a></button>
-                    <button><a href="{!! url('eliminar/' . $tarea['id']) !!}">Eliminar</a></button>
+                    <button><a href="{!! miurl('modificar/' . $tarea['id']) !!}">Modificar</a></button>
+                    <button><a href="{!! miurl('eliminar/' . $tarea['id']) !!}">Eliminar</a></button>
                     @endif
                     @if($_SESSION['rol'] == 'operario')
-                    <button><a href="{!! url('completar/' . $tarea['id']) !!}">Completar</a></button>
+                    <button><a href="{!! miurl('completar/' . $tarea['id']) !!}">Completar</a></button>
                     @endif
                 </td>
             </tr>

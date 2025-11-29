@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Funciones;
-
+use App\Models\Sesion;
 use App\Models\Tareas;
+use Session;
 
 class ModificarCtrl
 {
     public function mostrarFormulario($id)
     {
+        $login = Sesion::getInstance();
+        $login->onlyLogged();
+        $login->onlyAdministrador();
+        
+        
         $modelo = new Tareas();
         $tarea = $modelo->obtenerTareaPorId($id);
         if (!$tarea) {

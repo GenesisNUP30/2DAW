@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Funciones;
 use App\Models\Tareas;
+use App\Models\Sesion;
 
 class AltaCtrl
 {
@@ -12,6 +13,11 @@ class AltaCtrl
 
     public function alta()
     {
+        $login = Sesion::getInstance();
+        $login->onlyLogged();
+        $login->onlyAdministrador();
+
+
         if ($_POST) {
             Funciones::$errores = [];
             // Tenemos que filtrar
