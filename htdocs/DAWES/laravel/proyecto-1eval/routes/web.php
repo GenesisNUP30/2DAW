@@ -1,12 +1,15 @@
 <?php
 
 use App\Http\Controllers\AltaCtrl;
+use App\Http\Controllers\AñadirUsuarioCtrl;
 use App\Http\Controllers\CompletarCtrl;
 use App\Http\Controllers\EliminarCtrl;
 use App\Http\Controllers\InicioCtrl;
 use App\Http\Controllers\ModificarCtrl;
 use App\Http\Controllers\LoginCtrl;
 use App\Http\Controllers\VerUsuariosCtrl;
+use App\Http\Controllers\EditarUsuarioCtrl;
+use App\Http\Controllers\EliminarUsuarioCtrl;
 use Illuminate\Support\Facades\Route;
 
 define('BASE_URL', '/DAWES/laravel/proyecto-1eval/public/');
@@ -46,3 +49,13 @@ Route::post('/completar/{id}', [CompletarCtrl::class, 'completar']);
 
 // Listar usuarios
 Route::get('/listarusuarios', [VerUsuariosCtrl::class, 'index']);
+Route::get('/añadirusuario', [AñadirUsuarioCtrl::class, 'añadirUsuario']);
+Route::post('/añadirusuario', [AñadirUsuarioCtrl::class, 'añadirUsuario']);
+
+// Modificar usuario
+Route::get('/editarusuario/{id}', [EditarUsuarioCtrl::class, 'mostrarFormularioUsuario']);
+Route::post('/editarusuario/{id}', [EditarUsuarioCtrl::class, 'actualizar']);
+
+// Eliminar usuario
+Route::get('/eliminarusuario/{id}', [EliminarUsuarioCtrl::class, 'confirmar']);
+Route::post('/eliminarusuario/{id}', [EliminarUsuarioCtrl::class, 'eliminar']);

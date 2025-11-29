@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Funciones;
 use App\Models\Sesion;
 use App\Models\Tareas;
-use Session;
 
 class ModificarCtrl
 {
@@ -15,9 +14,9 @@ class ModificarCtrl
         $login->onlyLogged();
         $login->onlyAdministrador();
         
-        
         $modelo = new Tareas();
         $tarea = $modelo->obtenerTareaPorId($id);
+        
         if (!$tarea) {
             abort(404, 'Tarea no encontrada');
         }

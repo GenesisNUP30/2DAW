@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+use App\Models\Usuarios;
+
 class Funciones
 {
     public static function validarNif($dni)
@@ -159,6 +161,21 @@ class Funciones
             echo "<option value=\"$codigo\" $selected>" . htmlspecialchars($nombre) . "</option>";
         }
     }
+
+    public static function comprobarPassword($password_antigua, $password_nueva, $password_nueva2)
+    {
+        if ($password_antigua === $password_nueva) {
+            return "La contraseña antigua no puede ser la misma que la nueva";
+        }
+
+        if ($password_nueva !== $password_nueva2) {
+            return "Las contraseñas no coinciden";
+        }
+
+        return true;
+    }
+
+    
 
     public static $errores = [];
 
