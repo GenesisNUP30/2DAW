@@ -36,6 +36,7 @@ class Sesion
         $db = DB::getInstance();
         $user = $db->LeeUnRegistro('usuarios', 'usuario = "' . $usuario . '" AND password = "' . $password . '"');
         if ($user) {
+            $_SESSION['id'] = $user['id'];
             $_SESSION['usuario'] = $usuario;
             $_SESSION['rol'] = $user['rol'];
             $_SESSION['logado'] = true;

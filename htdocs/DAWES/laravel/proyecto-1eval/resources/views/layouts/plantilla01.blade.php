@@ -39,7 +39,7 @@
           <li class="nav-item"><a class="nav-link" href="{{ miurl('alta') }}">Crear nueva tarea</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ miurl('listarusuarios') }}">Ver lista de usuarios</a></li>
           @elseif(!empty($_SESSION['rol']) && $_SESSION['rol'] == 'operario')
-          <li class="nav-item"><a class="nav-link" href="#">Editar mi usuario</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ miurl('editarusuario/' . $_SESSION['id']) }}">Editar mi usuario</a></li>
           @endif
         </ul>
       </div>

@@ -15,7 +15,7 @@ class VerUsuariosCtrl
 
         $modelo = new Usuarios();
         $usuarios = $modelo->listarUsuarios();
-        return view('usuarios', ['usuarios' => $usuarios]);
+        return view('listarusuarios', ['usuarios' => $usuarios]);
     }
  
 }

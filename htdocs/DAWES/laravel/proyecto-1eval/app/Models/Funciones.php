@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use App\Models\Usuarios;
@@ -164,6 +165,11 @@ class Funciones
 
     public static function comprobarPassword($password_antigua, $password_nueva, $password_nueva2)
     {
+        // Si el usuario no quiere cambiar la contraseña, se permite
+        if ($password_nueva === "" && $password_nueva2 === "") {
+            return true;
+        }
+
         if ($password_antigua === $password_nueva) {
             return "La contraseña antigua no puede ser la misma que la nueva";
         }
@@ -175,7 +181,7 @@ class Funciones
         return true;
     }
 
-    
+
 
     public static $errores = [];
 

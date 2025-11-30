@@ -1,6 +1,6 @@
 @extends('layouts.plantilla01')
 
-@section('titulo', 'Eliminar Tarea')
+@section('titulo', 'Eliminar Usuario')
 
 @section('cuerpo')
    <h1>Eliminar Tarea</h1>
