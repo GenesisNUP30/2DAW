@@ -1,17 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <title> @yield('titulo') </title>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <title>@yield('titulo')</title>
+
+  <!-- Estilos generales -->
   <style>
     body {
         background: #f4f5f7;
@@ -55,59 +59,82 @@
         text-align: center;
     }
   </style>
+
   @yield('estilos')
 </head>
 
 <body>
-  <div class="container-fluid">
-    <!-- ENCABEZADO -->
-    <div class="row bg-primary text-white p-2">
-      <div class="col-md-6">
-        <h4>Mi Aplicación de Tareas</h4>
-      </div>
-      <div class="col-md-6 text-right">
-        @if(!empty($_SESSION['logado']))
-        Usuario: {{ $_SESSION['usuario'] }} |
-        Rol: {{ $_SESSION['rol'] }} |
-        Hora login: {{ $_SESSION['hora_logado'] }} |
-        <a href="{{miurl('logout')}}" class="text-white">Cerrar sesión</a>
-        @endif
-      </div>
-    </div>
 
-    <div class="row mt-2">
+  <!-- HEADER -->
+  <div class="header-app d-flex justify-content-between align-items-center">
+      <h4 class="m-0">
+        <i class="fas fa-clipboard-check"></i> Gestor de tareas
+      </h4>
+
+      @if(!empty($_SESSION['logado']))
+      <div>
+        <i class="fas fa-user"></i> {{ $_SESSION['usuario'] }} |
+        <i class="fas fa-id-badge"></i> {{ $_SESSION['rol'] }} |
+        <i class="far fa-clock"></i> {{ $_SESSION['hora_logado'] }} |
+        <a href="{{ miurl('logout') }}" class="text-white text-decoration-none fw-bold">
+            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+        </a>
+      </div>
+      @endif
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+
       <!-- MENÚ LATERAL -->
-      <div class="col-md-2 bg-light p-2">
+      <div class="col-md-2 sidebar">
         <ul class="nav flex-column">
-          <li class="nav-item"><a class="nav-link" href="{{ miurl('/') }}">Inicio</a></li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ miurl('/') }}">
+              <i class="fas fa-home"></i> Inicio
+            </a>
+          </li>
+
           @if(!empty($_SESSION['rol']) && $_SESSION['rol'] == 'administrador')
-          <li class="nav-item"><a class="nav-link" href="{{ miurl('alta') }}">Crear nueva tarea</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ miurl('listarusuarios') }}">Ver lista de usuarios</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ miurl('alta') }}">
+              <i class="fas fa-plus-circle"></i> Crear nueva tarea
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ miurl('listarusuarios') }}">
+              <i class="fas fa-users"></i> Ver lista de usuarios
+            </a>
+          </li>
+
           @elseif(!empty($_SESSION['rol']) && $_SESSION['rol'] == 'operario')
-          <li class="nav-item"><a class="nav-link" href="{{ miurl('editarusuario/' . $_SESSION['id']) }}">Editar mi usuario</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ miurl('editarusuario/' . $_SESSION['id']) }}">
+              <i class="fas fa-user-edit"></i> Editar mi usuario
+            </a>
+          </li>
           @endif
+
         </ul>
       </div>
 
-      <!-- CUERPO PRINCIPAL -->
-      <div class="col-md-10">
+      <!-- CONTENIDO PRINCIPAL -->
+      <div class="col-md-10 p-4">
         @yield('cuerpo')
       </div>
-    </div>
 
-    <!-- PIE DE PÁGINA -->
-    <div class="row bg-secondary text-white text-center mt-3 p-2">
-      <div class="col-12">
-        &copy; 2025 Mi Aplicación de Tareas
-      </div>
     </div>
   </div>
-  <!-- Scripts de Bootstrap -->
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <!-- FOOTER -->
+  <div class="footer-app">
+    &copy; 2025 Mi Aplicación de Tareas
+  </div>
+
+  <!-- Scripts Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
