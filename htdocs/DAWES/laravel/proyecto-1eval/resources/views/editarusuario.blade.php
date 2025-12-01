@@ -32,13 +32,13 @@
         {!! \App\Models\Funciones::verErrores('password_nueva2') !!}
     </div>
 
-    @if($_SESSION['rol'] == 'administrador')
+    @if($rol_logueado == 'administrador')
     <div class="form-group">
         <label>Rol</label>
         <select name="rol_nuevo" class="form-control">
             <option value="">Seleccione un rol</option>
-            <option value="administrador" {{ $rol=='administrador'?'selected':'' }}>Administrador</option>
-            <option value="operario" {{ $rol=='operario'?'selected':'' }}>Operario</option>
+            <option value="administrador" {{ $rol_nuevo=='administrador'?'selected':'' }}>Administrador</option>
+            <option value="operario" {{ $rol_nuevo=='operario'?'selected':'' }}>Operario</option>
         </select>
         {!! \App\Models\Funciones::verErrores('rol_nuevo') !!}
     </div>

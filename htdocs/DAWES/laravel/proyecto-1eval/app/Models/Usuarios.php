@@ -24,7 +24,7 @@ class Usuarios
         }
         return $usuarios;
     }
-    
+
     public function registraUsuario(array $datos)
     {
         $sql = "INSERT INTO usuarios (
@@ -45,6 +45,14 @@ class Usuarios
         $sql = "SELECT * FROM usuarios WHERE id = '{$this->bd->escape($id)}'";
         $resultado = $this->bd->query($sql);
         return $this->bd->LeeRegistro($resultado);
+    }
+
+    public function usuarioExiste($usuario)
+    {
+        $usuario = $this->bd->escape($usuario);
+        $sql = "SELECT id FROM usuarios WHERE usuario = '$usuario'";
+        $resultado = $this->bd->query($sql);
+        return $this->bd->LeeRegistro($resultado) !== null;
     }
 
     public function actualizarUsuario($id, array $datos)

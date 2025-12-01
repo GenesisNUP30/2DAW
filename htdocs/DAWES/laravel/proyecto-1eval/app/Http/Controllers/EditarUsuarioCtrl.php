@@ -20,10 +20,14 @@ class EditarUsuarioCtrl
             abort(404, 'Usuario no encontrado');
         }
 
+        // Obtener el rol del usuario logueado
+        $rolLogueado = $login->getRol();
+
         return view('editarusuario', [
             'id' => $usuario['id'],
-            'usuario_nuevo' => $usuario['usuario'], 
-            'rol' => $usuario['rol']
+            'usuario_nuevo' => $usuario['usuario'],
+            'rol_nuevo' => $usuario['rol'],
+            'rol_logueado' => $rolLogueado
         ]);
     }
 
@@ -35,10 +39,16 @@ class EditarUsuarioCtrl
             $usuario = $modelo->obtenerUsuarioPorId($id);
 
             Funciones::$errores = [];
-            $this->filtraDatos($usuario['password']);
+            $this->filtraDatos($usuario['password'], $usuario['usuario']);
+
+            $login = Sesion::getInstance();
 
             if (!empty(Funciones::$errores)) {
-                return view('editarusuario', array_merge($_POST, ['id' => $id]));
+                return view('editarusuario', array_merge($_POST, [
+                    'id' => $id,
+                    'rol_logueado' => $login->getRol(),
+                    'rol_nuevo' => $_POST['rol_nuevo'] ?? $usuario['rol']
+                ]));
             }
 
             // Si NO cambia la contraseña, se mantiene la antigua
@@ -54,16 +64,23 @@ class EditarUsuarioCtrl
             ];
 
             $modelo->actualizarUsuario($id, $datosActualizados);
-            miredirect('/listarusuarios');
+            miredirect('listarusuarios');
         }
     }
 
-    public function filtraDatos($password_actual)
+    public function filtraDatos($password_actual, $usuario_original)
     {
         extract($_POST);
 
         if ($usuario_nuevo === "") {
             Funciones::$errores['usuario_nuevo'] = "Debe introducir el nombre de usuario";
+        } else {
+            if ($usuario_nuevo !== $usuario_original) {
+                $modelo = new Usuarios();
+                if ($modelo->usuarioExiste($usuario_nuevo)) {
+                    Funciones::$errores['usuario_nuevo'] = "El nombre de usuario ya existe";
+                }
+            }
         }
 
         if ($password_antigua === "") {
