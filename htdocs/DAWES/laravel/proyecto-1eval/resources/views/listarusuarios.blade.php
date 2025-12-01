@@ -4,7 +4,7 @@
 
 @section('estilos')
 <style>
-        .tabla-usuarios {
+    .tabla-usuarios {
         width: 100%;
         border-collapse: collapse;
         margin: 20px 0;
@@ -97,12 +97,41 @@
         transform: translateY(-1px);
         box-shadow: 0 4px 8px rgba(245, 101, 101, 0.3);
     }
-    </style>
+
+    /* botón añadir usuario */
+    .acciones-superiores {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 15px;
+    }
+
+    .btn-add {
+        background: linear-gradient(135deg, #4299e1, #3182ce);
+        color: white;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 13px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+    .btn-add:hover {
+        background: linear-gradient(135deg, #3182ce, #2b6cb0);
+        box-shadow: 0 4px 8px rgba(66, 153, 225, 0.3);
+        transform: translateY(-1px);
+    }
+</style>
 @endsection('estilos')
 
 @section('cuerpo')
 <div class="container">
     <h1>Lista de usuarios</h1>
+
+    <div class="acciones-superiores">
+        <a href="{{ miurl('añadirusuario') }}" class="btn-add">➕ Añadir usuario</a>
+    </div>
+
     <table class="tabla-usuarios">
         <thead>
             <tr>

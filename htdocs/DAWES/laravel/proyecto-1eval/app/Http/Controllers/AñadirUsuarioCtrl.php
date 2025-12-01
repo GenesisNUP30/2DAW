@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Usuarios;
@@ -19,14 +20,12 @@ class AñadirUsuarioCtrl
             $this->filtraDatos();
             if (!empty(Funciones::$errores)) {
                 return view('añadirusuario', $_POST);
-            }
-            else {
+            } else {
                 $modelo = new Usuarios();
                 $modelo->registraUsuario($_POST);
-                miredirect('/');
+                miredirect('listarusuarios');
             }
-        }
-        else {
+        } else {
             $datos = [
                 'usuario' => '',
                 'password' => '',
@@ -40,14 +39,24 @@ class AñadirUsuarioCtrl
     {
         extract($_POST);
 
+        // USUARIO
         if ($usuario === "") {
             Funciones::$errores['usuario'] = "Debe introducir el nombre de usuario";
         }
 
+        // PASSWORD
         if ($password === "") {
             Funciones::$errores['password'] = "Debe introducir la contraseña";
         }
 
+        // CONFIRMAR PASSWORD
+        if ($password2 === "") {
+            Funciones::$errores['password2'] = "Debe confirmar la contraseña";
+        } elseif ($password !== $password2) {
+            Funciones::$errores['password2'] = "Las contraseñas no coinciden";
+        }
+
+        // ROL
         if ($rol === "") {
             Funciones::$errores['rol'] = "Debe seleccionar el rol";
         }

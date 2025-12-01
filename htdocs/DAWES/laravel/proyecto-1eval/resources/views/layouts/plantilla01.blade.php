@@ -9,7 +9,52 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <title> @yield('titulo') </title>
+  <style>
+    body {
+        background: #f4f5f7;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    /* Header */
+    .header-app {
+        background: #2c3e50;
+        color: white;
+        padding: 12px 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    /* Menú lateral */
+    .sidebar {
+        background: #ffffff;
+        min-height: 100vh;
+        border-right: 1px solid #e0e0e0;
+        padding-top: 20px;
+    }
+
+    .sidebar a {
+        color: #2c3e50;
+        font-weight: 500;
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+    .sidebar a:hover {
+        background: #eef1f5;
+    }
+
+    /* Footer */
+    .footer-app {
+        background: #2c3e50;
+        color: white;
+        padding: 15px;
+        margin-top: 30px;
+        text-align: center;
+    }
+  </style>
   @yield('estilos')
 </head>
 
