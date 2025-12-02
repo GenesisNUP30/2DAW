@@ -6,8 +6,28 @@ use App\Models\Funciones;
 use App\Models\Sesion;
 use App\Models\Tareas;
 
+/**
+ * Controlador para modificar tareas existentes.
+ *
+ * Permite mostrar el formulario de modificación de una tarea y
+ * actualizar los datos en la base de datos, con validación
+ * de todos los campos requeridos.
+ *
+ * @package App\Http\Controllers
+ */
 class ModificarCtrl
 {
+    /**
+     * Muestra el formulario de modificación de una tarea.
+     *
+     * Verifica que el usuario esté logueado y sea administrador.
+     * Obtiene los datos de la tarea por su ID y los pasa a la vista.
+     * Si la tarea no existe, retorna un error 404.
+     *
+     * @param int $id ID de la tarea a modificar
+     * @return \Illuminate\View\View Retorna la vista 'modificar' con los datos de la tarea
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException Si la tarea no existe
+     */
     public function mostrarFormulario($id)
     {
         $login = Sesion::getInstance();
@@ -24,6 +44,17 @@ class ModificarCtrl
         return view('modificar', $tarea);
     }
 
+    /**
+     * Actualiza los datos de una tarea existente.
+     *
+     * Verifica la existencia de la tarea, valida los datos del formulario
+     * y, si todo es correcto, actualiza la tarea en la base de datos.
+     * Si hay errores, vuelve a mostrar la vista con los datos introducidos.
+     *
+     * @param int $id ID de la tarea a actualizar
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse Retorna la vista con errores o redirige a la página principal
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException Si la tarea no existe
+     */
     public function actualizar($id)
     {
         if ($_POST) {
@@ -38,29 +69,38 @@ class ModificarCtrl
             $this->filtraDatos();
 
             if (!empty(Funciones::$errores)) {
+                // Si hay errores, mostrar vista con datos del formulario
                 return view('modificar', array_merge($_POST, ['id' => $id]));
             } else {
+                // Si no hay errores, actualizar tarea y redirigir
                 $modelo->actualizarTarea($id, $_POST);
                 miredirect('/');
             }
         }
     }
 
+    /**
+     * Filtra y valida los datos del formulario de modificación de tarea.
+     *
+     * Valida los campos obligatorios: NIF/CIF, persona de contacto,
+     * teléfono, correo, descripción, provincia y fecha de realización.
+     * Almacena los errores en Funciones::$errores con clave del campo
+     * y mensaje de error como valor.
+     *
+     * @return void
+     */
     private function filtraDatos()
     {
-        // Inicializamos el array de errores
         Funciones::$errores = [];
-        extract($_POST);
 
-        // // Tomamos los datos del POST, usando null coalescing para que siempre existan
-        $nif_cif            = $_POST['nif_cif'] ?? '';
-        $persona_contacto    = $_POST['persona_contacto'] ?? '';
-        $telefono           = $_POST['telefono'] ?? '';
-        $descripcion        = $_POST['descripcion'] ?? '';
-        $correo             = $_POST['correo'] ?? '';
-        $codigo_postal      = $_POST['codigo_postal'] ?? '';
-        $provincia          = $_POST['provincia'] ?? '';
-        $fecha_realizacion  = $_POST['fecha_realizacion'] ?? '';
+        $nif_cif           = $_POST['nif_cif'] ?? '';
+        $persona_contacto  = $_POST['persona_contacto'] ?? '';
+        $telefono          = $_POST['telefono'] ?? '';
+        $descripcion       = $_POST['descripcion'] ?? '';
+        $correo            = $_POST['correo'] ?? '';
+        $codigo_postal     = $_POST['codigo_postal'] ?? '';
+        $provincia         = $_POST['provincia'] ?? '';
+        $fecha_realizacion = $_POST['fecha_realizacion'] ?? '';
 
         if ($nif_cif === "") {
             Funciones::$errores['nif_cif'] = "Debe introducir el NIF/CIF de la persona encargada de la tarea";
@@ -105,10 +145,8 @@ class ModificarCtrl
         $fechaActual = date('Y-m-d');
         if ($fecha_realizacion == "") {
             Funciones::$errores['fecha_realizacion'] = "Debe introducir la fecha de realización de la tarea";
-        } else {
-            if ($fecha_realizacion <= $fechaActual) {
-                Funciones::$errores['fecha_realizacion'] = "La fecha de realización debe ser posterior a la fecha actual";
-            }
+        } else if ($fecha_realizacion <= $fechaActual) {
+            Funciones::$errores['fecha_realizacion'] = "La fecha de realización debe ser posterior a la fecha actual";
         }
     }
 }

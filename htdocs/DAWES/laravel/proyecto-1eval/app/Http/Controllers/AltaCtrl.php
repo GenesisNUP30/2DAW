@@ -6,32 +6,54 @@ use App\Models\Funciones;
 use App\Models\Tareas;
 use App\Models\Sesion;
 
+/**
+ * Controlador para dar de alta nuevas tareas en el sistema.
+ *
+ * Esta clase se encarga de gestionar la creación de tareas, 
+ * validar los datos del formulario y redirigir al usuario
+ * según el resultado de la operación.
+ *
+ * Nota: Es necesario desactivar CSRF en Laravel para permitir 
+ * procesar el formulario correctamente.
+ *
+ * @package App\Http\Controllers
+ */
 class AltaCtrl
 {
-    /* Recordad que hay que desactivar CSRF para permitir procesar el formulario en laravel
-        sin problemas */
-
+    /**
+     * Método principal para gestionar la creación de tareas.
+     *
+     * Si se recibe un POST, filtra y valida los datos. En caso de errores,
+     * devuelve la vista 'alta' con los datos introducidos y mensajes de error.
+     * Si no hay errores, guarda la tarea en la base de datos y redirige a la página principal.
+     *
+     * Si no se recibe un POST, carga la vista 'alta' con campos vacíos por defecto.
+     *
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse Retorna la vista de alta o redirige al listado.
+     */
     public function alta()
     {
+        // Obtiene la instancia de sesión
         $login = Sesion::getInstance();
-        $login->onlyLogged();
-        $login->onlyAdministrador();
-
+        $login->onlyLogged();        // Permite solo usuarios logueados
+        $login->onlyAdministrador(); // Permite solo administradores
 
         if ($_POST) {
             Funciones::$errores = [];
-            // Tenemos que filtrar
+            // Filtra y valida los datos del formulario
             $this->filtraDatos();
+
             if (!empty(Funciones::$errores)) {
+                // Si hay errores, muestra la vista con los datos del formulario
                 return view('alta', $_POST);
             } else {
-                // Procedemos a guardar los datos y mostrar la página que proceda
+                // Si no hay errores, registra la tarea y redirige
                 $model = new Tareas();
                 $model->registraAlta($_POST);
                 miredirect('/');
             }
         } else {
-
+            // Datos iniciales vacíos para la vista
             $datos = [
                 'nif_cif' => '',
                 'persona_contacto' => '',
@@ -47,17 +69,29 @@ class AltaCtrl
                 'fecha_realizacion' => "",
                 'anotaciones_anteriores' => "",
                 'anotaciones_posteriores' => "",
-
             ];
             return view('alta', $datos);
         }
     }
 
+    /**
+     * Filtra y valida los datos del formulario de alta de tareas.
+     *
+     * Verifica que los campos obligatorios no estén vacíos,
+     * valida NIF/CIF, correo electrónico y teléfono, y
+     * asegura que la fecha de realización sea posterior a la actual.
+     *
+     * Los errores se almacenan en Funciones::$errores con el
+     * nombre del campo como clave y el mensaje de error como valor.
+     *
+     * @return void
+     */
     private function filtraDatos()
     {
-        // Inicializamos el array de errores
+        // Inicializa array de errores
         Funciones::$errores = [];
 
+        // Recupera los datos del POST
         $nif_cif = $_POST['nif_cif'] ?? '';
         $persona_contacto = $_POST['persona_contacto'] ?? '';
         $telefono = $_POST['telefono'] ?? '';
@@ -67,6 +101,7 @@ class AltaCtrl
         $provincia = $_POST['provincia'] ?? '';
         $fecha_realizacion = $_POST['fecha_realizacion'] ?? '';
 
+        // Validaciones por campo
         if ($nif_cif == "") {
             Funciones::$errores['nif_cif'] = "Debe introducir el NIF/CIF de la persona encargada de la tarea";
         } else {
@@ -116,5 +151,4 @@ class AltaCtrl
             }
         }
     }
-
 }

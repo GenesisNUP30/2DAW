@@ -2,21 +2,35 @@
 
 namespace App\Models;
 
-use App\Models\Usuarios;
-
+/**
+ * Clase Funciones
+ *
+ * Contiene funciones utilitarias y validaciones comunes para el sistema de gestión de tareas.
+ * Incluye validaciones de NIF/CIF, teléfonos, contraseñas, formato de fechas,
+ * manejo de errores y lista de provincias españolas.
+ *
+ * @package App\Models
+ */
 class Funciones
 {
+    /**
+     * Validar un NIF o CIF.
+     *
+     * Comprueba si el valor introducido es un NIF o CIF válido. 
+     * Para NIF verifica la letra final según el algoritmo español. 
+     * Para CIF calcula el dígito/letra de control.
+     *
+     * @param string $dni El NIF o CIF a validar.
+     * @return true|string Devuelve true si es válido, de lo contrario devuelve un mensaje de error.
+     */
     public static function validarNif($dni)
     {
         $dni = strtoupper($dni); // Convertir a mayúsculas
-
-        // Comprueba que el NIF tenga 9 caracteres (8 numeros y 1 letra)
 
         if (!preg_match('/^[A-Z0-9]{9}$/', $dni)) {
             return 'El NIF/CIF debe tener 9 caracteres';
         }
 
-        // Comprueba que los primeros 8 caracteres del NIF sean números y el ultimo 1 letra mayúscula
         $letrasNif = 'TRWAGMYFPDXBNJZSQVHLCKE';
 
         if (preg_match('/^[0-9]{8}[A-Z]$/', $dni)) {
@@ -28,47 +42,31 @@ class Funciones
             return true;
         }
 
-        // Comprueba que el CIF es válido (letra + 7 números + letra/número de control)
         if (preg_match('/^[ABCDEFGHJNPQRSUVW][0-9]{7}[A-Z0-9]$/', $dni)) {
             $sumaPar = 0;
             $sumaImpar = 0;
 
-            // Trabajamos con el grupo de 7 números
-            // Sumamos los números que ocupan las posiciones pares
             for ($i = 1; $i <= 6; $i += 2) {
                 $sumaPar += (int) $dni[$i];
             }
 
-            // Multiplicmos por 2 los números que ocupan las posiciones impares
             for ($i = 0; $i <= 6; $i += 2) {
                 $doble = (int) $dni[$i] * 2;
-                //Si el resultado es > 9, se resta 9 (equivale a sumar los dígitos)
                 $sumaImpar += $doble > 9 ? $doble - 9 : $doble;
             }
 
-            // Sumamos los 2 resultados anteriores
             $sumaTotal = $sumaPar + $sumaImpar;
-
-            //Obtenemos el último número de la suma con el resto de la división entre 10,
-            // y le restamos 10 para saber cuanto le queda para llegar a la próxima decena
-            // Por último con %10 nos aseguramos que el resultado sea un número entre 0 y 9
             $control = (10 - ($sumaTotal % 10)) % 10;
-
-            $letrasControl = "JABCDEFGHI"; // Las letras del control
-
-            //Obtenemos el control esperado que se encuentra en la posición 8 del CIF
+            $letrasControl = "JABCDEFGHI";
             $controlEsperado = $dni[8];
 
-            // Con ctype_alpha averiguamos si el control esperado es una letra (true) o un número (false)
             if (ctype_alpha($controlEsperado)) {
-                // Si es una letra, comparamos con la letra correspondiente en la posición de letrasControl
                 if ($controlEsperado === $letrasControl[$control]) {
                     return true;
                 } else {
                     return "La letra de control del CIF no es correcto.";
                 }
             } else {
-                //Si es un número, pasamos el número a string para compararlo con el control esperado que es string
                 if ((string)$control === $controlEsperado) {
                     return true;
                 } else {
@@ -76,19 +74,25 @@ class Funciones
                 }
             }
         }
-        // Si no es NIF ni CIF válido, devolver false
+
         return "El NIF/CIF no es válido.";
     }
 
-
+    /**
+     * Valida un número de teléfono.
+     *
+     * Permite caracteres: +, (), números, espacios, guiones y puntos.
+     * Además comprueba que la longitud en dígitos esté entre 7 y 15.
+     *
+     * @param string $telefono Teléfono a validar.
+     * @return true|string True si válido, o mensaje de error.
+     */
     public static function telefonoValido($telefono)
     {
-        // Permitir solo: +, (), números, espacios, guiones y puntos
         if (!preg_match("/^[+()0-9\s\-.]+$/", $telefono)) {
             return "El teléfono no es válido, solo se pemiten números, espacios, guiones y +.";
         }
 
-        // Extraer solo los dígitos y comprobar que tengan al menos 7 y no más de 15 dígitos
         $soloDigitos = preg_replace('/[^0-9]/', '', $telefono);
         $long = strlen($soloDigitos);
         if ($long < 7) {
@@ -100,6 +104,11 @@ class Funciones
         return true;
     }
 
+    /**
+     * Lista de provincias españolas.
+     *
+     * @var array
+     */
     public static $provincias = [
         "01" => "Araba/Álava",
         "02" => "Albacete",
@@ -155,6 +164,12 @@ class Funciones
         "52" => "Melilla",
     ];
 
+    /**
+     * Genera el HTML de las opciones de provincias en un select.
+     *
+     * @param string $provinciaSeleccionada Código de la provincia que se desea marcar como seleccionada.
+     * @return void
+     */
     public static function mostrarProvincias($provinciaSeleccionada = "")
     {
         foreach (self::$provincias as $codigo => $nombre) {
@@ -163,9 +178,16 @@ class Funciones
         }
     }
 
+    /**
+     * Comprueba que las contraseñas cumplan los criterios.
+     *
+     * @param string $password_antigua Contraseña actual.
+     * @param string $password_nueva Nueva contraseña.
+     * @param string $password_nueva2 Repetición de la nueva contraseña.
+     * @return true|string True si válido, o mensaje de error.
+     */
     public static function comprobarPassword($password_antigua, $password_nueva, $password_nueva2)
     {
-        // Si el usuario no quiere cambiar la contraseña, se permite
         if ($password_nueva === "" && $password_nueva2 === "") {
             return true;
         }
@@ -181,6 +203,12 @@ class Funciones
         return true;
     }
 
+    /**
+     * Cambia el formato de fecha de YYYY-MM-DD a DD/MM/YYYY.
+     *
+     * @param string $fecha Fecha en formato YYYY-MM-DD.
+     * @return string Fecha en formato DD/MM/YYYY.
+     */
     public static function cambiarFormatoFecha($fecha)
     {
         if (!$fecha) return '';
@@ -189,20 +217,35 @@ class Funciones
         return $partes[2] . '/' . $partes[1] . '/' . $partes[0];
     }
 
+    /**
+     * Formatea fecha y hora de YYYY-MM-DD HH:MM:SS a DD/MM/YYYY HH:MM:SS.
+     *
+     * @param string $fechaHora Fecha y hora en formato YYYY-MM-DD HH:MM:SS.
+     * @return string Fecha y hora en formato DD/MM/YYYY HH:MM:SS.
+     */
     public static function formatearFechaHora($fechaHora)
     {
         if (!$fechaHora) return '';
-        // Separamos fecha y hora
-        $fecha = substr($fechaHora, 0, 10); 
-        $hora = substr($fechaHora, 11);     
+        $fecha = substr($fechaHora, 0, 10);
+        $hora = substr($fechaHora, 11);
         $partes = explode('-', $fecha);
         if (count($partes) !== 3) return $fechaHora;
         return $partes[2] . '/' . $partes[1] . '/' . $partes[0] . ' ' . $hora;
     }
 
-
+    /**
+     * Array que almacena errores de validación.
+     *
+     * @var array
+     */
     public static $errores = [];
 
+    /**
+     * Muestra un error en HTML para un campo específico.
+     *
+     * @param string $campo Nombre del campo a mostrar el error.
+     * @return string HTML con el mensaje de error o vacío si no hay error.
+     */
     public static function verErrores($campo)
     {
         if (isset(self::$errores[$campo])) {
