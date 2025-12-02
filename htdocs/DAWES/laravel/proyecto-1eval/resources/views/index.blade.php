@@ -132,7 +132,7 @@
                 <td>{{ $tarea['descripcion'] }}</td>
                 <td>{{ $tarea['estado'] }}</td>
                 <td>{{ $tarea['operario_encargado'] }}</td>
-                <td>{{ $tarea['fecha_realizacion'] }}</td>
+                <td>{{ \App\Models\Funciones::cambiarFormatoFecha($tarea['fecha_realizacion']) }}</td>
                 <td>
                     @if($_SESSION['rol'] == 'administrador')
                     <a href="{!! miurl('tarea/' . $tarea['id']) !!}" class="btn btn-detalle">

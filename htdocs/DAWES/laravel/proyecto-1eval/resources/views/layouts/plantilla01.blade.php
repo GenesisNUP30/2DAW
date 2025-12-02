@@ -7,56 +7,56 @@
 
   <!-- Bootstrap 5 -->
   <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
   <!-- Font Awesome -->
   <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <title>@yield('titulo')</title>
 
   <!-- Estilos generales -->
   <style>
     body {
-        background: #f4f5f7;
-        font-family: "Segoe UI", sans-serif;
+      background: #f4f5f7;
+      font-family: "Segoe UI", sans-serif;
     }
 
     /* Header */
     .header-app {
-        background: #2c3e50;
-        color: white;
-        padding: 12px 20px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      background: #2c3e50;
+      color: white;
+      padding: 12px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     /* Menú lateral */
     .sidebar {
-        background: #ffffff;
-        min-height: 100vh;
-        border-right: 1px solid #e0e0e0;
-        padding-top: 20px;
+      background: #ffffff;
+      min-height: 100vh;
+      border-right: 1px solid #e0e0e0;
+      padding-top: 20px;
     }
 
     .sidebar a {
-        color: #2c3e50;
-        font-weight: 500;
-        padding: 8px 12px;
-        border-radius: 6px;
-        transition: all 0.2s ease;
+      color: #2c3e50;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
     }
 
     .sidebar a:hover {
-        background: #eef1f5;
+      background: #eef1f5;
     }
 
     /* Footer */
     .footer-app {
-        background: #2c3e50;
-        color: white;
-        padding: 15px;
-        margin-top: 30px;
-        text-align: center;
+      background: #2c3e50;
+      color: white;
+      padding: 15px;
+      margin-top: 30px;
+      text-align: center;
     }
   </style>
 
@@ -67,20 +67,20 @@
 
   <!-- HEADER -->
   <div class="header-app d-flex justify-content-between align-items-center">
-      <h4 class="m-0">
-        <i class="fas fa-clipboard-check"></i> Gestor de tareas
-      </h4>
+    <h4 class="m-0">
+      <i class="fas fa-clipboard-check"></i> Gestor de tareas
+    </h4>
 
-      @if(!empty($_SESSION['logado']))
-      <div>
-        <i class="fas fa-user"></i> {{ $_SESSION['usuario'] }} |
-        <i class="fas fa-id-badge"></i> {{ $_SESSION['rol'] }} |
-        <i class="far fa-clock"></i> {{ $_SESSION['hora_logado'] }} |
-        <a href="{{ miurl('logout') }}" class="text-white text-decoration-none fw-bold">
-            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-        </a>
-      </div>
-      @endif
+    @if(!empty($_SESSION['logado']))
+    <div>
+      <i class="fas fa-user"></i> {{ $_SESSION['usuario'] }} |
+      <i class="fas fa-id-badge"></i> {{ $_SESSION['rol'] }} |
+      <i class="far fa-clock"></i> {{ \App\Models\Funciones::formatearFechaHora($_SESSION['hora_logado']) }} |
+      <a href="{{ miurl('logout') }}" class="text-white text-decoration-none fw-bold">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </a>
+    </div>
+    @endif
   </div>
 
   <div class="container-fluid">

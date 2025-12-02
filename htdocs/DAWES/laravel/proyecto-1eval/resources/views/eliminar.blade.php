@@ -86,7 +86,7 @@
     <p><strong>Teléfono:</strong> {{ $tarea['telefono'] }}</p>
     <p><strong>Correo:</strong> {{ $tarea['correo'] }}</p>
     <p><strong>Descripción:</strong> {{ $tarea['descripcion'] }}</p>
-    <p><strong>Fecha de realización:</strong> {{ $tarea['fecha_realizacion'] }}</p>
+    <p><strong>Fecha de realización:</strong> {{ \App\Models\Funciones::cambiarFormatoFecha($tarea['fecha_realizacion']) }}</p>
     <p><strong>Operario encargado:</strong> {{ $tarea['operario_encargado'] }}</p>
     <p><strong>Estado:</strong> {{ $tarea['estado'] }}</p>
 </div>

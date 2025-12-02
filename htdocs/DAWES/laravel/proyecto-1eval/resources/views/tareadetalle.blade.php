@@ -125,7 +125,7 @@
         </div>
         <div class="campo">
             <span class="label">Fecha de realización:</span>
-            <span>{{ $tarea['fecha_realizacion'] }}</span>
+            <span>{{ \App\Models\Funciones::cambiarFormatoFecha($tarea['fecha_realizacion']) }}</span>
         </div>
         <div class="campo">
             <span class="label">Anotaciones anteriores:</span>

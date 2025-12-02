@@ -181,6 +181,24 @@ class Funciones
         return true;
     }
 
+    public static function cambiarFormatoFecha($fecha)
+    {
+        if (!$fecha) return '';
+        $partes = explode('-', substr($fecha, 0, 10));
+        if (count($partes) !== 3) return $fecha;
+        return $partes[2] . '/' . $partes[1] . '/' . $partes[0];
+    }
+
+    public static function formatearFechaHora($fechaHora)
+    {
+        if (!$fechaHora) return '';
+        // Separamos fecha y hora
+        $fecha = substr($fechaHora, 0, 10); 
+        $hora = substr($fechaHora, 11);     
+        $partes = explode('-', $fecha);
+        if (count($partes) !== 3) return $fechaHora;
+        return $partes[2] . '/' . $partes[1] . '/' . $partes[0] . ' ' . $hora;
+    }
 
 
     public static $errores = [];
