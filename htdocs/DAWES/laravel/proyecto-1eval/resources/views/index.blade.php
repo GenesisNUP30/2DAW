@@ -11,41 +11,31 @@
         background: #ffffff;
         border-radius: 12px;
         overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
     .tabla-tareas th,
     .tabla-tareas td {
-        padding: 10px;
+        padding: 12px 15px;
         text-align: left;
-        border-right: 1px solid #e2e8f0;
     }
 
-    .tabla-tareas th:last-child,
-    .tabla-tareas td:last-child {
-        border-right: none;
-    }
 
     .tabla-tareas th {
-        background: linear-gradient(145deg, #667eea 0%, #764ba2 100%);
+        background: #2c3e50;
         color: white;
-        font-weight: 500;
-        text-transform: uppercase;
+        font-weight: 600;
         font-size: 11px;
+        text-transform: uppercase;
         letter-spacing: 0.8px;
     }
 
-    .tabla-tareas tr:nth-child(odd) {
-        background-color: #f7fafc;
-    }
-
     .tabla-tareas tr:nth-child(even) {
-        background-color: #edf2f7;
+        background-color: #f8f9fa;
     }
 
     .tabla-tareas tr:hover {
-        background-color: #e6fffa;
-        transform: scale(1.01);
-        transition: all 0.3s ease;
+        background-color: #edf2ff;
     }
 
     .tabla-tareas td {
@@ -55,53 +45,69 @@
 
     .tabla-tareas td:last-child {
         text-align: center;
-        min-width: 120px;
+        min-width: 130px;
     }
 
-    .tabla-tareas button {
-        margin: 2px;
-        padding: 6px 10px;
+    .tabla-tareas .btn {
+        margin: 3px;
+        padding: 6px 12px;
         font-size: 11px;
-        border: 2px solid transparent;
+        border: none;
         border-radius: 6px;
-        cursor: pointer;
-        font-weight: 500;
+        font-weight: 600;
         transition: all 0.2s ease;
-    }
-
-    .tabla-tareas button a {
         text-decoration: none;
-        color: inherit;
-        display: block;
+        display: inline-block;
+        color: white;
     }
 
-    .tabla-tareas button:first-child {
+    .tabla-tareas .btn-detalle {
+        background: linear-gradient(135deg, #3182ce, #2b6cb0);
+    }
+
+    .tabla-tareas .btn-detalle:hover {
+        background: linear-gradient(135deg, #2b6cb0, #2c5282);
+        transform: translateY(-2px);
+        box-shadow: 0 3px 6px rgba(49, 130, 206, 0.3);
+    }
+
+    .tabla-tareas .btn-editar {
         background: linear-gradient(135deg, #48bb78, #38a169);
-        color: white;
     }
 
-    .tabla-tareas button:first-child:hover {
+    .tabla-tareas .btn-editar:hover {
         background: linear-gradient(135deg, #38a169, #2f855a);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(72, 187, 120, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 3px 6px rgba(72, 187, 120, 0.3);
     }
 
-    .tabla-tareas button:last-child {
+    .tabla-tareas .btn-eliminar {
         background: linear-gradient(135deg, #f56565, #e53e3e);
-        color: white;
     }
 
-    .tabla-tareas button:last-child:hover {
+    .tabla-tareas .btn-eliminar:hover {
         background: linear-gradient(135deg, #e53e3e, #c53030);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(245, 101, 101, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 3px 6px rgba(245, 101, 101, 0.3);
+    }
+
+    .tabla-tareas .btn-completar {
+        background: linear-gradient(135deg, #3182ce, #2b6cb0);
+    }
+
+    .tabla-tareas .btn-completar:hover {
+        background: linear-gradient(135deg, #2b6cb0, #2c5282);
+        transform: translateY(-2px);
+        box-shadow: 0 3px 6px rgba(49, 130, 206, 0.3);
     }
 </style>
 @endsection('estilos')
 
 @section('cuerpo')
 <div class="container">
-    <h1>Gestión de Tareas</h1>
+    <h1 class="mb-4">
+        <i class="fas fa-tasks me-2"></i>Gestión de Tareas
+    </h1>
     <table class="tabla-tareas">
         <thead>
             <tr>
@@ -129,11 +135,20 @@
                 <td>{{ $tarea['fecha_realizacion'] }}</td>
                 <td>
                     @if($_SESSION['rol'] == 'administrador')
-                    <button><a href="{!! miurl('modificar/' . $tarea['id']) !!}">Modificar</a></button>
-                    <button><a href="{!! miurl('eliminar/' . $tarea['id']) !!}">Eliminar</a></button>
+                    <a href="{!! miurl('tarea/' . $tarea['id']) !!}" class="btn btn-detalle">
+                        <i class="fas fa-eye me-1"></i>Ver más
+                    </a>
+                    <a href="{!! miurl('modificar/' . $tarea['id']) !!}" class="btn btn-editar">
+                        <i class="fas fa-edit me-1"></i>Modificar
+                    </a>
+                    <a href="{!! miurl('eliminar/' . $tarea['id']) !!}" class="btn btn-eliminar">
+                        <i class="fas fa-trash-alt me-1"></i>Eliminar
+                    </a>
                     @endif
                     @if($_SESSION['rol'] == 'operario')
-                    <button><a href="{!! miurl('completar/' . $tarea['id']) !!}">Completar</a></button>
+                    <a href="{!! miurl('completar/' . $tarea['id']) !!}" class="btn btn-completar">
+                        <i class="fas fa-check-circle me-1"></i>Completar
+                    </a>
                     @endif
                 </td>
             </tr>

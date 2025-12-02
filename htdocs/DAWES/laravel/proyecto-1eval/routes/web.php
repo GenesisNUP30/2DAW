@@ -47,6 +47,10 @@ Route::post('/eliminar/{id}', [EliminarCtrl::class, 'eliminar']);
 Route::get('/completar/{id}', [CompletarCtrl::class, 'mostrarFormulario']);
 Route::post('/completar/{id}', [CompletarCtrl::class, 'completar']);
 
+// Ver detalles de tarea
+Route::get('/tarea/{id}', [InicioCtrl::class, 'verTarea']);
+
+
 // Listar usuarios
 Route::get('/listarusuarios', [VerUsuariosCtrl::class, 'index']);
 Route::get('/añadirusuario', [AñadirUsuarioCtrl::class, 'añadirUsuario']);

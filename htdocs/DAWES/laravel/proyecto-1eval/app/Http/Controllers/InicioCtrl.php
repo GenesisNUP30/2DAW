@@ -17,4 +17,20 @@ class InicioCtrl {
         
         return view('index', ['tareas' => $tareas]);
     }
+
+    public function verTarea($id)
+    {
+        $login = Sesion::getInstance();
+        $login->onlyLogged();
+        $login->onlyAdministrador(); 
+
+        $modelo = new Tareas();
+        $tarea = $modelo->obtenerTareaPorId($id);
+
+        if (!$tarea) {
+            abort(404, "Tarea no encontrada");
+        }
+
+        return view('tareadetalle', ['tarea' => $tarea]);
+    }
 }

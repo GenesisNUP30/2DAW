@@ -33,6 +33,8 @@ class Sesion
     public function validarLogin(string $usuario, string $password): bool
     {
 
+        date_default_timezone_set('Europe/Madrid');
+
         $db = DB::getInstance();
         $user = $db->LeeUnRegistro('usuarios', 'usuario = "' . $usuario . '" AND password = "' . $password . '"');
         if ($user) {

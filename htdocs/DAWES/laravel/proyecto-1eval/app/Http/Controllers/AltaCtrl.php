@@ -24,10 +24,9 @@ class AltaCtrl
             $this->filtraDatos();
             if (!empty(Funciones::$errores)) {
                 return view('alta', $_POST);
-            }
-            else {
+            } else {
                 // Procedemos a guardar los datos y mostrar la página que proceda
-                $model=new Tareas();
+                $model = new Tareas();
                 $model->registraAlta($_POST);
                 miredirect('/');
             }
@@ -56,7 +55,17 @@ class AltaCtrl
 
     private function filtraDatos()
     {
-        extract($_POST);
+        // Inicializamos el array de errores
+        Funciones::$errores = [];
+
+        $nif_cif = $_POST['nif_cif'] ?? '';
+        $persona_contacto = $_POST['persona_contacto'] ?? '';
+        $telefono = $_POST['telefono'] ?? '';
+        $descripcion = $_POST['descripcion'] ?? '';
+        $correo = $_POST['correo'] ?? '';
+        $codigo_postal = $_POST['codigo_postal'] ?? '';
+        $provincia = $_POST['provincia'] ?? '';
+        $fecha_realizacion = $_POST['fecha_realizacion'] ?? '';
 
         if ($nif_cif == "") {
             Funciones::$errores['nif_cif'] = "Debe introducir el NIF/CIF de la persona encargada de la tarea";
@@ -107,4 +116,5 @@ class AltaCtrl
             }
         }
     }
+
 }

@@ -13,10 +13,10 @@ class ModificarCtrl
         $login = Sesion::getInstance();
         $login->onlyLogged();
         $login->onlyAdministrador();
-        
+
         $modelo = new Tareas();
         $tarea = $modelo->obtenerTareaPorId($id);
-        
+
         if (!$tarea) {
             abort(404, 'Tarea no encontrada');
         }
@@ -48,7 +48,19 @@ class ModificarCtrl
 
     private function filtraDatos()
     {
+        // Inicializamos el array de errores
+        Funciones::$errores = [];
         extract($_POST);
+
+        // // Tomamos los datos del POST, usando null coalescing para que siempre existan
+        $nif_cif            = $_POST['nif_cif'] ?? '';
+        $persona_contacto    = $_POST['persona_contacto'] ?? '';
+        $telefono           = $_POST['telefono'] ?? '';
+        $descripcion        = $_POST['descripcion'] ?? '';
+        $correo             = $_POST['correo'] ?? '';
+        $codigo_postal      = $_POST['codigo_postal'] ?? '';
+        $provincia          = $_POST['provincia'] ?? '';
+        $fecha_realizacion  = $_POST['fecha_realizacion'] ?? '';
 
         if ($nif_cif === "") {
             Funciones::$errores['nif_cif'] = "Debe introducir el NIF/CIF de la persona encargada de la tarea";
@@ -100,4 +112,3 @@ class ModificarCtrl
         }
     }
 }
-
