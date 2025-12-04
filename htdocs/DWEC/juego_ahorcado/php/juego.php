@@ -15,8 +15,15 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'jugador') {
 </head>
 <body>
     <h1>Juego del Ahorcado</h1>
-    <div id="juego">
-        <p>Categoría: <span id="categoria"></span></p>
+    <div id="seleccion-categoria">
+        <label for="categoria">Selecciona una categoría:</label>
+        <select id="categoria">
+            <option value="">Cargando categorías...</option>
+        </select>
+        <button onclick="iniciarJuego()">Comenzar Juego</button>
+    </div>
+    <div id="juego" style="display: none;">
+        <p>Categoría: <span id="categoria-seleccionada"></span></p>
         <p>Palabra: <span id="palabra">_ _ _ _ _</span></p>
         <p>Intentos restantes: <span id="intentos">6</span></p>
         <p>Letras usadas: <span id="letras-usadas"></span></p>

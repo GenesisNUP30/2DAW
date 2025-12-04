@@ -1,27 +1,22 @@
 <?php
 // Encabezado para indicar que la respuesta es JSON
 header('Content-Type: application/json; charset=utf-8');
-session_start();
+
 include 'conexion.php';
 
 if ($conexion->connect_error) {
     die(json_encode(["error" => "Error de conexión: " . $conexion->connect_error]));
 }
 
-$usuario = $_GET['usuario'];
-$password = $_GET['password'];
+$usuario = $_POST['usuario'];
+$password = $_POST['password'];
 
-// Consulta SQL sin usar prepared statements
+// Consulta SQL 
 $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND password = '$password'";
 $resultado = mysqli_query($conexion, $sql);
 
 if ($resultado->num_rows > 0) {
     $usuario = $resultado->fetch_assoc();
-
-    // Establecer variables de sesión
-    $_SESSION['usuario'] = $usuario['usuario'];
-    $_SESSION['rol'] = $usuario['rol'];
-    
     echo json_encode([
         "status" => "success",
         "message" => "Bienvenido " . $usuario['usuario'],
