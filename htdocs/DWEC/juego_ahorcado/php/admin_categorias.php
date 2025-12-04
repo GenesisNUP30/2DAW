@@ -15,5 +15,17 @@ if ($accion == 'listar') {
     $nombre = $_GET['nombre'];
     mysqli_query($conexion, "INSERT INTO categorias (nombre) VALUES ('$nombre')");
     echo "ok";
+} elseif ($accion == 'editar') {
+    $id = $_GET['id'];
+    $nombre = $_GET['nombre'];
+    mysqli_query($conexion, "UPDATE categorias SET nombre='$nombre' WHERE id=$id");
+    echo "ok";
+} elseif ($accion == 'eliminar') {
+    $id = $_GET['id'];
+    // Primero eliminar palabras asociadas
+    mysqli_query($conexion, "DELETE FROM palabras WHERE categoria_id=$id");
+    // Luego eliminar categoría
+    mysqli_query($conexion, "DELETE FROM categorias WHERE id=$id");
+    echo "ok";
 }
 ?>

@@ -4,7 +4,7 @@
 let palabra_id_global = null;
 let partida_activa = false;
 let usuarioLogueado = null;
-let esAdmin = false; 
+let esAdmin = false;
 
 // Al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
@@ -117,7 +117,8 @@ function iniciarPartida() {
 function generarTeclado() {
     const tecladoDiv = document.getElementById("teclado");
     tecladoDiv.innerHTML = "";
-    const letras = "abcdefghijklmnopqrstuvwxyz".split("");
+    // Letras del alfabeto español (incluye ñ)
+    const letras = "abcdefghijklmnñopqrstuvwxyz".split("");
 
     letras.forEach(letra => {
         const btn = document.createElement("button");
@@ -263,9 +264,23 @@ function cargarCategoriasAdmin() {
     fetch("php/admin_categorias.php?accion=listar")
         .then(res => res.json())
         .then(data => {
-            let html = "<ul>";
-            data.forEach(c => html += `<li>${c.nombre}</li>`);
-            html += "</ul>";
+            let html = "<table class='table table-sm'><thead><tr><th>ID</th><th>Nombre</th><th>Acciones</th></tr></thead><tbody>";
+            data.forEach(c => {
+                html += `
+                <tr id="cat-fila-${c.id}">
+                    <td>${c.id}</td>
+                    <td>
+                        <span id="cat-nombre-${c.id}">${c.nombre}</span>
+                        <input type="text" id="cat-edit-${c.id}" value="${c.nombre}" class="form-control form-control-sm" style="display:none">
+                    </td>
+                    <td>
+                        <button onclick="editarCategoria(${c.id})" class="btn btn-sm btn-warning">Editar</button>
+                        <button onclick="guardarCategoria(${c.id})" id="btn-guardar-cat-${c.id}" class="btn btn-sm btn-success" style="display:none">Guardar</button>
+                        <button onclick="eliminarCategoria(${c.id})" class="btn btn-sm btn-danger">Eliminar</button>
+                    </td>
+                </tr>`;
+            });
+            html += "</tbody></table>";
             document.getElementById("lista-categorias").innerHTML = html;
         });
 }
@@ -284,7 +299,7 @@ function agregarCategoria() {
 }
 
 function cargarPalabrasAdmin() {
-    // Cargar categorías en el select
+    // Cargar categorías en el select (para agregar nuevas)
     fetch("php/obtener_categorias.php")
         .then(res => res.json())
         .then(data => {
@@ -302,10 +317,40 @@ function cargarPalabrasAdmin() {
     fetch("php/admin_palabras.php?accion=listar")
         .then(res => res.json())
         .then(data => {
-            let html = "<table class='table'><thead><tr><th>Palabra</th><th>Categoría</th></tr></thead><tbody>";
-            data.forEach(p => html += `<tr><td>${p.palabra}</td><td>${p.categoria}</td></tr>`);
-            html += "</tbody></table>";
-            document.getElementById("lista-palabras").innerHTML = html;
+            // También necesitamos categorías para el select de edición
+            fetch("php/obtener_categorias.php")
+                .then(r => r.json())
+                .then(cats => {
+                    let html = "<table class='table table-sm'><thead><tr><th>ID</th><th>Palabra</th><th>Categoría</th><th>Acciones</th></tr></thead><tbody>";
+                    data.forEach(p => {
+                        // Opciones para select de edición
+                        let opciones = "";
+                        cats.forEach(c => {
+                            const sel = c.id == p.categoria_id ? "selected" : "";
+                            opciones += `<option value="${c.id}" ${sel}>${c.nombre}</option>`;
+                        });
+
+                        html += `
+                        <tr id="pal-fila-${p.id}">
+                            <td>${p.id}</td>
+                            <td>
+                                <span id="pal-texto-${p.id}">${p.palabra}</span>
+                                <input type="text" id="pal-edit-${p.id}" value="${p.palabra}" class="form-control form-control-sm" style="display:none">
+                            </td>
+                            <td>
+                                <span id="pal-cat-${p.id}">${p.categoria}</span>
+                                <select id="pal-cat-edit-${p.id}" class="form-select form-select-sm" style="display:none">${opciones}</select>
+                            </td>
+                            <td>
+                                <button onclick="editarPalabra(${p.id})" class="btn btn-sm btn-warning">Editar</button>
+                                <button onclick="guardarPalabra(${p.id})" id="btn-guardar-pal-${p.id}" class="btn btn-sm btn-success" style="display:none">Guardar</button>
+                                <button onclick="eliminarPalabra(${p.id})" class="btn btn-sm btn-danger">Eliminar</button>
+                            </td>
+                        </tr>`;
+                    });
+                    html += "</tbody></table>";
+                    document.getElementById("lista-palabras").innerHTML = html;
+                });
         });
 }
 
@@ -323,11 +368,6 @@ function agregarPalabra() {
         });
 }
 
-function cargarJugadores() {
-    // Aquí podrías cargar lista de jugadores (opcional, simplificado)
-    document.getElementById("lista-jugadores").innerHTML =
-        "<p>Funcionalidad de visualización de jugadores (opcional en práctica)</p>";
-}
 
 function verHistorial() {
     const div = document.getElementById("historial-partidas");
@@ -539,6 +579,98 @@ function eliminarJugador(usuario_id) {
         });
 }
 
+
+function editarCategoria(id) {
+    document.getElementById(`cat-nombre-${id}`).style.display = "none";
+    document.getElementById(`cat-edit-${id}`).style.display = "block";
+    document.getElementById(`btn-guardar-cat-${id}`).style.display = "inline-block";
+}
+
+function guardarCategoria(id) {
+    const nuevoNombre = document.getElementById(`cat-edit-${id}`).value.trim();
+    if (!nuevoNombre) {
+        alert("Nombre no válido");
+        return;
+    }
+    const url = `php/admin_categorias.php?accion=editar&id=${id}&nombre=${encodeURIComponent(nuevoNombre)}`;
+    fetch(url)
+        .then(res => res.text())
+        .then(data => {
+            if (data === "ok") {
+                document.getElementById(`cat-nombre-${id}`).textContent = nuevoNombre;
+                document.getElementById(`cat-nombre-${id}`).style.display = "inline";
+                document.getElementById(`cat-edit-${id}`).style.display = "none";
+                document.getElementById(`btn-guardar-cat-${id}`).style.display = "none";
+            } else {
+                alert("Error al guardar categoría");
+            }
+        });
+}
+
+function eliminarCategoria(id) {
+    if (!confirm("¿Eliminar categoría? ¡También se borrarán sus palabras!")) return;
+    const url = `php/admin_categorias.php?accion=eliminar&id=${id}`;
+    fetch(url)
+        .then(res => res.text())
+        .then(data => {
+            if (data === "ok") {
+                document.getElementById(`cat-fila-${id}`).remove();
+            } else {
+                alert("Error al eliminar categoría");
+            }
+        });
+}
+
+function editarPalabra(id) {
+    document.getElementById(`pal-texto-${id}`).style.display = "none";
+    document.getElementById(`pal-cat-${id}`).style.display = "none";
+    document.getElementById(`pal-edit-${id}`).style.display = "block";
+    document.getElementById(`pal-cat-edit-${id}`).style.display = "block";
+}
+
+function guardarPalabra(id) {
+    const nuevaPalabra = document.getElementById(`pal-edit-${id}`).value.trim();
+    const nuevaCat = document.getElementById(`pal-cat-edit-${id}`).value;
+    if (!nuevaPalabra || !nuevaCat) {
+        alert("Completa todos los campos");
+        return;
+    }
+    const url = `php/admin_palabras.php?accion=editar&id=${id}&palabra=${encodeURIComponent(nuevaPalabra)}&categoria_id=${nuevaCat}`;
+    fetch(url)
+        .then(res => res.text())
+        .then(data => {
+            if (data === "ok") {
+                // Actualizar vista
+                document.getElementById(`pal-texto-${id}`).textContent = nuevaPalabra;
+                // Para la categoría, necesitamos su nombre → lo sacamos del select
+                const select = document.getElementById(`pal-cat-edit-${id}`);
+                const nombreCat = select.options[select.selectedIndex].text;
+                document.getElementById(`pal-cat-${id}`).textContent = nombreCat;
+
+                // Ocultar campos de edición
+                document.getElementById(`pal-texto-${id}`).style.display = "inline";
+                document.getElementById(`pal-cat-${id}`).style.display = "inline";
+                document.getElementById(`pal-edit-${id}`).style.display = "none";
+                document.getElementById(`pal-cat-edit-${id}`).style.display = "none";
+            } else {
+                alert("Error al guardar palabra");
+            }
+        });
+}
+
+function eliminarPalabra(id) {
+    if (!confirm("¿Eliminar esta palabra?")) return;
+    const url = `php/admin_palabras.php?accion=eliminar&id=${id}`;
+    fetch(url)
+        .then(res => res.text())
+        .then(data => {
+            if (data === "ok") {
+                document.getElementById(`pal-fila-${id}`).remove();
+            } else {
+                alert("Error al eliminar palabra");
+            }
+        });
+}
 
 
 
