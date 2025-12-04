@@ -17,6 +17,11 @@ $resultado = mysqli_query($conexion, $sql);
 
 if ($resultado->num_rows > 0) {
     $usuario = $resultado->fetch_assoc();
+
+    // Establecer variables de sesión
+    $_SESSION['usuario'] = $usuario['usuario'];
+    $_SESSION['rol'] = $usuario['rol'];
+    
     echo json_encode([
         "status" => "success",
         "message" => "Bienvenido " . $usuario['usuario'],
