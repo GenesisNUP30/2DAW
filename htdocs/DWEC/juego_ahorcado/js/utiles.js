@@ -2,22 +2,55 @@
 document.addEventListener("DOMContentLoaded", () => {
     const categoriaSelect = document.getElementById("categoria");
 
-    fetch("php/obtener_categorias.php")
-        .then(res => res.json())
-        .then(categorias => {
-            categoriaSelect.innerHTML = ""; // Limpiar opciones
-            categorias.forEach(categoria => {
-                const option = document.createElement("option");
-                option.value = categoria;
-                option.textContent = categoria;
-                categoriaSelect.appendChild(option);
+    if (categoriaSelect) {
+        fetch("/obtener_categorias.php")
+            .then(res => res.json())
+            .then(categorias => {
+                categoriaSelect.innerHTML = ""; // Limpiar opciones
+                categorias.forEach(categoria => {
+                    const option = document.createElement("option");
+                    option.value = categoria;
+                    option.textContent = categoria;
+                    categoriaSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error("Error al cargar las categorías:", error);
+                categoriaSelect.innerHTML = "<option value=''>Error al cargar</option>";
             });
+    }
+});
+
+function iniciarSesion() {
+    const mensaje = document.getElementById("mensaje");
+
+    const usuario = document.getElementById("usuario").value;
+    const password = document.getElementById("password").value;
+
+    if (!usuario || !password) {
+        mensaje.textContent = "Por favor, completa todos los campos.";
+        return;
+    }
+
+    const url = `php/validar_login.php?usuario=${encodeURIComponent(usuario)}&password=${encodeURIComponent(password)}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success") {
+                if (data.rol === "admin") {
+                    window.location.href = "php/administracion.php"; // Redirige a la página de administración
+                } else if (data.rol === "jugador") {
+                    window.location.href = "php/juego.php"; // Redirige a la página del juego
+                }
+            } else {
+                mensaje.textContent = data.message; // Muestra el mensaje de error
+            }
         })
         .catch(error => {
-            console.error("Error al cargar las categorías:", error);
-            categoriaSelect.innerHTML = "<option value=''>Error al cargar</option>";
+            console.error("Error en la solicitud:", error);
+            mensaje.textContent = "Hubo un problema al iniciar sesión.";
         });
-});
+}
 
 function iniciarJuego() {
     const categoria = document.getElementById("categoria").value;
