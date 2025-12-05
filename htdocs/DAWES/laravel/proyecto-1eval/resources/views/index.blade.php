@@ -124,6 +124,65 @@
         </thead>
         <tbody>
             @foreach ($tareas as $tarea)
+            @if ($tarea['estado'] == 'P')
+            <tr style="background-color: #5DE6F0;">
+                <td>{{ $tarea['id'] }}</td>
+                <td>{{ $tarea['persona_contacto'] }}</td>
+                <td>{{ $tarea['telefono'] }}</td>
+                <td>{{ $tarea['correo'] }}</td>
+                <td>{{ $tarea['descripcion'] }}</td>
+                <td>{{ $tarea['estado'] }}</td>
+                <td>{{ $tarea['operario_encargado'] }}</td>
+                <td>{{ \App\Models\Funciones::cambiarFormatoFecha($tarea['fecha_realizacion']) }}</td>
+                <td>
+                    @if($_SESSION['rol'] == 'administrador')
+                    <a href="{!! miurl('tarea/' . $tarea['id']) !!}" class="btn btn-detalle">
+                        <i class="fas fa-eye me-1"></i>Ver más
+                    </a>
+                    <a href="{!! miurl('modificar/' . $tarea['id']) !!}" class="btn btn-editar">
+                        <i class="fas fa-edit me-1"></i>Modificar
+                    </a>
+                    <a href="{!! miurl('eliminar/' . $tarea['id']) !!}" class="btn btn-eliminar">
+                        <i class="fas fa-trash-alt me-1"></i>Eliminar
+                    </a>
+                    @endif
+                    @if($_SESSION['rol'] == 'operario')
+                    <a href="{!! miurl('completar/' . $tarea['id']) !!}" class="btn btn-completar">
+                        <i class="fas fa-check-circle me-1"></i>Completar
+                    </a>
+                    @endif
+                </td>
+            </tr>
+            @elseif ($tarea['estado'] == 'C')
+            <tr style="background-color: #ff00007b;">
+                <td>{{ $tarea['id'] }}</td>
+                <td>{{ $tarea['persona_contacto'] }}</td>
+                <td>{{ $tarea['telefono'] }}</td>
+                <td>{{ $tarea['correo'] }}</td>
+                <td>{{ $tarea['descripcion'] }}</td>
+                <td>{{ $tarea['estado'] }}</td>
+                <td>{{ $tarea['operario_encargado'] }}</td>
+                <td>{{ \App\Models\Funciones::cambiarFormatoFecha($tarea['fecha_realizacion']) }}</td>
+                <td>
+                    @if($_SESSION['rol'] == 'administrador')
+                    <a href="{!! miurl('tarea/' . $tarea['id']) !!}" class="btn btn-detalle">
+                        <i class="fas fa-eye me-1"></i>Ver más
+                    </a>
+                    <a href="{!! miurl('modificar/' . $tarea['id']) !!}" class="btn btn-editar">
+                        <i class="fas fa-edit me-1"></i>Modificar
+                    </a>
+                    <a href="{!! miurl('eliminar/' . $tarea['id']) !!}" class="btn btn-eliminar">
+                        <i class="fas fa-trash-alt me-1"></i>Eliminar
+                    </a>
+                    @endif
+                    @if($_SESSION['rol'] == 'operario')
+                    <a href="{!! miurl('completar/' . $tarea['id']) !!}" class="btn btn-completar">
+                        <i class="fas fa-check-circle me-1"></i>Completar
+                    </a>
+                    @endif
+                </td>
+            </tr>
+            @else
             <tr>
                 <td>{{ $tarea['id'] }}</td>
                 <td>{{ $tarea['persona_contacto'] }}</td>
@@ -152,6 +211,7 @@
                     @endif
                 </td>
             </tr>
+            @endif
             @endforeach
         </tbody>
     </table>
