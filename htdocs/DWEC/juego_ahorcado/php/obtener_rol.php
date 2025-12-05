@@ -1,4 +1,4 @@
 <?php
 session_start();
-echo $_SESSION['admin'] ?? 0;
+echo (int)($_SESSION['admin'] ?? 0);
 ?>

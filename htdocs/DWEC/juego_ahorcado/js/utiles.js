@@ -48,6 +48,7 @@ function irAlJuego() {
 
 
 function verificarSesionYJugar() {
+    // Primero, verificar sesión
     fetch("php/check_session.php")
         .then(res => res.text())
         .then(data => {
@@ -55,14 +56,19 @@ function verificarSesionYJugar() {
                 window.location.href = "login.html";
                 return;
             }
-            // Obtener si es admin
+
+            // Luego, obtener el rol (admin o no)
             return fetch("php/obtener_rol.php")
-                .then(r => r.text())
+                .then(res => res.text())
                 .then(rol => {
-                    esAdmin = (rol === "1");
-                    if (esAdmin) {
-                        document.getElementById("boton-admin").style.display = "inline-block";
+                    esAdmin = (rol.trim() === "1"); 
+                    
+                    // Mostrar botón SOLO si es admin
+                    const botonAdmin = document.getElementById("boton-admin");
+                    if (botonAdmin && esAdmin) {
+                        botonAdmin.style.display = "inline-block";
                     }
+
                     cargarCategorias();
                 });
         })
@@ -117,7 +123,7 @@ function iniciarPartida() {
 function generarTeclado() {
     const tecladoDiv = document.getElementById("teclado");
     tecladoDiv.innerHTML = "";
-    const letras = "abcdefghijklmnopqrstuvwxyz".split("");
+    const letras = "abcdefghijklmnñopqrstuvwxyz".split("");
 
     letras.forEach(letra => {
         const btn = document.createElement("button");
@@ -310,23 +316,41 @@ function cargarPalabrasAdmin() {
 }
 
 function agregarPalabra() {
-    const palabra = document.getElementById("nueva-palabra").value;
+    const palabra = document.getElementById("nueva-palabra").value.trim();
     const catId = document.getElementById("categoria-palabra").value;
-    if (!palabra || !catId) return;
-    const url = `php/admin_palabras.php?accion=agregar&palabra=${encodeURIComponent(palabra)}&categoria_id=${catId}`;
+
+    if (!palabra) {
+        alert("Escribe una palabra");
+        return;
+    }
+    if (!catId) {
+        alert("Selecciona una categoría");
+        return;
+    }
+
+    const url = `php/admin_palabras.php?accion=agregar&palabra=${encodeURIComponent(palabra)}&categoria_id=${encodeURIComponent(catId)}`;
+    
     fetch(url)
         .then(res => res.text())
-        .then(() => {
-            alert("Palabra agregada");
-            cargarPalabrasAdmin();
-            document.getElementById("nueva-palabra").value = "";
+        .then(data => {
+            if (data === "ok") {
+                alert("Palabra agregada correctamente");
+                cargarPalabrasAdmin();
+                document.getElementById("nueva-palabra").value = "";
+            } else {
+                alert("Error al agregar palabra: " + data);
+                console.error("Error:", data);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Error de conexión");
         });
 }
 
 function cargarJugadores() {
-    // Aquí podrías cargar lista de jugadores (opcional, simplificado)
     document.getElementById("lista-jugadores").innerHTML =
-        "<p>Funcionalidad de visualización de jugadores (opcional en práctica)</p>";
+        "<p>Funcionalidad de visualización de jugadores";
 }
 
 function verHistorial() {

@@ -12,19 +12,20 @@ if ($accion == 'listar') {
     }
     echo json_encode($palabras, JSON_UNESCAPED_UNICODE);
 } elseif ($accion == 'agregar') {
-    $palabra = $_GET['palabra'];
-    $cat_id = $_GET['categoria_id'];
-    mysqli_query($conexion, "INSERT INTO palabras (palabra, categoria_id) VALUES ('$palabra', $cat_id)");
-    echo "ok";
-} elseif ($accion == 'editar') {
-    $id = $_GET['id'];
-    $palabra = $_GET['palabra'];
-    $cat_id = $_GET['categoria_id'];
-    mysqli_query($conexion, "UPDATE palabras SET palabra='$palabra', categoria_id=$cat_id WHERE id=$id");
-    echo "ok";
-} elseif ($accion == 'eliminar') {
-    $id = $_GET['id'];
-    mysqli_query($conexion, "DELETE FROM palabras WHERE id=$id");
-    echo "ok";
+    $palabra = trim($_GET['palabra']);
+    $cat_id = trim($_GET['categoria_id']);
+
+    if ($palabra === '' || $cat_id === '' || !is_numeric($cat_id)) {
+        echo "error_datos";
+        exit();
+    }
+
+    // Insertar
+    $query = "INSERT INTO palabras (palabra, categoria_id) VALUES ('$palabra', $cat_id)";
+    if (mysqli_query($conexion, $query)) {
+        echo "ok";
+    } else {
+        echo "error_sql: " . mysqli_error($conexion);
+    }
 }
 ?>
