@@ -10,6 +10,7 @@ use App\Http\Controllers\LoginCtrl;
 use App\Http\Controllers\VerUsuariosCtrl;
 use App\Http\Controllers\EditarUsuarioCtrl;
 use App\Http\Controllers\EliminarUsuarioCtrl;
+use App\Http\Controllers\VerTareasBorradasCtrl;
 use Illuminate\Support\Facades\Route;
 
 define('BASE_URL', '/DAWES/laravel/proyecto-1eval/public/');
@@ -33,6 +34,8 @@ Route::any('/logout', [LoginCtrl::class, 'logout']);
 
 // Página principal
 Route::get('/', [InicioCtrl::class, 'index']);
+
+Route::get('/listartareasborradas', [VerTareasBorradasCtrl::class, 'index']);
 
 // Alta de tarea
 Route::get('/alta', [AltaCtrl::class, 'alta']);

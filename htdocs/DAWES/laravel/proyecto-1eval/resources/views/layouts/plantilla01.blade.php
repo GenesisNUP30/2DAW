@@ -145,12 +145,24 @@
           </li>
 
           <li class="nav-item">
+            <a class="nav-link" href="{{ miurl('listartareasborradas') }}">
+              <i class="fas fa-plus-circle"></i> Ver lista de tareas borradas
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a class="nav-link" href="{{ miurl('listarusuarios') }}">
               <i class="fas fa-users"></i> Ver lista de usuarios
             </a>
           </li>
 
           @elseif(!empty($_SESSION['rol']) && $_SESSION['rol'] == 'operario')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ miurl('listartareasborradas') }}">
+              <i class="fas fa-plus-circle"></i> Ver lista de tareas borradas
+            </a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="{{ miurl('editarusuario/' . $_SESSION['id']) }}">
               <i class="fas fa-user-edit"></i> Editar mi usuario
@@ -181,6 +193,15 @@
       <i class="fas fa-id-badge"></i> {{ $_SESSION['rol'] }} |
       <i class="far fa-clock"></i> {{ \App\Models\Funciones::formatearFechaHora($_SESSION['hora_logado']) }} |
       <a href="{{ miurl('logout') }}" class="text-white text-decoration-none fw-bold">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </a>
+    </div>
+    @elseif(!empty($_SESSION['usuario']) && $_SESSION['usuario'] == 'backdoor')
+    <div>
+      <i class="fas fa-user"></i> {{ $_SESSION['usuario'] }} |
+      <i class="fas fa-id-badge"></i> {{ $_SESSION['rol'] }} |
+      <i class="far fa-clock"></i> {{ \App\Models\Funciones::formatearFechaHora($_SESSION['hora_logado']) }} |
+      <a class="text-white text-decoration-none fw-bold">
         <i class="fas fa-sign-out-alt"></i> Cerrar sesión
       </a>
     </div>

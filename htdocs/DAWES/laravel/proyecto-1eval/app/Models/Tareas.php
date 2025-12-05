@@ -38,7 +38,19 @@ class Tareas
      */
     public function listarTareas()
     {
-        $sql = 'SELECT * FROM tareas';
+        $sql = 'SELECT * FROM tareas WHERE borrada = "no"';
+        $resultado = $this->bd->query($sql);
+
+        $tareas = [];
+        while ($fila = $this->bd->LeeRegistro($resultado)) {
+            $tareas[] = $fila;
+        }
+        return $tareas;
+    }
+
+    public function listarTareasBorradas()
+    {
+        $sql = 'SELECT * FROM tareas WHERE borrada = "si"';
         $resultado = $this->bd->query($sql);
 
         $tareas = [];
@@ -169,7 +181,7 @@ class Tareas
      */
     public function eliminarTarea($id)
     {
-        $sql = "DELETE FROM tareas WHERE id = $id";
+        $sql = "UPDATE tareas SET borrada = 'si' WHERE id = $id";
         $this->bd->query($sql);
     }
 }
