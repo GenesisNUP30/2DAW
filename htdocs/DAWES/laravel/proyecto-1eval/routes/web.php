@@ -12,7 +12,7 @@ use App\Http\Controllers\EditarUsuarioCtrl;
 use App\Http\Controllers\EliminarUsuarioCtrl;
 use Illuminate\Support\Facades\Route;
 
-define('BASE_URL', '/DAWES/laravel/proyecto-1eval-copia/public/');
+define('BASE_URL', '/DAWES/laravel/proyecto-1eval/public/');
 
 function miurl($ruta = '')
 {
