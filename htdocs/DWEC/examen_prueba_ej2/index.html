@@ -7,10 +7,68 @@
     <title>Examen Prueba Ejercicio 2</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        /* #tabla-articulos {
+            display: none;
+        } */
+
+        #informacion {
+            display: none;
+        }
+
+        #tabla {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
+    <h2>Realizar facturas</h2>
+    <div id="formulario">
+        Código: <input type="text" id="codigo" onchange="rellenarBusqueda();">
+        <button onclick="cargarArticulo();">Cargar artículos</button><br><br>
+        Descripción: <input type="text" id="descripcion"><br><br>
+        Cantidad: <input type="number" id="cantidad"><br><br>
+        Precio: <input type="number" id="precio"><br><br>
+        Subtotal: <span id="subtotal">0</span><br><br>
+    </div>
+    <br>
+    <button onclick="insertar()">Insertar</button>
+    <br><br>
+    <div id="tabla-articulos">
+        <table border="1" class="table" id="tabla-articulos">
+            <thead>
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="informacion">
+        <table class="table" id="tabla">
+            <thead>
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <label for="base">Base: <span id="base"></span></label><br>
+        <label for="total">Total con IVA: <span id="total"></span></label><br><br>
+    </div>
+
 
 </body>
 <script src="js/utiles.js"></script>
+
 </html>
