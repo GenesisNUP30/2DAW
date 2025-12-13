@@ -36,6 +36,7 @@ cp.addEventListener("input", function () {
 });
 
 function seleccionar(codigopostal) {
+    const textohabitantes = document.getElementById("habitantesrellenar");
     const url = `php/obtener_poblacion.php?cp=${codigopostal}`;
     fetch(url)
         .then(res => res.json())
@@ -46,9 +47,10 @@ function seleccionar(codigopostal) {
             sugerencias.style.display = "none";
 
             if (data[0].habitantes === null) {
+                textohabitantes.classList.remove("oculto");
                 numerohabitantes.value = "";
             } else {
-                numerohabitantes.value = data[0].habitantes;
+                textohabitantes.classList.add("oculto");
             }
         })
 
@@ -56,7 +58,20 @@ function seleccionar(codigopostal) {
 }
 
 function actualizarHabitantes() {
+    alert("Actualizando habitantes...");
     const habitantes = numerohabitantes.value;
     const codigo_postal = cp.value;
     const url = `php/actualizar_habitantes.php?cp=${codigo_postal}&habitantes=${habitantes}`;
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if (data.error) {
+                alert(data.error);
+            } else {
+                alert("Datos actualizados correctamente");
+            }
+        })
+        .catch(error => console.error(error));
 }

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="utiles.js"></script>
+
+</head>
+
+<body onload="colorCeldas()">
+    <table id="tabla-fotografias" class="table" border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Valoración</th>
+            <th>Ruta</th>
+        </tr>
+        <tr>
+            <td>Árbol</td>
+            <td>Naturaleza</td>
+            <td class="valoracion" onclick="aplicarValor(this)">8</td>
+            <td class="ruta" onmouseover="mostrarImagen('C:\\imagenes\\arbol.jpg')" onmouseout="ocultarImagen()">
+                C:\imagenes\arbol.jpg</td>
+        </tr>
+        <tr>
+            <td>Playa</td>
+            <td>Naturaleza</td>
+            <td class="valoracion" onclick="aplicarValor(this)"></td>
+            <td class="ruta" onmouseover="mostrarImagen('C:\\imagenes\\playa.gif')" onmouseout="ocultarImagen()">
+                C:\imagenes\playa.gif</td>
+        </tr>
+        <tr>
+            <td>Coche deportivo</td>
+            <td>Coches</td>
+            <td class="valoracion" onclick="aplicarValor(this)">3</td>
+            <td class="ruta" onmouseover="mostrarImagen('C:\\otros\\coche.jpg')" onmouseout="ocultarImagen()">
+                C:\otros\coche.jpg</td>
+        </tr>
+    </table>
+
+    <div id="vista"></div>
+    <br><br>
+
+    <table border="1" id="tabla-numeros">
+        <tr>
+            <td onclick="capturarValor(this)">0</td>
+            <td onclick="capturarValor(this)">1</td>
+            <td onclick="capturarValor(this)">2</td>
+            <td onclick="capturarValor(this)">3</td>
+            <td onclick="capturarValor(this)">4</td>
+            <td onclick="capturarValor(this)">5</td>
+            <td onclick="capturarValor(this)">6</td>
+            <td onclick="capturarValor(this)">7</td>
+            <td onclick="capturarValor(this)">8</td>
+            <td onclick="capturarValor(this)">9</td>
+        </tr>
+    </table>
+    <br><br>
+    Código: <input type="text" id="codigo" onchange="rellenarBusqueda();">
+    Descripción: <input type="text" id="descripcion">
+    Cantidad: <input type="number" id="cantidad">
+    Precio: <input type="number" id="precio">
+    Subtotal: <input type="number" id="subtotal">
+    <button onclick="anade();">insertar</button><br><br>
+
+    <table border="1" id="table">
+        <tr>
+            <td>Código</td>
+            <td>Descripción</td>
+            <td>Cantidad</td>
+            <td>Precio</td>
+            <td>Subtotal</td>
+        </tr>
+    </table>
+    <br><br>
+    Base imponible: <input type="number" id="base"> €<br><br>
+    Total con IVA (21%): <input type="number" id="total"> €<br><br>
+    
+    <table border="1" id="tabla-articulos">
+        <tr>
+            <td>Código</td>
+            <td>Descripción</td>
+            <td>Precio</td>
+        </tr>
+        <tr>
+            <td class="codigo1">1</td>
+            <td class="descripcion1">Teclado</td>
+            <td class="precio1">25</td>
+        </tr>
+        <tr>
+            <td class="codigo2">2</td>
+            <td class="descripcion2">Cámara</td>
+            <td class="precio2">15</td>
+        </tr>
+        <tr>
+            <td class="codigo3">3</td>
+            <td class="descripcion3">Ratón</td>
+            <td class="precio3">10</td>
+        </tr>
+        <tr>
+            <td class="codigo4">4</td>
+            <td class="descripcion4">Monitor</td>
+            <td class="precio4">56</td>
+    </table>
+</body>
+
+</html>

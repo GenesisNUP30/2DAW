@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="utiles.js"></script>
+</head>
+
+<body>
+    Nombre de la tarea:
+    <input type="text" id="nombreTarea"><br><br>
+    Prioridad:
+    <select id="prioridad">
+        <option value="alta">Alta</option>
+        <option value="media">Media</option>
+        <option value="baja">Baja</option>
+    </select>
+    <br><br>
+    <button id="boton" onclick="anadir();">Añadir tarea</button>
+    <br><br>
+    <table border="1" id="tablaTareas">
+        <tr>
+            <td>Nombre de la tarea</td>
+            <td>Prioridad</td>
+            <td>Operacion</td>
+        </tr>
+    </table>
+
+    <ul id="lista-tareas">
+
+    </ul>
+
+    <br><br>
+    Elige la prioridad de la tarea:
+    <select id="prioridadTarea" onchange="seleccionPrioridad();">
+        <option value="todas">Todas</option>
+        <option value="alta">Alta</option>
+        <option value="media">Media</option>
+        <option value="baja">Baja</option>
+
+</body>
+
+</html>

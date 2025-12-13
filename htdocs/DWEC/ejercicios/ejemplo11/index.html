@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="utiles.js"></script>
+</head>
+
+<body>
+    <form action="" id="formulario">
+        Numero 1: <input type="text" id=numero1><br>
+        Numero 2: <input type="text" id=numero2><br>
+        <input type="button" onclick="sumar()" ; value="Sumar">
+        <span id="resultado"></span>
+    </form>
+    <p>¿Es usted pogklfdlkdfkñlj?</p>
+    <input type="radio" id="si" name="encuesta" value="si">
+    <label for="si">SI</label><span id="votosSi"></span>
+    <p>Votos Sí: <span id="votosSi">0</span> (<span id="porcentajeSi">0%</span>)</p>
+    <img src="verde.png" id="verde" alt="verde">
+    <br>
+    <input type="radio" id="no" name="encuesta" value="no">
+    <label for="no">NO</label><span id="votosNo"></span>
+    <p>Votos No: <span id="votosNo">0</span> (<span id="porcentajeNo">0%</span>)</p>
+    <img src="rojo.png" id="rojo" alt="verde">
+    <br>
+    <input type="radio" id="nsnc" name="encuesta" value="nsnc">
+    <label for="no">NS/NC</label><span id="votosNsNc"></span>
+    <p>Votos Ns/Nc: <span id="votosNsNc">0</span> (<span id="porcentajeNsNc">0%</span>)</p>
+    <img src="azul.png" id="azul" alt="verde">
+    <br>
+
+    <button onclick="vota();">VOTAR</button>
+    <br>
+    <br>
+    <input type="text" id="texto"><button onclick="anade();">Añade</button><br>
+    <label for="pais">País:</label>
+    <select id="pais" name="pais" onchange="alert(document.getElementById('pais').value);">
+        <option value="us">Estados Unidos</option>
+        <option value="es">España</option>
+        <option value="mx">México</option>
+    </select>
+</html>

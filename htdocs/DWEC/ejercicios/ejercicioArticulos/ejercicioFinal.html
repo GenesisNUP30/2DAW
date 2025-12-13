@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="utiles1.js"></script>
+</head>
+
+<body>
+    Código: <input type="text" id="codigo" onchange="rellenarBusqueda();">
+    Descripción: <input type="text" id="descripcion">
+    Cantidad: <input type="number" id="cantidad">
+    Precio: <input type="number" id="precio">
+    <button onclick="anade();">OK</button><br><br>
+
+    <table border="1" id="table">
+        <tr>
+            <td>Código</td>
+            <td>Descripción</td>
+            <td>Cantidad</td>
+            <td>Precio</td>
+            <td>Subtotal</td>
+            <td>Opción</td>
+        </tr>
+    </table>
+    <br>
+    <label for="total">Total: <span id="total"></span></label><br><br>
+    Código: <input type="text" id="codigo2">
+    Descripción: <input type="text" id="descripcion2">
+    Cantidad: <input type="number" id="cantidad2">
+    Precio: <input type="number" id="precio2">
+    <button id="botonmodifica" onclick="modificar2();">OK</button><br><br>
+    <br>
+    <table id="busquedaCodigos" border="1">
+        <tr>
+            <td>Código</td>
+            <td>Descripción</td>
+            <td>Precio</td>
+        </tr>
+        <tr>
+            <td class="codigo1">1</td>
+            <td class="descripcion1">Tornillo</td>
+            <td class="precio1">2</td>
+        </tr>
+        <tr>
+            <td class="codigo2">2</td>
+            <td class="descripcion2">Destornillador</td>
+            <td class="precio2">4</td>
+        </tr>
+        <tr>
+            <td class="codigo3">3</td>
+            <td class="descripcion3">Martillo</td>
+            <td class="precio3">9</td>
+        </tr>
+        <tr>
+            <td class="codigo4">4</td>
+            <td class="descripcion4">Llave inglesa</td>
+            <td class="precio4">6</td>
+    </table>
+</body>
+</html>

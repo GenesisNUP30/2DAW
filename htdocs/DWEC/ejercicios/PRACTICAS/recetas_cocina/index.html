@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body onload="cargarRecetas();">
+    <h1>Recetas de cocina</h1>
+    <div class="filtros">
+        Tipo de comida: <select id="tipo-comida">
+            <option value="">Selecciona un tipo de comida</option>
+        </select>
+
+        Dificultad: <select id="dificultad">
+            <option value="">Selecciona una dificultad</option>
+        </select>
+
+        Cocina: <select id="cocina">
+            <option value="">Selecciona una cocina</option>
+        </select>
+
+        Tiempo de preparación: <select id="tiempo-preparacion">
+            <option value="-1">Selecciona un tiempo</option>
+        </select>
+
+        <button onclick="aplicarFiltros()">Aplicar filtros</button>
+    </div>
+    <br>
+
+    Busca por nombre o ingrediente:
+    <input type="text" id="buscar-recetas">
+    <button onclick="buscar();">Buscar</button>
+
+    <div id="contenedor-recetas" class="row g-3 mt-3"></div>
+
+
+    <div class="modal fade" id="modalReceta" tabindex="-1" aria-labelledby="modalRecetaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalRecetaLabel">Detalles de la receta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="modal-body-receta">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+<script src="utiles.js"></script>
+
+</html>

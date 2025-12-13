@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="utiles.js"></script>
+</head>
+
+<body>
+    <label for="palabra">Palabra:</label>
+    <input type="text" id="texto"><button onclick="anade();">Añade</button>
+    <select id="select1" name="select1" onchange="anade2();">
+    </select>
+    <select id="select2" name="select2">
+    </select>
+    <br>
+    <div>
+        <label for="categoria">Categoría:</label>
+        <select id="categoria" onchange="cargarSubcategorias()">
+            <option value="">Selecciona una categoría</option>
+            <option value="0">Tecnología</option>
+            <option value="1">Hogar</option>
+            <option value="2">Ropa</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="subcategoria">Subcategoría:</label>
+        <select id="subcategoria">
+            <option value="">Selecciona una subcategoría</option>
+        </select>
+    </div>
+</body>
+
+</html>
