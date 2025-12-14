@@ -17,7 +17,7 @@ function cargarArticulos() {
                     div.style.display = "block";
 
                     const fila = document.createElement("tr");
-
+                    fila.classList.add("articulo");
                     fila.innerHTML = `
                     <td>${articulo.codigo}</td>
                     <td>${articulo.descripcion}</td>
@@ -28,6 +28,11 @@ function cargarArticulos() {
 
                     fila.onclick = function () {
                         console.log("Haz seleccionado el artículo");
+                        document.getElementById("codigo").value = articulo.codigo;
+                        document.getElementById("descripcion").value = articulo.descripcion;
+                        document.getElementById("cantidad").value = articulo.cantidad;
+                        document.getElementById("precio").value = articulo.precio;
+                        document.getElementById("subtotal").innerHTML = subtotal.innerHTML;
                     }
 
 
@@ -69,6 +74,21 @@ function rellenarBusqueda() {
         });
 }
 
+function calcularBase() {
+    let base = 0;
+    let subtotales = document.getElementsByClassName('subtotal');
+    for (i = 0; i < subtotales.length; i++) {
+        base += parseFloat(subtotales[i].textContent);
+    }
+    document.getElementById("base").textContent = base.toFixed(2);
+}
+
+function calcularTotal() {
+    let total = parseFloat(document.getElementById("base").textContent);
+    let iva = total * 0.21;
+    document.getElementById("total").textContent = total + iva;
+}
+
 function insertar() {
     const codigo = document.getElementById("codigo").value;
     const descripcion = document.getElementById("descripcion").value;
@@ -98,6 +118,8 @@ function insertar() {
                     <td class="subtotal">${subtotal.innerHTML = parseFloat(precio) * parseInt(cantidad)}</td>
                 `;
                 tbody.appendChild(fila);
+                calcularBase();
+                calcularTotal();
 
             } else {
                 alert("Error al insertar el artículo: " + data.mensaje);
@@ -105,24 +127,37 @@ function insertar() {
         })
 }
 
+const buscador = document.getElementById("buscador");
 
+buscador.addEventListener("input", function () {
+    const texto = buscador.value;
+    const tabla = document.getElementById("tabla-articulos");
+    const tbody = tabla.querySelector("tbody");
+    const url = `php/buscar_articulos.php?texto=${texto}`;
 
-function calcularBase() {
-    let base = 0;
-    let subtotales = document.getElementsByClassName('subtotal');
-    for (i = 0; i < subtotales.length; i++) {
-        base += parseFloat(subtotales[i].textContent);
-    }
-    document.getElementById("base").textContent = base.toFixed(2);
-}
+    console.log(texto);
 
-function calcularTotal() {
-    let total = parseFloat(document.getElementById("base").textContent);
-    let iva = total * 0.21;
-    document.getElementById("total").textContent = total + iva;
-}
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            tbody.innerHTML = "";
+            data.forEach(articulo => {
 
-function cargarArticulo() {
-    alert('Cargando artículos');
+                console.log(articulo);
 
-}
+                const fila = document.createElement("tr");
+                fila.classList.add("articulo");
+                fila.innerHTML = `
+                <td>${articulo.codigo}</td>
+                <td>${articulo.descripcion}</td>
+                <td>${articulo.cantidad}</td>
+                <td>${articulo.precio}</td>
+                <td>${articulo.precio * articulo.cantidad}</td>
+                `;
+
+                tbody.appendChild(fila);
+            });
+        })
+        .catch(error => console.error(error));
+});
+
