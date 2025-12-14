@@ -1,65 +1,45 @@
-// function cargarArticulos() {
-//     const tabla = document.getElementById("tabla-articulos");
-//     const tbody = tabla.querySelector("tbody");
-//     const url = `php/listar_articulos.php`;
-
-//     fetch(url)
-//         .then(res => res.json())
-//         .then(data => {
-//             if (data.length > 0) {
-//                 data.forEach(articulo => {
-//                     tabla.style.display = "table";
-//                     const fila = document.createElement("tr");
-//                     fila.innerHTML = `
-//                     <td>${articulo.codigo}</td>
-//                     <td>${articulo.descripcion}</td>
-//                     <td>${articulo.cantidad}</td>
-//                     <td>${articulo.precio}</td>
-//                     <td class="subtotal">${articulo.subtotal}</td>
-//                     `;
-//                     tbody.appendChild(fila);
-//                 });
-//             } else {
-//                 alert("No hay artículos para mostrar.");
-//             }
-//         })
-//         .catch(error => console.error(error));
-// }
-
-document.addEventListener("DOMContentLoaded", async () => {
+function cargarArticulos() {
+    console.log('Cargando artículos');
+    const div = document.getElementById("capa-articulos");
     const tabla = document.getElementById("tabla-articulos");
     const tbody = tabla.querySelector("tbody");
+    tbody.innerHTML = '';
 
-    try {
-        // Petición al PHP que devuelve JSON
-        const respuesta = await fetch("php/listar_articulos.php");
-        const datos = await respuesta.json();
+    const url = `php/listar_articulos.php`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            tbody.innerHTML = "";
+            console.log(data);
 
-        // Si hay artículos
-        if (datos.length > 0) {
-            datos.forEach(articulo => {
-                tabla.style.display = "table";
+            if (data.length > 0) {
+                data.forEach(articulo => {
+                    div.style.display = "block";
 
-                const fila = document.createElement("tr");
-                fila.innerHTML = `
-                <td>${articulo.codigo}</td>
-                <td>${articulo.descripcion}</td>
-                <td>${articulo.cantidad}</td>
-                <td>${articulo.precio}</td>
-                <td class="subtotal">${articulo.subtotal}</td>
-                `;
-                tbody.appendChild(fila);
-            });
-            tabla.style.display = "table";
-        } else {
-            tabla.style.display = "none";
-        }
+                    const fila = document.createElement("tr");
 
-    } catch (error) {
-        tabla.style.display = "none";
-        console.error(error);
-    }
-});
+                    fila.innerHTML = `
+                    <td>${articulo.codigo}</td>
+                    <td>${articulo.descripcion}</td>
+                    <td>${articulo.cantidad}</td>
+                    <td>${articulo.precio}</td>
+                    <td>${subtotal.innerHTML = parseFloat(articulo.precio) * parseInt(articulo.cantidad)}</td>
+                    `;
+
+                    fila.onclick = function () {
+                        console.log("Haz seleccionado el artículo");
+                    }
+
+
+                    tbody.appendChild(fila);
+                });
+            } else {
+                alert("No hay artículos para mostrar.");
+            }
+        })
+        .catch(error => console.error(error));
+}
+
 
 
 function rellenarBusqueda() {
@@ -119,15 +99,13 @@ function insertar() {
                 `;
                 tbody.appendChild(fila);
 
-                calcularBase();
-                calcularTotal();
-
             } else {
                 alert("Error al insertar el artículo: " + data.mensaje);
             }
         })
-
 }
+
+
 
 function calcularBase() {
     let base = 0;

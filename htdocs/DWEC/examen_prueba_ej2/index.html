@@ -8,9 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <style>
-        /* #tabla-articulos {
+        #capa-articulos {
             display: none;
-        } */
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
 
         #informacion {
             display: none;
@@ -26,7 +29,7 @@
     <h2>Realizar facturas</h2>
     <div id="formulario">
         Código: <input type="text" id="codigo" onchange="rellenarBusqueda();">
-        <button onclick="cargarArticulo();">Cargar artículos</button><br><br>
+        <button onclick="cargarArticulos();">Cargar artículos</button><br><br>
         Descripción: <input type="text" id="descripcion"><br><br>
         Cantidad: <input type="number" id="cantidad"><br><br>
         Precio: <input type="number" id="precio"><br><br>
@@ -35,7 +38,7 @@
     <br>
     <button onclick="insertar()">Insertar</button>
     <br><br>
-    <div id="tabla-articulos">
+    <div id="capa-articulos">
         <table border="1" class="table" id="tabla-articulos">
             <thead>
                 <th>Código</th>
@@ -44,7 +47,7 @@
                 <th>Precio</th>
                 <th>Subtotal</th>
             </thead>
-            <tbody id="tbody">
+            <tbody>
 
             </tbody>
         </table>

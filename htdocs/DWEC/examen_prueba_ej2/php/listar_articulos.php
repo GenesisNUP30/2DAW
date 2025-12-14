@@ -11,7 +11,7 @@ if ($conexion->connect_error) {
 }
 
 $sql = "SELECT * FROM articulos";
-$resultado = mysqli_query($conexion, $sql);
+$resultado = $conexion->query($sql);
 
 $articulos = [];
 
@@ -28,5 +28,5 @@ if ($resultado && $resultado->num_rows > 0) {
     ]);
 }
 
+// Cerrar conexión
 mysqli_close($conexion);
-?>
