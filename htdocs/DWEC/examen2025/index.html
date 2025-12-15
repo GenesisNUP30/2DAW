@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen 2025</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<style>
+    #cliente-modificar {
+        display: none;
+    }
+
+    #busqueda {
+        display: none;
+    }
+
+    #estadisticas {
+        display: none;
+    }
+</style>
+
+<body>
+    <h2>Gestión de Clientes</h2>
+    <h>Lista de clientes</h>
+    <div id="clientes">
+        <br>
+        <div id="cargando">Cargando alumnos...</div>
+        Buscar por nombre: <input type="text" id="buscar-cliente">
+        <button onclick="buscarCliente();">Buscar</button>
+        <br><br>
+        Buscar por telefono: <input type="text" id="buscar-telefono">
+        <button onclick="buscarClienteTelefono();">Buscar</button>
+        <br><br>
+        <table border="1" class="table" id="busqueda">
+            <thead>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Telefono</th>
+                <th>Email</th>
+                <th>Dirección</th>
+                <th>Fecha_alta</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <table border="1" class="table" id="tabla-clientes">
+            <thead>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Telefono</th>
+                <th>Email</th>
+                <th>Dirección</th>
+                <th>Fecha_alta</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="formulario-cliente">
+        <h2>Crear cliente</h2>
+        Nombre: <input type="text" id="nombre"><br>
+        Apellidos: <input type="text" id="apellidos"><br>
+        Teléfono: <input type="text" id="telefono"><br>
+        Email: <input type="email" id="email"><br>
+        Dirección: <input type="text" id="direccion"><br><br>
+        <button onclick="crearcliente();">Crear cliente</button>
+    </div>
+
+    <div id="cliente-modificar">
+        <h2>Modificar cliente</h2>
+        <div id="cargando-modificar" style="display:none">Cargando cliente...</div>
+        Nombre: <input type="text" id="nombre2"><br>
+        Apellidos: <input type="text" id="apellidos2"><br>
+        Teléfono: <input type="text" id="telefono2"><br>
+        Email: <input type="email" id="email2"><br>
+        Dirección: <input type="text" id="direccion2"><br><br>
+        <button onclick="modificarcliente2();">Modificar cliente</button>
+    </div>
+    <br><br>
+    <h2>Gestión de Mascotas</h2>
+    <br>
+    <button onclick="verestadisticas();">Estadísticas</button>
+    <br><br>
+    <div id="mascotas">
+        <div id="cargando-mascotas">Cargando mascotas...</div>
+        <table border="1" class="table" id="tabla-mascotas">
+            <thead>
+                <th>Nombre</th>
+                <th>Especie</th>
+                <th>Raza</th>
+                <th>Fecha de nacimiento</th>
+                <th>Cliente propietario</th>
+                <th>Icono</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="formulario-mascota">
+        <h2>Crear mascota</h2>
+        Nombre: <input type="text" id="nombre"><br>
+        Especie: <input type="text" id="especie"><br>
+        Raza: <input type="text" id="rza"><br>
+        Fecha de nacimiento: <input type="date" id="fechanacimiento"><br>
+        Cliente:
+        <select id="cliente">
+            <option value="">Seleccione un cliente</option>
+        </select>
+        <button onclick="crearmascota();">Crear mascota</button>
+    </div>
+    <br><br>
+    <div id="estadisticas">
+        <table class="table" id="tabla-estadisticas">
+            <thead>
+                <th>Numero total de clientes</th>
+                <th>Numero total de mascotas</th>
+                <!-- <th>Mascota mas comun</th>
+                <th>Cliente con mas mascotas</th> -->
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="js/utiles.js"></script>
+
+</html>
