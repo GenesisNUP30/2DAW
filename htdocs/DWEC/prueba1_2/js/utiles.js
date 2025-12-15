@@ -1,7 +1,69 @@
 var codigo_global = null;
 
+// Cargar provincias al iniciar
+async function cargarProvincias() {
+    try {
+        const res = await fetch("php/listar_provincias.php");
+        const provincias = await res.json();
+
+        const selectProv = document.getElementById("provincia");
+        const selectProv2 = document.getElementById("provincia2");
+
+        selectProv.innerHTML = '<option value="">Seleccione una provincia</option>';
+        selectProv2.innerHTML = '<option value="">Seleccione una provincia</option>';
+
+        provincias.forEach(prov => {
+            const option = document.createElement("option");
+            option.value = prov;
+            option.textContent = prov;
+            selectProv.appendChild(option.cloneNode(true));
+            selectProv2.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar provincias:", error);
+    }
+}
+
+// Cargar poblaciones cuando cambia la provincia
+async function cargarPoblaciones(provincia, selectPoblacionId) {
+    const selectPoblacion = document.getElementById(selectPoblacionId);
+    selectPoblacion.innerHTML = '<option value="">Cargando...</option>';
+
+    if (!provincia) {
+        selectPoblacion.innerHTML = '<option value="">Seleccione una provincia primero</option>';
+        return;
+    }
+
+    try {
+        const res = await fetch(`php/listar_poblaciones.php?provincia=${encodeURIComponent(provincia)}`);
+        const poblaciones = await res.json();
+
+        selectPoblacion.innerHTML = '<option value="">Seleccione una población</option>';
+        poblaciones.forEach(pob => {
+            const option = document.createElement("option");
+            option.value = pob;
+            option.textContent = pob;
+            selectPoblacion.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar poblaciones:", error);
+        selectPoblacion.innerHTML = '<option value="">Error al cargar</option>';
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    cargarCoches(); // ← primera carga
+    cargarCoches();
+    cargarProvincias();
+
+    // Para el formulario principal
+    document.getElementById("provincia").addEventListener("change", function () {
+        cargarPoblaciones(this.value, "poblacion");
+    });
+
+    // Para el formulario de modificación
+    document.getElementById("provincia2").addEventListener("change", function () {
+        cargarPoblaciones(this.value, "poblacion2");
+    });
 });
 // Cuando la página carga
 async function cargarCoches() {
@@ -166,11 +228,18 @@ function modificarCoche(codigo) {
             document.getElementById("marca2").value = data[0].marca;
             document.getElementById("modelo2").value = data[0].modelo;
             document.getElementById("precio2").value = data[0].precio;
+            // ✅ Seleccionar provincia
             document.getElementById("provincia2").value = data[0].provincia;
-            document.getElementById("poblacion2").value = data[0].poblacion;
-            console.log(data);
+
+            // ✅ Cargar poblaciones de esa provincia y luego seleccionar
+            cargarPoblaciones(data[0].provincia, "poblacion2").then(() => {
+                document.getElementById("poblacion2").value = data[0].poblacion;
+                console.log(data);
+
+            });
         })
         .catch(error => console.error(error));
+
 }
 
 function modificarCoche2() {
