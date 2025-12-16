@@ -11,7 +11,7 @@ if ($conexion->connect_error) {
     die(json_encode(["error" => "Error de conexión: " . $conexion->connect_error]));
 }
 
-$sql = "SELECT *, clientes.nombre AS cliente_propietario FROM mascotas INNER JOIN clientes ON mascotas.id = clientes.id";
+$sql = "SELECT *, clientes.nombre AS cliente_propietario FROM mascotas INNER JOIN clientes ON mascotas.id_cliente = clientes.id";
 $resultado = mysqli_query($conexion, $sql);
 
 $mascotas = [];
