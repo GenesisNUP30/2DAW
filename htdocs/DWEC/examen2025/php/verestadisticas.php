@@ -20,14 +20,17 @@ $sql = "SELECT COUNT(*) AS total_mascotas FROM mascotas";
 $resultado = mysqli_query($conexion, $sql);
 $datos['total_mascotas'] = $resultado->fetch_assoc()['total_mascotas'];
 
-// $sql = "SELECT mascotas.nombre AS mascota_comun FROM mascotas INNER JOIN clientes ON mascotas.id_cliente = clientes.id WHERE clientes.id = (SELECT MAX(id) FROM clientes)";
-// $resultado = mysqli_query($conexion, $sql);
-// $datos['mascota_comun'] = $resultado->fetch_assoc()['mascota_comun'];
+$sql = "SELECT especie, COUNT(*) AS cantidad FROM mascotas GROUP BY especie ORDER BY cantidad DESC LIMIT 1";
+$resultado = mysqli_query($conexion, $sql);
+$fila = $resultado->fetch_assoc();
+$datos['mascota_comun'] = $fila['especie'];
+$datos['cantidad_mascota_comun'] = $fila['cantidad'];
 
-// $sql = "SELECT clientes.nombre AS cliente_con_mas_mascotas FROM mascotas INNER JOIN clientes ON mascotas.id_cliente = clientes.id WHERE clientes.id = (SELECT MAX(id) FROM clientes)";
-// $resultado = mysqli_query($conexion, $sql);
-// $datos['cliente_con_mas_mascotas'] = $resultado->fetch_assoc()['cliente_con_mas_mascotas'];
+$sql = "SELECT c.nombre AS cliente_nombre, COUNT(m.id) AS cantidad_mascotas FROM clientes c JOIN mascotas m ON c.id = m.id_cliente GROUP BY c.id, c.nombre ORDER BY cantidad_mascotas DESC LIMIT 1";
+$resultado = mysqli_query($conexion, $sql);
+$fila = $resultado->fetch_assoc();
+$datos['cliente_con_mas_mascotas'] = $fila['cliente_nombre'];
+$datos['cantidad_mascotas_cliente'] = $fila['cantidad_mascotas'] ?? 0;
 
 // Siempre devolvemos un ARRAY (vacío si no hay datos)
 echo json_encode($datos, JSON_UNESCAPED_UNICODE);
-?>

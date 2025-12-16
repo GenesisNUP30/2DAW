@@ -12,12 +12,16 @@ async function cargarClientes() {
     const cargando = document.getElementById("cargando");
 
     try {
-        // Petición al PHP que devuelve JSON
         const respuesta = await fetch("php/listarclientes.php");
         const datos = await respuesta.json();
 
-        tbody.innerHTML = "";
-        // Si hay clientes
+        // Destruir DataTable si ya existía
+        if ($.fn.DataTable.isDataTable('#tabla-clientes')) {
+            $('#tabla-clientes').DataTable().destroy();
+        }
+
+        tbody.innerHTML = ""; 
+
         if (datos.length > 0) {
             datos.forEach(cliente => {
                 const fila = document.createElement("tr");
@@ -30,14 +34,13 @@ async function cargarClientes() {
                     <td>${cliente.direccion}</td>
                     <td>${cliente.fecha_alta}</td>
                     <td>
-                    <button onclick="eliminarcliente(${cliente.id}, this);">Eliminar</button>
-                    <button onclick="modificarcliente(${cliente.id});">Modificar</button>
-                    </td
+                        <button onclick="eliminarcliente(${cliente.id}, this);">Eliminar</button>
+                        <button onclick="modificarcliente(${cliente.id});">Modificar</button>
+                    </td>
                 `;
-                tbody.appendChild(fila);
-
+                
                 fila.onclick = function () {
-                    codigo_cliente = cliente.id;
+                    const codigo_cliente = cliente.id;
                     const filainformacion = document.createElement("tr");
                     filainformacion.style.display = "block";
                     const url = `php/mostrarmascotascliente.php?codigo=${codigo_cliente}`;
@@ -49,19 +52,33 @@ async function cargarClientes() {
                             if (data.length > 0) {
                                 data.forEach(mascota => {
                                     filainformacion.innerHTML += `
-                                    <td>Mascota: <strong>${mascota.nombre}</strong>
-                                    Mascota de <strong>${cliente.nombre}</strong></td>
-                                `;
-                                    fila.appendChild(filainformacion);
+                                        <td colspan="8">
+                                            Mascota: <strong>${mascota.nombre}</strong>
+                                            Mascota de <strong>${cliente.nombre}</strong>
+                                        </td>
+                                    `;
+                                    fila.parentNode.insertBefore(filainformacion, fila.nextSibling);
                                 });
                             } else {
-                                filainformacion.innerHTML = `<p>No hay mascotas para este cliente.</p>`;
+                                filainformacion.innerHTML = `<td colspan="8">No hay mascotas para este cliente.</td>`;
+                                fila.parentNode.insertBefore(filainformacion, fila.nextSibling);
                             }
                         })
                         .catch(error => console.error(error));
-                }
+                };
 
+                tbody.appendChild(fila);
             });
+
+            // Inicializar DataTable después de agregar filas
+            $('#tabla-clientes').DataTable({
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+                }
+            });
+
             tabla.style.display = "table";
             cargando.style.display = "none";
         } else {
@@ -75,6 +92,7 @@ async function cargarClientes() {
         console.error(error);
     }
 }
+
 
 async function cargarmascotas() {
     const tabla = document.getElementById("tabla-mascotas");
@@ -90,12 +108,15 @@ async function cargarmascotas() {
         // Si hay mascotas
         if (datos.length > 0) {
             datos.forEach(mascota => {
-                tipomascota = mascota.especie;
-                switch (tipomascota) {
+                let icono = "";
+                switch (mascota.especie.toLowerCase()) {
                     case "perro":
                         icono = "img/perro.png";
                         break;
                     case "gato":
+                        icono = "img/gato.png";
+                        break;
+                    case "gata":
                         icono = "img/gato.png";
                         break;
                     case "ave":
@@ -108,12 +129,14 @@ async function cargarmascotas() {
                 const fila = document.createElement("tr");
                 fila.innerHTML = `
                 
-                    <td>${mascota.nombre}</td>
+                    <td>${mascota.nombre_mascota}</td>
                     <td>${mascota.especie}</td>
                     <td>${mascota.raza}</td>
                     <td>${mascota.fecha_nacimiento}</td>
-                    <td>${mascota.cliente_propietario}</td>
-                    <td></td>
+                    <td>${mascota.nombre_cliente}</td>
+                    <td>
+                    <img src="${icono}" alt="Icono de mascota" width="50" height="50">
+                    </td>
                     <td>
                     <button onclick="eliminarmascota(${mascota.id}, this);">Eliminar</button>
                     </td>
@@ -179,11 +202,9 @@ function crearcliente() {
         alert("Debe rellenar los campos obligatorios");
         return;
     }
-
-    if (validarEmail(email)) {
-        console.log("El email es válido.");
-    } else {
-        console.log("El email no es válido.");
+    if (!validarEmail(email)) {
+        alert("El email no es válido");
+        return;
     }
 
     telefonocliente = parseInt(telefono);
@@ -268,8 +289,8 @@ function eliminarcliente(codigo, boton) {
     const tbody = tabla.querySelector("tbody");
     const url = `php/eliminarcliente.php?codigo=${codigo}`;
 
-    let respuesta = prompt("¿Estás seguro de que quieres borrar el cliente?");
-    if (respuesta === "si") {
+    const confirmado = confirm("¿Estás seguro de que quieres borrar el cliente?");
+    if (confirmado) {
         fetch(url)
             .then(res => res.json())
             .then(data => {
@@ -375,15 +396,17 @@ function buscarClienteTelefono() {
 }
 
 
-
 function crearmascota() {
-    const nombre = document.getElementById("nombre").value;
+    const nombre = document.getElementById("nombre_mascota").value;
     const especie = document.getElementById("especie").value;
-    const raza = document.getElementById("rza").value;
+    const raza = document.getElementById("raza").value;
     const fechanacimiento = document.getElementById("fechanacimiento").value;
     const id_cliente = document.getElementById("cliente").value;
 
-
+    if (id_cliente === "") {
+        alert("Debe seleccionar un cliente.");
+        return;
+    }
 
     const url = `php/crearmascota.php?nombre=${encodeURIComponent(nombre)}&especie=${encodeURIComponent(especie)}&raza=${encodeURIComponent(raza)}&fechanacimiento=${encodeURIComponent(fechanacimiento)}&id_cliente=${encodeURIComponent(id_cliente)}`;
 
@@ -391,11 +414,12 @@ function crearmascota() {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            alert(data.message);
+            alert(data.mensaje);
             cargarmascotas();
         })
         .catch(error => console.error(error));
 }
+
 
 function eliminarmascota(codigo, boton) {
     const tabla = document.getElementById("tabla-mascotas");
@@ -443,6 +467,8 @@ function verestadisticas() {
             fila.innerHTML = `
                 <td>${data.total_clientes}</td>
                 <td>${data.total_mascotas}</td>
+                <td>${data.mascota_comun}</td>
+                <td>${data.cliente_con_mas_mascotas}</td>
             `;
             tbody.appendChild(fila);
         })

@@ -12,7 +12,7 @@ if ($conexion->connect_error) {
 }
 
 $codigocliente = $_GET["codigo"];
-$sql = "SELECT * FROM mascotas WHERE id = $codigocliente";
+$sql = "SELECT * FROM mascotas WHERE id_cliente = $codigocliente";
 $resultado = mysqli_query($conexion, $sql);
 
 $mascotas = [];

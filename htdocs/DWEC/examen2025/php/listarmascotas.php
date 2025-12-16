@@ -11,7 +11,16 @@ if ($conexion->connect_error) {
     die(json_encode(["error" => "Error de conexión: " . $conexion->connect_error]));
 }
 
-$sql = "SELECT *, clientes.nombre AS cliente_propietario FROM mascotas INNER JOIN clientes ON mascotas.id_cliente = clientes.id";
+$sql = "SELECT 
+    mascotas.id,
+    mascotas.nombre AS nombre_mascota,
+    mascotas.especie,
+    mascotas.raza,
+    mascotas.fecha_nacimiento,
+    clientes.nombre AS nombre_cliente,
+    clientes.apellidos
+FROM mascotas
+JOIN clientes ON mascotas.id_cliente = clientes.id";
 $resultado = mysqli_query($conexion, $sql);
 
 $mascotas = [];
@@ -22,8 +31,7 @@ if ($resultado && $resultado->num_rows > 0) {
     }
     // Devolver los datos como JSON
     echo json_encode($mascotas, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-} 
+}
 
 // Cerrar conexión
-mysqli_close($conexion);    
-?>
+mysqli_close($conexion);
