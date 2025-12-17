@@ -4,7 +4,7 @@
 let palabra_id_global = null;
 let partida_activa = false;
 let usuarioLogueado = null;
-let esAdmin = false; 
+let esAdmin = false;
 
 // Al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
@@ -61,8 +61,8 @@ function verificarSesionYJugar() {
             return fetch("php/obtener_rol.php")
                 .then(res => res.text())
                 .then(rol => {
-                    esAdmin = (rol.trim() === "1"); 
-                    
+                    esAdmin = (rol.trim() === "1");
+
                     // Mostrar botón SOLO si es admin
                     const botonAdmin = document.getElementById("boton-admin");
                     if (botonAdmin && esAdmin) {
@@ -162,8 +162,16 @@ function jugarLetra(letra) {
             document.getElementById("puntos").textContent = data.puntos;
 
             // Deshabilitar botón
-            const btn = Array.from(document.querySelectorAll("#teclado button"))
-                .find(b => b.textContent.toLowerCase() === letra);
+            const botones = document.querySelectorAll("#teclado button");
+            let btn = null;
+
+            for (let i = 0; i < botones.length; i++) {
+                if (botones[i].textContent.toLowerCase() === letra) {
+                    btn = botones[i];
+                    break;
+                }
+            }
+
             if (btn) {
                 btn.disabled = true;
                 btn.className = data.acierto
@@ -329,7 +337,7 @@ function agregarPalabra() {
     }
 
     const url = `php/admin_palabras.php?accion=agregar&palabra=${encodeURIComponent(palabra)}&categoria_id=${encodeURIComponent(catId)}`;
-    
+
     fetch(url)
         .then(res => res.text())
         .then(data => {
