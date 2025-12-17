@@ -1,22 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Examen 2025 v2</title>
+    <style>
+        #precio-modelo {
+            display: none;
+        }
+
+        #compras {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
     <h2>Marca y modelo</h2>
-    <select id="marca" >
+    <select id="marca" onchange="cargarModelos();">
         <option value="">Seleccione una marca</option>
     </select>
-    <select id="modelo">
+    <select id="modelo" onchange="obtenerprecio(this.value);">
         <option value="">Seleccione un modelo</option>
     </select>
+    <br><br>
+    <div id="icono-marca">
 
-    <button onclick="mostrarCompras();">Ver compras</button>
+    </div>
+    <br><br>
+    <div id="numero-modelos">
+
+    </div>
+
+    <div id="precio-modelo">
+        Introducir precio: <input type="number" id="precio"><br><br>
+        <button onclick="actualizarprecio();">Actualizar precio</button>
+    </div>
+    <br>
+    <br>
+    <button onclick="comprarcoche();">Comprar coche</button>
     <br><br>
     <div id="compras">
+        <h3>Lista de compra</h3>
         <table class="table" id="tabla-compras">
             <thead>
                 <th>Marca</th>
@@ -30,6 +56,25 @@
             </tbody>
         </table>
     </div>
+    <br><br>
+    <div id="buscador">
+        Buscar <input type="text" id="busca-modelo">
+        <button onclick="buscarModelo();">Buscar</button>
+        <br><br>
+        <table class="table" id="tabla-modelos">
+            <thead>
+                <th>ID</th>
+                <th>Nombre</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <div id="marca-busqueda">
+
+        </div>
+    </div>
 </body>
 <script src="js/utiles.js"></script>
+
 </html>

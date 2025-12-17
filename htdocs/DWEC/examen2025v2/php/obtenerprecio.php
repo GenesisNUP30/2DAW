@@ -1,4 +1,5 @@
 <?php
+
 // Encabezado para indicar que la respuesta es JSON
 header('Content-Type: application/json; charset=utf-8');
 
@@ -10,24 +11,22 @@ if ($conexion->connect_error) {
     die(json_encode(["error" => "Error de conexión: " . $conn->connect_error]));
 }
 
-$id_marca = $_GET['id_marca'];
+$id_modelo = $_GET['id_modelo'];
 
-
-$sql = "SELECT id, nombre, COUNT(*) AS cantidad FROM modelos WHERE id_marca = '$id_marca'GROUP BY id";
+$sql = "SELECT precio FROM modelos WHERE id = $id_modelo";
 $resultado = mysqli_query($conexion, $sql);
 
-$modelos = [];
+$precio = [];
+
 if ($resultado && $resultado->num_rows > 0) {
     while ($fila = $resultado->fetch_assoc()) {
-        $modelos[] = $fila;
+        $precio[] = $fila;
     }
     // Devolver los datos como JSON
-    echo json_encode($modelos, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    echo json_encode($precio, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     
 }
 
 // Cerrar conexión
 $conexion->close();
 ?>
-
-
