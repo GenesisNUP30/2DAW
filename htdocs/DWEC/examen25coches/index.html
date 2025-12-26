@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #extras {
+            display: none;
+        }
+
+        #tabla-compras {
+            display: none;
+        }
+
+        .modelo {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Examen 2025 (Modelos y coches)</h1>
+    <h2>Marca y modelo</h2>
+    <select id="marca" onchange="listarmodelos(); mostrarlogo();">
+        <option value="">Seleccione una marca</option>
+    </select>
+    <select id="modelo" onchange="obtenerprecio();">
+        <option value="">Selecciona un modelo</option>
+    </select>
+    <br>
+    <img id="icono-marca" src="">
+    <br>
+    <div id="precio-modelo">
+
+    </div>
+    <br>
+    <div id="mumero-modelos">
+
+    </div>
+    <br>
+    <div id="extras">
+        Extras:
+        <br>
+        <input type="radio" name="color" value="0" onchange="calcularpreciofinal();"> Color blanco
+        <br>
+        <input type="radio" name="color" value="300" onchange="calcularpreciofinal();"> Color negro
+        <br>
+        <input type="radio" name="color" value="300" onchange="calcularpreciofinal();"> Color rojo
+        <br>
+        <input type="radio" name="color" value="300" onchange="calcularpreciofinal();"> Color azul
+        <br>
+        <input type="radio" name="puertas" value="0" onchange="calcularpreciofinal();"> 2 puertas
+        <br>
+        <input type="radio" name="puertas" value="800" onchange="calcularpreciofinal();"> 5 puertas
+        <br>
+        <input type="checkbox" id="aire-acondicionado" value="1000" onchange="calcularpreciofinal();"> Aire acondicionado
+        <br>
+        <input type="checkbox" id="llantas" value="500" onchange="calcularpreciofinal();"> Llantas
+        <br><br>
+        Precio base: <span id="precio-base"></span>
+        <br>
+        <h2>PRECIO FINAL:
+            <span id="precio-final">
+
+            </span>
+            <div id="compra">
+                
+            </div>
+        </h2>
+    </div>
+    <table id="tabla-compras" border="1">
+        <thead>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Precio final</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <div id="buscador">
+        Buscar modelo: <input type="text" id="buscador-modelo">
+        <div id="resultados-busqueda"></div>
+        <div id="marca-busqueda"></div>
+    </div>
+</body>
+<script src="js/utiles.js"></script>
+
+</html>
