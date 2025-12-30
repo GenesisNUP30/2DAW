@@ -51,7 +51,7 @@ class InicioCtrl {
     {
         $login = Sesion::getInstance();
         $login->onlyLogged();
-        $login->onlyAdministrador(); 
+        // $login->onlyAdministrador();
 
         $modelo = new Tareas();
         $tarea = $modelo->obtenerTareaPorId($id);

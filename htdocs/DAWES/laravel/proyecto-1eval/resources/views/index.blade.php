@@ -92,11 +92,11 @@
     }
 
     .tabla-tareas .btn-completar {
-        background: linear-gradient(135deg, #3182ce, #2b6cb0);
+        background: linear-gradient(135deg, #a231ceff, #792bb0ff);
     }
 
     .tabla-tareas .btn-completar:hover {
-        background: linear-gradient(135deg, #2b6cb0, #2c5282);
+        background: linear-gradient(135deg, #5f3f87ff, #532c82ff);
         transform: translateY(-2px);
         box-shadow: 0 3px 6px rgba(49, 130, 206, 0.3);
     }
@@ -146,6 +146,9 @@
                     </a>
                     @endif
                     @if($_SESSION['rol'] == 'operario')
+                    <a href="{!! miurl('tarea/' . $tarea['id']) !!}" class="btn btn-detalle">
+                        <i class="fas fa-eye me-1"></i>Ver más
+                    </a>
                     <a href="{!! miurl('completar/' . $tarea['id']) !!}" class="btn btn-completar">
                         <i class="fas fa-check-circle me-1"></i>Completar
                     </a>
