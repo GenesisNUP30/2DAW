@@ -67,8 +67,8 @@ class AltaCtrl
                 'estado' => "",
                 'operario_encargado' => "",
                 'fecha_realizacion' => "",
-                'anotaciones_anteriores' => "",
-                'anotaciones_posteriores' => "",
+                'anotaciones' => ""
+                // 'anotaciones_posteriores' => "",
             ];
             return view('alta', $datos);
         }
@@ -134,13 +134,21 @@ class AltaCtrl
             }
         }
 
-        if ($codigo_postal != "" && !preg_match("/^[0-9]{5}$/", $codigo_postal)) {
-            Funciones::$errores['codigo_postal'] = "El código postal introducido no es válido, debe tener 5 números";
+        if ($codigo_postal == "") {
+            Funciones::$errores['codigo_postal'] = "Debe introducir el código postal";
         }
 
         if ($provincia === "") {
             Funciones::$errores['provincia'] = "Debe introducir la provincia";
         }
+
+        if ($codigo_postal !== "" && preg_match("/^[0-9]{5}$/", $codigo_postal) && $provincia !== "") {
+            $resultado = Funciones::validarCodigoPostalProvincia($codigo_postal, $provincia);
+            if ($resultado !== true) {
+                Funciones::$errores['provincia'] = $resultado;
+            }
+        }
+
 
         $fechaActual = date('Y-m-d');
         if ($fecha_realizacion == "") {

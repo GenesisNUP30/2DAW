@@ -9,7 +9,7 @@
         margin: 30px auto;
         background: #fff;
         border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         padding: 20px 30px;
         font-size: 14px;
         color: #4a5568;
@@ -135,6 +135,26 @@
             <span class="label">Anotaciones posteriores:</span>
             <span>{{ $tarea['anotaciones_posteriores'] }}</span>
         </div>
+        @if (!empty($tarea['fichero_resumen']))
+        <div class="campo">
+            <span class="label">Fichero adjunto:</span>
+            <span>
+                <a href="{!! miurl('tarea/' . $tarea['id'] . '/fichero') !!}"
+                    class="btn-volver"
+                    style="margin-top:0; padding:6px 12px; font-size:13px;">
+                    <i class="fas fa-file-download me-1"></i>
+                    Descargar fichero
+                </a>
+            </span>
+        </div>
+        @else
+        <div class="campo">
+            <span class="label">Fichero adjunto:</span>
+            <span class="text-muted"><em>No hay fichero adjunto</em></span>
+        </div>
+        @endif
+
+
     </div>
 
     <a href="{!! miurl('/') !!}" class="btn-volver"><i class="fas fa-arrow-left me-1"></i> Volver</a>

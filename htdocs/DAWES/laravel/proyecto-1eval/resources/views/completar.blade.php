@@ -18,7 +18,8 @@
         display: block;
     }
 
-    .form-control, .form-check-input {
+    .form-control,
+    .form-check-input {
         border: 1px solid #cbd5e0;
         border-radius: 6px;
         padding: 0.5rem 0.75rem;
@@ -129,8 +130,13 @@
     </div>
 
     <div class="form-row">
+        @php
+        $esCompletada = old('estado', 'R') == 'R';
+        @endphp
         <label class="form-label">Fecha de realización:</label>
-        <input type="date" name="fecha_realizacion" class="form-control" value="{{ $fecha_realizacion }}" readonly>
+        <input type="date" name="fecha_realizacion" class="form-control"
+            value="{{ old('fecha_realizacion', $fecha_realizacion) }}" {{ $esCompletada ? '' : 'readonly' }}>
+        {!! \App\Models\Funciones::verErrores('fecha_realizacion') !!}
     </div>
 
     <div class="form-row">
@@ -144,10 +150,13 @@
         {!! \App\Models\Funciones::verErrores('anotaciones_posteriores') !!}
     </div>
 
+    @if($esCompletada)
     <div class="form-row">
         <label class="form-label">Fichero resumen:</label>
-        <input type="file" id="fichero_resumen" name="fichero_resumen" multiple class="form-control">
+        <input type="file" id="fichero_resumen" name="fichero_resumen" class="form-control">
+        {!! \App\Models\Funciones::verErrores('fichero_resumen') !!}
     </div>
+    @endif
 
     <div class="mt-4">
         <button type="submit" class="btn-submit">

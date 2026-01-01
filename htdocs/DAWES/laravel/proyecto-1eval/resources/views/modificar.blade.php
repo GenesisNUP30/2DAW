@@ -179,7 +179,7 @@
         <textarea id="anotaciones_posteriores" name="anotaciones_posteriores" class="form-control">{{ $anotaciones_posteriores ?? '' }}</textarea>
     </div>
 
-    <div class="form-row">
+    <!-- <div class="form-row">
         <label class="form-label">Fichero resumen:</label>
         <input type="file" id="fichero_resumen" name="fichero_resumen" class="form-control">
     </div>
@@ -187,7 +187,7 @@
     <div class="form-row">
         <label class="form-label">Fotos del trabajo:</label>
         <input type="file" id="fotos" name="fotos[]" multiple class="form-control">
-    </div>
+    </div> -->
 
     <div class="mt-4">
         <a href="{{ url('/') }}" class="btn-cancel">

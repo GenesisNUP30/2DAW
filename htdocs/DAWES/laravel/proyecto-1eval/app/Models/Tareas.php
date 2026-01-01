@@ -36,7 +36,7 @@ class Tareas
      *
      * @return array Devuelve un array con todas las tareas.
      */
-    public function listarTareas()
+    public function listarTareas(): array
     {
         $sql = 'SELECT * FROM tareas';
         $resultado = $this->bd->query($sql);
@@ -46,6 +46,51 @@ class Tareas
             $tareas[] = $fila;
         }
         return $tareas;
+    }
+
+    /**
+     * Lista todas las tareas de la base de datos, paginadas. 
+     * Permite filtrar solo las tareas pendientes si se indica.
+     * 
+     * @param int $pagina Número de página a mostrar.
+     * @param int $porPagina Número de registros por página.
+     * @param bool $soloPendientes Si es true, solo lista tareas pendientes.
+     * @return array Devuelve un array con todas las tareas y el total de registros.
+     */
+
+    public function listarTareasPaginadas(int $pagina, int $porPagina, bool $soloPendientes = false): array
+    {
+        $offset = ($pagina - 1) * $porPagina;
+
+        // Condición para filtrar solo tareas pendientes en la sentencia sql
+        if ($soloPendientes) {
+            $where = 'WHERE estado = "P"';
+        } else {
+            $where = "";
+        }
+
+        // Total de registros
+        $sqlTotal = "SELECT COUNT(*) AS total FROM tareas $where";
+        $resTotal = $this->bd->query($sqlTotal);
+        $filaTotal = $this->bd->LeeRegistro($resTotal);
+        $totalRegistros = (int)$filaTotal['total'];
+
+        // Registros de la página actual, ordenados por fecha de realización descendente
+        $sql = "SELECT * FROM tareas $where
+            ORDER BY fecha_realizacion DESC, id DESC
+            LIMIT $offset, $porPagina";
+
+        $resultado = $this->bd->query($sql);
+
+        $tareas = [];
+        while ($fila = $this->bd->LeeRegistro($resultado)) {
+            $tareas[] = $fila;
+        }
+
+        return [
+            'tareas' => $tareas,
+            'total' => $totalRegistros
+        ];
     }
 
     /**
@@ -90,7 +135,7 @@ class Tareas
             '{$this->bd->escape($datos['estado'])}',
             '{$this->bd->escape($datos['operario_encargado'])}',
             '{$this->bd->escape($datos['fecha_realizacion'])}',
-            '{$this->bd->escape($datos['anotaciones_anteriores'])}'
+            '{$this->bd->escape($datos['anotaciones'])}'
         )";
 
         $this->bd->query($sql);
@@ -156,7 +201,13 @@ class Tareas
     {
         $sql = "UPDATE tareas SET
             estado = '{$this->bd->escape($datos['estado'])}',
-            anotaciones_posteriores = '{$this->bd->escape($datos['anotaciones_posteriores'])}'
+            anotaciones_posteriores = '{$this->bd->escape($datos['anotaciones_posteriores'])}',
+            fecha_realizacion = " . ($datos['fecha_realizacion']
+            ? "'" . $this->bd->escape($datos['fecha_realizacion']) . "'"
+            : "NULL") . ",
+            fichero_resumen = " . ($datos['fichero_resumen']
+            ? "'" . $this->bd->escape($datos['fichero_resumen']) . "'"
+            : "NULL") . "
             WHERE id = $id";
         $this->bd->query($sql);
     }

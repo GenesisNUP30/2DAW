@@ -49,6 +49,7 @@ Route::post('/completar/{id}', [CompletarCtrl::class, 'completar']);
 
 // Ver detalles de tarea
 Route::get('/tarea/{id}', [InicioCtrl::class, 'verTarea']);
+Route::get('tarea/{id}/fichero', [InicioCtrl::class, 'descargarFichero']);
 
 
 // Listar usuarios

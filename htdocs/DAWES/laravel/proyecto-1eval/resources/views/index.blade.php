@@ -100,6 +100,36 @@
         transform: translateY(-2px);
         box-shadow: 0 3px 6px rgba(49, 130, 206, 0.3);
     }
+
+    .paginacion {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .paginacion a,
+    .paginacion span {
+        display: inline-block;
+        margin: 0 4px;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .paginacion a {
+        background: #e2e8f0;
+        color: #2d3748;
+    }
+
+    .paginacion a:hover {
+        background: #cbd5e0;
+    }
+
+    .paginacion .actual {
+        background: #3182ce;
+        color: white;
+    }
 </style>
 @endsection('estilos')
 
@@ -108,6 +138,19 @@
     <h1 class="mb-4">
         <i class="fas fa-tasks me-2"></i>Gestión de Tareas
     </h1>
+
+    <div class="mb-3">
+        @if(!$soloPendientes)
+        <a href="{{ miurl('?pendientes=1') }}" class="btn btn-warning">
+            <i class="fas fa-filter me-1"></i> Listar tareas pendientes
+        </a>
+        @else
+        <a href="{{ miurl('/') }}" class="btn btn-secondary">
+            <i class="fas fa-list me-1"></i> Ver todas las tareas
+        </a>
+        @endif
+    </div>
+
     <table class="tabla-tareas">
         <thead>
             <tr>
@@ -158,6 +201,37 @@
             @endforeach
         </tbody>
     </table>
+
+    <div class="paginacion">
+
+        <div>
+            @if($paginaActual > 1)
+            <a href="{{ miurl('?page=1' . ($soloPendientes ? '&pendientes=1' : '')) }}">⏮ Primera</a>
+            <a href="{{ miurl('?page=' . ($paginaActual - 1) . ($soloPendientes ? '&pendientes=1' : '')) }}">◀ Anterior</a>
+            @endif
+
+            <span class="actual">
+                Página {{ $paginaActual }} de {{ $totalPaginas }}
+            </span>
+
+            @if($paginaActual < $totalPaginas)
+                <a href="{{ miurl('?page=' . ($paginaActual + 1) . ($soloPendientes ? '&pendientes=1' : '')) }}">Siguiente ▶</a>
+                <a href="{{ miurl('?page=' . $totalPaginas . ($soloPendientes ? '&pendientes=1' : '')) }}">Última ⏭</a>
+                @endif
+        </div>
+    </div>
+
+
+    <form method="get" style="margin-top:10px;">
+        <input type="hidden" name="pendientes" value="{{ $soloPendientes ? 1 : '' }}">
+        <label>Ir a página:</label>
+        <input type="number" name="page"
+            min="1" max="{{ $totalPaginas }}"
+            value="{{ $paginaActual }}"
+            style="width:60px;">
+        <button type="submit">Ir</button>
+    </form>
+
 </div>
 
 @endsection('cuerpo')

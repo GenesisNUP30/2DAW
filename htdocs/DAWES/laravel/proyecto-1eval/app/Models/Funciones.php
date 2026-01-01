@@ -179,6 +179,25 @@ class Funciones
     }
 
     /**
+     * Comprueba que el código postal corresponde con la provincia seleccionada.
+     *
+     * @param string $codigo_postal Código postal (5 dígitos)
+     * @param string $provincia Código de provincia (2 dígitos)
+     * @return true|string
+     */
+
+    public static function validarCodigoPostalProvincia($codigo_postal, $provincia)
+    {
+        $cpProvincia = substr($codigo_postal, 0, 2);
+
+        if ($cpProvincia !== $provincia) {
+            return "La provincia seleccionada no corresponde con el código postal";
+        }
+
+        return true;
+    }
+
+    /**
      * Comprueba que las contraseñas cumplan los criterios.
      *
      * @param string $password_antigua Contraseña actual.

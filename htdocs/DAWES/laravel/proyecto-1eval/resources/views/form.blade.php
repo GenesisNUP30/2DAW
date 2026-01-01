@@ -36,7 +36,7 @@
 
     <div class="form-row">
         <label class="form-label">Población:</label>
-        <input type="text" name="poblacion" class="form-control" value="<?= htmlspecialchars($poblacion) ?>">
+        <input type="text" name="poblacion" class="form-control" value="<?= htmlspecialchars($poblacion) ?>"> 
     </div>
 
     <div class="form-row">
@@ -83,18 +83,8 @@
     </div>
 
     <div class="form-row">
-        <label class="form-label">Anotaciones anteriores:</label>
-        <textarea id="anotaciones_anteriores" name="anotaciones_anteriores" class="form-control">{{ $anotaciones_anteriores ?? '' }}</textarea>
-    </div>
-
-    <div class="form-row">
-        <label class="form-label">Fichero resumen:</label>
-        <input type="file" id="fichero_resumen" name="fichero_resumen" class="form-control">
-    </div>
-
-    <div class="form-row">
-        <label class="form-label">Fotos del trabajo:</label>
-        <input type="file" id="fotos" name="fotos[]" multiple class="form-control">
+        <label class="form-label">Anotaciones:</label>
+        <textarea id="anotaciones" name="anotaciones" class="form-control">{{ $anotaciones ?? '' }}</textarea>
     </div>
 
     <div class="mt-4">

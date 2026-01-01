@@ -58,6 +58,7 @@ class CompletarCtrl
     public function completar($id)
     {
         if ($_POST) {
+
             $modelo = new Tareas();
             $tarea = $modelo->obtenerTareaPorId($id);
 
@@ -72,9 +73,37 @@ class CompletarCtrl
                 return view('completar', array_merge($_POST, ['id' => $id]));
             }
 
+            $rutaFichero = null;
+
+            if ($_POST['estado'] === 'R') {
+
+                if (
+                    isset($_FILES['fichero_resumen']) &&
+                    $_FILES['fichero_resumen']['error'] === UPLOAD_ERR_OK
+                ) {
+                    $carpeta = storage_path('app/pruebas_tareas');
+
+                    if (!is_dir($carpeta)) {
+                        mkdir($carpeta, 0755, true);
+                    }
+
+                    $nombreSeguro = $id . '_' . basename($_FILES['fichero_resumen']['name']);
+                    $rutaCompleta = $carpeta . '/' . $nombreSeguro;
+
+                    move_uploaded_file(
+                        $_FILES['fichero_resumen']['tmp_name'],
+                        $rutaCompleta
+                    );
+
+                    $rutaFichero = $nombreSeguro;
+                }
+            }
+
             $datos = [
                 'estado' => $_POST['estado'],
                 'anotaciones_posteriores' => $_POST['anotaciones_posteriores'],
+                'fecha_realizacion' => $_POST['fecha_realizacion'],
+                'fichero_resumen' => $rutaFichero,
             ];
             $modelo->completarTarea($id, $datos);
             miredirect('/');
@@ -99,6 +128,20 @@ class CompletarCtrl
 
         if ($anotaciones_posteriores === "") {
             Funciones::$errores['anotaciones_posteriores'] = "Debe introducir las anotaciones posteriores";
+        }
+
+        // Solo si esta completada
+        if ($estado === "R") {
+
+            if (empty($fecha_realizacion)) {
+                Funciones::$errores['fecha_realizacion'] = "Debe introducir la fecha de realización";
+            }
+
+            if (
+                !isset($_FILES['fichero_resumen']) || $_FILES['fichero_resumen']['error'] !== UPLOAD_ERR_OK
+            ) {
+                Funciones::$errores['fichero_resumen'] = "Debe subir un fichero como prueba del trabajo";
+            }
         }
     }
 }
