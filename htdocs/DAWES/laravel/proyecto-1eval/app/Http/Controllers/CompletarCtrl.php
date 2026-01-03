@@ -46,7 +46,11 @@ class CompletarCtrl
 
     /**
      * Completa la tarea con el estado y las anotaciones posteriores.
-     *
+     * Si el estado es 'R', se valida que el fichero de prueba esté subido.
+     * Si no, se muestra un error.
+     * Si el fichero de prueba está subido, se almacena en el sistema, en la carpeta 'pruebas_tareas'.
+     * El nombre del fichero se compone del ID de la tarea y el nombre original del fichero.
+     * 
      * Valida los datos enviados por el formulario, y si no hay errores,
      * actualiza la tarea en la base de datos mediante el modelo Tareas.
      * Redirige a la página principal después de completar la tarea.

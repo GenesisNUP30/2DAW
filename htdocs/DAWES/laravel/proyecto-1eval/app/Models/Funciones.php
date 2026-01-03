@@ -180,6 +180,8 @@ class Funciones
 
     /**
      * Comprueba que el código postal corresponde con la provincia seleccionada.
+     * Separa los dos primeros dígitos del código postal y los compara con el código de provincia.
+     * Devuelve true si coinciden, o un mensaje de error si no.
      *
      * @param string $codigo_postal Código postal (5 dígitos)
      * @param string $provincia Código de provincia (2 dígitos)

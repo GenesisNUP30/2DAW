@@ -68,7 +68,6 @@ class AltaCtrl
                 'operario_encargado' => "",
                 'fecha_realizacion' => "",
                 'anotaciones' => ""
-                // 'anotaciones_posteriores' => "",
             ];
             return view('alta', $datos);
         }
@@ -78,8 +77,9 @@ class AltaCtrl
      * Filtra y valida los datos del formulario de alta de tareas.
      *
      * Verifica que los campos obligatorios no estén vacíos,
-     * valida NIF/CIF, correo electrónico y teléfono, y
-     * asegura que la fecha de realización sea posterior a la actual.
+     * valida NIF/CIF, correo electrónico y teléfono.
+     * Además asegura que el la provincia coincida con el código postal y
+     * que la fecha de realización sea posterior a la actual.
      *
      * Los errores se almacenan en Funciones::$errores con el
      * nombre del campo como clave y el mensaje de error como valor.
@@ -148,7 +148,6 @@ class AltaCtrl
                 Funciones::$errores['provincia'] = $resultado;
             }
         }
-
 
         $fechaActual = date('Y-m-d');
         if ($fecha_realizacion == "") {
