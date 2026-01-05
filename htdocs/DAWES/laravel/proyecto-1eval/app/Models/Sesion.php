@@ -32,6 +32,10 @@ class Sesion
     public function __construct()
     {
         session_start();
+
+        if (!$this->isLogged() && isset($_COOKIE['recordar_usuario'])) {
+            $this->loginDesdeCookie();
+        }
     }
 
     /**
@@ -65,6 +69,9 @@ class Sesion
      * Consulta la base de datos buscando un usuario que coincida con
      * el nombre y contraseña introducidos. Si existe, crea la sesión
      * asignando ID, usuario, rol y hora de login.
+     * Además, crea una cookie para recordar el último usuario.
+     * Si se envía el formulario con el checkbox "recordarme",
+     * se crea un token de sesión válido por 3 días.
      *
      * @param string $usuario Nombre del usuario
      * @param string $password Contraseña del usuario
@@ -90,11 +97,106 @@ class Sesion
                 time() + (60 * 60 * 24 * 30),
                 '/',
             );
-            
+
+            if (isset($_POST['recordarme'])) {
+                $this->crearTokenRecordarme($usuario);
+            }
+
             return true;
         }
         return false;
     }
+
+    /**
+     * Si el usuario ha seleccionado el checkbox "recordarme",
+     * crea un token de sesión válido por 3 días.
+     * Genera un selector y un validador aleatorios y los encripta. 
+     * Invalida los tokens antiguos, almacena el nuevo en la BD y crea las cookies correspondientes.
+     * @param string $usuario Nombre del usuario
+     * @return void
+     * 
+     */
+
+    public function crearTokenRecordarme(string $usuario): void
+    {
+        $db = DB::getInstance();
+
+        // Generar selector y validator aleatorios
+        $selector = bin2hex(random_bytes(8));
+        $validator = bin2hex(random_bytes(32));
+
+        // Encriptar selector y validator
+        $selectorHash = password_hash($selector, PASSWORD_DEFAULT);
+        $validatorHash = password_hash($validator, PASSWORD_DEFAULT);
+
+        // Asignar fecha de expiración a 3 días
+        $fecha_expira = date('Y-m-d H:i:s', time() + (3 * 24 * 60 * 60));
+
+        // Invalidar tokens antiguos
+        $db->query("UPDATE login_token SET is_expired = 1 WHERE usuario = '$usuario'");
+
+        //Guardar nuevo token
+        $db->query("INSERT INTO login_token (usuario, selector_hash, validator_hash, expiry_date)
+        VALUES ('$usuario', '$selectorHash', '$validatorHash', '$fecha_expira')
+        ");
+
+        // Guardar cookie durante 3 días
+        setcookie('recordar_usuario', $usuario, time() + (3 * 24 * 60 * 60), '/');
+        setcookie('recordar_selector', $selector, time() + (3 * 24 * 60 * 60), '/');
+        setcookie('recordar_validator', $validator, time() + (3 * 24 * 60 * 60), '/');
+    }
+
+    /**
+     * Intenta iniciar sesión automáticamente usando las cookies "recordarme".
+     * Verifica el token almacenado en la base de datos.
+     * Si es válido, crea la sesión del usuario.
+     * Si no es válido, invalida el token y borra las cookies.
+     * @return void
+     */
+
+    public function loginDesdeCookie(): void
+    {
+        $db = DB::getInstance();
+        $fecha_actual = date('Y-m-d H:i:s');
+
+        // Obtiene los valores de las cookies y las asigna a variables
+        $usuario = $_COOKIE['recordar_usuario'];
+        $selector = $_COOKIE['recordar_selector'];
+        $validator = $_COOKIE['recordar_validator'];
+
+        // Busca el token del usuario en la base de datos
+        $token = $db->LeeUnRegistro(
+            'login_token',
+            "usuario = '$usuario' AND is_expired = 0 AND expiry_date > '$fecha_actual'"
+        );
+
+        // Verifica si el token es válido
+        // Si es válido, crea la sesión del usuario
+        if ($token && password_verify($selector, $token['selector_hash']) && password_verify($validator, $token['validator_hash'])) {
+            $_SESSION['usuario'] = $usuario;
+            $_SESSION['logueado'] = true;
+
+            // Si no es válido, invalida el token y borra las cookies
+        } else {
+            if ($token) {
+                $db->query("UPDATE login_token SET is_expired = 1 WHERE usuario = '$usuario'");
+            }
+            $this->borrarCookiesRecordarme();
+        }
+
+    }
+
+    /**
+     * Borra las cookies relacionadas con la función "recordarme".
+     * @return void
+     */
+    public function borrarCookiesRecordarme(): void
+    {
+        setcookie('recordar_usuario', '', time() - 3600, '/');
+        setcookie('recordar_selector', '', time() - 3600, '/');
+        setcookie('recordar_validator', '', time() - 3600, '/');
+    }
+
 
     /**
      * Cierra completamente la sesión del usuario.
@@ -107,6 +209,7 @@ class Sesion
     {
         $_SESSION = [];
         session_destroy();
+        $this->borrarCookiesRecordarme();
     }
 
     /**
