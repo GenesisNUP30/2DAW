@@ -92,12 +92,19 @@
     <form method="post">
         <div class="form-group">
             <label for="usuario" class="form-label">Usuario</label>
-            <input type="text" id="usuario" name="usuario" class="form-control" autocomplete="username" required>
+            <input type="text" id="usuario" name="usuario" class="form-control" value="{{ $_COOKIE['ultimo_usuario'] ?? '' }}" autocomplete="username">
         </div>
 
         <div class="form-group">
             <label for="password" class="form-label">Contraseña</label>
-            <input type="password" id="password" name="password" class="form-control" autocomplete="current-password" required>
+            <input type="password" id="password" name="password" class="form-control" autocomplete="current-password">
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="recordarme">
+                Recordarme durante 3 días
+            </label>
         </div>
 
         <button type="submit" class="btn-login">

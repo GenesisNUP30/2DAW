@@ -83,6 +83,14 @@ class Sesion
             $_SESSION['rol'] = $user['rol'];
             $_SESSION['logado'] = true;
             $_SESSION['hora_logado'] = date('Y-m-d H:i:s');
+
+            setcookie(
+                'ultimo_usuario',
+                $usuario,
+                time() + (60 * 60 * 24 * 30),
+                '/',
+            );
+            
             return true;
         }
         return false;
