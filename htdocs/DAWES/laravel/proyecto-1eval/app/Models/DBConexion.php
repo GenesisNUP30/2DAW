@@ -1,39 +1,36 @@
 <?php
 /**
- * Configuración de conexión a la base de datos.
+ * @file database.php
  *
- * Este archivo retorna un array asociativo con los parámetros necesarios
- * para conectarse a la base de datos del proyecto.
+ * @brief Configuración de la conexión a la base de datos del sistema.
+ *
+ * Este archivo devuelve un array asociativo con los parámetros necesarios
+ * para establecer la conexión con la base de datos utilizada por el proyecto.
+ *
+ * Es cargado por las clases encargadas de gestionar el acceso a datos.
  *
  * @package Config
  */
 
 return [
+
     /**
-     * Servidor de la base de datos.
-     * 
-     * @var string
+     * @var string Servidor donde se aloja la base de datos.
      */
     'servidor' => 'localhost',
 
     /**
-     * Usuario de la base de datos.
-     * 
-     * @var string
+     * @var string Usuario con permisos sobre la base de datos.
      */
     'usuario' => 'root',
 
     /**
-     * Contraseña del usuario de la base de datos.
-     * 
-     * @var string
+     * @var string Contraseña asociada al usuario de la base de datos.
      */
     'password' => '',
 
     /**
-     * Nombre de la base de datos.
-     * 
-     * @var string
+     * @var string Nombre de la base de datos utilizada por el proyecto.
      */
     'base_datos' => 'proyecto_1eval'
 ];

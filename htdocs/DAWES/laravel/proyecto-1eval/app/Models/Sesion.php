@@ -5,12 +5,17 @@ namespace App\Models;
 use App\Models\DB;
 
 /**
- * Clase encargada de la gestión de sesiones de usuario.
+ * @class Sesion
+ * @brief Gestión de sesiones de usuario con patrón Singleton.
  *
- * Implementa el patrón Singleton para asegurar que solo exista una única
- * instancia del controlador de sesión en toda la aplicación.
- * Proporciona funciones para validación de login, cierre de sesión,
- * verificación de permisos y acceso a datos del usuario autenticado.
+ * Esta clase gestiona el login, logout, permisos de acceso, roles de usuario,
+ * inicio de sesión desde cookies y almacenamiento de datos de sesión.
+ *
+ * Implementa:
+ * - Validación de login con usuario y contraseña.
+ * - Creación y verificación de token "recordarme".
+ * - Control de acceso según rol (operario/administrador).
+ * - Patrón Singleton para asegurar una única instancia.
  *
  * @package App\Models
  */
@@ -28,6 +33,7 @@ class Sesion
      *
      * Inicia la sesión e impide que la clase pueda ser instanciada
      * desde fuera para mantener el patrón Singleton.
+     * Verifica si se puede iniciar sesión desde cookie "recordarme".
      */
     public function __construct()
     {
@@ -82,22 +88,26 @@ class Sesion
         date_default_timezone_set('Europe/Madrid');
 
         $db = DB::getInstance();
+
+        // Verifica si el usuario existe en la base de datos
         $user = $db->LeeUnRegistro('usuarios', 'usuario = "' . $usuario . '" AND password = "' . $password . '"');
 
+        // Si existe, crea la sesión
         if ($user) {
-            $_SESSION['id'] = $user['id'];
-            $_SESSION['usuario'] = $usuario;
-            $_SESSION['rol'] = $user['rol'];
-            $_SESSION['logado'] = true;
-            $_SESSION['hora_logado'] = date('Y-m-d H:i:s');
+            $_SESSION['id'] = $user['id']; // ID del usuario
+            $_SESSION['usuario'] = $usuario; // Nombre del usuario
+            $_SESSION['logado'] = true; // Marca logueado como true
+            $_SESSION['hora_logado'] = date('Y-m-d H:i:s'); // Hora de login
 
+            // Guarda el nombre del último usuario en la cookie durante 3 días (para que coincida con "recordarme")
             setcookie(
                 'ultimo_usuario',
                 $usuario,
-                time() + (60 * 60 * 24 * 30),
+                time() + (3 * 24 * 60 * 60),
                 '/',
             );
 
+            // Si se ha seleccionado el checkbox "recordarme", crea el token de sesión
             if (isset($_POST['recordarme'])) {
                 $this->crearTokenRecordarme($usuario);
             }

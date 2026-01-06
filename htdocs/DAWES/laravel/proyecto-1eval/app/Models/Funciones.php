@@ -3,11 +3,15 @@
 namespace App\Models;
 
 /**
- * Clase Funciones
+ * @class Funciones
+ * @brief Funciones utilitarias y validaciones para el sistema de gestión de tareas.
  *
- * Contiene funciones utilitarias y validaciones comunes para el sistema de gestión de tareas.
- * Incluye validaciones de NIF/CIF, teléfonos, contraseñas, formato de fechas,
- * manejo de errores y lista de provincias españolas.
+ * Esta clase contiene métodos estáticos que realizan:
+ * - Validaciones de NIF/CIF y teléfonos.
+ * - Validaciones de contraseñas y código postal.
+ * - Conversión y formato de fechas.
+ * - Generación de listas de provincias españolas.
+ * - Gestión de errores de validación.
  *
  * @package App\Models
  */
@@ -105,9 +109,8 @@ class Funciones
     }
 
     /**
-     * Lista de provincias españolas.
      *
-     * @var array
+     * @var array Lista de provincias españolas con código y nombre.
      */
     public static $provincias = [
         "01" => "Araba/Álava",
@@ -165,7 +168,7 @@ class Funciones
     ];
 
     /**
-     * Genera el HTML de las opciones de provincias en un select.
+     * Muestra el listado de provincias como opciones HTML de un select.
      *
      * @param string $provinciaSeleccionada Código de la provincia que se desea marcar como seleccionada.
      * @return void
@@ -185,7 +188,7 @@ class Funciones
      *
      * @param string $codigo_postal Código postal (5 dígitos)
      * @param string $provincia Código de provincia (2 dígitos)
-     * @return true|string
+     * @return true|string True si coincide, mensaje de error si no.
      */
 
     public static function validarCodigoPostalProvincia($codigo_postal, $provincia)

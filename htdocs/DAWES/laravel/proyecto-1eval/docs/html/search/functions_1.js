@@ -1,7 +1,0 @@
-var searchData=
-[
-  ['actualizar_0',['actualizar',['../class_app_1_1_http_1_1_controllers_1_1_editar_usuario_ctrl.html#a39260d89d62595041604e2adac5f7dcd',1,'App::Http::Controllers::EditarUsuarioCtrl::actualizar()'],['../class_app_1_1_http_1_1_controllers_1_1_modificar_ctrl.html#aef65f1e3a572e9ebad65d2c155644bb6',1,'App::Http::Controllers::ModificarCtrl::actualizar()'],['../class_modificar_ctrl.html#aecaa968cac624e45ce02a3f83b120ae4',1,'ModificarCtrl::actualizar()'],['../class_editar_usuario_ctrl.html#aa6cac5dfed748498aa70e14e647c60b8',1,'EditarUsuarioCtrl::actualizar()']]],
-  ['actualizartarea_1',['actualizarTarea',['../class_app_1_1_models_1_1_tareas.html#a577b3fc938fb92f3545ea961b538abf4',1,'App::Models::Tareas::actualizarTarea()'],['../class_app_1_1_http_1_1_controllers_1_1_tareas.html#aec498f8212a895990c27600b4965d86c',1,'App::Http::Controllers::Tareas::actualizarTarea()']]],
-  ['actualizarusuario_2',['actualizarUsuario',['../class_app_1_1_models_1_1_usuarios.html#ac7b98ba47fd57279855da662af6b9b6c',1,'App::Models::Usuarios::actualizarUsuario()'],['../class_app_1_1_http_1_1_controllers_1_1_usuarios.html#a0afb8729033f3d366592689afde86415',1,'App::Http::Controllers::Usuarios::actualizarUsuario()']]],
-  ['alta_3',['alta',['../class_app_1_1_http_1_1_controllers_1_1_alta_ctrl.html#a423cf7e9caa21025913394f1233cccd8',1,'App::Http::Controllers::AltaCtrl::alta()'],['../class_alta_ctrl.html#a423cf7e9caa21025913394f1233cccd8',1,'AltaCtrl::alta()']]]
-];

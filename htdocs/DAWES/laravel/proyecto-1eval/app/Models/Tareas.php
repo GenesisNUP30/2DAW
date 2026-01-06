@@ -5,10 +5,18 @@ namespace App\Models;
 use App\Models\DB;
 
 /**
- * Modelo que gestiona todas las operaciones relacionadas con las tareas.
+ * @class Tareas
+ * @brief Modelo para la gestión de tareas en la base de datos.
  *
- * Permite listar, registrar, obtener, actualizar, completar y eliminar
- * tareas en la base de datos. Se conecta mediante la clase singleton DB.
+ * Este modelo proporciona métodos para:
+ * - Listar tareas completas o paginadas
+ * - Registrar nuevas tareas
+ * - Obtener una tarea por su ID
+ * - Actualizar tareas
+ * - Completar tareas
+ * - Eliminar tareas
+ *
+ * Utiliza la clase singleton DB para todas las operaciones de base de datos.
  *
  * @package App\Models
  */
@@ -54,7 +62,7 @@ class Tareas
      * 
      * @param int $pagina Número de página a mostrar.
      * @param int $porPagina Número de registros por página.
-     * @param bool $soloPendientes Si es true, solo lista tareas pendientes.
+     * @param bool $soloPendientes Si es true, solo muestra tareas pendientes.
      * @return array Devuelve un array con todas las tareas y el total de registros.
      */
 
