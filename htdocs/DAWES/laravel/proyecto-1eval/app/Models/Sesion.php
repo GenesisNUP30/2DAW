@@ -96,6 +96,7 @@ class Sesion
         if ($user) {
             $_SESSION['id'] = $user['id']; // ID del usuario
             $_SESSION['usuario'] = $usuario; // Nombre del usuario
+            $_SESSION['rol'] = $user['rol']; // Rol del usuario
             $_SESSION['logado'] = true; // Marca logueado como true
             $_SESSION['hora_logado'] = date('Y-m-d H:i:s'); // Hora de login
 
@@ -104,8 +105,7 @@ class Sesion
                 'ultimo_usuario',
                 $usuario,
                 time() + (3 * 24 * 60 * 60),
-                '/',
-            );
+                '/');
 
             // Si se ha seleccionado el checkbox "recordarme", crea el token de sesión
             if (isset($_POST['recordarme'])) {
@@ -183,17 +183,18 @@ class Sesion
         // Verifica si el token es válido
         // Si es válido, crea la sesión del usuario
         if ($token && password_verify($selector, $token['selector_hash']) && password_verify($validator, $token['validator_hash'])) {
-            $_SESSION['usuario'] = $usuario;
-            $_SESSION['logueado'] = true;
-
-            // Si no es válido, invalida el token y borra las cookies
-        } else {
-            if ($token) {
-                $db->query("UPDATE login_token SET is_expired = 1 WHERE usuario = '$usuario'");
+            // Recuperar datos completos del usuario
+            $user = $db->LeeUnRegistro('usuarios', 'usuario = "' . $usuario . '"');
+            if ($user) {
+                $_SESSION['usuario'] = $usuario;
+                $_SESSION['rol'] = $user['rol']; // <- esto faltaba
+                $_SESSION['logado'] = true;
+                $_SESSION['hora_logado'] = date('Y-m-d H:i:s'); // opcional
+            } else {
+                // Usuario no encontrado → borrar cookies
+                $this->borrarCookiesRecordarme();
             }
-            $this->borrarCookiesRecordarme();
         }
-
     }
 
     /**
