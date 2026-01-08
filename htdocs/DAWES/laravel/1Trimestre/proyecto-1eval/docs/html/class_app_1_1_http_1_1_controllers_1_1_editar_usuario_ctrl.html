@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: App::Http::Controllers::EditarUsuarioCtrl Class Reference</title>
+<title>Proyecto Laravel 1eval: App::Http::Controllers::EditarUsuarioCtrl Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -92,19 +92,25 @@ $(function(){initNavTree('class_app_1_1_http_1_1_controllers_1_1_editar_usuario_
 </div><!--header-->
 <div class="contents">
 
-<p>Controlador para la edición de usuarios.  
+<p>Controlador responsable de la edición de usuarios.  
  <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a39260d89d62595041604e2adac5f7dcd" id="r_a39260d89d62595041604e2adac5f7dcd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39260d89d62595041604e2adac5f7dcd">actualizar</a> ($id)</td></tr>
-<tr class="memdesc:a39260d89d62595041604e2adac5f7dcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actualiza los datos de un usuario.  <br /></td></tr>
+<tr class="memdesc:a39260d89d62595041604e2adac5f7dcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Procesa la actualización de los datos de un usuario.  <br /></td></tr>
 <tr class="memitem:ad37faa14a2c149ce9c965d6986ee6e2c" id="r_ad37faa14a2c149ce9c965d6986ee6e2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad37faa14a2c149ce9c965d6986ee6e2c">filtraDatos</a> ($password_actual, $usuario_original, $esAdministrador)</td></tr>
-<tr class="memdesc:ad37faa14a2c149ce9c965d6986ee6e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valida los datos recibidos desde el formulario de edición.  <br /></td></tr>
+<tr class="memdesc:ad37faa14a2c149ce9c965d6986ee6e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filtra y valida los datos del formulario de edición de usuarios.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Controlador para la edición de usuarios. </p>
-<p>Se encarga de la visualización del formulario de edición, validación de datos y actualización de los registros de usuarios. </p>
+<div class="textblock"><p>Controlador responsable de la edición de usuarios. </p>
+<p>Centraliza la lógica necesaria para:</p><ul>
+<li>Controlar permisos de acceso según el rol del usuario.</li>
+<li>Mostrar el formulario de edición con los datos actuales.</li>
+<li>Validar los datos enviados por el formulario.</li>
+<li>Persistir los cambios en la base de datos.</li>
+</ul>
+<p>La gestión de errores se realiza mediante {</p><dl class="section see"><dt>See also</dt><dd>Funciones::$errores}. </dd></dl>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a39260d89d62595041604e2adac5f7dcd" name="a39260d89d62595041604e2adac5f7dcd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a39260d89d62595041604e2adac5f7dcd">&#9670;&#160;</a></span>actualizar()</h2>
@@ -121,19 +127,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Actualiza los datos de un usuario. </p>
-<p>Comprueba si se ha enviado un POST y realiza:</p><ul>
-<li>Validación de datos.</li>
-<li>Actualización del registro en base de datos.</li>
-<li>Redirección según rol del usuario logueado.</li>
+<p>Procesa la actualización de los datos de un usuario. </p>
+<p>Este método se ejecuta tras el envío del formulario de edición:</p>
+<ul>
+<li>Verifica que el usuario esté autenticado.</li>
+<li>Comprueba los permisos según el rol.</li>
+<li>Valida los datos enviados por el formulario.</li>
+<li>Determina si se debe actualizar la contraseña.</li>
+<li>Actualiza el rol solo si el usuario logueado es administrador.</li>
+<li>Persiste los cambios en la base de datos.</li>
 </ul>
+<p>Tras la actualización, redirige al usuario a la página correspondiente según su rol.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>ID del usuario a actualizar. </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>Identificador único del usuario a actualizar.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>void Redirige a la página correspondiente tras la actualización. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View|\Illuminate\Http\RedirectResponse Recarga la vista con errores o redirige tras una actualización correcta. </dd></dl>
 
 </div>
 </div>
@@ -161,22 +172,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Valida los datos recibidos desde el formulario de edición. </p>
-<p>Comprueba:</p><ul>
-<li>Usuario no vacío y no repetido.</li>
-<li>Contraseña antigua si se quiere cambiar.</li>
-<li>Nueva contraseña y confirmación coinciden.</li>
-<li>Rol solo si es administrador.</li>
+<p>Filtra y valida los datos del formulario de edición de usuarios. </p>
+<p>Este método comprueba:</p><ul>
+<li>Que el nombre de usuario no esté vacío.</li>
+<li>Que el nombre de usuario no esté repetido (si se modifica).</li>
+<li>Si se desea cambiar la contraseña:<ul>
+<li>Que la contraseña antigua sea correcta.</li>
+<li>Que la nueva contraseña cumpla los requisitos y coincida con la confirmación.</li>
 </ul>
+</li>
+<li>Que el rol esté informado únicamente si el usuario logueado es administrador.</li>
+</ul>
+<p>Los errores detectados se almacenan en {</p><dl class="section see"><dt>See also</dt><dd>Funciones::$errores}.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$password_actual</td><td>Contraseña actual del usuario. </td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$usuario_original</td><td>Nombre de usuario original. </td></tr>
-    <tr><td class="paramtype">bool</td><td class="paramname">$esAdministrador</td><td>Si el usuario logueado es administrador. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$password_actual</td><td>Contraseña actual almacenada del usuario. </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$usuario_original</td><td>Nombre de usuario original antes de la edición. </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$esAdministrador</td><td>Indica si el usuario logueado es administrador.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>void Actualiza Funciones::$errores con los errores encontrados. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>

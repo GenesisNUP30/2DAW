@@ -1,40 +1,59 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Sesion;
 use App\Models\Tareas;
 
 /**
- * Controlador para eliminar tareas.
+ * @class EliminarCtrl
  *
- * Permite mostrar una confirmación de eliminación y eliminar
- * una tarea de la base de datos. Se asegura de que solo usuarios
- * logueados y administradores puedan realizar la acción.
+ * @brief Controlador responsable de la eliminación de tareas.
+ *
+ * Este controlador gestiona el proceso completo de borrado de tareas:
+ * - Verificación de autenticación del usuario.
+ * - Control de permisos (solo administradores).
+ * - Visualización de la pantalla de confirmación de eliminación.
+ * - Eliminación definitiva de la tarea de la base de datos.
+ *
+ * El proceso se divide en dos pasos para evitar eliminaciones accidentales:
+ * confirmación previa y eliminación final.
  *
  * @package App\Http\Controllers
  */
 class EliminarCtrl
 {
     /**
-     * Muestra la página de confirmación de eliminación de una tarea.
+     * @brief Muestra la vista de confirmación para eliminar una tarea.
      *
-     * Verifica que el usuario esté logueado y sea administrador.
-     * Obtiene la tarea por su ID y la pasa a la vista.
-     * Si la tarea no existe, lanza un error 404.
+     * Este método:
+     * - Verifica que el usuario esté autenticado.
+     * - Verifica que el usuario tenga rol de administrador.
+     * - Recupera la tarea asociada al identificador recibido.
+     * - Envía los datos de la tarea a la vista `eliminar`.
      *
-     * @param int $id ID de la tarea a eliminar
-     * @return \Illuminate\View\View Retorna la vista 'eliminar' con los datos de la tarea
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException Si la tarea no existe
+     * Si la tarea no existe, se devuelve una respuesta HTTP 404.
+     *
+     * @param int $id Identificador único de la tarea a eliminar.
+     *
+     * @return \Illuminate\View\View
+     * Devuelve la vista `eliminar` con los datos de la tarea.
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * Se lanza cuando la tarea no existe.
      */
     public function confirmar($id)
     {
+        // Control de acceso: usuario autenticado y administrador
         $login = Sesion::getInstance();
         $login->onlyLogged();
         $login->onlyAdministrador();
 
+        // Obtención de la tarea
         $modelo = new Tareas();
         $tarea = $modelo->obtenerTareaPorId($id);
 
+        // Comprobación de existencia
         if (!$tarea) {
             abort(404, 'Tarea no encontrada');
         }
@@ -43,18 +62,23 @@ class EliminarCtrl
     }
 
     /**
-     * Elimina una tarea de la base de datos.
+     * @brief Elimina definitivamente una tarea del sistema.
      *
-     * Llama al método del modelo Tareas para eliminar la tarea por ID
-     * y redirige a la página principal.
+     * Este método:
+     * - Invoca el método correspondiente del modelo {@see Tareas}
+     *   para eliminar la tarea por su identificador.
+     * - Redirige al usuario a la página principal tras completar la operación.
      *
-     * @param int $id ID de la tarea a eliminar
-     * @return void Redirige a la página principal después de la eliminación
+     * @param int $id Identificador único de la tarea a eliminar.
+     *
+     * @return void
      */
     public function eliminar($id)
     {
         $modelo = new Tareas();
         $modelo->eliminarTarea($id);
+
+        // Redirección tras la eliminación
         miredirect('/');
     }
 }

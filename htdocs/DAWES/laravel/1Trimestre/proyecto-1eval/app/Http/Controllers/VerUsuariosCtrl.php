@@ -1,10 +1,12 @@
 <?php
 /**
  * @file VerUsuariosCtrl.php
- * @brief Controlador encargado de mostrar el listado de usuarios.
  *
- * Este controlador gestiona la visualización de todos los usuarios del sistema.
- * Incluye validaciones de sesión y permisos, utilizando el modelo Sesion.
+ * @brief Controlador encargado de mostrar el listado de usuarios del sistema.
+ *
+ * Este controlador gestiona la visualización de todos los usuarios registrados,
+ * verificando previamente que el usuario esté autenticado y tenga permisos
+ * de administrador.
  */
 
 namespace App\Http\Controllers;
@@ -14,43 +16,47 @@ use App\Models\Sesion;
 
 /**
  * @class VerUsuariosCtrl
- * @brief Controlador para listar usuarios.
  *
- * Verifica que el usuario esté autenticado y tenga rol de administrador antes
- * de permitir el acceso al listado de usuarios.
+ * @brief Controlador para la visualización del listado de usuarios.
+ *
+ * Solo los usuarios con rol de administrador pueden acceder
+ * a este controlador.
  */
 class VerUsuariosCtrl
 {
     /**
-     * @brief Método principal del controlador.
+     * @brief Muestra el listado completo de usuarios.
      *
-     * Realiza tres tareas:
-     * - Comprueba si el usuario está logueado.
-     * - Comprueba si el usuario tiene permisos de administrador.
-     * - Solicita al modelo la lista de usuarios y devuelve la vista correspondiente.
+     * Este método:
+     * - Verifica que el usuario esté logueado.
+     * - Comprueba que el usuario tenga rol de administrador.
+     * - Obtiene la lista completa de usuarios desde el modelo.
+     * - Devuelve la vista `listarusuarios` con los datos obtenidos.
      *
-     * @return mixed Devuelve una vista con el listado de usuarios.
+     * @return \Illuminate\View\View
+     * Devuelve la vista `listarusuarios` con el array de usuarios.
      */
     public function index()
     {
         /** @var Sesion $login Instancia única del sistema de sesiones */
         $login = Sesion::getInstance();
 
-        // Asegurar que el usuario está logueado
+        // Comprobar autenticación
         $login->onlyLogged();
 
-        // Asegurar que el usuario es administrador
+        // Comprobar permisos de administrador
         $login->onlyAdministrador();
 
-        /** @var Usuarios $modelo Modelo que gestiona los usuarios */
+        /** @var Usuarios $modelo Modelo encargado de la gestión de usuarios */
         $modelo = new Usuarios();
 
-        /** 
-         * @var array $usuarios Lista completa de usuarios obtenidos desde el modelo.
+        /**
+         * @var array $usuarios
+         * Array con el listado completo de usuarios obtenidos desde el modelo.
          */
         $usuarios = $modelo->listarUsuarios();
 
-        // Retornar la vista pasando los usuarios
+        // Retornar la vista con los usuarios
         return view('listarusuarios', ['usuarios' => $usuarios]);
     }
 }

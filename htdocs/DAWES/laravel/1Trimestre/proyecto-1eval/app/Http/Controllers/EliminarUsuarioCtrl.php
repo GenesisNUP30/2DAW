@@ -1,13 +1,15 @@
 <?php
 /**
  * @file EliminarUsuarioCtrl.php
- * @brief Controlador encargado de la eliminación de usuarios en el sistema.
  *
- * Gestiona:
- * - Confirmación de eliminación de un usuario.
- * - Eliminación del usuario en la base de datos.
+ * @brief Controlador encargado de la eliminación de usuarios del sistema.
  *
- * Solo los administradores pueden eliminar usuarios.
+ * Este controlador gestiona el proceso completo de borrado de usuarios:
+ * - Visualización de la pantalla de confirmación de eliminación.
+ * - Eliminación definitiva del usuario en la base de datos.
+ *
+ * Por motivos de seguridad, **únicamente los usuarios con rol de administrador**
+ * pueden ejecutar estas acciones.
  */
 
 namespace App\Http\Controllers;
@@ -17,50 +19,75 @@ use App\Models\Sesion;
 
 /**
  * @class EliminarUsuarioCtrl
- * @brief Controlador para la eliminación de usuarios.
  *
- * Se encarga de la confirmación y eliminación de un usuario
- * verificando que el usuario logueado tenga permisos de administrador.
+ * @brief Controlador responsable de la eliminación de usuarios.
+ *
+ * Implementa un flujo de eliminación en dos pasos (confirmación y borrado)
+ * para evitar eliminaciones accidentales, garantizando además que
+ * el usuario autenticado tenga permisos de administrador.
+ *
+ * @package App\Http\Controllers
  */
 class EliminarUsuarioCtrl
 {
     /**
-     * @brief Muestra la página de confirmación para eliminar un usuario.
+     * @brief Muestra la vista de confirmación para eliminar un usuario.
      *
-     * Verifica que el usuario logueado sea administrador antes de mostrar el formulario.
+     * Este método:
+     * - Verifica que el usuario esté autenticado.
+     * - Verifica que el usuario tenga rol de administrador.
+     * - Recupera los datos del usuario a eliminar.
+     * - Envía la información a la vista `eliminarusuario`.
      *
-     * @param int $id ID del usuario a eliminar.
-     * @return mixed Devuelve la vista 'eliminarusuario' con los datos del usuario.
+     * Si el usuario no existe, se devuelve una respuesta HTTP 404.
+     *
+     * @param int $id Identificador único del usuario a eliminar.
+     *
+     * @return \Illuminate\View\View
+     * Devuelve la vista `eliminarusuario` con los datos del usuario.
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * Se lanza cuando el usuario no existe.
      */
     public function confirmar($id)
     {
+        // Control de acceso: usuario autenticado y administrador
         $login = Sesion::getInstance();
         $login->onlyLogged();
         $login->onlyAdministrador();
-        
+
+        // Obtención del usuario
         $modelo = new Usuarios();
         $usuario = $modelo->obtenerUsuarioPorId($id);
 
+        // Comprobación de existencia
         if (!$usuario) {
             abort(404, 'Usuario no encontrado');
         }
-        
+
         return view('eliminarusuario', ['usuario' => $usuario]);
     }
 
     /**
-     * @brief Elimina un usuario de la base de datos.
+     * @brief Elimina definitivamente un usuario del sistema.
      *
-     * Solo un administrador puede ejecutar esta acción.
-     * Redirige a la página principal tras la eliminación.
+     * Este método:
+     * - Invoca el método correspondiente del modelo {@see Usuarios}
+     *   para eliminar el usuario identificado por su ID.
+     * - Redirige al usuario a la página principal tras completar la operación.
      *
-     * @param int $id ID del usuario a eliminar.
-     * @return void Redirige a la página principal después de eliminar.
+     * Esta acción solo puede ser ejecutada por un administrador.
+     *
+     * @param int $id Identificador único del usuario a eliminar.
+     *
+     * @return void
      */
     public function eliminar($id)
     {
         $modelo = new Usuarios();
         $modelo->eliminarUsuario($id);
+
+        // Redirección tras la eliminación
         miredirect('/');
     }
 }

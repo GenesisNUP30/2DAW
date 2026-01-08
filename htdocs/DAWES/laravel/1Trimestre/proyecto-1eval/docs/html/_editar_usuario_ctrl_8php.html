@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: app/Http/Controllers/EditarUsuarioCtrl.php File Reference</title>
+<title>Proyecto Laravel 1eval: app/Http/Controllers/EditarUsuarioCtrl.php File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -92,28 +92,29 @@ $(function(){initNavTree('_editar_usuario_ctrl_8php.html','',''); });
 </div><!--header-->
 <div class="contents">
 
-<p>Controlador encargado de la edición de usuarios en el sistema.  
+<p>Controlador encargado de la edición de usuarios del sistema.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:App_3A_3AHttp_3A_3AControllers_3A_3AEditarUsuarioCtrl" id="r_App_3A_3AHttp_3A_3AControllers_3A_3AEditarUsuarioCtrl"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_app_1_1_http_1_1_controllers_1_1_editar_usuario_ctrl.html">App::Http::Controllers::EditarUsuarioCtrl</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controlador para la edición de usuarios.  <a href="class_app_1_1_http_1_1_controllers_1_1_editar_usuario_ctrl.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controlador responsable de la edición de usuarios.  <a href="class_app_1_1_http_1_1_controllers_1_1_editar_usuario_ctrl.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:App_3A_3AHttp_3A_3AControllers" id="r_App_3A_3AHttp_3A_3AControllers"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_app_1_1_http_1_1_controllers.html">App::Http::Controllers</a></td></tr>
+<tr class="memitem:App" id="r_App"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_app.html">App</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Controlador encargado de la edición de usuarios en el sistema. </p>
-<p>Gestiona:</p><ul>
-<li>Mostrar el formulario de edición de un usuario.</li>
-<li>Validar los datos recibidos.</li>
-<li>Actualizar la información del usuario en la base de datos.</li>
+<div class="textblock"><p>Controlador encargado de la edición de usuarios del sistema. </p>
+<p>Este controlador gestiona el ciclo completo de modificación de usuarios:</p><ul>
+<li>Visualización del formulario de edición.</li>
+<li>Validación de los datos introducidos.</li>
+<li>Actualización de la información del usuario en la base de datos.</li>
 </ul>
-<p>Se respetan los permisos según rol:</p><ul>
-<li>Administrador puede editar cualquier usuario.</li>
-<li>Operario solo puede editar su propio usuario y no cambiar el rol. </li>
+<p>El acceso y las acciones permitidas dependen del rol del usuario autenticado:</p><ul>
+<li><b>Administrador</b>: puede editar cualquier usuario y modificar su rol.</li>
+<li><b>Operario</b>: solo puede editar su propio usuario y no puede cambiar el rol. </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

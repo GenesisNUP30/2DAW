@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: app/Http/Controllers/EliminarUsuarioCtrl.php File Reference</title>
+<title>Proyecto Laravel 1eval: app/Http/Controllers/EliminarUsuarioCtrl.php File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -92,25 +92,26 @@ $(function(){initNavTree('_eliminar_usuario_ctrl_8php.html','',''); });
 </div><!--header-->
 <div class="contents">
 
-<p>Controlador encargado de la eliminación de usuarios en el sistema.  
+<p>Controlador encargado de la eliminación de usuarios del sistema.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:App_3A_3AHttp_3A_3AControllers_3A_3AEliminarUsuarioCtrl" id="r_App_3A_3AHttp_3A_3AControllers_3A_3AEliminarUsuarioCtrl"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_app_1_1_http_1_1_controllers_1_1_eliminar_usuario_ctrl.html">App::Http::Controllers::EliminarUsuarioCtrl</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controlador para la eliminación de usuarios.  <a href="class_app_1_1_http_1_1_controllers_1_1_eliminar_usuario_ctrl.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controlador responsable de la eliminación de usuarios.  <a href="class_app_1_1_http_1_1_controllers_1_1_eliminar_usuario_ctrl.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:App_3A_3AHttp_3A_3AControllers" id="r_App_3A_3AHttp_3A_3AControllers"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_app_1_1_http_1_1_controllers.html">App::Http::Controllers</a></td></tr>
+<tr class="memitem:App" id="r_App"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_app.html">App</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Controlador encargado de la eliminación de usuarios en el sistema. </p>
-<p>Gestiona:</p><ul>
-<li>Confirmación de eliminación de un usuario.</li>
-<li>Eliminación del usuario en la base de datos.</li>
+<div class="textblock"><p>Controlador encargado de la eliminación de usuarios del sistema. </p>
+<p>Este controlador gestiona el proceso completo de borrado de usuarios:</p><ul>
+<li>Visualización de la pantalla de confirmación de eliminación.</li>
+<li>Eliminación definitiva del usuario en la base de datos.</li>
 </ul>
-<p>Solo los administradores pueden eliminar usuarios. </p>
+<p>Por motivos de seguridad, <b>únicamente los usuarios con rol de administrador</b> pueden ejecutar estas acciones. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

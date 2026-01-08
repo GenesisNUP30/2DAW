@@ -5,50 +5,53 @@ use Illuminate\Support\Facades\Log;
 use mysqli;
 
 /**
- * Clase DB
+ * @class DB
+ * @brief Singleton para la conexión a la base de datos MySQL usando mysqli.
  *
- * Implementa un singleton para la conexión a la base de datos MySQL usando mysqli.
- * Proporciona métodos para ejecutar consultas, escapar valores, leer registros
- * y obtener el último ID insertado.
+ * Esta clase implementa un patrón singleton para asegurar que solo haya
+ * una conexión activa a la base de datos durante la ejecución del proyecto.
+ * Proporciona métodos para:
+ * - Ejecutar consultas SQL.
+ * - Escapar valores para evitar inyección SQL.
+ * - Leer registros de resultados de consultas.
+ * - Obtener el último ID insertado.
  *
  * @package App\Models
  */
 class DB {
 
     /**
-     * Conexión mysqli
-     * @var \mysqli
+     * @var \mysqli Conexión activa a la base de datos.
      */
     private $link;
 
     /**
-     * Resultado de la última consulta ejecutada
-     * @var \mysqli_result|null
+     * @var \mysqli_result|null Resultado de la última consulta ejecutada.
      */
     private $result;
 
     /**
-     * Registro actual leído
-     * @var array|null
+     * @var array|null Último registro leído mediante `LeeRegistro`.
      */
     private $regActual;
 
     /**
-     * Nombre de la base de datos
-     * @var string
+     * @var string Nombre de la base de datos usada por la conexión.
      */
     private $base_datos;
 
     /**
-     * Instancia única del singleton
-     * @var self|null
+     * @var self|null Instancia única del singleton DB.
      */
     static $_instance;
 
     /**
      * Constructor privado.
      *
-     * Inicializa la conexión a la base de datos usando la configuración de DBConexion.php.
+     * Inicializa la conexión a la base de datos usando la configuración de `DBConexion.php`.
+     * Evita instanciación externa directa para mantener el patrón singleton.
+     *
+     * @throws \Exception Si hay error de conexión o configuración incompleta.
      */
     private function __construct()
     {
@@ -62,9 +65,9 @@ class DB {
     private function __clone() {}
 
     /**
-     * Devuelve la única instancia de DB.
+     * Obtiene la instancia única de la clase DB.
      *
-     * @return self Instancia única de la clase DB
+     * @return self Instancia única de DB.
      */
     public static function getInstance() : self
     {
@@ -75,10 +78,15 @@ class DB {
     }
 
     /**
-     * Conecta a la base de datos usando la configuración proporcionada.
+     * Establece la conexión a la base de datos.
      *
-     * @param array $conf Array con claves 'servidor', 'usuario', 'password', 'base_datos'
-     * @throws \Exception Si faltan parámetros o hay error de conexión
+     * @param array $conf Array asociativo con las claves:
+     *                    - 'servidor': Servidor de la base de datos
+     *                    - 'usuario': Usuario de la base de datos
+     *                    - 'password': Contraseña del usuario
+     *                    - 'base_datos': Nombre de la base de datos
+     * @return void
+     * @throws \Exception Si faltan parámetros o falla la conexión.
      */
     private function Conectar(array $conf) : void
     {
@@ -107,10 +115,10 @@ class DB {
     }
 
     /**
-     * Escapa un valor para usarlo en una consulta SQL.
+     * Escapa un valor para uso seguro en consultas SQL.
      *
-     * @param string $value Valor a escapar
-     * @return string Valor escapado seguro
+     * @param string $value Valor a escapar.
+     * @return string Valor escapado seguro.
      */
     public function escape($value): string
     {
@@ -120,8 +128,8 @@ class DB {
     /**
      * Ejecuta una consulta SQL.
      *
-     * @param string $sql Consulta SQL a ejecutar
-     * @return \mysqli_result|bool Resultado de la consulta
+     * @param string $sql Consulta SQL a ejecutar.
+     * @return \mysqli_result|bool Resultado de la consulta, o false en caso de error.
      */
     public function query(string $sql)
     {
@@ -130,10 +138,10 @@ class DB {
     }
 
     /**
-     * Lee un registro del resultado de la última consulta o del resultado especificado.
+     * Lee un registro del resultado de una consulta.
      *
-     * @param \mysqli_result|null $result Resultado opcional
-     * @return array|null Registro leído o null si no hay registros
+     * @param \mysqli_result|null $result Resultado opcional. Si no se pasa, se usa el último ejecutado.
+     * @return array|null Registro leído como array asociativo, o null si no hay registros.
      */
     public function LeeRegistro($result = NULL) : ?array
     {
@@ -151,7 +159,7 @@ class DB {
     /**
      * Devuelve el último registro leído.
      *
-     * @return array|null Registro actual
+     * @return array|null Último registro leído o null si no se ha leído ninguno.
      */
     public function RegistroActual()
     {
@@ -159,9 +167,9 @@ class DB {
     }
 
     /**
-     * Devuelve el ID del último registro insertado.
+     * Devuelve el ID del último registro insertado en la base de datos.
      *
-     * @return int Último ID insertado
+     * @return int Último ID insertado.
      */
     public function LastID()
     {
@@ -169,12 +177,12 @@ class DB {
     }
 
     /**
-     * Lee un único registro de una tabla según la condición.
+     * Lee un único registro de una tabla según una condición.
      *
-     * @param string $tabla Nombre de la tabla
-     * @param string $condicion Condición WHERE
-     * @param string $campos Campos a seleccionar, por defecto '*'
-     * @return array|null Registro encontrado o null si no existe
+     * @param string $tabla Nombre de la tabla.
+     * @param string $condicion Condición WHERE (sin la palabra WHERE).
+     * @param string $campos Campos a seleccionar, por defecto '*'.
+     * @return array|null Registro encontrado como array asociativo, o null si no existe.
      */
     public function LeeUnRegistro($tabla, $condicion, $campos='*') : ?array
     {

@@ -22,6 +22,8 @@ use App\Models\DB;
  *
  * Este modelo encapsula todas las operaciones CRUD sobre usuarios,
  * utilizando la clase DB para la interacción con la base de datos.
+ *
+ * @package App\Models
  */
 class Usuarios
 {
@@ -32,6 +34,8 @@ class Usuarios
 
     /**
      * @brief Constructor que inicializa la conexión a la base de datos.
+     *
+     * Obtiene la instancia del singleton DB.
      */
     public function __construct()
     {
@@ -45,10 +49,12 @@ class Usuarios
      */
     public function listarUsuarios()
     {
+        // Consulta SQL para obtener todos los usuarios
         $sql = "SELECT * FROM usuarios";
         $resultado = $this->bd->query($sql);
 
         $usuarios = [];
+        // Recorre el resultado y lo añade al array
         while ($fila = $this->bd->LeeRegistro($resultado)) {
             $usuarios[] = $fila;
         }
@@ -58,7 +64,12 @@ class Usuarios
     /**
      * @brief Registra un nuevo usuario en la base de datos.
      *
-     * @param array $datos Arreglo con los datos del usuario ['usuario', 'password', 'rol'].
+     * Escapa los valores para evitar inyección SQL.
+     *
+     * @param array $datos Arreglo con los datos del usuario:
+     *                     ['usuario' => nombre de usuario, 
+     *                      'password' => contraseña, 
+     *                      'rol' => rol del usuario]
      */
     public function registraUsuario(array $datos)
     {
@@ -72,14 +83,17 @@ class Usuarios
             '{$this->bd->escape($datos['rol'])}'
         )";
 
+        // Ejecuta la consulta
         $this->bd->query($sql);
     }
 
     /**
      * @brief Obtiene los datos de un usuario por su ID.
      *
+     * Escapa el ID para evitar inyección SQL.
+     *
      * @param int $id ID del usuario.
-     * @return array|null Arreglo asociativo con los datos del usuario o null si no existe.
+     * @return array|null Arreglo asociativo con los datos del usuario, o null si no existe.
      */
     public function obtenerUsuarioPorId($id)
     {
@@ -92,21 +106,27 @@ class Usuarios
      * @brief Comprueba si un usuario ya existe en la base de datos.
      *
      * @param string $usuario Nombre de usuario a comprobar.
-     * @return bool true si el usuario existe, false si no.
+     * @return bool True si el usuario existe, false si no.
      */
     public function usuarioExiste($usuario)
     {
         $usuario = $this->bd->escape($usuario);
         $sql = "SELECT id FROM usuarios WHERE usuario = '$usuario'";
         $resultado = $this->bd->query($sql);
+        // Devuelve true si se encuentra al menos un registro
         return $this->bd->LeeRegistro($resultado) !== null;
     }
 
     /**
      * @brief Actualiza los datos de un usuario existente.
      *
+     * Escapa todos los valores para evitar inyección SQL.
+     *
      * @param int $id ID del usuario a actualizar.
-     * @param array $datos Arreglo con los nuevos datos ['usuario', 'password', 'rol'].
+     * @param array $datos Arreglo asociativo con los nuevos datos:
+     *                     ['usuario' => nombre de usuario, 
+     *                      'password' => contraseña, 
+     *                      'rol' => rol del usuario]
      */
     public function actualizarUsuario($id, array $datos)
     {
@@ -116,17 +136,21 @@ class Usuarios
             rol = '{$this->bd->escape($datos['rol'])}'
             WHERE id = '{$this->bd->escape($id)}'";
 
+        // Ejecuta la consulta de actualización
         $this->bd->query($sql);
     }
 
     /**
      * @brief Elimina un usuario de la base de datos.
      *
+     * Escapa el ID para evitar inyección SQL.
+     *
      * @param int $id ID del usuario a eliminar.
      */
     public function eliminarUsuario($id)
     {
         $sql = "DELETE FROM usuarios WHERE id = '{$this->bd->escape($id)}'";
+        // Ejecuta la consulta de eliminación
         $this->bd->query($sql);
     }
 }

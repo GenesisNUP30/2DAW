@@ -20,5 +20,6 @@ var searchData=
   ['content_17',['content',['../listarusuarios_8blade_8php.html#aa847f2bbc747f47e666a46cb74f30e00',1,'content:&#160;listarusuarios.blade.php'],['../tareadetalle_8blade_8php.html#aa847f2bbc747f47e666a46cb74f30e00',1,'content:&#160;tareadetalle.blade.php']]],
   ['control_18',['control',['../a_xC3_xB1adirusuario_8blade_8php.html#afe7d79816f1002e135be9c6729f5779a',1,'control:&#160;añadirusuario.blade.php'],['../alta_8blade_8php.html#afe7d79816f1002e135be9c6729f5779a',1,'control:&#160;alta.blade.php'],['../completar_8blade_8php.html#afe7d79816f1002e135be9c6729f5779a',1,'control:&#160;completar.blade.php'],['../editarusuario_8blade_8php.html#a892754a3f8f6681e89925594865fa7f2',1,'control:&#160;editarusuario.blade.php'],['../login_8blade_8php.html#a892754a3f8f6681e89925594865fa7f2',1,'control:&#160;login.blade.php'],['../modificar_8blade_8php.html#afe7d79816f1002e135be9c6729f5779a',1,'control:&#160;modificar.blade.php']]],
   ['controller_19',['Controller',['../class_app_1_1_http_1_1_controllers_1_1_controller.html',1,'App::Http::Controllers']]],
-  ['controller_2ephp_20',['Controller.php',['../_controller_8php.html',1,'']]]
+  ['controller_2ephp_20',['Controller.php',['../_controller_8php.html',1,'']]],
+  ['creartokenrecordarme_21',['crearTokenRecordarme',['../class_app_1_1_models_1_1_sesion.html#acb010eb3705d82f1c4eb8927ef24ab80',1,'App::Models::Sesion::crearTokenRecordarme()'],['../class_app_1_1_http_1_1_controllers_1_1_sesion.html#acb010eb3705d82f1c4eb8927ef24ab80',1,'App::Http::Controllers::Sesion::crearTokenRecordarme()']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: App::Http::Controllers::Usuarios Class Reference</title>
+<title>Proyecto Laravel 1eval: App::Http::Controllers::Usuarios Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -118,7 +118,7 @@ Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Modelo que maneja la tabla 'usuarios' de la base de datos. </p>
-<p>Este modelo encapsula todas las operaciones CRUD sobre usuarios, utilizando la clase <a class="el" href="class_app_1_1_models_1_1_d_b.html">DB</a> para la interacción con la base de datos. </p>
+<p>Este modelo encapsula todas las operaciones CRUD sobre usuarios, utilizando la clase <a class="el" href="class_app_1_1_models_1_1_d_b.html" title="Singleton para la conexión a la base de datos MySQL usando mysqli.">DB</a> para la interacción con la base de datos. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a9d6321e34ecd4e259082ae17e4013c5d" name="a9d6321e34ecd4e259082ae17e4013c5d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9d6321e34ecd4e259082ae17e4013c5d">&#9670;&#160;</a></span>__construct()</h2>
@@ -136,6 +136,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructor que inicializa la conexión a la base de datos. </p>
+<p>Obtiene la instancia del singleton <a class="el" href="class_app_1_1_models_1_1_d_b.html" title="Singleton para la conexión a la base de datos MySQL usando mysqli.">DB</a>. </p>
 
 </div>
 </div>
@@ -159,10 +160,11 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Actualiza los datos de un usuario existente. </p>
+<p>Escapa todos los valores para evitar inyección SQL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>ID del usuario a actualizar. </td></tr>
-    <tr><td class="paramtype">array</td><td class="paramname">$datos</td><td>Arreglo con los nuevos datos ['usuario', 'password', 'rol']. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$datos</td><td>Arreglo asociativo con los nuevos datos: ['usuario' =&gt; nombre de usuario, 'password' =&gt; contraseña, 'rol' =&gt; rol del usuario] </td></tr>
   </table>
   </dd>
 </dl>
@@ -185,6 +187,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Elimina un usuario de la base de datos. </p>
+<p>Escapa el ID para evitar inyección SQL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>ID del usuario a eliminar. </td></tr>
@@ -230,13 +233,14 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Obtiene los datos de un usuario por su ID. </p>
+<p>Escapa el ID para evitar inyección SQL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>ID del usuario. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>array|null Arreglo asociativo con los datos del usuario o null si no existe. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>array|null Arreglo asociativo con los datos del usuario, o null si no existe. </dd></dl>
 
 </div>
 </div>
@@ -256,9 +260,10 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Registra un nuevo usuario en la base de datos. </p>
+<p>Escapa los valores para evitar inyección SQL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">array</td><td class="paramname">$datos</td><td>Arreglo con los datos del usuario ['usuario', 'password', 'rol']. </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$datos</td><td>Arreglo con los datos del usuario: ['usuario' =&gt; nombre de usuario, 'password' =&gt; contraseña, 'rol' =&gt; rol del usuario] </td></tr>
   </table>
   </dd>
 </dl>
@@ -287,7 +292,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>bool true si el usuario existe, false si no. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>bool True si el usuario existe, false si no. </dd></dl>
 
 </div>
 </div>

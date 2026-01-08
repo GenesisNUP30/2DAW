@@ -1,6 +1,7 @@
 var completar_8blade_8php =
 [
     [ "extends", "completar_8blade_8php.html#aae6bc56215aca23a1269cbae3d18015c", null ],
+    [ "section", "completar_8blade_8php.html#afd08eb224f7ff27a99ecc92ef32d50f4", null ],
     [ "section", "completar_8blade_8php.html#ab06ddfd7fd8705050f6f605566555bc8", null ],
     [ "__pad0__", "completar_8blade_8php.html#a82281c80e5a34da73d7f831c14a3514a", null ],
     [ "__pad10__", "completar_8blade_8php.html#a1a09e49a1b01720b61e602be151dc251", null ],
@@ -26,6 +27,7 @@ var completar_8blade_8php =
     [ "left", "completar_8blade_8php.html#a361a2bf748f322798d4f19476600f204", null ],
     [ "outline", "completar_8blade_8php.html#ada067c68a99092bd9458b23527f8d4e3", null ],
     [ "radius", "completar_8blade_8php.html#a80c707b38d569e6a8eb9e56b8d29866c", null ],
+    [ "realización", "completar_8blade_8php.html#a8af9101d645ff9ebd53efcafd0b5a321", null ],
     [ "row", "completar_8blade_8php.html#a8da37513495f072cfd1a7cc1f3faf803", null ],
     [ "shadow", "completar_8blade_8php.html#afb2fd8f53f973be6e4f74331d4db64d5", null ],
     [ "size", "completar_8blade_8php.html#ae20d3ca2acbfbfe24798ca800435f9f1", null ],

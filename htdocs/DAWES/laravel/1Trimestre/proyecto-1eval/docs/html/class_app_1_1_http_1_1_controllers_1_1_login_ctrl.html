@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: App::Http::Controllers::LoginCtrl Class Reference</title>
+<title>Proyecto Laravel 1eval: App::Http::Controllers::LoginCtrl Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -91,13 +91,27 @@ $(function(){initNavTree('class_app_1_1_http_1_1_controllers_1_1_login_ctrl.html
   <div class="headertitle"><div class="title">App::Http::Controllers::LoginCtrl Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Controlador encargado de la autenticación de usuarios.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af442005084992372b23b9397a1fbd8cd" id="r_af442005084992372b23b9397a1fbd8cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af442005084992372b23b9397a1fbd8cd">login</a> ()</td></tr>
+<tr class="memdesc:af442005084992372b23b9397a1fbd8cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Muestra el formulario de login o procesa el envío de credenciales.  <br /></td></tr>
 <tr class="memitem:a11b9f497b93fb498aa3686805bf7fda7" id="r_a11b9f497b93fb498aa3686805bf7fda7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a11b9f497b93fb498aa3686805bf7fda7">logout</a> ()</td></tr>
+<tr class="memdesc:a11b9f497b93fb498aa3686805bf7fda7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cierra la sesión del usuario autenticado.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Controlador encargado de la autenticación de usuarios. </p>
+<p>Este controlador gestiona todo el ciclo de autenticación del sistema:</p><ul>
+<li>Visualización del formulario de inicio de sesión.</li>
+<li>Validación de credenciales de acceso.</li>
+<li>Redirección tras login correcto o incorrecto.</li>
+<li>Cierre de sesión del usuario.</li>
+</ul>
+<p>Se apoya en el modelo {</p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_app_1_1_http_1_1_controllers_1_1_sesion.html" title="Gestión de sesiones de usuario con patrón Singleton.">Sesion</a>} para realizar las comprobaciones de autenticación y mantener el estado de sesión del usuario. </dd></dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="af442005084992372b23b9397a1fbd8cd" name="af442005084992372b23b9397a1fbd8cd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af442005084992372b23b9397a1fbd8cd">&#9670;&#160;</a></span>login()</h2>
 
@@ -112,9 +126,16 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Muestra el formulario de login o procesa los datos enviados.</p>
-<p>Si el usuario ya ha iniciado sesión, lo redirige al inicio. Si se envía el formulario vía POST, valida el usuario y contraseña.</p>
-<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View|\Illuminate\Http\RedirectResponse Devuelve la vista del formulario de login o redirige al inicio. </dd></dl>
+
+<p>Muestra el formulario de login o procesa el envío de credenciales. </p>
+<p>Este método realiza las siguientes acciones:</p><ul>
+<li>Comprueba si el usuario ya está autenticado y, en tal caso, lo redirige directamente a la página principal.</li>
+<li>Si se reciben datos mediante una petición POST, valida las credenciales introducidas (usuario y contraseña).</li>
+<li>Si las credenciales son correctas, redirige al inicio.</li>
+<li>Si las credenciales son incorrectas, vuelve a mostrar el formulario con un mensaje de error.</li>
+</ul>
+<p>Cuando no se reciben datos POST, se muestra únicamente el formulario de inicio de sesión.</p>
+<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View|\Illuminate\Http\RedirectResponse Devuelve la vista <span class="tt"><a class="el" href="login_8blade_8php.html#a65abaccefa56d4052da2b7abb0fd25a1">login</a></span> o una redirección a la página principal. </dd></dl>
 
 </div>
 </div>
@@ -132,8 +153,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cierra la sesión del usuario.</p>
-<p>Llama al método logout() del modelo <a class="el" href="class_app_1_1_http_1_1_controllers_1_1_sesion.html">Sesion</a> y redirige al formulario de login.</p>
+
+<p>Cierra la sesión del usuario autenticado. </p>
+<p>Este método:</p><ul>
+<li>Llama al método {<dl class="section see"><dt>See also</dt><dd>Sesion::logout()} para destruir la sesión.</dd></dl>
+</li>
+<li>Redirige al usuario al formulario de inicio de sesión.</li>
+</ul>
 <dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>

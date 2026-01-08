@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: ModificarCtrl Class Reference</title>
+<title>Proyecto Laravel 1eval: ModificarCtrl Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -91,17 +91,31 @@ $(function(){initNavTree('class_modificar_ctrl.html','','class_modificar_ctrl-me
   <div class="headertitle"><div class="title">ModificarCtrl Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Controlador encargado de la modificación de tareas existentes.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab0047f78a4e15e8739783523c8db6c1d" id="r_ab0047f78a4e15e8739783523c8db6c1d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0047f78a4e15e8739783523c8db6c1d">mostrarFormulario</a> ( $id)</td></tr>
+<tr class="memdesc:ab0047f78a4e15e8739783523c8db6c1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Muestra el formulario de modificación de una tarea.  <br /></td></tr>
 <tr class="memitem:aecaa968cac624e45ce02a3f83b120ae4" id="r_aecaa968cac624e45ce02a3f83b120ae4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecaa968cac624e45ce02a3f83b120ae4">actualizar</a> ( $id)</td></tr>
+<tr class="memdesc:aecaa968cac624e45ce02a3f83b120ae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actualiza los datos de una tarea existente.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a10f698e6eb7c4801ec8c3f1879938eb7" id="r_a10f698e6eb7c4801ec8c3f1879938eb7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10f698e6eb7c4801ec8c3f1879938eb7">filtraDatos</a> ()</td></tr>
+<tr class="memdesc:a10f698e6eb7c4801ec8c3f1879938eb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filtra y valida los datos del formulario de modificación de tareas.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Controlador encargado de la modificación de tareas existentes. </p>
+<p>Este controlador gestiona el proceso completo de edición de una tarea:</p><ul>
+<li>Visualización del formulario de modificación.</li>
+<li>Validación de los datos introducidos por el usuario.</li>
+<li>Actualización de la tarea en la base de datos.</li>
+</ul>
+<p>Solo los usuarios autenticados con rol de administrador pueden acceder a estas funcionalidades. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="aecaa968cac624e45ce02a3f83b120ae4" name="aecaa968cac624e45ce02a3f83b120ae4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aecaa968cac624e45ce02a3f83b120ae4">&#9670;&#160;</a></span>actualizar()</h2>
 
@@ -116,22 +130,28 @@ Private Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Actualiza los datos de una tarea existente.</p>
-<p>Verifica la existencia de la tarea, valida los datos del formulario y, si todo es correcto, actualiza la tarea en la base de datos. Si hay errores, vuelve a mostrar la vista con los datos introducidos.</p>
+
+<p>Actualiza los datos de una tarea existente. </p>
+<p>Este método:</p><ul>
+<li>Comprueba que la tarea exista.</li>
+<li>Filtra y valida los datos enviados mediante POST.</li>
+<li>Si existen errores de validación, vuelve a mostrar el formulario con los datos introducidos y los mensajes de error.</li>
+<li>Si los datos son correctos, actualiza la tarea y redirige a la página principal.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>ID de la tarea a actualizar </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>Identificador único de la tarea a actualizar.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View|\Illuminate\Http\RedirectResponse Retorna la vista con errores o redirige a la página principal </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View|\Illuminate\Http\RedirectResponse Devuelve la vista <span class="tt">modificar</span> con errores o redirige al inicio.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"></td><td></td></tr>
   </table>
   </dd>
 </dl>
-<p>Symfony\Component\HttpKernel\Exception\NotFoundHttpException Si la tarea no existe </p>
+<p>Symfony\Component\HttpKernel\Exception\NotFoundHttpException Se lanza si la tarea no existe. </p>
 
 </div>
 </div>
@@ -157,8 +177,18 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Filtra y valida los datos del formulario de modificación de tarea.</p>
-<p>Valida los campos obligatorios: NIF/CIF, persona de contacto, teléfono, correo, descripción, provincia y fecha de realización. Almacena los errores en Funciones::$errores con clave del campo y mensaje de error como valor.</p>
+
+<p>Filtra y valida los datos del formulario de modificación de tareas. </p>
+<p>Valida los campos obligatorios:</p><ul>
+<li>NIF/CIF</li>
+<li>Persona de contacto</li>
+<li>Teléfono</li>
+<li>Correo electrónico</li>
+<li>Descripción de la tarea</li>
+<li>Provincia</li>
+<li>Fecha de realización</li>
+</ul>
+<p>Los errores detectados se almacenan en el array estático {</p><dl class="section see"><dt>See also</dt><dd>Funciones::$errores}, usando como clave el nombre del <a class="el" href="tareadetalle_8blade_8php.html#a149485ac42400e3948828458fafe1073">campo</a> y como valor el mensaje de <a class="el" href="login_8blade_8php.html#a7bf66bd02bacac9cdccb33a5058f7e20">error</a> correspondiente.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
@@ -177,22 +207,29 @@ Private Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Muestra el formulario de modificación de una tarea.</p>
-<p>Verifica que el usuario esté logueado y sea administrador. Obtiene los datos de la tarea por su ID y los pasa a la vista. Si la tarea no existe, retorna un error 404.</p>
+
+<p>Muestra el formulario de modificación de una tarea. </p>
+<p>Este método:</p><ul>
+<li>Verifica que el usuario esté autenticado.</li>
+<li>Verifica que el usuario tenga permisos de administrador.</li>
+<li>Obtiene los datos de la tarea a partir de su identificador.</li>
+<li>Envía los datos a la vista <span class="tt">modificar</span>.</li>
+</ul>
+<p>Si la tarea no existe, se lanza una excepción HTTP 404.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>ID de la tarea a modificar </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>Identificador único de la tarea a modificar.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View Retorna la vista 'modificar' con los datos de la tarea </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View Devuelve la vista <span class="tt">modificar</span> con los datos de la tarea.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"></td><td></td></tr>
   </table>
   </dd>
 </dl>
-<p>Symfony\Component\HttpKernel\Exception\NotFoundHttpException Si la tarea no existe </p>
+<p>Symfony\Component\HttpKernel\Exception\NotFoundHttpException Se lanza si la tarea no existe. </p>
 
 </div>
 </div>

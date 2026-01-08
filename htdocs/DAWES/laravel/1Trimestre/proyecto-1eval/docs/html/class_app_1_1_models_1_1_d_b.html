@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: App::Models::DB Class Reference</title>
+<title>Proyecto Laravel 1eval: App::Models::DB Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -91,6 +91,9 @@ $(function(){initNavTree('class_app_1_1_models_1_1_d_b.html','','class_app_1_1_m
   <div class="headertitle"><div class="title">App::Models::DB Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Singleton para la conexión a la base de datos MySQL usando mysqli.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -121,7 +124,15 @@ Private Attributes</h2></td></tr>
 Static Private Attributes</h2></td></tr>
 <tr class="memitem:aa921105840c6708a8c14039e507445f3" id="r_aa921105840c6708a8c14039e507445f3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa921105840c6708a8c14039e507445f3">$_instance</a></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Singleton para la conexión a la base de datos MySQL usando mysqli. </p>
+<p>Esta clase implementa un patrón singleton para asegurar que solo haya una conexión activa a la base de datos durante la ejecución del proyecto. Proporciona métodos para:</p><ul>
+<li>Ejecutar consultas SQL.</li>
+<li>Escapar valores para evitar inyección SQL.</li>
+<li>Leer registros de resultados de consultas.</li>
+<li>Obtener el último ID insertado. </li>
+</ul>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a65f58787ba7c5573eee7b826e354a132" name="a65f58787ba7c5573eee7b826e354a132"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a65f58787ba7c5573eee7b826e354a132">&#9670;&#160;</a></span>__clone()</h2>
 
@@ -171,7 +182,14 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Constructor privado.</p>
-<p>Inicializa la conexión a la base de datos usando la configuración de <a class="el" href="_d_b_conexion_8php.html">DBConexion.php</a>. </p>
+<p>Inicializa la conexión a la base de datos usando la configuración de <span class="tt"><a class="el" href="_d_b_conexion_8php.html">DBConexion.php</a></span>. Evita instanciación externa directa para mantener el patrón singleton.</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Exception Si hay error de conexión o configuración incompleta. </p>
 
 </div>
 </div>
@@ -197,20 +215,27 @@ Static Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Conecta a la base de datos usando la configuración proporcionada.</p>
+<p>Establece la conexión a la base de datos.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">array</td><td class="paramname">$conf</td><td>Array con claves 'servidor', 'usuario', 'password', 'base_datos' </td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$conf</td><td>Array asociativo con las claves:<ul>
+<li>'servidor': Servidor de la base de datos</li>
+<li>'usuario': Usuario de la base de datos</li>
+<li>'password': Contraseña del usuario</li>
+<li>'base_datos': Nombre de la base de datos </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"></td><td></td></tr>
   </table>
   </dd>
 </dl>
-<p>Exception Si faltan parámetros o hay error de conexión </p>
+<p>Exception Si faltan parámetros o falla la conexión. </p>
 
 </div>
 </div>
@@ -228,14 +253,14 @@ Static Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Escapa un valor para usarlo en una consulta SQL.</p>
+<p>Escapa un valor para uso seguro en consultas SQL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$value</td><td>Valor a escapar </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$value</td><td>Valor a escapar. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>string Valor escapado seguro </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>string Valor escapado seguro. </dd></dl>
 
 </div>
 </div>
@@ -261,8 +286,8 @@ Static Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Devuelve la única instancia de <a class="el" href="class_app_1_1_models_1_1_d_b.html">DB</a>.</p>
-<dl class="section return"><dt>Returns</dt><dd>self Instancia única de la clase <a class="el" href="class_app_1_1_models_1_1_d_b.html">DB</a> </dd></dl>
+<p>Obtiene la instancia única de la clase <a class="el" href="class_app_1_1_models_1_1_d_b.html" title="Singleton para la conexión a la base de datos MySQL usando mysqli.">DB</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>self Instancia única de <a class="el" href="class_app_1_1_models_1_1_d_b.html" title="Singleton para la conexión a la base de datos MySQL usando mysqli.">DB</a>. </dd></dl>
 
 </div>
 </div>
@@ -280,8 +305,8 @@ Static Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Devuelve el ID del último registro insertado.</p>
-<dl class="section return"><dt>Returns</dt><dd>int Último ID insertado </dd></dl>
+<p>Devuelve el ID del último registro insertado en la base de datos.</p>
+<dl class="section return"><dt>Returns</dt><dd>int Último ID insertado. </dd></dl>
 
 </div>
 </div>
@@ -299,14 +324,14 @@ Static Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Lee un registro del resultado de la última consulta o del resultado especificado.</p>
+<p>Lee un registro del resultado de una consulta.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">\mysqli_result&#160;|&#160;null</td><td class="paramname">$result</td><td>Resultado opcional </td></tr>
+    <tr><td class="paramtype">\mysqli_result&#160;|&#160;null</td><td class="paramname">$result</td><td>Resultado opcional. Si no se pasa, se usa el último ejecutado. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>array|null Registro leído o null si no hay registros </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>array|null Registro leído como array asociativo, o null si no hay registros. </dd></dl>
 
 </div>
 </div>
@@ -327,11 +352,11 @@ Static Private Attributes</h2></td></tr>
 <p>Ejecuta una consulta SQL.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$sql</td><td>Consulta SQL a ejecutar </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$sql</td><td>Consulta SQL a ejecutar. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>\mysqli_result|bool Resultado de la consulta </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>\mysqli_result|bool Resultado de la consulta, o false en caso de error. </dd></dl>
 
 </div>
 </div>
@@ -350,7 +375,7 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Devuelve el último registro leído.</p>
-<dl class="section return"><dt>Returns</dt><dd>array|null Registro actual </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>array|null Último registro leído o null si no se ha leído ninguno. </dd></dl>
 
 </div>
 </div>

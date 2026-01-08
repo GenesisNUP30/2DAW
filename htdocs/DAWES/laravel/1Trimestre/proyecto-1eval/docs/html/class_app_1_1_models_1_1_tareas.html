@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: App::Models::Tareas Class Reference</title>
+<title>Proyecto Laravel 1eval: App::Models::Tareas Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -91,11 +91,15 @@ $(function(){initNavTree('class_app_1_1_models_1_1_tareas.html','','class_app_1_
   <div class="headertitle"><div class="title">App::Models::Tareas Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Modelo para la gestión de tareas en la base de datos.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a24d0e8e3dbbb16cfe28af07ddc417a0c" id="r_a24d0e8e3dbbb16cfe28af07ddc417a0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24d0e8e3dbbb16cfe28af07ddc417a0c">__construct</a> ()</td></tr>
 <tr class="memitem:a2af0eaab61563699ff499aeaab9cdae2" id="r_a2af0eaab61563699ff499aeaab9cdae2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2af0eaab61563699ff499aeaab9cdae2">listarTareas</a> ()</td></tr>
+<tr class="memitem:ac02ad56e665bd790f6f05f35771b4d8d" id="r_ac02ad56e665bd790f6f05f35771b4d8d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac02ad56e665bd790f6f05f35771b4d8d">listarTareasPaginadas</a> (int $pagina, int $porPagina, bool $soloPendientes=false)</td></tr>
 <tr class="memitem:ac5b8326ec3b6e12b42b1900290b147f7" id="r_ac5b8326ec3b6e12b42b1900290b147f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5b8326ec3b6e12b42b1900290b147f7">registraAlta</a> (array $<a class="el" href="eliminar_8blade_8php.html#a9a45f7a6bffc18e9945796b3752a4c37">datos</a>)</td></tr>
 <tr class="memitem:ae5d113f25ff4b1a29022e4c4ba046aed" id="r_ae5d113f25ff4b1a29022e4c4ba046aed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5d113f25ff4b1a29022e4c4ba046aed">obtenerTareaPorId</a> ($id)</td></tr>
 <tr class="memitem:a577b3fc938fb92f3545ea961b538abf4" id="r_a577b3fc938fb92f3545ea961b538abf4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a577b3fc938fb92f3545ea961b538abf4">actualizarTarea</a> ($id, array $<a class="el" href="eliminar_8blade_8php.html#a9a45f7a6bffc18e9945796b3752a4c37">datos</a>)</td></tr>
@@ -106,7 +110,18 @@ Public Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a0b24fec2d479d380e103a24627ff0592" id="r_a0b24fec2d479d380e103a24627ff0592"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b24fec2d479d380e103a24627ff0592">$bd</a></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Modelo para la gestión de tareas en la base de datos. </p>
+<p>Este modelo proporciona métodos para:</p><ul>
+<li>Listar tareas completas o paginadas</li>
+<li>Registrar nuevas tareas</li>
+<li>Obtener una tarea por su ID</li>
+<li>Actualizar tareas</li>
+<li>Completar tareas</li>
+<li>Eliminar tareas</li>
+</ul>
+<p>Utiliza la clase singleton <a class="el" href="class_app_1_1_models_1_1_d_b.html" title="Singleton para la conexión a la base de datos MySQL usando mysqli.">DB</a> para todas las operaciones de base de datos. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a24d0e8e3dbbb16cfe28af07ddc417a0c" name="a24d0e8e3dbbb16cfe28af07ddc417a0c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a24d0e8e3dbbb16cfe28af07ddc417a0c">&#9670;&#160;</a></span>__construct()</h2>
 
@@ -227,6 +242,42 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Lista todas las tareas de la base de datos.</p>
 <dl class="section return"><dt>Returns</dt><dd>array Devuelve un array con todas las tareas. </dd></dl>
+
+</div>
+</div>
+<a id="ac02ad56e665bd790f6f05f35771b4d8d" name="ac02ad56e665bd790f6f05f35771b4d8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac02ad56e665bd790f6f05f35771b4d8d">&#9670;&#160;</a></span>listarTareasPaginadas()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">App::Models::Tareas::listarTareasPaginadas </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$pagina</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>$porPagina</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>$soloPendientes</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Lista todas las tareas de la base de datos, paginadas. Permite filtrar solo las tareas pendientes si se indica.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$pagina</td><td>Número de página a mostrar. </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$porPagina</td><td>Número de registros por página. </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$soloPendientes</td><td>Si es true, solo muestra tareas pendientes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array Devuelve un array con todas las tareas y el total de registros. </dd></dl>
 
 </div>
 </div>

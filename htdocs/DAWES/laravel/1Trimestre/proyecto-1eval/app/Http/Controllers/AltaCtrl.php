@@ -7,91 +7,121 @@ use App\Models\Tareas;
 use App\Models\Sesion;
 
 /**
- * Controlador para dar de alta nuevas tareas en el sistema.
+ * @class AltaCtrl
  *
- * Esta clase se encarga de gestionar la creación de tareas, 
- * validar los datos del formulario y redirigir al usuario
- * según el resultado de la operación.
+ * @brief Controlador responsable de la creación (alta) de nuevas tareas.
  *
- * Nota: Es necesario desactivar CSRF en Laravel para permitir 
- * procesar el formulario correctamente.
+ * Este controlador gestiona todo el flujo del alta de tareas dentro del sistema:
+ * - Control de acceso (solo usuarios autenticados y administradores).
+ * - Carga del formulario de alta.
+ * - Filtrado y validación exhaustiva de los datos enviados por el usuario.
+ * - Persistencia de la tarea en la base de datos.
+ * - Gestión de errores y redirecciones según el resultado del proceso.
+ *
+ * La validación de datos se apoya en métodos auxiliares definidos en la clase
+ * {@see Funciones}, donde se almacenan los mensajes de error.
+ *
+ * @note Para el correcto funcionamiento del envío del formulario, el middleware
+ * CSRF debe estar deshabilitado o gestionado adecuadamente.
  *
  * @package App\Http\Controllers
  */
 class AltaCtrl
 {
     /**
-     * Método principal para gestionar la creación de tareas.
+     * @brief Gestiona el flujo principal del alta de tareas.
      *
-     * Si se recibe un POST, filtra y valida los datos. En caso de errores,
-     * devuelve la vista 'alta' con los datos introducidos y mensajes de error.
-     * Si no hay errores, guarda la tarea en la base de datos y redirige a la página principal.
+     * Este método actúa como punto de entrada del controlador:
      *
-     * Si no se recibe un POST, carga la vista 'alta' con campos vacíos por defecto.
+     * - **GET**:
+     *   - Carga la vista de alta (`alta`) con todos los campos inicializados
+     *     a valores vacíos.
      *
-     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse Retorna la vista de alta o redirige al listado.
+     * - **POST**:
+     *   - Filtra y valida los datos enviados mediante el formulario.
+     *   - Si existen errores de validación, devuelve la vista de alta junto
+     *     con los datos introducidos y los mensajes de error.
+     *   - Si no existen errores, registra la nueva tarea en la base de datos
+     *     y redirige al listado principal.
+     *
+     * El acceso a este método está restringido exclusivamente a:
+     * - Usuarios autenticados.
+     * - Usuarios con rol de administrador.
+     *
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     * Devuelve la vista de alta con datos y errores, o redirige al inicio
+     * tras una inserción correcta.
      */
     public function alta()
     {
-        // Obtiene la instancia de sesión
+        // Obtiene la instancia singleton de sesión
         $login = Sesion::getInstance();
-        $login->onlyLogged();        // Permite solo usuarios logueados
-        $login->onlyAdministrador(); // Permite solo administradores
+        $login->onlyLogged();         // Restringe el acceso a usuarios autenticados
+        $login->onlyAdministrador(); // Restringe el acceso a administradores
 
         if ($_POST) {
+            // Inicializa el contenedor de errores
             Funciones::$errores = [];
-            // Filtra y valida los datos del formulario
+
+            // Filtrado y validación de los datos recibidos
             $this->filtraDatos();
 
             if (!empty(Funciones::$errores)) {
-                // Si hay errores, muestra la vista con los datos del formulario
+                // Existen errores: se recarga la vista con los datos introducidos
                 return view('alta', $_POST);
             } else {
-                // Si no hay errores, registra la tarea y redirige
+                // No hay errores: se registra la tarea y se redirige
                 $model = new Tareas();
                 $model->registraAlta($_POST);
                 miredirect('/');
             }
         } else {
-            // Datos iniciales vacíos para la vista
+            // Inicialización de valores por defecto para la vista
             $datos = [
                 'nif_cif' => '',
                 'persona_contacto' => '',
-                'telefono' => "",
-                'descripcion' => "",
-                'correo' => "",
-                'direccion' => "",
-                'poblacion' => "",
-                'codigo_postal' => "",
-                'provincia' => "",
-                'estado' => "",
-                'operario_encargado' => "",
-                'fecha_realizacion' => "",
-                'anotaciones' => ""
+                'telefono' => '',
+                'descripcion' => '',
+                'correo' => '',
+                'direccion' => '',
+                'poblacion' => '',
+                'codigo_postal' => '',
+                'provincia' => '',
+                'estado' => '',
+                'operario_encargado' => '',
+                'fecha_realizacion' => '',
+                'anotaciones' => ''
             ];
+
             return view('alta', $datos);
         }
     }
 
     /**
-     * Filtra y valida los datos del formulario de alta de tareas.
+     * @brief Filtra y valida los datos del formulario de alta de tareas.
      *
-     * Verifica que los campos obligatorios no estén vacíos,
-     * valida NIF/CIF, correo electrónico y teléfono.
-     * Además asegura que el la provincia coincida con el código postal y
-     * que la fecha de realización sea posterior a la actual.
+     * Este método se encarga de realizar todas las validaciones necesarias
+     * sobre los datos recibidos mediante el formulario:
      *
-     * Los errores se almacenan en Funciones::$errores con el
-     * nombre del campo como clave y el mensaje de error como valor.
+     * - Comprobación de campos obligatorios.
+     * - Validación del NIF/CIF.
+     * - Validación del formato del correo electrónico.
+     * - Validación del número de teléfono.
+     * - Verificación de la coherencia entre código postal y provincia.
+     * - Comprobación de que la fecha de realización sea posterior a la fecha actual.
+     *
+     * Todos los errores detectados se almacenan en el array estático
+     * {@see Funciones::$errores}, utilizando como clave el nombre del campo
+     * y como valor el mensaje de error correspondiente.
      *
      * @return void
      */
     private function filtraDatos()
     {
-        // Inicializa array de errores
+        // Reinicia el array de errores
         Funciones::$errores = [];
 
-        // Recupera los datos del POST
+        // Recuperación segura de los datos enviados por POST
         $nif_cif = $_POST['nif_cif'] ?? '';
         $persona_contacto = $_POST['persona_contacto'] ?? '';
         $telefono = $_POST['telefono'] ?? '';
@@ -101,8 +131,8 @@ class AltaCtrl
         $provincia = $_POST['provincia'] ?? '';
         $fecha_realizacion = $_POST['fecha_realizacion'] ?? '';
 
-        // Validaciones por campo
-        if ($nif_cif == "") {
+        // Validación del NIF/CIF
+        if ($nif_cif === '') {
             Funciones::$errores['nif_cif'] = "Debe introducir el NIF/CIF de la persona encargada de la tarea";
         } else {
             $resultado = Funciones::validarNif($nif_cif);
@@ -111,21 +141,25 @@ class AltaCtrl
             }
         }
 
-        if ($persona_contacto === "") {
+        // Validación de la persona de contacto
+        if ($persona_contacto === '') {
             Funciones::$errores['persona_contacto'] = "Debe introducir el nombre de la persona encargada de la tarea";
         }
 
-        if ($descripcion === "") {
+        // Validación de la descripción
+        if ($descripcion === '') {
             Funciones::$errores['descripcion'] = "Debe introducir la descripción de la tarea";
         }
 
-        if ($correo === "") {
+        // Validación del correo electrónico
+        if ($correo === '') {
             Funciones::$errores['correo'] = "Debe introducir el correo de la persona encargada de la tarea";
-        } else if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        } elseif (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
             Funciones::$errores['correo'] = "El correo introducido no es válido";
         }
 
-        if ($telefono == "") {
+        // Validación del teléfono
+        if ($telefono === '') {
             Funciones::$errores['telefono'] = "Debe introducir el teléfono de la persona encargada de la tarea";
         } else {
             $resultado = Funciones::telefonoValido($telefono);
@@ -134,28 +168,30 @@ class AltaCtrl
             }
         }
 
-        if ($codigo_postal == "") {
+        // Validación del código postal
+        if ($codigo_postal === '') {
             Funciones::$errores['codigo_postal'] = "Debe introducir el código postal";
         }
 
-        if ($provincia === "") {
+        // Validación de la provincia
+        if ($provincia === '') {
             Funciones::$errores['provincia'] = "Debe introducir la provincia";
         }
 
-        if ($codigo_postal !== "" && preg_match("/^[0-9]{5}$/", $codigo_postal) && $provincia !== "") {
+        // Comprobación de coherencia entre código postal y provincia
+        if ($codigo_postal !== '' && preg_match('/^[0-9]{5}$/', $codigo_postal) && $provincia !== '') {
             $resultado = Funciones::validarCodigoPostalProvincia($codigo_postal, $provincia);
             if ($resultado !== true) {
                 Funciones::$errores['provincia'] = $resultado;
             }
         }
 
+        // Validación de la fecha de realización
         $fechaActual = date('Y-m-d');
-        if ($fecha_realizacion == "") {
+        if ($fecha_realizacion === '') {
             Funciones::$errores['fecha_realizacion'] = "Debe introducir la fecha de realización de la tarea";
-        } else {
-            if ($fecha_realizacion <= $fechaActual) {
-                Funciones::$errores['fecha_realizacion'] = "La fecha de realización debe ser posterior a la fecha actual";
-            }
+        } elseif ($fecha_realizacion <= $fechaActual) {
+            Funciones::$errores['fecha_realizacion'] = "La fecha de realización debe ser posterior a la fecha actual";
         }
     }
 }

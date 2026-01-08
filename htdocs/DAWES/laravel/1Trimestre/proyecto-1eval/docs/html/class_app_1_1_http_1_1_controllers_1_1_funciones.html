@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: App::Http::Controllers::Funciones Class Reference</title>
+<title>Proyecto Laravel 1eval: App::Http::Controllers::Funciones Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -91,12 +91,16 @@ $(function(){initNavTree('class_app_1_1_http_1_1_controllers_1_1_funciones.html'
   <div class="headertitle"><div class="title">App::Http::Controllers::Funciones Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="class_app_1_1_http_1_1_controllers_1_1_funciones.html" title="Funciones utilitarias y validaciones para el sistema de gestión de tareas.">Funciones</a> utilitarias y validaciones para el sistema de gestión de tareas.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a08850cd7b923c29569f656b29963bed3" id="r_a08850cd7b923c29569f656b29963bed3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08850cd7b923c29569f656b29963bed3">validarNif</a> ( $dni)</td></tr>
 <tr class="memitem:a99b38c9e9971edaa3476f9a3f9bfc645" id="r_a99b38c9e9971edaa3476f9a3f9bfc645"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99b38c9e9971edaa3476f9a3f9bfc645">telefonoValido</a> ( $telefono)</td></tr>
 <tr class="memitem:a16637a0a4badc319700a24ae70d26a93" id="r_a16637a0a4badc319700a24ae70d26a93"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16637a0a4badc319700a24ae70d26a93">mostrarProvincias</a> ( $provinciaSeleccionada=&quot;&quot;)</td></tr>
+<tr class="memitem:a92ca55820503b41007bebc1f4355db74" id="r_a92ca55820503b41007bebc1f4355db74"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92ca55820503b41007bebc1f4355db74">validarCodigoPostalProvincia</a> ( $codigo_postal, $provincia)</td></tr>
 <tr class="memitem:af246c308a126dd8d4ad16c882a763e9c" id="r_af246c308a126dd8d4ad16c882a763e9c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af246c308a126dd8d4ad16c882a763e9c">comprobarPassword</a> ( $password_antigua, $password_nueva, $password_nueva2)</td></tr>
 <tr class="memitem:a375468f62a00efecf0edf5192e92ed7a" id="r_a375468f62a00efecf0edf5192e92ed7a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a375468f62a00efecf0edf5192e92ed7a">cambiarFormatoFecha</a> ( $fecha)</td></tr>
 <tr class="memitem:a64f5883a0598b1e4c92a803fb046cbef" id="r_a64f5883a0598b1e4c92a803fb046cbef"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64f5883a0598b1e4c92a803fb046cbef">formatearFechaHora</a> ( $fechaHora)</td></tr>
@@ -107,7 +111,16 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a1d817d313e2d216ad1759ebce1990fa4" id="r_a1d817d313e2d216ad1759ebce1990fa4"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1d817d313e2d216ad1759ebce1990fa4">$provincias</a></td></tr>
 <tr class="memitem:a0e4625316e78f2744082e3d076e31b3c" id="r_a0e4625316e78f2744082e3d076e31b3c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e4625316e78f2744082e3d076e31b3c">$errores</a> = []</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="class_app_1_1_http_1_1_controllers_1_1_funciones.html" title="Funciones utilitarias y validaciones para el sistema de gestión de tareas.">Funciones</a> utilitarias y validaciones para el sistema de gestión de tareas. </p>
+<p>Esta clase contiene métodos estáticos que realizan:</p><ul>
+<li>Validaciones de NIF/CIF y teléfonos.</li>
+<li>Validaciones de contraseñas y código postal.</li>
+<li>Conversión y formato de fechas.</li>
+<li>Generación de listas de provincias españolas.</li>
+<li>Gestión de errores de validación. </li>
+</ul>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a375468f62a00efecf0edf5192e92ed7a" name="a375468f62a00efecf0edf5192e92ed7a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a375468f62a00efecf0edf5192e92ed7a">&#9670;&#160;</a></span>cambiarFormatoFecha()</h2>
 
@@ -240,7 +253,7 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Genera el HTML de las opciones de provincias en un select.</p>
+<p>Muestra el listado de provincias como opciones HTML de un select.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$provinciaSeleccionada</td><td>Código de la provincia que se desea marcar como seleccionada. </td></tr>
@@ -282,6 +295,44 @@ Static Public Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true|string True si válido, o mensaje de error. </dd></dl>
+
+</div>
+</div>
+<a id="a92ca55820503b41007bebc1f4355db74" name="a92ca55820503b41007bebc1f4355db74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92ca55820503b41007bebc1f4355db74">&#9670;&#160;</a></span>validarCodigoPostalProvincia()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_app_1_1_models_1_1_funciones.html#ad6f1623a66088c7d4396c49f57071250">App::Models::Funciones::validarCodigoPostalProvincia</a> </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>$codigo_postal</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>$provincia</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Comprueba que el código postal corresponde con la provincia seleccionada. Separa los dos primeros dígitos del código postal y los compara con el código de provincia. Devuelve true si coinciden, o un mensaje de error si no.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$codigo_postal</td><td>Código postal (5 dígitos) </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$provincia</td><td>Código de provincia (2 dígitos) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true|string True si coincide, mensaje de error si no. </dd></dl>
 
 </div>
 </div>

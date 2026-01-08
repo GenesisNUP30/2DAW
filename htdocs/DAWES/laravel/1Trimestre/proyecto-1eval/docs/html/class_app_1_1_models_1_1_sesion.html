@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: App::Models::Sesion Class Reference</title>
+<title>Proyecto Laravel 1eval: App::Models::Sesion Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -91,12 +91,18 @@ $(function(){initNavTree('class_app_1_1_models_1_1_sesion.html','','class_app_1_
   <div class="headertitle"><div class="title">App::Models::Sesion Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Gestión de sesiones de usuario con patrón Singleton.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4014f3a69bb77128e81759334cc7e88e" id="r_a4014f3a69bb77128e81759334cc7e88e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4014f3a69bb77128e81759334cc7e88e">__construct</a> ()</td></tr>
 <tr class="memitem:af1c45a10ec901e69282fa3a5ded83af4" id="r_af1c45a10ec901e69282fa3a5ded83af4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1c45a10ec901e69282fa3a5ded83af4">__clone</a> ()</td></tr>
 <tr class="memitem:a149770ec4f2e520051635a5b39d4da20" id="r_a149770ec4f2e520051635a5b39d4da20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a149770ec4f2e520051635a5b39d4da20">validarLogin</a> (string $usuario, string $password)</td></tr>
+<tr class="memitem:acb010eb3705d82f1c4eb8927ef24ab80" id="r_acb010eb3705d82f1c4eb8927ef24ab80"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb010eb3705d82f1c4eb8927ef24ab80">crearTokenRecordarme</a> (string $usuario)</td></tr>
+<tr class="memitem:aec7099248845d6b1a142bd116a33a91e" id="r_aec7099248845d6b1a142bd116a33a91e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec7099248845d6b1a142bd116a33a91e">loginDesdeCookie</a> ()</td></tr>
+<tr class="memitem:a0046bc3b6484cab838ef2833ee314156" id="r_a0046bc3b6484cab838ef2833ee314156"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0046bc3b6484cab838ef2833ee314156">borrarCookiesRecordarme</a> ()</td></tr>
 <tr class="memitem:aa2b384fd894dac4d00594d08cb7d275e" id="r_aa2b384fd894dac4d00594d08cb7d275e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2b384fd894dac4d00594d08cb7d275e">logout</a> ()</td></tr>
 <tr class="memitem:a02fce64b8bbaaa308ba237f68c7a5501" id="r_a02fce64b8bbaaa308ba237f68c7a5501"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02fce64b8bbaaa308ba237f68c7a5501">isLogged</a> ()</td></tr>
 <tr class="memitem:a7353ff1d629512e4f6c28a3983589182" id="r_a7353ff1d629512e4f6c28a3983589182"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7353ff1d629512e4f6c28a3983589182">onlyLogged</a> ()</td></tr>
@@ -114,7 +120,16 @@ Static Public Member Functions</h2></td></tr>
 Static Private Attributes</h2></td></tr>
 <tr class="memitem:a6adbc49685dd678d4da3c411a074eb7e" id="r_a6adbc49685dd678d4da3c411a074eb7e"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6adbc49685dd678d4da3c411a074eb7e">$instance</a> = null</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Gestión de sesiones de usuario con patrón Singleton. </p>
+<p>Esta clase gestiona el login, logout, permisos de acceso, roles de usuario, inicio de sesión desde cookies y almacenamiento de datos de sesión.</p>
+<p>Implementa:</p><ul>
+<li>Validación de login con usuario y contraseña.</li>
+<li>Creación y verificación de token "recordarme".</li>
+<li>Control de acceso según rol (operario/administrador).</li>
+<li>Patrón Singleton para asegurar una única instancia. </li>
+</ul>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="af1c45a10ec901e69282fa3a5ded83af4" name="af1c45a10ec901e69282fa3a5ded83af4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af1c45a10ec901e69282fa3a5ded83af4">&#9670;&#160;</a></span>__clone()</h2>
 
@@ -155,7 +170,49 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Constructor privado.</p>
-<p>Inicia la sesión e impide que la clase pueda ser instanciada desde fuera para mantener el patrón Singleton. </p>
+<p>Inicia la sesión e impide que la clase pueda ser instanciada desde fuera para mantener el patrón Singleton. Verifica si se puede iniciar sesión desde cookie "recordarme". </p>
+
+</div>
+</div>
+<a id="a0046bc3b6484cab838ef2833ee314156" name="a0046bc3b6484cab838ef2833ee314156"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0046bc3b6484cab838ef2833ee314156">&#9670;&#160;</a></span>borrarCookiesRecordarme()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">App::Models::Sesion::borrarCookiesRecordarme </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Borra las cookies relacionadas con la función "recordarme". </p><dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a id="acb010eb3705d82f1c4eb8927ef24ab80" name="acb010eb3705d82f1c4eb8927ef24ab80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb010eb3705d82f1c4eb8927ef24ab80">&#9670;&#160;</a></span>crearTokenRecordarme()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">App::Models::Sesion::crearTokenRecordarme </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>$usuario</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Si el usuario ha seleccionado el checkbox "recordarme", crea un token de sesión válido por 3 días. Genera un selector y un validador aleatorios y los encripta. Invalida los tokens antiguos, almacena el nuevo en la BD y crea las cookies correspondientes. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$usuario</td><td>Nombre del usuario </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>
@@ -200,9 +257,9 @@ Static Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Obtiene la instancia única de la clase <a class="el" href="class_app_1_1_models_1_1_sesion.html">Sesion</a>.</p>
+<p>Obtiene la instancia única de la clase <a class="el" href="class_app_1_1_models_1_1_sesion.html" title="Gestión de sesiones de usuario con patrón Singleton.">Sesion</a>.</p>
 <p>Si la instancia aún no existe, la crea. Si ya existe, la devuelve.</p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_app_1_1_models_1_1_sesion.html">Sesion</a> Instancia única del gestor de sesiones </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_app_1_1_models_1_1_sesion.html" title="Gestión de sesiones de usuario con patrón Singleton.">Sesion</a> Instancia única del gestor de sesiones </dd></dl>
 
 </div>
 </div>
@@ -260,6 +317,24 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Comprueba si el usuario está actualmente logueado.</p>
 <dl class="section return"><dt>Returns</dt><dd>bool True si el usuario inició sesión, false en caso contrario </dd></dl>
+
+</div>
+</div>
+<a id="aec7099248845d6b1a142bd116a33a91e" name="aec7099248845d6b1a142bd116a33a91e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec7099248845d6b1a142bd116a33a91e">&#9670;&#160;</a></span>loginDesdeCookie()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">App::Models::Sesion::loginDesdeCookie </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Intenta iniciar sesión automáticamente usando las cookies "recordarme". Verifica el token almacenado en la base de datos. Si es válido, crea la sesión del usuario. Si no es válido, invalida el token y borra las cookies. </p><dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>
@@ -374,7 +449,7 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Valida las credenciales del usuario y crea la sesión.</p>
-<p>Consulta la base de datos buscando un usuario que coincida con el nombre y contraseña introducidos. Si existe, crea la sesión asignando ID, usuario, rol y hora de login.</p>
+<p>Consulta la base de datos buscando un usuario que coincida con el nombre y contraseña introducidos. Si existe, crea la sesión asignando ID, usuario, rol y hora de login. Además, crea una cookie para recordar el último usuario. Si se envía el formulario con el checkbox "recordarme", se crea un token de sesión válido por 3 días.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$usuario</td><td>Nombre del usuario </td></tr>

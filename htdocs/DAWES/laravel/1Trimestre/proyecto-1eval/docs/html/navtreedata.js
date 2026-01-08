@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Proyecto-1eval", "index.html", [
+  [ "Proyecto Laravel 1eval", "index.html", [
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
     ] ],
@@ -52,8 +52,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_a_xC3_xB1adir_usuario_ctrl_8php.html",
-"class_app_1_1_models_1_1_d_b.html#aaecbeda3ccf3aa04c2942c209f9858b4",
-"eliminarusuario_8blade_8php.html#afb2fd8f53f973be6e4f74331d4db64d5"
+"class_app_1_1_models_1_1_d_b.html#a2facf61f010643b18f2e1257f41fa2b1",
+"eliminar_8blade_8php.html#ae59385959d44c06a7c920ab7cc59596a",
+"tareadetalle_8blade_8php.html#ae269a1b6fd1174f5cba41110f090bbb4"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

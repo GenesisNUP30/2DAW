@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: App::Http::Controllers::EliminarCtrl Class Reference</title>
+<title>Proyecto Laravel 1eval: App::Http::Controllers::EliminarCtrl Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -91,13 +91,27 @@ $(function(){initNavTree('class_app_1_1_http_1_1_controllers_1_1_eliminar_ctrl.h
   <div class="headertitle"><div class="title">App::Http::Controllers::EliminarCtrl Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Controlador responsable de la eliminación de tareas.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae03ac098b4c5a565b5b52a352cc95253" id="r_ae03ac098b4c5a565b5b52a352cc95253"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae03ac098b4c5a565b5b52a352cc95253">confirmar</a> ($id)</td></tr>
+<tr class="memdesc:ae03ac098b4c5a565b5b52a352cc95253"><td class="mdescLeft">&#160;</td><td class="mdescRight">Muestra la vista de confirmación para eliminar una tarea.  <br /></td></tr>
 <tr class="memitem:a83712803f2a57af348a282f0a73cd2ce" id="r_a83712803f2a57af348a282f0a73cd2ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a83712803f2a57af348a282f0a73cd2ce">eliminar</a> ($id)</td></tr>
+<tr class="memdesc:a83712803f2a57af348a282f0a73cd2ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elimina definitivamente una tarea del sistema.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Controlador responsable de la eliminación de tareas. </p>
+<p>Este controlador gestiona el proceso completo de borrado de tareas:</p><ul>
+<li>Verificación de autenticación del usuario.</li>
+<li>Control de permisos (solo administradores).</li>
+<li>Visualización de la pantalla de confirmación de eliminación.</li>
+<li>Eliminación definitiva de la tarea de la base de datos.</li>
+</ul>
+<p>El proceso se divide en dos pasos para evitar eliminaciones accidentales: confirmación previa y eliminación final. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="ae03ac098b4c5a565b5b52a352cc95253" name="ae03ac098b4c5a565b5b52a352cc95253"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae03ac098b4c5a565b5b52a352cc95253">&#9670;&#160;</a></span>confirmar()</h2>
 
@@ -112,22 +126,29 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Muestra la página de confirmación de eliminación de una tarea.</p>
-<p>Verifica que el usuario esté logueado y sea administrador. Obtiene la tarea por su ID y la pasa a la vista. Si la tarea no existe, lanza un error 404.</p>
+
+<p>Muestra la vista de confirmación para eliminar una tarea. </p>
+<p>Este método:</p><ul>
+<li>Verifica que el usuario esté autenticado.</li>
+<li>Verifica que el usuario tenga rol de administrador.</li>
+<li>Recupera la tarea asociada al identificador recibido.</li>
+<li>Envía los datos de la tarea a la vista <span class="tt"><a class="el" href="index_8blade_8php.html#a441a4debedb0dd0632f719ccd42a53e4">eliminar</a></span>.</li>
+</ul>
+<p>Si la tarea no existe, se devuelve una respuesta HTTP 404.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>ID de la tarea a eliminar </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>Identificador único de la tarea a eliminar.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View Retorna la vista 'eliminar' con los datos de la tarea </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View Devuelve la vista <span class="tt"><a class="el" href="index_8blade_8php.html#a441a4debedb0dd0632f719ccd42a53e4">eliminar</a></span> con los datos de la tarea.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"></td><td></td></tr>
   </table>
   </dd>
 </dl>
-<p>Symfony\Component\HttpKernel\Exception\NotFoundHttpException Si la tarea no existe </p>
+<p>Symfony\Component\HttpKernel\Exception\NotFoundHttpException Se lanza cuando la tarea no existe. </p>
 
 </div>
 </div>
@@ -145,15 +166,20 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Elimina una tarea de la base de datos.</p>
-<p>Llama al método del modelo <a class="el" href="class_app_1_1_http_1_1_controllers_1_1_tareas.html">Tareas</a> para eliminar la tarea por ID y redirige a la página principal.</p>
+
+<p>Elimina definitivamente una tarea del sistema. </p>
+<p>Este método:</p><ul>
+<li>Invoca el método correspondiente del modelo {<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_app_1_1_http_1_1_controllers_1_1_tareas.html" title="Modelo para la gestión de tareas en la base de datos.">Tareas</a>} para <a class="el" href="index_8blade_8php.html#a441a4debedb0dd0632f719ccd42a53e4">eliminar</a> la tarea por su identificador.</dd></dl>
+</li>
+<li>Redirige al usuario a la página principal tras completar la operación.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>ID de la tarea a eliminar </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>Identificador único de la tarea a eliminar.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>void Redirige a la página principal después de la eliminación </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>

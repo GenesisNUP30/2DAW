@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Proyecto-1eval: App::Http::Controllers::InicioCtrl Class Reference</title>
+<title>Proyecto Laravel 1eval: App::Http::Controllers::InicioCtrl Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Proyecto-1eval
+   <div id="projectname">Proyecto Laravel 1eval
    </div>
   </td>
  </tr>
@@ -91,13 +91,70 @@ $(function(){initNavTree('class_app_1_1_http_1_1_controllers_1_1_inicio_ctrl.htm
   <div class="headertitle"><div class="title">App::Http::Controllers::InicioCtrl Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Controlador principal de la aplicación.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3893c71a0ffefcd47a327907f7507b6b" id="r_a3893c71a0ffefcd47a327907f7507b6b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3893c71a0ffefcd47a327907f7507b6b">index</a> ()</td></tr>
+<tr class="memdesc:a3893c71a0ffefcd47a327907f7507b6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Muestra la página principal con el listado de tareas.  <br /></td></tr>
 <tr class="memitem:ae187e03505a2fdab2f893fc53812ff6c" id="r_ae187e03505a2fdab2f893fc53812ff6c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae187e03505a2fdab2f893fc53812ff6c">verTarea</a> ($id)</td></tr>
+<tr class="memdesc:ae187e03505a2fdab2f893fc53812ff6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Muestra el detalle de una tarea concreta.  <br /></td></tr>
+<tr class="memitem:ac22d4740e952785398752360df0115d5" id="r_ac22d4740e952785398752360df0115d5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac22d4740e952785398752360df0115d5">descargarFichero</a> ($id)</td></tr>
+<tr class="memdesc:ac22d4740e952785398752360df0115d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permite descargar el fichero adjunto asociado a una tarea.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Controlador principal de la aplicación. </p>
+<p>Este controlador gestiona las funcionalidades principales accesibles tras la autenticación del usuario:</p><ul>
+<li>Visualización de la página de inicio con el listado de tareas.</li>
+<li>Paginación y filtrado de tareas pendientes.</li>
+<li>Visualización del detalle de una tarea concreta.</li>
+<li>Descarga de ficheros adjuntos asociados a tareas.</li>
+</ul>
+<p>Todas las acciones de este controlador requieren que el usuario esté correctamente autenticado. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ac22d4740e952785398752360df0115d5" name="ac22d4740e952785398752360df0115d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac22d4740e952785398752360df0115d5">&#9670;&#160;</a></span>descargarFichero()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">App::Http::Controllers::InicioCtrl::descargarFichero </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>$id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Permite descargar el fichero adjunto asociado a una tarea. </p>
+<p>Este método:</p><ul>
+<li>Verifica que el usuario esté autenticado.</li>
+<li>Recupera la tarea correspondiente al identificador recibido.</li>
+<li>Comprueba que la tarea tenga un fichero adjunto.</li>
+<li>Verifica la existencia física del fichero en el servidor.</li>
+<li>Devuelve la respuesta de descarga del fichero.</li>
+</ul>
+<p>Si la tarea no existe, no tiene fichero adjunto o el fichero no se encuentra en el sistema de archivos, se devuelve un error HTTP 404.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>Identificador único de la tarea cuyo fichero se desea descargar.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>\Illuminate\Http\Response Devuelve la respuesta HTTP que inicia la descarga del fichero.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Symfony\Component\HttpKernel\Exception\NotFoundHttpException Se lanza cuando la tarea o el fichero asociado no existen. </p>
+
+</div>
+</div>
 <a id="a3893c71a0ffefcd47a327907f7507b6b" name="a3893c71a0ffefcd47a327907f7507b6b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3893c71a0ffefcd47a327907f7507b6b">&#9670;&#160;</a></span>index()</h2>
 
@@ -112,9 +169,21 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Muestra la página principal con la lista de tareas.</p>
-<p>Verifica que el usuario esté logueado antes de mostrar la lista. Obtiene todas las tareas mediante el modelo <a class="el" href="class_app_1_1_http_1_1_controllers_1_1_tareas.html">Tareas</a> y las pasa a la vista 'index'. Se registra un log de depuración con las tareas.</p>
-<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View Retorna la vista 'index' con el array de tareas </dd></dl>
+
+<p>Muestra la página principal con el listado de tareas. </p>
+<p>Este método:</p><ul>
+<li>Verifica que el usuario esté autenticado.</li>
+<li>Gestiona la paginación del listado de tareas.</li>
+<li>Permite filtrar las tareas para mostrar únicamente las pendientes.</li>
+<li>Recupera las tareas desde el modelo {<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_app_1_1_http_1_1_controllers_1_1_tareas.html" title="Modelo para la gestión de tareas en la base de datos.">Tareas</a>}.</dd></dl>
+</li>
+<li>Envía los datos necesarios a la vista <span class="tt">index</span>.</li>
+</ul>
+<p>La paginación se controla mediante parámetros GET:</p><ul>
+<li><span class="tt">page</span>: número de página actual.</li>
+<li><span class="tt">pendientes</span>: filtra solo tareas pendientes cuando su valor es <span class="tt">1</span>.</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View Devuelve la vista <span class="tt">index</span> con la lista de tareas y datos de paginación. </dd></dl>
 
 </div>
 </div>
@@ -132,22 +201,28 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Muestra los detalles de una tarea específica.</p>
-<p>Verifica que el usuario esté logueado y sea administrador. Obtiene la tarea por su ID mediante el modelo <a class="el" href="class_app_1_1_http_1_1_controllers_1_1_tareas.html">Tareas</a> y la pasa a la vista 'tareadetalle'. Si la tarea no existe, lanza un error 404.</p>
+
+<p>Muestra el detalle de una tarea concreta. </p>
+<p>Este método:</p><ul>
+<li>Verifica que el usuario esté autenticado.</li>
+<li>Recupera la tarea correspondiente al identificador recibido.</li>
+<li>Envía los datos de la tarea a la vista <span class="tt">tareadetalle</span>.</li>
+</ul>
+<p>Si la tarea no existe, se devuelve una respuesta HTTP 404.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>ID de la tarea a mostrar </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$id</td><td>Identificador único de la tarea a visualizar.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View Retorna la vista 'tareadetalle' con los datos de la tarea </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>\Illuminate\View\View Devuelve la vista <span class="tt">tareadetalle</span> con los datos completos de la tarea.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"></td><td></td></tr>
   </table>
   </dd>
 </dl>
-<p>Symfony\Component\HttpKernel\Exception\NotFoundHttpException Si la tarea no existe </p>
+<p>Symfony\Component\HttpKernel\Exception\NotFoundHttpException Se lanza cuando la tarea solicitada no existe. </p>
 
 </div>
 </div>
