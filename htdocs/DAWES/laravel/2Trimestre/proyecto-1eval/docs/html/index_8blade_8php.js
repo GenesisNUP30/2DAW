@@ -1,0 +1,28 @@
+var index_8blade_8php =
+[
+    [ "extends", "index_8blade_8php.html#aae6bc56215aca23a1269cbae3d18015c", null ],
+    [ "section", "index_8blade_8php.html#aad0c317a15e209650f0e4505e16f3318", null ],
+    [ "__pad0__", "index_8blade_8php.html#a82281c80e5a34da73d7f831c14a3514a", null ],
+    [ "__pad1__", "index_8blade_8php.html#aa5cd2155ac03abebb317ba2a8dfb5b46", null ],
+    [ "__pad2__", "index_8blade_8php.html#a530c6851db9f982bca19c9512d4c651c", null ],
+    [ "__pad3__", "index_8blade_8php.html#a2959c9933947e441e08fab575a578b51", null ],
+    [ "__pad4__", "index_8blade_8php.html#af27f628dd23edf5c7a635731a1fd63d5", null ],
+    [ "__pad5__", "index_8blade_8php.html#a399cdd17dba87ba7fd179492e8aec98b", null ],
+    [ "align", "index_8blade_8php.html#a024818509e9cff11892e2e8927cfc5df", null ],
+    [ "btn", "index_8blade_8php.html#a881ceca034d9d3cc804c36c0df391802", null ],
+    [ "completar", "index_8blade_8php.html#a5cde732d0e939fd87a26aaa5cbff8ee9", null ],
+    [ "decoration", "index_8blade_8php.html#ad1ba8052b5e15f7bd3093dcb839f840b", null ],
+    [ "detalle", "index_8blade_8php.html#a5fe660de1e45619908731b5b867bb023", null ],
+    [ "editar", "index_8blade_8php.html#acbea54d2cbcb7e00efb24687b894c72b", null ],
+    [ "eliminar", "index_8blade_8php.html#a441a4debedb0dd0632f719ccd42a53e4", null ],
+    [ "radius", "index_8blade_8php.html#a80c707b38d569e6a8eb9e56b8d29866c", null ],
+    [ "shadow", "index_8blade_8php.html#afb2fd8f53f973be6e4f74331d4db64d5", null ],
+    [ "size", "index_8blade_8php.html#ae20d3ca2acbfbfe24798ca800435f9f1", null ],
+    [ "spacing", "index_8blade_8php.html#ae579efcc03bd327169f5bab7e8b7635d", null ],
+    [ "td", "index_8blade_8php.html#a74b7df110d30d599bfb25f62bf33559b", null ],
+    [ "th", "index_8blade_8php.html#a512dae01cdfe44f5e3274d36c37ddded", null ],
+    [ "tr", "index_8blade_8php.html#a2e96b17c5565e505e2b479e8b2f8ac82", null ],
+    [ "transform", "index_8blade_8php.html#a18debfc3a29e60abffc3c38234ea1f60", null ],
+    [ "weight", "index_8blade_8php.html#a9b9780cce21a0de7f2a4efdab697bc39", null ],
+    [ "width", "index_8blade_8php.html#a4e1600da4c5f6d7a478fce1c0026bd97", null ]
+];

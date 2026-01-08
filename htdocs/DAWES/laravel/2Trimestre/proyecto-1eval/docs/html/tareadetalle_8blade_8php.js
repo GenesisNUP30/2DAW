@@ -1,0 +1,28 @@
+var tareadetalle_8blade_8php =
+[
+    [ "extends", "tareadetalle_8blade_8php.html#aae6bc56215aca23a1269cbae3d18015c", null ],
+    [ "section", "tareadetalle_8blade_8php.html#a71fc51edac8a4914ab3c25f0e8c8d0e4", null ],
+    [ "__pad0__", "tareadetalle_8blade_8php.html#a82281c80e5a34da73d7f831c14a3514a", null ],
+    [ "__pad1__", "tareadetalle_8blade_8php.html#aa5cd2155ac03abebb317ba2a8dfb5b46", null ],
+    [ "__pad2__", "tareadetalle_8blade_8php.html#ae269a1b6fd1174f5cba41110f090bbb4", null ],
+    [ "__pad3__", "tareadetalle_8blade_8php.html#a6911db4ff471f96c611fd807e56d6c3a", null ],
+    [ "__pad4__", "tareadetalle_8blade_8php.html#a8278785471b941afcceb629250027091", null ],
+    [ "__pad5__", "tareadetalle_8blade_8php.html#a790b17d9b9a0d3563fc188566c181fe6", null ],
+    [ "__pad6__", "tareadetalle_8blade_8php.html#ad2f2c6035f155ef0acc647320fccddb8", null ],
+    [ "bottom", "tareadetalle_8blade_8php.html#a9324057a236bf5a4cb4b02d83f2a5722", null ],
+    [ "campo", "tareadetalle_8blade_8php.html#a149485ac42400e3948828458fafe1073", null ],
+    [ "color", "tareadetalle_8blade_8php.html#ac04e2a463631b69c8f70784275a056d6", null ],
+    [ "content", "tareadetalle_8blade_8php.html#aa847f2bbc747f47e666a46cb74f30e00", null ],
+    [ "decoration", "tareadetalle_8blade_8php.html#ad1ba8052b5e15f7bd3093dcb839f840b", null ],
+    [ "h2", "tareadetalle_8blade_8php.html#a0dd91c9e533e25ac44ce3fc15eba79ab", null ],
+    [ "h3", "tareadetalle_8blade_8php.html#a9da8a61739f7122cabee7835f8ae6a38", null ],
+    [ "label", "tareadetalle_8blade_8php.html#a567739435994d18bc70feadd5de9093f", null ],
+    [ "radius", "tareadetalle_8blade_8php.html#a80c707b38d569e6a8eb9e56b8d29866c", null ],
+    [ "seccion", "tareadetalle_8blade_8php.html#ab90b29ece6e1c0246d2c90c2bba830b7", null ],
+    [ "shadow", "tareadetalle_8blade_8php.html#afb2fd8f53f973be6e4f74331d4db64d5", null ],
+    [ "size", "tareadetalle_8blade_8php.html#ae20d3ca2acbfbfe24798ca800435f9f1", null ],
+    [ "top", "tareadetalle_8blade_8php.html#a92a4f9c60f5fc724a2e9a4fdb35e9777", null ],
+    [ "transform", "tareadetalle_8blade_8php.html#a2f2663920f9aa041c89be4527d5f9509", null ],
+    [ "volver", "tareadetalle_8blade_8php.html#abb04f27d0e3e84d602d639029cf1d469", null ],
+    [ "weight", "tareadetalle_8blade_8php.html#a9b9780cce21a0de7f2a4efdab697bc39", null ]
+];
