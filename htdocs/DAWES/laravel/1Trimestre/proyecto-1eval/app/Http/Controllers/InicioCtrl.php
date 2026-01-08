@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sesion;
 use App\Models\Tareas;
+use App\Models\ConfigAvanzada;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -50,7 +51,8 @@ class InicioCtrl
 
         // Gestión de paginación
         $pagina = isset($_GET['page']) ? max(1, (int) $_GET['page']) : 1;
-        $porPagina = 3;
+        $cofiguracion = ConfigAvanzada::getInstance();
+        $porPagina = (int) $cofiguracion->get('items_por_pagina', 5);
 
         // Filtro de tareas pendientes
         $soloPendientes = (isset($_GET['pendientes']) && $_GET['pendientes'] == '1');

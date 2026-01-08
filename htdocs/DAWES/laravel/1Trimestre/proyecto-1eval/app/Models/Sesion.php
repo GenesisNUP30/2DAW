@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\DB;
+use App\Models\ConfigAvanzada;
 
 /**
  * @class Sesion
@@ -38,6 +39,22 @@ class Sesion
     public function __construct()
     {
         session_start();
+        // Crear instancia de ConfigAvanzada
+        $config = ConfigAvanzada::getInstance();
+
+        // Obtener tiempo de sesión 
+        $tiempoSesion = (int) $config->get('tiempo_sesion', 600);
+
+        //Controlar el tiempo de inactividad
+        if (isset($_SESSION['ultima_actividad'])) {
+            // Si la última actividad es mayor que el tiempo de sesión, se cierra la sesión
+            if (time() - $_SESSION['ultima_actividad'] > $tiempoSesion) {
+                $this->logout();
+            }
+        }
+
+        // Guardar la hora de la última actividad
+        $_SESSION['ultima_actividad'] = time();
 
         if (!$this->isLogged() && isset($_COOKIE['recordar_usuario'])) {
             $this->loginDesdeCookie();
