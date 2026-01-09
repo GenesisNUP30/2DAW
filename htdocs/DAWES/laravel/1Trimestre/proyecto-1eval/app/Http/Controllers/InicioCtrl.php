@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Log;
  *
  * @brief Controlador principal de la aplicación.
  *
- * Este controlador gestiona las funcionalidades principales accesibles
- * tras la autenticación del usuario:
+ * Este controlador gestiona las funcionalidades principales:
  * - Visualización de la página de inicio con el listado de tareas.
  * - Paginación y filtrado de tareas pendientes.
  * - Visualización del detalle de una tarea concreta.
@@ -51,8 +50,10 @@ class InicioCtrl
 
         // Gestión de paginación
         $pagina = isset($_GET['page']) ? max(1, (int) $_GET['page']) : 1;
-        $cofiguracion = ConfigAvanzada::getInstance();
-        $porPagina = (int) $cofiguracion->get('items_por_pagina', 5);
+
+        // Obtener configuración avanzada para items por página
+        $configuracion = ConfigAvanzada::getInstance();
+        $porPagina = (int) $configuracion->items_por_pagina;
 
         // Filtro de tareas pendientes
         $soloPendientes = (isset($_GET['pendientes']) && $_GET['pendientes'] == '1');

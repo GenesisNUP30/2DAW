@@ -22,6 +22,49 @@
       font-family: "Segoe UI", sans-serif;
     }
 
+/* 
+    body.claro {
+      background-color: #f8fafc;
+      color: #1a202c;
+    }
+
+    body.claro a {
+      color: #3182ce;
+    }
+
+
+    body.oscuro {
+      background-color: #1a202c;
+      color: #f8fafc;
+    }
+
+    body.oscuro a {
+      color: #63b3ed;
+    }
+
+
+    body.oscuro .form-control,
+    body.oscuro .form-select {
+      background-color: #2d3748;
+      color: #f8fafc;
+      border-color: #4a5568;
+    }
+
+    body.oscuro table {
+      background-color: #2d3748;
+      color: #f8fafc;
+    }
+
+    body.oscuro th {
+      background-color: #4a5568;
+      color: #f8fafc;
+    }
+
+    body.oscuro tr:nth-child(even) {
+      background-color: #1a202c;
+    } */
+
+
     /* Header */
     .header-app {
       background: #2c3e50;
@@ -63,7 +106,7 @@
   @yield('estilos')
 </head>
 
-<body>
+<body class="{{ $_SESSION['tema'] ?? 'claro' }}">
 
   <!-- HEADER -->
   <div class="header-app d-flex justify-content-between align-items-center">

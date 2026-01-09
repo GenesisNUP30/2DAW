@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Funciones;
 use App\Models\Tareas;
 use App\Models\Sesion;
+use App\Models\ConfigAvanzada;
 
 /**
  * @class AltaCtrl
@@ -76,6 +77,9 @@ class AltaCtrl
                 miredirect('/');
             }
         } else {
+            // Cargar configuración avanzada
+            $configavanzada = ConfigAvanzada::getInstance();
+
             // Inicialización de valores por defecto para la vista
             $datos = [
                 'nif_cif' => '',
@@ -84,9 +88,9 @@ class AltaCtrl
                 'descripcion' => '',
                 'correo' => '',
                 'direccion' => '',
-                'poblacion' => '',
+                'poblacion' => $configavanzada->poblacion_defecto,
                 'codigo_postal' => '',
-                'provincia' => '',
+                'provincia' => $configavanzada->provincia_defecto,
                 'estado' => '',
                 'operario_encargado' => '',
                 'fecha_realizacion' => '',

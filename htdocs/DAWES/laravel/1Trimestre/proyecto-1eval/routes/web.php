@@ -10,6 +10,7 @@ use App\Http\Controllers\LoginCtrl;
 use App\Http\Controllers\VerUsuariosCtrl;
 use App\Http\Controllers\EditarUsuarioCtrl;
 use App\Http\Controllers\EliminarUsuarioCtrl;
+use App\Http\Controllers\ConfigAvanzadaCtrl;
 use Illuminate\Support\Facades\Route;
 
 define('BASE_URL', '/DAWES/laravel/1Trimestre/proyecto-1eval/public/');
@@ -44,6 +45,7 @@ Route::post('/modificar/{id}', [ModificarCtrl::class, 'actualizar']);
 Route::get('/eliminar/{id}', [EliminarCtrl::class, 'confirmar']);
 Route::post('/eliminar/{id}', [EliminarCtrl::class, 'eliminar']);
 
+// Completar tarea
 Route::get('/completar/{id}', [CompletarCtrl::class, 'mostrarFormulario']);
 Route::post('/completar/{id}', [CompletarCtrl::class, 'completar']);
 
@@ -64,3 +66,9 @@ Route::post('/editarusuario/{id}', [EditarUsuarioCtrl::class, 'actualizar']);
 // Eliminar usuario
 Route::get('/eliminarusuario/{id}', [EliminarUsuarioCtrl::class, 'confirmar']);
 Route::post('/eliminarusuario/{id}', [EliminarUsuarioCtrl::class, 'eliminar']);
+
+// Configuración avanzada
+// Configuración avanzada
+Route::get('/configavanzada', [ConfigAvanzadaCtrl::class, 'mostrar']);
+Route::post('/configavanzada', [ConfigAvanzadaCtrl::class, 'guardar']);
+

@@ -43,7 +43,7 @@ class Sesion
         $config = ConfigAvanzada::getInstance();
 
         // Obtener tiempo de sesión 
-        $tiempoSesion = (int) $config->get('tiempo_sesion', 600);
+        $tiempoSesion = (int) $config->tiempo_sesion;
 
         //Controlar el tiempo de inactividad
         if (isset($_SESSION['ultima_actividad'])) {
@@ -116,6 +116,7 @@ class Sesion
             $_SESSION['rol'] = $user['rol']; // Rol del usuario
             $_SESSION['logado'] = true; // Marca logueado como true
             $_SESSION['hora_logado'] = date('Y-m-d H:i:s'); // Hora de login
+            $_SESSION['tema'] = $config->tema ?? 'claro'; // Tema de la aplicación
 
             // Guarda el nombre del último usuario en la cookie durante 3 días (para que coincida con "recordarme")
             setcookie(
@@ -204,11 +205,11 @@ class Sesion
             $user = $db->LeeUnRegistro('usuarios', 'usuario = "' . $usuario . '"');
             if ($user) {
                 $_SESSION['usuario'] = $usuario;
-                $_SESSION['rol'] = $user['rol']; // <- esto faltaba
+                $_SESSION['rol'] = $user['rol']; 
                 $_SESSION['logado'] = true;
-                $_SESSION['hora_logado'] = date('Y-m-d H:i:s'); // opcional
+                $_SESSION['hora_logado'] = date('Y-m-d H:i:s'); 
             } else {
-                // Usuario no encontrado → borrar cookies
+                // Si el usuario no existe, borrar cookies
                 $this->borrarCookiesRecordarme();
             }
         }

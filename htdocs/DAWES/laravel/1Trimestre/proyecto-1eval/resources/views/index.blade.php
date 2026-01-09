@@ -151,6 +151,11 @@
         @endif
     </div>
 
+    <a href="{{ miurl('configavanzada') }}" class="btn btn-editar">
+        <i class="fas fa-cogs me-1"></i> Configuración Avanzada
+    </a>
+
+
     <table class="tabla-tareas">
         <thead>
             <tr>

@@ -24,17 +24,33 @@ class ConfigAvanzada
      */
     private static $instance = null;
 
-    /**
-     * Array asociativo con la configuración cargada.
-     * Ejemplo: ['items_por_pagina' => '10']
-     * @var array
-     */
-    private array $config = [];
+    private $bd;
+    
+    public $provincia_defecto;
+    public $poblacion_defecto;
+    public $items_por_pagina;
+    public $tiempo_sesion;
+    public $tema;
 
     /**
      * Constructor
      */
-    public function __construct() {}
+    public function __construct() 
+    {
+        $this->bd = DB::getInstance();
+
+        $sql = "SELECT * FROM config_avanzada";
+        $res = $this->bd->query($sql);
+        $fila = $this->bd->LeeRegistro($res);
+
+        if ($fila) {
+            $this->provincia_defecto = $fila['provincia_defecto'];
+            $this->poblacion_defecto = $fila['poblacion_defecto'];
+            $this->items_por_pagina = $fila['items_por_pagina'];
+            $this->tiempo_sesion = $fila['tiempo_sesion'];
+            $this->tema = $fila['tema'];
+        }
+    }
 
     /**
      * Evita la clonación del objeto Singleton.
@@ -61,55 +77,17 @@ class ConfigAvanzada
         return self::$instance;
     }
 
-    /**
-     * Carga todos los valores de configuración desde la base de datos.
-     */
-    public function cargarConfiguracion(): void
+    public function guardar(): void
     {
-        // Lógica para cargar la configuración avanzada desde la base de datos
-        // Crear instancia de DB
-        $db = DB::getInstance();
-
-        // Consulta SQL para obtener los valores de la configuración
-        $db->query("SELECT clave, valor FROM configuracion");
-
-        //Leer los registros uno a uno
-        while ($fila = $db->LeeRegistro()) {
-            // Asignar los valores a las propiedades correspondientes
-            $this->config[$fila['clave']] = $fila['valor'];
-        }
-    }
-
-    /**
-     * Obtiene el valor de una configuración específica.
-     * @param string $clave Clave de la configuración a obtener.
-     * @param mixed $default Valor por defecto si la clave no existe.
-     * @return mixed Devuelve el valor de la configuración o el valor por defecto si no existe.
-     */
-    public function get(string $clave, $default = null)
-    {
-        return $this->config[$clave] ?? $default;
-    }
-
-    /**
-     * Establece el valor de una configuración específica.
-     * @param string $clave Clave de la configuración a establecer.
-     * @param string $valor Valor a establecer.
-     * @return void
-     */
-    public function set(string $clave, string $valor): void
-    {
-        // Crear instancia de DB
-        $db = DB::getInstance();
-
-        // Escapar valores para evitar inyección SQL
-        $clave_sql = $db->escape($clave);
-        $valor_sql = $db->escape($valor);
-
         // Consulta SQL para actualizar la configuración
-        $db->query("UPDATE configuracion SET valor = '$valor_sql' WHERE clave = '$clave_sql'");
+        $sql = "UPDATE config_avanzada SET 
+        provincia_defecto = '{$this->bd->escape($this->provincia_defecto)}',
+        poblacion_defecto = '{$this->bd->escape($this->poblacion_defecto)}',
+        items_por_pagina = '{$this->bd->escape($this->items_por_pagina)}',
+        tiempo_sesion = '{$this->bd->escape($this->tiempo_sesion)}',
+        tema = '{$this->bd->escape($this->tema)}'
+        WHERE id = 1";
 
-        // Actualizar el valor en el array local
-        $this->config[$clave] = $valor;
+        $this->bd->query($sql);
     }
 }
