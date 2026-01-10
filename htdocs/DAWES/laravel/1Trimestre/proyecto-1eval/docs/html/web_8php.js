@@ -10,6 +10,7 @@ var web_8php =
     [ "VerUsuariosCtrl", "class_ver_usuarios_ctrl.html", null ],
     [ "EditarUsuarioCtrl", "class_editar_usuario_ctrl.html", "class_editar_usuario_ctrl" ],
     [ "EliminarUsuarioCtrl", "class_eliminar_usuario_ctrl.html", "class_eliminar_usuario_ctrl" ],
+    [ "ConfigAvanzadaCtrl", "class_config_avanzada_ctrl.html", "class_config_avanzada_ctrl" ],
     [ "miredirect", "web_8php.html#a076207b7d94d13a2d6df72dd75c2de69", null ],
     [ "BASE_URL", "web_8php.html#ac2f7c46cdf071163a82cb95295eca57f", null ],
     [ "miurl", "web_8php.html#a64bc0e98bff60531d07f2220330aeaf9", null ]

@@ -6,6 +6,7 @@ var annotated_dup =
           [ "AñadirUsuarioCtrl", "class_app_1_1_http_1_1_controllers_1_1_a_xC3_xB1adir_usuario_ctrl.html", "class_app_1_1_http_1_1_controllers_1_1_a_xC3_xB1adir_usuario_ctrl" ],
           [ "AltaCtrl", "class_app_1_1_http_1_1_controllers_1_1_alta_ctrl.html", "class_app_1_1_http_1_1_controllers_1_1_alta_ctrl" ],
           [ "CompletarCtrl", "class_app_1_1_http_1_1_controllers_1_1_completar_ctrl.html", "class_app_1_1_http_1_1_controllers_1_1_completar_ctrl" ],
+          [ "ConfigAvanzadaCtrl", "class_app_1_1_http_1_1_controllers_1_1_config_avanzada_ctrl.html", "class_app_1_1_http_1_1_controllers_1_1_config_avanzada_ctrl" ],
           [ "Controller", "class_app_1_1_http_1_1_controllers_1_1_controller.html", null ],
           [ "EditarUsuarioCtrl", "class_app_1_1_http_1_1_controllers_1_1_editar_usuario_ctrl.html", "class_app_1_1_http_1_1_controllers_1_1_editar_usuario_ctrl" ],
           [ "EliminarCtrl", "class_app_1_1_http_1_1_controllers_1_1_eliminar_ctrl.html", "class_app_1_1_http_1_1_controllers_1_1_eliminar_ctrl" ],
@@ -17,10 +18,12 @@ var annotated_dup =
           [ "Usuarios", "class_app_1_1_http_1_1_controllers_1_1_usuarios.html", "class_app_1_1_http_1_1_controllers_1_1_usuarios" ],
           [ "Sesion", "class_app_1_1_http_1_1_controllers_1_1_sesion.html", "class_app_1_1_http_1_1_controllers_1_1_sesion" ],
           [ "Funciones", "class_app_1_1_http_1_1_controllers_1_1_funciones.html", "class_app_1_1_http_1_1_controllers_1_1_funciones" ],
-          [ "Tareas", "class_app_1_1_http_1_1_controllers_1_1_tareas.html", "class_app_1_1_http_1_1_controllers_1_1_tareas" ]
+          [ "Tareas", "class_app_1_1_http_1_1_controllers_1_1_tareas.html", "class_app_1_1_http_1_1_controllers_1_1_tareas" ],
+          [ "ConfigAvanzada", "class_app_1_1_http_1_1_controllers_1_1_config_avanzada.html", "class_app_1_1_http_1_1_controllers_1_1_config_avanzada" ]
         ] ]
       ] ],
       [ "Models", "namespace_app_1_1_models.html", [
+        [ "ConfigAvanzada", "class_app_1_1_models_1_1_config_avanzada.html", "class_app_1_1_models_1_1_config_avanzada" ],
         [ "DB", "class_app_1_1_models_1_1_d_b.html", "class_app_1_1_models_1_1_d_b" ],
         [ "Funciones", "class_app_1_1_models_1_1_funciones.html", "class_app_1_1_models_1_1_funciones" ],
         [ "Sesion", "class_app_1_1_models_1_1_sesion.html", "class_app_1_1_models_1_1_sesion" ],
@@ -32,6 +35,7 @@ var annotated_dup =
     [ "AñadirUsuarioCtrl", "class_a_xC3_xB1adir_usuario_ctrl.html", "class_a_xC3_xB1adir_usuario_ctrl" ],
     [ "AltaCtrl", "class_alta_ctrl.html", "class_alta_ctrl" ],
     [ "CompletarCtrl", "class_completar_ctrl.html", "class_completar_ctrl" ],
+    [ "ConfigAvanzadaCtrl", "class_config_avanzada_ctrl.html", "class_config_avanzada_ctrl" ],
     [ "EditarUsuarioCtrl", "class_editar_usuario_ctrl.html", "class_editar_usuario_ctrl" ],
     [ "EliminarCtrl", "class_eliminar_ctrl.html", "class_eliminar_ctrl" ],
     [ "EliminarUsuarioCtrl", "class_eliminar_usuario_ctrl.html", "class_eliminar_usuario_ctrl" ],

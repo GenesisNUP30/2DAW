@@ -1,5 +1,6 @@
 var dir_fc6199fba97859a095e1d9a5aa5fae23 =
 [
+    [ "ConfigAvanzada.php", "_config_avanzada_8php.html", "_config_avanzada_8php" ],
     [ "DB.php", "_d_b_8php.html", "_d_b_8php" ],
     [ "DBConexion.php", "_d_b_conexion_8php.html", "_d_b_conexion_8php" ],
     [ "Funciones.php", "_funciones_8php.html", "_funciones_8php" ],

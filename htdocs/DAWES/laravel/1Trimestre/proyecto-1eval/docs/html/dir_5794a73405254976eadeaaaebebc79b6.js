@@ -5,6 +5,7 @@ var dir_5794a73405254976eadeaaaebebc79b6 =
     [ "alta.blade.php", "alta_8blade_8php.html", "alta_8blade_8php" ],
     [ "app.blade.php", "app_8blade_8php.html", null ],
     [ "completar.blade.php", "completar_8blade_8php.html", "completar_8blade_8php" ],
+    [ "configavanzada.blade.php", "configavanzada_8blade_8php.html", "configavanzada_8blade_8php" ],
     [ "editarusuario.blade.php", "editarusuario_8blade_8php.html", "editarusuario_8blade_8php" ],
     [ "eliminar.blade.php", "eliminar_8blade_8php.html", "eliminar_8blade_8php" ],
     [ "eliminarusuario.blade.php", "eliminarusuario_8blade_8php.html", "eliminarusuario_8blade_8php" ],

@@ -1,6 +1,7 @@
 var login_8blade_8php =
 [
     [ "extends", "login_8blade_8php.html#aae6bc56215aca23a1269cbae3d18015c", null ],
+    [ "section", "login_8blade_8php.html#a96019ab16a77a2cc770d33ac6c3c3c19", null ],
     [ "section", "login_8blade_8php.html#ac453482cfd54a9b68b7743f2f77acd4c", null ],
     [ "__pad0__", "login_8blade_8php.html#a82281c80e5a34da73d7f831c14a3514a", null ],
     [ "__pad10__", "login_8blade_8php.html#a3874a778fe05ca36cd60ff2872850a7f", null ],

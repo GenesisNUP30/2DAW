@@ -7,5 +7,5 @@ var searchData=
   ['vertarea_4',['verTarea',['../class_app_1_1_http_1_1_controllers_1_1_inicio_ctrl.html#ae187e03505a2fdab2f893fc53812ff6c',1,'App::Http::Controllers::InicioCtrl::verTarea()'],['../class_inicio_ctrl.html#af6b3024af40df40840e38e4770cb16bb',1,'InicioCtrl::verTarea()']]],
   ['verusuariosctrl_5',['VerUsuariosCtrl',['../class_app_1_1_http_1_1_controllers_1_1_ver_usuarios_ctrl.html',1,'App::Http::Controllers::VerUsuariosCtrl'],['../class_ver_usuarios_ctrl.html',1,'VerUsuariosCtrl']]],
   ['verusuariosctrl_2ephp_6',['VerUsuariosCtrl.php',['../_ver_usuarios_ctrl_8php.html',1,'']]],
-  ['volver_7',['volver',['../tareadetalle_8blade_8php.html#abb04f27d0e3e84d602d639029cf1d469',1,'tareadetalle.blade.php']]]
+  ['volver_7',['volver',['../tareadetalle_8blade_8php.html#ac7cce97763ef61ff53c3c169850220e4',1,'tareadetalle.blade.php']]]
 ];
