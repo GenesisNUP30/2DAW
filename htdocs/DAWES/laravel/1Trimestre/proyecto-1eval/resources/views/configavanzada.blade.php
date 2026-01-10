@@ -4,6 +4,13 @@
 
 @section('estilos')
 <style>
+    .error {
+        color: #e53e3e;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
     .form-label {
         font-weight: 600;
         margin-top: 1.25rem;
@@ -90,12 +97,14 @@
         <label class="form-label">Elementos por página</label>
         <input type="number" name="items_por_pagina" class="form-control"
             value="{{ $configavanzada->items_por_pagina }}">
+        {!! \App\Models\Funciones::verErrores('items_por_pagina') !!}
     </div>
 
     <div class="form-row">
-        <label class="form-label">Tiempo máximo de sesión inactiva (segundos)</label>
-        <input type="number" name="tiempo_sesion" class="form-control"
-            value="{{ $configavanzada->tiempo_sesion }}">
+        <label class="form-label">Tiempo máximo de sesión inactiva (minutos)</label>
+        <input type="number" name="tiempo_sesion_minutos" class="form-control"
+            value="{{ $configavanzada->getTiempoSesionMinutos() }}">
+        {!! \App\Models\Funciones::verErrores('tiempo_sesion_minutos') !!}
     </div>
 
     <div class="form-row">

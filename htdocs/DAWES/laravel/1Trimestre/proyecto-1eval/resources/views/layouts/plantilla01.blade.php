@@ -22,47 +22,6 @@
       font-family: "Segoe UI", sans-serif;
     }
 
-/* 
-    body.claro {
-      background-color: #f8fafc;
-      color: #1a202c;
-    }
-
-    body.claro a {
-      color: #3182ce;
-    }
-
-
-    body.oscuro {
-      background-color: #1a202c;
-      color: #f8fafc;
-    }
-
-    body.oscuro a {
-      color: #63b3ed;
-    }
-
-
-    body.oscuro .form-control,
-    body.oscuro .form-select {
-      background-color: #2d3748;
-      color: #f8fafc;
-      border-color: #4a5568;
-    }
-
-    body.oscuro table {
-      background-color: #2d3748;
-      color: #f8fafc;
-    }
-
-    body.oscuro th {
-      background-color: #4a5568;
-      color: #f8fafc;
-    }
-
-    body.oscuro tr:nth-child(even) {
-      background-color: #1a202c;
-    } */
 
 
     /* Header */
@@ -79,6 +38,8 @@
       min-height: 100vh;
       border-right: 1px solid #e0e0e0;
       padding-top: 20px;
+      display: flex;
+      flex-direction: column;
     }
 
     .sidebar a {
@@ -89,9 +50,20 @@
       transition: all 0.2s ease;
     }
 
-    .sidebar a:hover {
-      background: #eef1f5;
+    .nav-config {
+      background: linear-gradient(135deg, #6b46c1, #553c9a);
+      color: #fff !important;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 12px 10px;
+      transition: all 0.25s ease;
     }
+
+    .nav-config:hover {
+      background: linear-gradient(135deg, #553c9a, #44337a);
+      transform: translateY(-2px);
+    }
+
 
     /* Footer */
     .footer-app {
@@ -100,6 +72,165 @@
       padding: 15px;
       margin-top: 30px;
       text-align: center;
+    }
+
+    body {
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.claro {
+      background-color: #f8fafc;
+      color: #1a202c;
+    }
+
+    body.oscuro {
+      --bg: #1f2937;
+      --panel: #111827;
+      --panel2: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #374151;
+      --link: #9bc6fe;
+      --hover: #374151;
+    }
+
+    /* Fondo general */
+    body.oscuro {
+      background-color: var(--bg) !important;
+      color: var(--text) !important;
+    }
+
+    /* Textos generales */
+    body.oscuro h1,
+    body.oscuro h2,
+    body.oscuro h3,
+    body.oscuro h4,
+    body.oscuro h5,
+    body.oscuro h6,
+    body.oscuro label,
+    body.oscuro .form-label,
+    body.oscuro p,
+    body.oscuro span,
+    body.oscuro div {
+      color: var(--text);
+    }
+
+    /* Contenedores */
+    body.oscuro .container,
+    body.oscuro .container-fluid,
+    body.oscuro .card,
+    body.oscuro .col-md-10,
+    body.oscuro .p-4 {
+      background-color: var(--bg) !important;
+    }
+
+    /* Paneles (tablas, formularios, bloques) */
+    body.oscuro .tabla-tareas,
+    body.oscuro .card,
+    body.oscuro .modal-content {
+      background-color: var(--panel);
+      color: var(--text);
+    }
+
+    /* Tablas */
+    body.oscuro table {
+      background-color: var(--panel);
+      color: var(--text);
+    }
+
+    body.oscuro th {
+      background-color: var(--panel2) !important;
+      color: var(--text) !important;
+    }
+
+    body.oscuro td {
+      color: var(--text);
+    }
+
+    body.oscuro tr:nth-child(even) {
+      background-color: #0f172a;
+    }
+
+    body.oscuro tr:hover {
+      background-color: #1e293b;
+    }
+
+    /* Inputs */
+    body.oscuro input,
+    body.oscuro select,
+    body.oscuro textarea {
+      background-color: var(--panel2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    body.oscuro input::placeholder {
+      color: var(--muted);
+    }
+
+    /* Enlaces reales (no botones ni menú) */
+    body.oscuro a:not(.btn):not(.nav-link) {
+      color: var(--link);
+    }
+
+    /* Menú lateral */
+    body.oscuro .sidebar {
+      background-color: var(--panel);
+      border-right: 1px solid var(--border);
+    }
+
+    body.oscuro .sidebar a {
+      color: var(--text);
+    }
+
+    body.oscuro .sidebar a:hover {
+      background-color: var(--hover);
+    }
+
+    body.oscuro .alert-warning {
+      background-color: #422006;
+      border-color: #92400e;
+      color: #fde68a;
+    }
+
+    body.oscuro .alert-warning .text-danger {
+      color: #fca5a5 !important;
+    }
+
+    body.oscuro .tarea-datos,
+    body.oscuro .detalle-tarea {
+      background-color: var(--panel) !important;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    body.oscuro .form-control[readonly],
+    body.oscuro input[type="file"] {
+      background-color: #374151;
+      color: #e5e7eb;
+    }
+
+    /* Filas */
+    body.oscuro .campo {
+      border-bottom: 1px solid var(--border);
+    }
+
+    body.oscuro .campo .label {
+      color: #c7d2fe;
+    }
+
+    /* Títulos de sección */
+    body.oscuro .detalle-tarea h2,
+    body.oscuro .detalle-tarea h3 {
+      color: #bfdbfe;
+      border-color: var(--border);
+    }
+
+    /* Header y footer */
+    body.oscuro .header-app,
+    body.oscuro .footer-app {
+      background-color: #020617;
+      color: var(--text);
     }
   </style>
 
@@ -131,7 +262,7 @@
 
       <!-- MENÚ LATERAL -->
       <div class="col-md-2 sidebar">
-        <ul class="nav flex-column">
+        <ul class="nav flex-column flex-grow-1">
 
           <li class="nav-item">
             <a class="nav-link" href="{{ miurl('/') }}">
@@ -159,6 +290,15 @@
             </a>
           </li>
           @endif
+
+          @if(!empty($_SESSION['rol']))
+          <div class="p-3 mt-auto">
+            <a class="nav-link nav-config w-100 text-center" href="{{ miurl('configavanzada') }}">
+              <i class="fas fa-cogs me-2"></i> Configuración
+            </a>
+          </div>
+          @endif
+
 
         </ul>
       </div>

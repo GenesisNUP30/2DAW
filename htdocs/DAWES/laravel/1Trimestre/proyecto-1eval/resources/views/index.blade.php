@@ -118,12 +118,11 @@
     }
 
     .paginacion a {
-        background: #e2e8f0;
-        color: #2d3748;
+        color: #20262f;
     }
 
     .paginacion a:hover {
-        background: #cbd5e0;
+        background: #6c7177;
     }
 
     .paginacion .actual {
@@ -150,11 +149,6 @@
         </a>
         @endif
     </div>
-
-    <a href="{{ miurl('configavanzada') }}" class="btn btn-editar">
-        <i class="fas fa-cogs me-1"></i> Configuración Avanzada
-    </a>
-
 
     <table class="tabla-tareas">
         <thead>

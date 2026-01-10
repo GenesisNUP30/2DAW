@@ -79,6 +79,13 @@
 
 @section('cuerpo')
 <div class="login-container">
+    @if (!empty($_SESSION['mensaje_inactividad']))
+    <div class="alert-error">
+        <i class="fas fa-exclamation-circle me-1"></i>{{ $_SESSION['mensaje_inactividad'] }}
+    </div>
+    <?php unset($_SESSION['mensaje_inactividad']); ?>
+    @endif
+
     <h1 class="login-title">
         <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
     </h1>

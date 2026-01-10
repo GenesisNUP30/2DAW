@@ -49,12 +49,15 @@ class Sesion
         if (isset($_SESSION['ultima_actividad'])) {
             // Si la última actividad es mayor que el tiempo de sesión, se cierra la sesión
             if (time() - $_SESSION['ultima_actividad'] > $tiempoSesion) {
+                $_SESSION['mensaje_inactividad'] = "Tu sesión ha expirado por inactividad. Debes iniciar sesión de nuevo.";
                 $this->logout();
             }
         }
 
-        // Guardar la hora de la última actividad
-        $_SESSION['ultima_actividad'] = time();
+        // Guardar la hora de la última actividad (si aún hay sesión)
+        if (!isset($_SESSION['logado'])) {
+            $_SESSION['ultima_actividad'] = time();
+        }
 
         if (!$this->isLogged() && isset($_COOKIE['recordar_usuario'])) {
             $this->loginDesdeCookie();
@@ -123,7 +126,8 @@ class Sesion
                 'ultimo_usuario',
                 $usuario,
                 time() + (3 * 24 * 60 * 60),
-                '/');
+                '/'
+            );
 
             // Si se ha seleccionado el checkbox "recordarme", crea el token de sesión
             if (isset($_POST['recordarme'])) {
@@ -205,9 +209,9 @@ class Sesion
             $user = $db->LeeUnRegistro('usuarios', 'usuario = "' . $usuario . '"');
             if ($user) {
                 $_SESSION['usuario'] = $usuario;
-                $_SESSION['rol'] = $user['rol']; 
+                $_SESSION['rol'] = $user['rol'];
                 $_SESSION['logado'] = true;
-                $_SESSION['hora_logado'] = date('Y-m-d H:i:s'); 
+                $_SESSION['hora_logado'] = date('Y-m-d H:i:s');
             } else {
                 // Si el usuario no existe, borrar cookies
                 $this->borrarCookiesRecordarme();
@@ -236,9 +240,16 @@ class Sesion
      */
     public function logout(): void
     {
+        $mensaje = $_SESSION['mensaje_inactividad'] ?? null;
+
         $_SESSION = [];
         session_destroy();
         $this->borrarCookiesRecordarme();
+
+        if ($mensaje) {
+            session_start(); // reiniciar sesión temporal para mostrar mensaje
+            $_SESSION['mensaje_inactividad'] = $mensaje;
+        }
     }
 
     /**

@@ -65,6 +65,46 @@
     h1 {
         margin-bottom: 1.5rem;
     }
+
+    /* ============================= */
+    /* TEMA OSCURO */
+    /* ============================= */
+
+    body.oscuro .alert-warning {
+        background: #3f2a04;
+        border-color: #92400e;
+        color: #fde68a;
+    }
+
+    body.oscuro .tarea-datos {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        color: var(--text);
+    }
+
+    body.oscuro .tarea-datos p {
+        color: var(--text);
+    }
+
+    body.oscuro h1 {
+        color: #fca5a5;
+    }
+
+    body.oscuro .btn-confirm {
+        background: linear-gradient(135deg, #dc2626, #991b1b);
+    }
+
+    body.oscuro .btn-confirm:hover {
+        background: linear-gradient(135deg, #b91c1c, #7f1d1d);
+    }
+
+    body.oscuro .btn-cancel {
+        background: linear-gradient(135deg, #334155, #1e293b);
+    }
+
+    body.oscuro .btn-cancel:hover {
+        background: linear-gradient(135deg, #1e293b, #020617);
+    }
 </style>
 @endsection
 

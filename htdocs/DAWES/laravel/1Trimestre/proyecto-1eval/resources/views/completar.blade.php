@@ -92,6 +92,7 @@
     textarea.form-control {
         min-height: 100px;
     }
+    
 </style>
 @endsection
 

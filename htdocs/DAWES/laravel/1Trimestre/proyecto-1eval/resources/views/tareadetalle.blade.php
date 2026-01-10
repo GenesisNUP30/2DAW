@@ -66,6 +66,46 @@
         border-bottom: 1px solid #cbd5e0;
         padding-bottom: 4px;
     }
+
+    /* ============================= */
+    /* TEMA OSCURO  */
+    /* ============================= */
+
+    body.oscuro .detalle-tarea {
+        background: var(--panel);
+        color: var(--text);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    }
+
+    body.oscuro .detalle-tarea h2 {
+        color: #93c5fd;
+    }
+
+    body.oscuro .detalle-tarea h3 {
+        color: #60a5fa;
+        border-bottom: 1px solid var(--border);
+    }
+
+    body.oscuro .detalle-tarea .campo {
+        border-bottom: 1px solid var(--border);
+    }
+
+    body.oscuro .detalle-tarea .label {
+        color: #d1d5db;
+    }
+
+    body.oscuro .detalle-tarea span {
+        color: var(--text);
+    }
+
+    body.oscuro .detalle-tarea .btn-volver {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+    }
+
+    body.oscuro .detalle-tarea .btn-volver:hover {
+        background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    }
 </style>
 @endsection
 
