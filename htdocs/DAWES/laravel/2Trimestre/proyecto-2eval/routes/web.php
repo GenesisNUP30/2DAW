@@ -13,7 +13,7 @@ use App\Http\Controllers\EliminarUsuarioCtrl;
 use App\Http\Controllers\ConfigAvanzadaCtrl;
 use Illuminate\Support\Facades\Route;
 
-define('BASE_URL', '/DAWES/laravel/1Trimestre/proyecto-1eval/public/');
+define('BASE_URL', '/DAWES/laravel/2Trimestre/proyecto-2eval/public/');
 
 function miurl($ruta = '')
 {
