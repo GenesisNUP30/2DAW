@@ -213,7 +213,8 @@ class Sesion
                 $_SESSION['logado'] = true;
                 $_SESSION['hora_logado'] = date('Y-m-d H:i:s');
             } else {
-                // Si el usuario no existe, borrar cookies
+                // Si el usuario no existe, invalida el token y borra las cookies
+                $db->query("UPDATE login_token SET is_expired = 1 WHERE usuario = '$usuario'");
                 $this->borrarCookiesRecordarme();
             }
         }

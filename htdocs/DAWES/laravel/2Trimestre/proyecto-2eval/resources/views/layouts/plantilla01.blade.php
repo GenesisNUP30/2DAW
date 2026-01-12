@@ -238,8 +238,6 @@
 </head>
 
 <body class="{{ $_SESSION['tema'] ?? 'claro' }}">
-
-  <!-- HEADER -->
   <div class="header-app d-flex justify-content-between align-items-center">
     <h4 class="m-0">
       <i class="fas fa-clipboard-check"></i> Gestor de tareas

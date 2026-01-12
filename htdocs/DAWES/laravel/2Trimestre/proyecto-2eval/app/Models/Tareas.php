@@ -101,6 +101,11 @@ class Tareas
         ];
     }
 
+    // public function listarTareasAsignadas(): array 
+    // {
+
+    // }
+
     /**
      * Registra una nueva tarea en la base de datos.
      *
