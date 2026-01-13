@@ -88,6 +88,6 @@ class EliminarUsuarioCtrl
         $modelo->eliminarUsuario($id);
 
         // Redirección tras la eliminación
-        miredirect('listarusuarios');
+        miredirect('eliminarusuario');
     }
 }

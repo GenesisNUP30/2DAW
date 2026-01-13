@@ -1,0 +1,8 @@
+var searchData=
+[
+  ['obtenertareaporid_0',['obtenerTareaPorId',['../class_app_1_1_models_1_1_tareas.html#ae5d113f25ff4b1a29022e4c4ba046aed',1,'App::Models::Tareas::obtenerTareaPorId()'],['../class_app_1_1_http_1_1_controllers_1_1_tareas.html#a12f50437cc7dd725b4f8e5cb3f7a4ef2',1,'App::Http::Controllers::Tareas::obtenerTareaPorId()']]],
+  ['obtenerusuarioporid_1',['obtenerUsuarioPorId',['../class_app_1_1_models_1_1_usuarios.html#a35db71a38b5a6ac18df7559becec4cb7',1,'App::Models::Usuarios::obtenerUsuarioPorId()'],['../class_app_1_1_http_1_1_controllers_1_1_usuarios.html#abf37041c68c9d172bb0dcc60efce2098',1,'App::Http::Controllers::Usuarios::obtenerUsuarioPorId()']]],
+  ['onlyadministrador_2',['onlyAdministrador',['../class_app_1_1_models_1_1_sesion.html#a0cdd6be11b68798da7d4650311282fe7',1,'App::Models::Sesion::onlyAdministrador()'],['../class_app_1_1_http_1_1_controllers_1_1_sesion.html#a0cdd6be11b68798da7d4650311282fe7',1,'App::Http::Controllers::Sesion::onlyAdministrador()']]],
+  ['onlylogged_3',['onlyLogged',['../class_app_1_1_models_1_1_sesion.html#a7353ff1d629512e4f6c28a3983589182',1,'App::Models::Sesion::onlyLogged()'],['../class_app_1_1_http_1_1_controllers_1_1_sesion.html#a7353ff1d629512e4f6c28a3983589182',1,'App::Http::Controllers::Sesion::onlyLogged()']]],
+  ['onlyoperario_4',['onlyOperario',['../class_app_1_1_models_1_1_sesion.html#ad74d396f3f1d0bf04ba7c07d507c9870',1,'App::Models::Sesion::onlyOperario()'],['../class_app_1_1_http_1_1_controllers_1_1_sesion.html#ad74d396f3f1d0bf04ba7c07d507c9870',1,'App::Http::Controllers::Sesion::onlyOperario()']]]
+];
