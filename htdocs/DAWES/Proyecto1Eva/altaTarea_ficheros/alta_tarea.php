@@ -94,7 +94,7 @@ if ($_POST) {
         require_once __DIR__.'/../conexion.php';
 
         $sql = "INSERT INTO tareas (
-            nif_cif, persona_contacto, telefono, email, direccion, poblacion,
+            nif_cif, persona_contacto, telefono, correo, direccion, poblacion,
             codigo_postal, provincia, descripcion, anotaciones_anteriores,
             estado, operario_encargado, fecha_realizacion
         ) VALUES (

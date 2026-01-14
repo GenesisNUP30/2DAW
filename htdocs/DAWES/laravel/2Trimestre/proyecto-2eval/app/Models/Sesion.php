@@ -108,12 +108,15 @@ class Sesion
         date_default_timezone_set('Europe/Madrid');
 
         $db = DB::getInstance();
+        
 
         // Verifica si el usuario existe en la base de datos
         $user = $db->LeeUnRegistro('usuarios', 'usuario = "' . $usuario . '" AND password = "' . $password . '"');
 
         // Si existe, crea la sesión
         if ($user) {
+            $config = ConfigAvanzada::getInstance();
+
             $_SESSION['id'] = $user['id']; // ID del usuario
             $_SESSION['usuario'] = $usuario; // Nombre del usuario
             $_SESSION['rol'] = $user['rol']; // Rol del usuario
@@ -208,10 +211,13 @@ class Sesion
             // Recuperar datos completos del usuario
             $user = $db->LeeUnRegistro('usuarios', 'usuario = "' . $usuario . '"');
             if ($user) {
+                $config = ConfigAvanzada::getInstance();
+
                 $_SESSION['usuario'] = $usuario;
                 $_SESSION['rol'] = $user['rol'];
                 $_SESSION['logado'] = true;
                 $_SESSION['hora_logado'] = date('Y-m-d H:i:s');
+                $_SESSION['tema'] = $config->tema ?? 'claro'; 
             } else {
                 // Si el usuario no existe, invalida el token y borra las cookies
                 $db->query("UPDATE login_token SET is_expired = 1 WHERE usuario = '$usuario'");

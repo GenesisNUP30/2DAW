@@ -151,7 +151,7 @@ function mostrarTablaTareas($resultado) {
             // echo "<td>" . $fila['nif_cif'] . "</td>";
             echo "<td>" . $fila['persona_contacto'] . "</td>";
             echo "<td>" . $fila['telefono'] . "</td>";
-            echo "<td>" . $fila['email'] . "</td>";
+            echo "<td>" . $fila['correo'] . "</td>";
             echo "<td>" . $fila['descripcion'] . "</td>";
             // echo "<td>" . $fila['direccion'] . "</td>";
             // echo "<td>" . $fila['poblacion'] . "</td>";

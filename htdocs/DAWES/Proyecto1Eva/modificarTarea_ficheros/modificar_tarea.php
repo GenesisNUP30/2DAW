@@ -40,7 +40,7 @@ $nifCif = $tareaExistente['nif_cif'];
 $personaNombre = $tareaExistente['persona_contacto'];
 $telefono = $tareaExistente['telefono'];
 $descripcionTarea = $tareaExistente['descripcion'];
-$correo = $tareaExistente['email'];
+$correo = $tareaExistente['correo'];
 $direccionTarea = $tareaExistente['direccion'];
 $poblacion = $tareaExistente['poblacion'];
 $codigoPostal = $tareaExistente['codigo_postal'];
@@ -127,7 +127,7 @@ if ($_POST) {
         // Actualizar en la BD
         $sqlActualizado = "UPDATE tareas SET
             nif_cif='$nifCif', persona_contacto='$personaNombre', telefono='$telefono',
-            descripcion='$descripcionTarea', email='$correo', direccion='$direccionTarea',
+            descripcion='$descripcionTarea', correo='$correo', direccion='$direccionTarea',
             poblacion='$poblacion', codigo_postal='$codigoPostal', provincia='$provincia',
             estado='$estadoTarea', operario_encargado='$operarioEncargado',
             fecha_realizacion='$fechaRealizacion', anotaciones_anteriores='$anotacionesAnteriores',

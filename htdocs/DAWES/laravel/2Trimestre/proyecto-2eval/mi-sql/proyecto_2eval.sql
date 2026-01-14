@@ -74,7 +74,7 @@ CREATE TABLE `tareas` (
   `poblacion` varchar(100) NOT NULL,
   `codigo_postal` char(5) NOT NULL,
   `provincia` char(2) NOT NULL,
-  `descripcion` text DEFAULT NULL,
+  `descripcion` text DEFAULT NULL, 
   `anotaciones_anteriores` text DEFAULT NULL,
   `estado` enum('B','P','R','C') NOT NULL DEFAULT 'P',
   `fecha_creacion` datetime DEFAULT current_timestamp(),
