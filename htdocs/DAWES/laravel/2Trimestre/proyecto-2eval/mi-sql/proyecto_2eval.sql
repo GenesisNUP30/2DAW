@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-01-2026 a las 19:03:59
+-- Tiempo de generación: 14-01-2026 a las 09:17:41
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,8 +18,26 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `proyecto_1eval`
+-- Base de datos: `proyecto_2eval`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `id` int(11) NOT NULL,
+  `cif` varchar(20) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `correo` varchar(100) DEFAULT NULL,
+  `cuenta_bancaria` varchar(50) DEFAULT NULL,
+  `pais` varchar(50) DEFAULT NULL,
+  `moneda` varchar(10) DEFAULT NULL,
+  `importe_cuota` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -46,16 +64,64 @@ INSERT INTO `config_avanzada` (`id`, `provincia_defecto`, `poblacion_defecto`, `
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `cuotas`
+--
+
+CREATE TABLE `cuotas` (
+  `id` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `concepto` varchar(255) DEFAULT NULL,
+  `fecha_emision` date DEFAULT NULL,
+  `importe` decimal(10,2) DEFAULT NULL,
+  `pagada` tinyint(1) DEFAULT 0,
+  `fecha_pago` date DEFAULT NULL,
+  `notas` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleados`
+--
+
+CREATE TABLE `empleados` (
+  `id` int(11) NOT NULL,
+  `dni` varchar(15) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
+  `fecha_alta` date NOT NULL,
+  `tipo` enum('administrador','operario') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `facturas`
+--
+
+CREATE TABLE `facturas` (
+  `id` int(11) NOT NULL,
+  `cuota_id` int(11) NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `pdf_path` varchar(255) DEFAULT NULL,
+  `enviada` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `login_token`
 --
 
 CREATE TABLE `login_token` (
   `id` int(11) NOT NULL,
-  `usuario` varchar(100) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
   `selector_hash` varchar(255) NOT NULL,
   `validator_hash` varchar(255) NOT NULL,
   `expiry_date` datetime NOT NULL,
-  `is_expired` tinyint(4) DEFAULT 0
+  `is_expired` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -66,41 +132,34 @@ CREATE TABLE `login_token` (
 
 CREATE TABLE `tareas` (
   `id` int(11) NOT NULL,
-  `nif_cif` varchar(20) NOT NULL,
-  `persona_contacto` varchar(100) NOT NULL,
-  `telefono` varchar(20) NOT NULL,
-  `correo` varchar(100) DEFAULT NULL,
-  `direccion` text NOT NULL,
-  `poblacion` varchar(100) NOT NULL,
-  `codigo_postal` char(5) NOT NULL,
-  `provincia` char(2) NOT NULL,
-  `descripcion` text DEFAULT NULL, 
+  `cliente_id` int(11) NOT NULL,
+  `operario_id` int(11) DEFAULT NULL,
+  `descripcion` text NOT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
+  `poblacion` varchar(100) DEFAULT NULL,
+  `codigo_postal` char(5) DEFAULT NULL,
+  `provincia` char(2) DEFAULT NULL,
+  `estado` enum('P','R','C') DEFAULT 'P',
+  `fecha_creacion` datetime NOT NULL,
+  `fecha_realizacion` date DEFAULT NULL,
   `anotaciones_anteriores` text DEFAULT NULL,
-  `estado` enum('B','P','R','C') NOT NULL DEFAULT 'P',
-  `fecha_creacion` datetime DEFAULT current_timestamp(),
-  `operario_encargado` varchar(50) DEFAULT NULL,
-  `fecha_realizacion` date NOT NULL,
   `anotaciones_posteriores` text DEFAULT NULL,
   `fichero_resumen` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `tareas`
---
-
-INSERT INTO `tareas` (`id`, `nif_cif`, `persona_contacto`, `telefono`, `correo`, `direccion`, `poblacion`, `codigo_postal`, `provincia`, `descripcion`, `anotaciones_anteriores`, `estado`, `fecha_creacion`, `operario_encargado`, `fecha_realizacion`, `anotaciones_posteriores`, `fichero_resumen`) VALUES
-(1, '12345678Z', 'Manuel García', '111 222 333', 'manuelgarcia@gmail.com', 'Av Santa Marta', 'Bollullos', '21710', '21', 'Prueba laravel', '', 'R', '2025-11-20 08:20:58', 'Ana María Fernández', '2025-12-31', 'Esto es para probar el rol de administrador. AHORA ESTA MODIFICANDO EL OPERARIO', NULL),
-(2, '12345678Z', 'pepe', '986 562 147', 'prueba2@gmail.com', 'Calle Falsa 123', 'Sevilla', '41014', '41', 'dhftfn', '', 'R', '2025-11-20 08:41:00', 'Lucía Hurtado', '2025-12-04', 'PROBANDO A COMPLETAR OTRA TAREA', NULL),
-(3, '12345678Z', 'laravel5', '986 562 147', 'prueba5@gmail.com', '', 'sevilla', '41014', '41', 't`kgbodrgb', '', 'P', '2025-11-24 22:07:34', 'Carlos Ruiz', '2026-02-20', 'fergverbvetbte', NULL),
-(4, '12345678Z', 'yujuu', '+34 654 874 320', 'prueba2@gmail.com', '', '', '21004', '21', 'foerkpwj', '', 'C', '2025-11-24 23:54:29', 'Carlos Ruiz', '2025-12-24', 'regvergv', NULL),
-(5, '12345678Z', 'No lo se', '123456789', 'adminstrador@gmail.com', 'Calle Picos', 'Moguer', '21800', '21', 'Probando a ver si el administrador puede crear una tarea', '', 'R', '2025-11-27 08:30:27', 'Lucía Hurtado', '2026-01-02', 'subiendo archivo .docx', '5_prueba.docx'),
-(6, '12345678Z', 'Antonio Murillo', '959 78 65 01', 'examen2@gmail.com', 'Calle Espejo, 12', 'Moguer', '21800', '21', 'probando nuevo xampp', 'xampp nuevo instalado', 'P', '2026-01-03 18:28:01', 'Carlos Ruiz', '2026-03-19', 'probando a subir los ficheros despues de instalar xampp de nuevo', '6_tarea_antonio-9-1-26.txt');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Disparadores `tareas`
 --
 DELIMITER $$
-CREATE TRIGGER `tr_no_modificar_fecha_creacion` BEFORE UPDATE ON `tareas` FOR EACH ROW BEGIN
+CREATE TRIGGER `tr_tareas_fecha_creacion_insert` BEFORE INSERT ON `tareas` FOR EACH ROW BEGIN
+    IF NEW.fecha_creacion IS NULL THEN
+        SET NEW.fecha_creacion = CURRENT_TIMESTAMP();
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `tr_tareas_fecha_creacion_update` BEFORE UPDATE ON `tareas` FOR EACH ROW BEGIN
     SET NEW.fecha_creacion = OLD.fecha_creacion;
 END
 $$
@@ -114,26 +173,21 @@ DELIMITER ;
 
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
+  `empleado_id` int(11) NOT NULL,
   `usuario` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `rol` enum('administrador','operario') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`id`, `usuario`, `password`, `rol`) VALUES
-(1, 'operario', 'operario', 'operario'),
-(2, 'admin', 'admin123', 'administrador'),
-(5, 'Genesis', 'genesis', 'administrador'),
-(6, 'jose angel', 'jozeanje', 'administrador'),
-(7, 'antonio', '1234', 'operario'),
-(8, 'prueba', '123', 'operario');
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `cif` (`cif`);
 
 --
 -- Indices de la tabla `config_avanzada`
@@ -142,33 +196,82 @@ ALTER TABLE `config_avanzada`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `cuotas`
+--
+ALTER TABLE `cuotas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cliente_id` (`cliente_id`);
+
+--
+-- Indices de la tabla `empleados`
+--
+ALTER TABLE `empleados`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `dni` (`dni`);
+
+--
+-- Indices de la tabla `facturas`
+--
+ALTER TABLE `facturas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cuota_id` (`cuota_id`);
+
+--
 -- Indices de la tabla `login_token`
 --
 ALTER TABLE `login_token`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_id` (`usuario_id`);
 
 --
 -- Indices de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cliente_id` (`cliente_id`),
+  ADD KEY `operario_id` (`operario_id`);
 
 --
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `usuario` (`id`);
+  ADD UNIQUE KEY `usuario` (`usuario`),
+  ADD KEY `empleado_id` (`empleado_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
+-- AUTO_INCREMENT de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `config_avanzada`
 --
 ALTER TABLE `config_avanzada`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `cuotas`
+--
+ALTER TABLE `cuotas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `empleados`
+--
+ALTER TABLE `empleados`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `facturas`
+--
+ALTER TABLE `facturas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `login_token`
@@ -180,13 +283,48 @@ ALTER TABLE `login_token`
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `cuotas`
+--
+ALTER TABLE `cuotas`
+  ADD CONSTRAINT `cuotas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`);
+
+--
+-- Filtros para la tabla `facturas`
+--
+ALTER TABLE `facturas`
+  ADD CONSTRAINT `facturas_ibfk_1` FOREIGN KEY (`cuota_id`) REFERENCES `cuotas` (`id`);
+
+--
+-- Filtros para la tabla `login_token`
+--
+ALTER TABLE `login_token`
+  ADD CONSTRAINT `login_token_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `tareas`
+--
+ALTER TABLE `tareas`
+  ADD CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`),
+  ADD CONSTRAINT `tareas_ibfk_2` FOREIGN KEY (`operario_id`) REFERENCES `empleados` (`id`);
+
+--
+-- Filtros para la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`empleado_id`) REFERENCES `empleados` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
