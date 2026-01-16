@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -21,6 +22,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'empleado_id',
+        'tipo',
+        'selector_hash',
+        'validator_hash',
+        'expiry_date',
+        'is_expired',
     ];
 
     /**
@@ -31,6 +38,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'selector_hash',
+        'validator_hash',
     ];
 
     /**
@@ -42,7 +51,23 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'expiry_date' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->tipo === 'administrador';
+    }
+
+    public function isEmpleado(): bool
+    {
+        return $this->tipo === 'empleado';
     }
 }
