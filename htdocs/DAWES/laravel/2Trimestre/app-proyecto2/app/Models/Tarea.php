@@ -24,7 +24,7 @@ class Tarea extends Model
      */
     protected $fillable = [
         'cliente_id',
-        'empleado_id',
+        'operario_id',
         'descripcion',
         'direccion',
         'poblacion',
@@ -37,9 +37,16 @@ class Tarea extends Model
         'fichero_resumen',
     ];
 
+    /**
+     * Evitamos que se actualicen automáticamente las fechas
+     *
+     * @var boolean
+     */
+    public $timestamps = false; 
+
     protected $casts = [
         'fecha_creacion' => 'datetime',
-        'fecha_realizacion' => 'datetime',
+        'fecha_realizacion' => 'date',
     ];
 
     public function cliente()
@@ -52,7 +59,7 @@ class Tarea extends Model
         return $this->belongsTo(Empleado::class, 'operario_id');
     }
 
-    public function tareasPendientes($query)
+    public function scopePendientes($query)
     {
         return $query->where('estado', 'P');
     }

@@ -48,6 +48,6 @@ class Empleado extends Model
 
     public function tareas()
     {
-        return $this->hasMany(Tarea::class);
+        return $this->hasMany(Tarea::class, 'operario_id');
     }
 }

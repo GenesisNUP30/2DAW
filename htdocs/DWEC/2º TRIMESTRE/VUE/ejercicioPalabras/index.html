@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Ejercicio Palabras</title>
+</head>
+
+<body>
+    <div id="aplicacion">
+        Palabra: <br>
+        <input type="text" v-model="nuevaPalabra">
+        <button v-on:click="anadePalabra"> Añadir</button>
+
+        <select v-model="palabraSeleccionada">
+            <option v-for="palabra in palabras" v-bind:value="palabra">
+                {{ palabra }}
+            </option>
+        </select>
+
+        <h2>Texto: {{ palabraSeleccionada }}</h2>
+    </div>
+
+</body>
+<script src="utiles.js"></script>
+
+</html>

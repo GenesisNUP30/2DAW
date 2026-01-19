@@ -2,16 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConfigAvanzada;
+use App\Models\Tarea;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class TareaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Listado de tareas paginadas
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5 ;
+
+        if ($user->isAdmin()) {
+            $tareas = Tarea::with(['cliente', 'operario'])
+            ->orderByDesc('fecha_creacion')
+            ->paginate($itemsPorPagina);
+        } else {
+            $tareas = Tarea::with(['cliente', 'operario'])
+            ->where('operario_id', $user->empleado_id)
+            ->orderByDesc('fecha_creacion')
+            ->paginate($itemsPorPagina);
+        }
+
+        return view('tareas.index', compact('tareas'));
+
     }
 
     /**

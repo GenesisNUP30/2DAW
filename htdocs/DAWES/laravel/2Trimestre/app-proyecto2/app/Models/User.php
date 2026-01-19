@@ -68,6 +68,6 @@ class User extends Authenticatable
 
     public function isEmpleado(): bool
     {
-        return $this->tipo === 'empleado';
+        return $this->tipo === 'operario';
     }
 }
