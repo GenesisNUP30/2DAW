@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Calculadora</title>
+</head>
+
+<body>
+    <div id="aplicacion">
+    Valor A:<br/>
+    <input v-model.number="valorA" type="number" step="1">
+    <br/>
+    Valor B: <br>
+    <input v-model.number="valorB" type="number" step="1">
+    <br/>
+    <h1>{{ suma() }}</h1>
+    <h1>{{ resta() }}</h1>
+    </div>
+</body>
+
+<script src="utiles.js"></script>
+
+</html>

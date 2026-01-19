@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="aplicacion">
+        <h1 v-if="(oportunidades==3)"> Ya realizaste 3 tiros</h1>
+        <h1> Tiros: {{ oportunidades }}</h1>
+        <h2> Jugador 1: {{ jugador1 }}</h2>
+        <h2> Jugador 2: {{ jugador2 }}</h2>
+        <h1> {{ ganador }}</h1>
+
+        <h2> Jugador 1 ha ganado {{ contadorjugador1 }} veces</h2>
+        <h2> Jugador 2 ha ganado {{ contadorjugador2 }} veces</h2>
+        <h2> Ha habido {{ contadorempate }} empates</h2>
+
+        <input type="button" v-on:click="jugar" :disabled="oportunidades==3" value="Jugar">
+        <input v-if="(oportunidades==3)" type="button" value="Reiniciar" v-on:click="reiniciar">
+
+    </div>
+</body>
+<script src="utiles.js"></script>
+</html>
