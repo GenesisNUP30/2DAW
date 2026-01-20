@@ -24,7 +24,6 @@ Route::middleware('auth')->group(function () {
     ====== LISTADO PRINCIPAL (HOME REAL DE LA APP) ======
     */
     Route::get('/', [TareaController::class, 'index'])->name('tareas.index');
-    Route::get('/tareas/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
 
     /*
     ====== ADMINISTRADOR ======
@@ -64,6 +63,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/facturas/{factura}/pdf', [FacturaController::class, 'pdf'])->name('facturas.pdf');
         Route::post('/facturas/{factura}/enviar', [FacturaController::class, 'enviar'])->name('facturas.enviar');
     });
+
+    Route::get('/tareas/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
 
     /*
     ====== OPERARIO ======

@@ -25,16 +25,18 @@ class Tarea extends Model
     protected $fillable = [
         'cliente_id',
         'operario_id',
+        'persona_contacto',
+        'telefono_contacto',
+        'operario_id',
         'descripcion',
+        'correo_contacto',
         'direccion',
         'poblacion',
         'codigo_postal',
         'provincia',
         'estado',
         'fecha_realizacion',
-        'anotaciones_anteriores',
-        'anotaciones_posteriores',
-        'fichero_resumen',
+        'anotaciones_anteriores'
     ];
 
     /**

@@ -6,7 +6,7 @@
 <div class="container">
 
     <h1 class="mb-4">
-        <i class="fa-solid fa-list-check me-2"></i> Detalle de la tarea
+        <i class="fas fa-tasks me-2"></i> Detalle de la tarea ID: {{ $tarea->id }}
     </h1>
 
     {{-- MENSAJES --}}
@@ -54,7 +54,7 @@
 
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fa-solid fa-note me-1"></i><strong>Anotaciones</strong>
+            <i class="fas fa-clipboard me-2"></i><strong>Anotaciones</strong>
         </div>
 
         <div class="card-body">

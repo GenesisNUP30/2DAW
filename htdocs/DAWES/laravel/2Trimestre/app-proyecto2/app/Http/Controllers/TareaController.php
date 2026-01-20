@@ -49,30 +49,121 @@ class TareaController extends Controller
         return view('tareas.show', compact('tarea'));
     }
 
+    private function provincias(): array
+    {
+        return [
+            '01' => 'Álava',
+            '02' => 'Albacete',
+            '03' => 'Alicante',
+            '04' => 'Almería',
+            '05' => 'Ávila',
+            '06' => 'Badajoz',
+            '07' => 'Islas Baleares',
+            '08' => 'Barcelona',
+            '09' => 'Burgos',
+            '10' => 'Cáceres',
+            '11' => 'Cádiz',
+            '12' => 'Castellón',
+            '13' => 'Ciudad Real',
+            '14' => 'Córdoba',
+            '15' => 'A Coruña',
+            '16' => 'Cuenca',
+            '17' => 'Girona',
+            '18' => 'Granada',
+            '19' => 'Guadalajara',
+            '20' => 'Guipúzcoa',
+            '21' => 'Huelva',
+            '22' => 'Huesca',
+            '23' => 'Jaén',
+            '24' => 'León',
+            '25' => 'Lleida',
+            '26' => 'La Rioja',
+            '27' => 'Lugo',
+            '28' => 'Madrid',
+            '29' => 'Málaga',
+            '30' => 'Murcia',
+            '31' => 'Navarra',
+            '32' => 'Ourense',
+            '33' => 'Asturias',
+            '34' => 'Palencia',
+            '35' => 'Las Palmas',
+            '36' => 'Pontevedra',
+            '37' => 'Salamanca',
+            '38' => 'Santa Cruz de Tenerife',
+            '39' => 'Cantabria',
+            '40' => 'Segovia',
+            '41' => 'Sevilla',
+            '42' => 'Soria',
+            '43' => 'Tarragona',
+            '44' => 'Teruel',
+            '45' => 'Toledo',
+            '46' => 'Valencia',
+            '47' => 'Valladolid',
+            '48' => 'Vizcaya',
+            '49' => 'Zamora',
+            '50' => 'Zaragoza',
+            '51' => 'Ceuta',
+            '52' => 'Melilla',
+        ];
+    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
         $clientes = Cliente::orderBy('nombre')->get();
         $operarios = Empleado::where('tipo', 'operario')->orderBy('nombre')->get();
 
-        return view('tareas.create', compact('clientes', 'operarios'));
+        return view('tareas.create', [
+            'clientes' => $clientes,
+            'operarios' => $operarios,
+            'provincias' => $this->provincias(),
+        ]);
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'operario_id' => 'required|exists:empleados,id',
+            'persona_contacto' => 'required|string|max:255',
+            'telefono_contacto' => ['required', 'regex:/^[+()0-9\s\-.]+$/'],
             'descripcion' => 'required|string',
-            'correo' => 'required|email',
+            'correo_contacto' => 'required|email',
+            'codigo_postal' => 'required|regex:/^\d{5}$/',
+            'provincia' => ['required', 'regex:/^\d{2}$/'],
             'fecha_realizacion' => 'required|date|after:today',
         ]);
+
+        $cp = $request->codigo_postal;
+        $provincia = $request->provincia;
+
+        if (substr($cp, 0, 2) !== $provincia) {
+            return back()
+            ->withErrors([
+                'provincia' => 'La provincia seleccionada no corresponde con el código postal',
+            ])
+            ->withInput();
+        }
 
         Tarea::create($request->all());
 
@@ -86,10 +177,22 @@ class TareaController extends Controller
      */
     public function edit(Tarea $tarea)
     {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
         $clientes = Cliente::orderBy('nombre')->get();
         $operarios = Empleado::where('tipo', 'operario')->orderBy('nombre')->get();
 
-        return view('tareas.edit', compact('tarea', 'clientes', 'operarios'));
+        return view('tareas.edit', [
+            'tarea' => $tarea,
+            'clientes' => $clientes,
+            'operarios' => $operarios,
+            'provincias' => $this->provincias(),
+        ]);
     }
 
     /**
@@ -97,6 +200,13 @@ class TareaController extends Controller
      */
     public function update(Request $request, Tarea $tarea)
     {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'operario_id' => 'required|exists:empleados,id',
