@@ -14,6 +14,17 @@ var aplicacion = new Vue ({
             .catch(function (error) {
                 console.error('Error al cargar los productos:', error)
             })
+    },
+    methods: {
+        // borrarProducto: function (index) {
+        //     this.productos.splice(index, 1)
+        // }
+        borrarProducto: function (index) {
+            fetch('https://fakestoreapi.com/products', {
+                method: 'DELETE',
+                
+            })
+        }
     }
 })
 
