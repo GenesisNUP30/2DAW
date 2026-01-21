@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/tareas/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
+    Route::get('/tareas/{tarea}/descargar', [TareaController::class, 'downloadFile'])->name('tareas.downloadFile');
 
     /*
     ====== OPERARIO ======
@@ -80,3 +81,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/perfil', [UserController::class, 'profile'])->name('perfil');
     Route::post('/perfil', [UserController::class, 'updateProfile'])->name('perfil.update');
 });
+
+Route::get('/incidencia', [TareaController::class, 'createFromCliente'])->name('incidencia.create');
+Route::post('/incidencia', [TareaController::class, 'storeFromCliente'])->name('incidencia.store');

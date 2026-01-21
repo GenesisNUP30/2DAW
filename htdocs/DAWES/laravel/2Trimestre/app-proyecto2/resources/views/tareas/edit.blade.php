@@ -22,6 +22,7 @@
 
     <form action="{{ route('tareas.update', $tarea) }}" method="POST">
         @csrf
+        @method('PUT')
 
         {{-- CLIENTE --}}
         <div class="mb-3">
@@ -64,18 +65,18 @@
         {{-- DIRECCIÓN --}}
         <div class="mb-3">
             <label class="form-label">Dirección</label>
-            <input type="text" name="direccion" class="form-control" value="{{ old('direccion') }}">
+            <input type="text" name="direccion" class="form-control" value="{{ old('direccion', $tarea->direccion) }}">
         </div>
 
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label class="form-label">Población</label>
-                <input type="text" name="poblacion" class="form-control" value="{{ old('poblacion') }}">
+                <input type="text" name="poblacion" class="form-control" value="{{ old('poblacion', $tarea->poblacion) }}">
             </div>
 
             <div class="col-md-4 mb-3">
                 <label class="form-label">Código postal</label>
-                <input type="text" name="codigo_postal" class="form-control" value="{{ old('codigo_postal') }}">
+                <input type="text" name="codigo_postal" class="form-control" value="{{ old('codigo_postal', $tarea->codigo_postal) }}">
             </div>
 
             <div class="col-md-4 mb-3">
@@ -84,7 +85,7 @@
                     <option value="">-- Selecciona provincia --</option>
                     @foreach ($provincias as $codigo => $nombre)
                     <option value="{{ $codigo }}"
-                        {{ old('provincia') == $codigo ? 'selected' : '' }}>
+                        {{ old('provincia', $tarea->provincia) == $codigo ? 'selected' : '' }}>
                         {{ $nombre }}
                     </option>
                     @endforeach
@@ -97,49 +98,50 @@
             <label class="form-label">Estado</label>
             <select name="estado" class="form-select">
                 <option value="">-- Elija un estado --</option>
-                <option value="B" {{ old('B') == 'B' ? 'selected' : ''}}>Esperando a ser aprobada</option>
-                <option value="P" {{ old('P') == 'P' ? 'selected' : ''}}>Pendiente</option>
-                <option value="R" {{ old('R') == 'R' ? 'selected' : ''}}>Realizada</option>
-                <option value="C" {{ old('C') == 'C' ? 'selected' : ''}}>Completada</option>
+                <option value="B" {{ old('estado', $tarea->estado) === 'B' ? 'selected' : '' }}>Esperando a ser aprobada</option>
+                <option value="P" {{ old('estado', $tarea->estado) === 'P' ? 'selected' : '' }}>Pendiente</option>
+                <option value="R" {{ old('estado', $tarea->estado) === 'R' ? 'selected' : '' }}>Realizada</option>
+                <option value="C" {{ old('estado', $tarea->estado) === 'C' ? 'selected' : '' }}>Cancelada</option>
+
             </select>
 
-        {{-- OPERARIO --}}
-        <div class="mb-3">
-            <label class="form-label">Operario asignado</label>
-            <select name="operario_id" class="form-select">
-                <option value="">-- Sin asignar --</option>
-                @foreach ($operarios as $operario)
-                <option value="{{ $operario->id }}"
-                    {{ old('operario_id') == $operario->id ? 'selected' : '' }}>
-                    {{ $operario->nombre }}
-                </option>
-                @endforeach
-            </select>
-        </div>
+            {{-- OPERARIO --}}
+            <div class="mb-3">
+                <label class="form-label">Operario asignado</label>
+                <select name="operario_id" class="form-select">
+                    <option value="">-- Sin asignar --</option>
+                    @foreach ($operarios as $operario)
+                    <option value="{{ $operario->id }}"
+                        {{ old('operario_id', $tarea->operario_id) == $operario->id ? 'selected' : '' }}>
+                        {{ $operario->nombre }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
 
-                
-        {{-- FECHA --}}
-        <div class="mb-3">
-            <label class="form-label">Fecha de realización</label>
-            <input type="date" name="fecha_realizacion" class="form-control" value="{{ old('fecha_realizacion') }}">
-        </div>
 
-        {{-- ANOTACIONES --}}
-        <div class="mb-3">
-            <label class="form-label">Anotaciones</label>
-            <textarea name="anotaciones" class="form-control" rows="4">{{ old('anotaciones') }}</textarea>
-        </div>
+            {{-- FECHA --}}
+            <div class="mb-3">
+                <label class="form-label">Fecha de realización</label>
+                <input type="date" name="fecha_realizacion" class="form-control" value="{{ old('fecha_realizacion', optional($tarea->fecha_realizacion)->format('Y-m-d')) }}">
+            </div>
 
-        {{-- BOTONES --}}
-        <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-success">
-                Actualizar tarea
-            </button>
+            {{-- ANOTACIONES --}}
+            <div class="mb-3">
+                <label class="form-label">Anotaciones</label>
+                <textarea name="anotaciones_anteriores" class="form-control" rows="4">{{ old('anotaciones_anteriores', $tarea->anotaciones_anteriores) }}</textarea>
+            </div>
 
-            <a href="{{ route('tareas.index') }}" class="btn btn-secondary">
-                Cancelar
-            </a>
-        </div>
+            {{-- BOTONES --}}
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">
+                    Actualizar tarea
+                </button>
+
+                <a href="{{ route('tareas.index') }}" class="btn btn-secondary">
+                    Cancelar
+                </a>
+            </div>
     </form>
 
 </div>

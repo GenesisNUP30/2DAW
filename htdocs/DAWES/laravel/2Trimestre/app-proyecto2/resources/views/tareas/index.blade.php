@@ -47,10 +47,14 @@
                             <td>{{ $tarea->operario->nombre ?? '-' }}</td>
                             <td>{{ optional($tarea->fecha_realizacion)->format('d/m/Y') }}</td>
                             <td>
-                                @if ($tarea->estado === 'P')
-                                    <span class="badge bg-warning">Pendiente</span>
-                                @else
+                                @if ($tarea->estado === 'B')
+                                    <span class="badge bg-secondary">Esperando aprobación</span>
+                                @elseif ($tarea->estado === 'P')
+                                    <span class="badge bg-warning text-dark">Pendiente</span>
+                                @elseif ($tarea->estado === 'R')
                                     <span class="badge bg-success">Realizada</span>
+                                @elseif ($tarea->estado === 'C')
+                                    <span class="badge bg-danger">Cancelada</span>
                                 @endif
                             </td>
                             <td class="text-end">

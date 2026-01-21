@@ -7,6 +7,7 @@ use App\Models\ConfigAvanzada;
 use App\Models\Empleado;
 use App\Models\Tarea;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class TareaController extends Controller
@@ -47,6 +48,23 @@ class TareaController extends Controller
         }
 
         return view('tareas.show', compact('tarea'));
+    }
+
+    public function downloadFile(Tarea $tarea)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if ($user->isEmpleado() && $tarea->operario_id !== $user->empleado_id) {
+            abort(403);
+        }
+
+        if (!$tarea->fichero_resumen || !Storage::disk('private')->exists($tarea->fichero_resumen)) {
+            abort(404);
+        }
+
+        $nombreArchivo = $tarea->id . '_' . basename($tarea->fichero_resumen);
+        return Storage::disk('private')->download($tarea->fichero_resumen, $nombreArchivo);
     }
 
     private function provincias(): array
@@ -159,13 +177,27 @@ class TareaController extends Controller
 
         if (substr($cp, 0, 2) !== $provincia) {
             return back()
-            ->withErrors([
-                'provincia' => 'La provincia seleccionada no corresponde con el código postal',
-            ])
-            ->withInput();
+                ->withErrors([
+                    'provincia' => 'La provincia seleccionada no corresponde con el código postal',
+                ])
+                ->withInput();
         }
 
-        Tarea::create($request->all());
+        Tarea::create($request->only(
+            'cliente_id',
+            'operario_id',
+            'persona_contacto',
+            'telefono_contacto',
+            'descripcion',
+            'correo_contacto',
+            'direccion',
+            'poblacion',
+            'codigo_postal',
+            'provincia',
+            'fecha_realizacion',
+            'estado',
+            'anotaciones_anteriores',
+        ));
 
         return redirect('/')->with('success', 'Tarea creada correctamente');
     }
@@ -210,11 +242,41 @@ class TareaController extends Controller
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'operario_id' => 'required|exists:empleados,id',
-            'correo' => 'required|email',
+            'persona_contacto' => 'required|string|max:255',
+            'telefono_contacto' => ['required', 'regex:/^[+()0-9\s\-.]+$/'],
+            'descripcion' => 'required|string',
+            'correo_contacto' => 'required|email',
+            'codigo_postal' => 'required|regex:/^\d{5}$/',
+            'provincia' => ['required', 'regex:/^\d{2}$/'],
             'fecha_realizacion' => 'required|date|after:today',
         ]);
 
-        $tarea->update($request->all());
+        $cp = $request->codigo_postal;
+        $provincia = $request->provincia;
+
+        if (substr($cp, 0, 2) !== $provincia) {
+            return back()
+                ->withErrors([
+                    'provincia' => 'La provincia seleccionada no corresponde con el código postal',
+                ])
+                ->withInput();
+        }
+
+        $tarea->update($request->only(
+            'cliente_id',
+            'operario_id',
+            'persona_contacto',
+            'telefono_contacto',
+            'descripcion',
+            'correo_contacto',
+            'direccion',
+            'poblacion',
+            'codigo_postal',
+            'provincia',
+            'estado',
+            'fecha_realizacion',
+            'anotaciones_anteriores',
+        ));
         return redirect('/')->with('success', 'Tarea actualizada correctamente');
     }
 

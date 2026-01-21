@@ -100,7 +100,7 @@
                 <option value="B" {{ old('B') == 'B' ? 'selected' : ''}}>Esperando a ser aprobada</option>
                 <option value="P" {{ old('P') == 'P' ? 'selected' : ''}}>Pendiente</option>
                 <option value="R" {{ old('R') == 'R' ? 'selected' : ''}}>Realizada</option>
-                <option value="C" {{ old('C') == 'C' ? 'selected' : ''}}>Completada</option>
+                <option value="C" {{ old('C') == 'C' ? 'selected' : ''}}>Cancelada</option>
             </select>
 
         {{-- OPERARIO --}}
@@ -127,7 +127,7 @@
         {{-- ANOTACIONES --}}
         <div class="mb-3">
             <label class="form-label">Anotaciones</label>
-            <textarea name="anotaciones" class="form-control" rows="4">{{ old('anotaciones') }}</textarea>
+            <textarea name="anotaciones" class="form-control" rows="4">{{ old('anotaciones_anteriores') }}</textarea>
         </div>
 
         {{-- BOTONES --}}
