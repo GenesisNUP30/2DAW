@@ -30,7 +30,7 @@
                 <option value="">-- Selecciona cliente --</option>
                 @foreach ($clientes as $cliente)
                 <option value="{{ $cliente->id }}"
-                    {{ old('cliente_id') == $cliente->id ? 'selected' : '' }}>
+                    {{ old('cliente_id', $tarea->cliente_id) == $cliente->id ? 'selected' : '' }}>
                     {{ $cliente->nombre }} ({{ $cliente->cif }})
                 </option>
                 @endforeach
@@ -40,25 +40,25 @@
         {{-- PERSONA DE CONTACTO --}}
         <div class="mb-3">
             <label class="form-label">Persona de contacto</label>
-            <input type="text" name="persona_contacto" class="form-control" value="{{ old('persona_contacto') }}" required>
+            <input type="text" name="persona_contacto" class="form-control" value="{{ old('persona_contacto', $tarea->persona_contacto) }}" required>
         </div>
 
         {{-- TELÉFONO --}}
         <div class="mb-3">
             <label class="form-label">Teléfono de contacto</label>
-            <input type="text" name="telefono_contacto" class="form-control" value="{{ old('telefono_contacto') }}" required>
+            <input type="text" name="telefono_contacto" class="form-control" value="{{ old('telefono_contacto', $tarea->telefono_contacto) }}" required>
         </div>
 
         {{-- DESCRIPCIÓN --}}
         <div class="mb-3">
             <label class="form-label">Descripción</label>
-            <textarea name="descripcion" class="form-control" rows="4" required>{{ old('descripcion') }}</textarea>
+            <textarea name="descripcion" class="form-control" rows="4" required>{{ old('descripcion', $tarea->descripcion) }}</textarea>
         </div>
 
         {{-- CORREO --}}
         <div class="mb-3">
             <label class="form-label">Correo electrónico</label>
-            <input type="email" name="correo_contacto" class="form-control" value="{{ old('correo_contacto') }}" required>
+            <input type="email" name="correo_contacto" class="form-control" value="{{ old('correo_contacto', $tarea->correo_contacto) }}" required>
         </div>
 
         {{-- DIRECCIÓN --}}
