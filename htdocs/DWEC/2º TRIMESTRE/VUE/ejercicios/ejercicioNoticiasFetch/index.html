@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Cargar noticias</title>
+</head>
+<body>
+    <div id="aplicacion">
+        <ul v-if="noticias.length">
+            <li v-for="noticia in noticias" :key="noticia.id">
+                <h3>{{ noticia.title }}</h3>
+                <p>{{ noticia.body }}</p>
+            </li>
+        </ul>
+        <h1 v-else>No hay noticias</h1>
+    </div>
+</body>
+<script src="utiles.js"></script>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Artículos - Tabla</title>
+</head>
+
+<body>
+    <div id="aplicacion">
+        Código:
+        <input type="text" v-model="codigo">
+        Descripción:
+        <input type="text" v-model="descripcion">
+        Cantidad:
+        <input type="number" v-model="cantidad">
+        Precio:
+        <input type="number" v-model="precio">
+        <button v-on:click="anade()">Añadir</button>
+        <br>
+        <br>
+        <table border="1" v-if="articulos.length">
+            <tr>
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+            </tr>
+            <tr v-for="articulo in articulos">
+                <td>{{ articulo.codigo }}</td>
+                <td>{{ articulo.descripcion }}</td>
+                <td>{{ articulo.cantidad }}</td>
+                <td>{{ articulo.precio }}</td>
+                <td>{{ articulo.cantidad * articulo.precio }}</td>
+            </tr>
+        </table>
+        <br>
+        <h2>Total: {{ totalPrecio }}</h2>
+    </div>
+</body>
+<script src="utiles.js"></script>
+
+</html>
