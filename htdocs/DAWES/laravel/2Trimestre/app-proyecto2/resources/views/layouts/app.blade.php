@@ -78,60 +78,6 @@
         </nav>
 
         <main class="py-4">
-
-            <div class="container-fluid">
-                <div class="row">
-
-                    <!-- MENÚ LATERAL -->
-                    <div class="col-md-2 sidebar">
-                        <ul class="nav flex-column flex-grow-1">
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="route('/')">
-                                    <i class="fas fa-home"></i> Inicio
-                                </a>
-                            </li>
-
-                            @if (Auth::user()->isAdmin())
-                            <li class="nav-item">
-                                <a class="nav-link" href="">
-                                    <i class="fas fa-plus-circle"></i> Crear nueva tarea
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="">
-                                    <i class="fas fa-users"></i> Ver lista de usuarios
-                                </a>
-                            </li>
-
-                            @elseif (Auth::user()->isEmpleado())
-                            <li class="nav-item">
-                                <a class="nav-link" href="">
-                                    <i class="fas fa-user-edit"></i> Editar mi usuario
-                                </a>
-                            </li>
-                            @endif
-
-                            @if(Auth::user())
-                            <div class="p-3 mt-auto">
-                                <a class="nav-link nav-config w-100 text-center" href="">
-                                    <i class="fas fa-cogs me-2"></i> Configuración
-                                </a>
-                            </div>
-                            @endif
-
-
-                        </ul>
-                    </div>
-
-                    <!-- CONTENIDO PRINCIPAL -->
-                    <div class="col-md-10 p-4">
-                        @yield('cuerpo')
-                    </div>
-
-                </div>
-            </div>
             @yield('content')
         </main>
     </div>

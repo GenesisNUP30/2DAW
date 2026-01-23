@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 
 class UserController extends Controller
 {
@@ -11,7 +14,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        $usuarios = User::with('empleado')->get();
+        return view('usuarios.index', compact('usuarios'));
+
     }
 
     /**
