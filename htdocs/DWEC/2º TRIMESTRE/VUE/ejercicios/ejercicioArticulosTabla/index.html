@@ -19,6 +19,7 @@
         Precio:
         <input type="number" v-model="precio">
         <button v-on:click="anade()">Añadir</button>
+        <button v-if="botoneditar" v-on:click="editar()">Editar</button>
         <br>
         <br>
         <table border="1" v-if="articulos.length">
@@ -28,6 +29,7 @@
                 <th>Cantidad</th>
                 <th>Precio</th>
                 <th>Subtotal</th>
+                <th>Acciones</th>
             </tr>
             <tr v-for="articulo in articulos">
                 <td>{{ articulo.codigo }}</td>
@@ -35,6 +37,10 @@
                 <td>{{ articulo.cantidad }}</td>
                 <td>{{ articulo.precio }}</td>
                 <td>{{ articulo.cantidad * articulo.precio }}</td>
+                <td>
+                    <button v-on:click="eliminaArticulo(articulo)">Eliminar</button>
+                    <button v-on:click="modificar(articulo)">Modificar</button>
+                </td>
             </tr>
         </table>
         <br>
