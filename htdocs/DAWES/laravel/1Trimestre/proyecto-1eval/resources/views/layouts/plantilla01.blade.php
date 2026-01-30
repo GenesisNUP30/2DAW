@@ -267,7 +267,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ miurl('/') }}">
               <i class="fas fa-home"></i> Inicio
-            </a>º 1QA
+            </a>
           </li>
 
           @if(!empty($_SESSION['rol']) && $_SESSION['rol'] == 'administrador')
