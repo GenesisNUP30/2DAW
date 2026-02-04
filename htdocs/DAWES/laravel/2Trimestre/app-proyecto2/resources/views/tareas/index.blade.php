@@ -3,6 +3,7 @@
 @section('titulo', 'Gestor de tareas')
 
 @section('content')
+
 <div class="container">
 
     <h1 class="mb-4">
@@ -14,13 +15,6 @@
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
-    @endif
-
-    {{-- Botón crear tarea (solo administrador) --}}
-    @if (auth()->user()->isAdmin())
-        <a href="{{ route('tareas.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus"></i> Nueva tarea
-        </a>
     @endif
 
     {{-- Tabla de tareas --}}

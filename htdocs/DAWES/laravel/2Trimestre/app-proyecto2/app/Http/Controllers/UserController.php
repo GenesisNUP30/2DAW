@@ -31,7 +31,14 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        return view('usuarios.create');
     }
 
     /**
@@ -39,7 +46,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'tipo' => 'required|string|in:administrador,operario',
+        ]);
+
+        User::create($request->only(
+            'name',
+            'email',
+            'password',
+            'tipo',
+        ));
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
     }
 
     /**
@@ -53,9 +81,16 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $usuario)
     {
-        //
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        return view('usuarios.edit', compact('usuario'));
     }
 
     /**

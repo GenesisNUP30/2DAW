@@ -21,11 +21,6 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
 
     /*
-    ====== LISTADO PRINCIPAL (HOME REAL DE LA APP) ======
-    */
-    Route::get('/', [TareaController::class, 'index'])->name('tareas.index');
-
-    /*
     ====== ADMINISTRADOR ======
     */
     Route::middleware('role:administrador')->group(function () {
@@ -39,7 +34,19 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/tareas/{tarea}/eliminar', [TareaController::class, 'confirmDelete'])->name('tareas.confirmDelete');
         Route::delete('/tareas/{tarea}', [TareaController::class, 'destroy'])->name('tareas.destroy');
+    });
 
+    /*
+    ====== OPERARIO ======
+    */
+    Route::middleware(['role:operario'])->group(function () {
+
+        Route::get('/tareas/{tarea}/completar', [TareaController::class, 'completeForm'])->name('tareas.completeForm');
+        Route::post('/tareas/{tarea}/completar', [TareaController::class, 'complete'])->name('tareas.complete');
+    });
+
+
+    Route::middleware('role:administrador')->group(function () {
         // USUARIOS (empleados)
         Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
 
@@ -64,22 +71,19 @@ Route::middleware('auth')->group(function () {
         Route::post('/facturas/{factura}/enviar', [FacturaController::class, 'enviar'])->name('facturas.enviar');
     });
 
-    Route::get('/tareas/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
-    Route::get('/tareas/{tarea}/descargar', [TareaController::class, 'downloadFile'])->name('tareas.downloadFile');
-
-    /*
-    ====== OPERARIO ======
-    */
-    Route::middleware('role:operario')->group(function () {
-        Route::get('/tareas/{tarea}/completar', [TareaController::class, 'completeForm'])->name('tareas.completeForm');
-        Route::post('/tareas/{tarea}/completar', [TareaController::class, 'complete'])->name('tareas.complete');
-    });
 
     /*
     ====== PERFIL EMPLEADO ======
     */
     Route::get('/perfil', [UserController::class, 'profile'])->name('perfil');
     Route::post('/perfil', [UserController::class, 'updateProfile'])->name('perfil.update');
+
+    /*
+    ====== LISTADO PRINCIPAL ======
+    */
+    Route::get('/', [TareaController::class, 'index'])->name('tareas.index');
+    Route::get('/tareas/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
+    Route::get('/tareas/{tarea}/descargar', [TareaController::class, 'downloadFile'])->name('tareas.downloadFile');
 });
 
 Route::get('/incidencia', [TareaController::class, 'createFromCliente'])->name('incidencia.create');
