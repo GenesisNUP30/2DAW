@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('titulo', 'Lista de usuarios')
+@section('titulo', 'Lista de empleados')
 
 @section('content')
 
 <div class="container">
 
     <h1 class="mb-4">
-        <i class="fas fa-users"></i> Lista de usuarios
+        <i class="fas fa-users"></i> Lista de empleados
     </h1>
 
     {{-- Mensaje de éxito --}}
@@ -17,13 +17,13 @@
     </div>
     @endif
 
-    {{-- Tabla de usuarios --}}
+    {{-- Tabla de empleados --}}
     <div class="col-md-10">
 
-        {{-- Botón crear usuario (solo administrador) --}}
+        {{-- Botón crear empleado (solo administrador) --}}
         @if (auth()->user()->isAdmin())
-        <a href="{{ route('usuarios.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-user-plus me-2"></i> Crear nuevo usuario
+        <a href="{{ route('empleados.create') }}" class="btn btn-primary mb-3">
+            <i class="fas fa-user-plus me-2"></i> Añadir empleado
         </a>
         @endif
 
@@ -40,18 +40,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($usuarios as $usu)
+                        @foreach ($empleados as $usu)
                         <tr>
                             <td>{{ $usu->id }}</td>
                             <td>{{ $usu->name }}</td>
                             <td>{{ $usu->email }}</td>
                             <td>{{ $usu->tipo }}</td>
                             <td class="text-end">
-                                <a href="{{ route('usuarios.edit', $usu) }}" class="btn btn-sm btn-warning">
+                                <a href="{{ route('empleados.edit', $usu) }}" class="btn btn-sm btn-warning">
                                     Editar
                                 </a>
 
-                                <a href="{{ route('usuarios.confirmDelete', $usu) }}"
+                                <a href="{{ route('empleados.confirmDelete', $usu) }}"
                                     class="btn btn-sm btn-danger">
                                     Eliminar
                                 </a>

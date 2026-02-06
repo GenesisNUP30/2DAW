@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -22,12 +23,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'empleado_id',
+        'dni',
+        'telefono',
+        'direccion',
+        'fecha_alta',
         'tipo',
-        'selector_hash',
-        'validator_hash',
-        'expiry_date',
-        'is_expired',
     ];
 
     /**
@@ -56,17 +56,12 @@ class User extends Authenticatable
         ];
     }
 
-    public function empleado()
-    {
-        return $this->belongsTo(Empleado::class);
-    }
-
     public function isAdmin(): bool
     {
         return $this->tipo === 'administrador';
     }
 
-    public function isEmpleado(): bool
+    public function isOperario(): bool
     {
         return $this->tipo === 'operario';
     }

@@ -148,7 +148,7 @@
         @endif
 
         {{-- OPERARIO --}}
-        @if (Auth::user()->isEmpleado() && $tarea->estado === 'P')
+        @if (Auth::user()->isOperario() && $tarea->estado === 'P')
         <a href="{{ route('tareas.completeForm', $tarea) }}" class="btn btn-success">
             <i class="fas fa-check me-1"></i> Completar tarea
         </a>

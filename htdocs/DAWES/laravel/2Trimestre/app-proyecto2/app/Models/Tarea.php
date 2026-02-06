@@ -58,7 +58,7 @@ class Tarea extends Model
 
     public function operario()
     {
-        return $this->belongsTo(Empleado::class, 'operario_id');
+        return $this->belongsTo(User::class, 'operario_id');
     }
 
     public function scopePendientes($query)

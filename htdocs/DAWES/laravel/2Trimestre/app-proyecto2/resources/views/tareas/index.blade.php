@@ -38,7 +38,7 @@
                             <td>{{ $tarea->id }}</td>
                             <td>{{ $tarea->cliente->nombre ?? '-' }}</td>
                             <td>{{ $tarea->descripcion }}</td>
-                            <td>{{ $tarea->operario->nombre ?? '-' }}</td>
+                            <td>{{ $tarea->operario->name ?? '-' }}</td>
                             <td>{{ optional($tarea->fecha_realizacion)->format('d/m/Y') }}</td>
                             <td>
                                 @if ($tarea->estado === 'B')
@@ -71,7 +71,7 @@
                                 @endif
 
                                 {{-- Operario --}}
-                                @if (auth()->user()->isEmpleado() && $tarea->estado === 'P')
+                                @if (auth()->user()->isOperario() && $tarea->estado === 'P')
                                     <a href="{{ route('tareas.completeForm', $tarea) }}"
                                        class="btn btn-sm btn-success">
                                         Completar

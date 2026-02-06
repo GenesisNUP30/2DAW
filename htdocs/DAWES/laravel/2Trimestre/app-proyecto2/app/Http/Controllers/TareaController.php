@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\ConfigAvanzada;
-use App\Models\Empleado;
 use App\Models\Tarea;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class TareaController extends Controller
                 ->paginate($itemsPorPagina);
         } else {
             $tareas = Tarea::with(['cliente', 'operario'])
-                ->where('operario_id', $user->empleado_id)
+                ->where('operario_id', $user->id)
                 ->orderByDesc('fecha_realizacion')
                 ->paginate($itemsPorPagina);
         }
@@ -43,7 +43,7 @@ class TareaController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        if ($user->isEmpleado() && $tarea->operario_id !== $user->empleado_id) {
+        if ($user->isOperario() && $tarea->operario_id !== $user->id) {
             abort(403);
         }
 
@@ -55,7 +55,7 @@ class TareaController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        if ($user->isEmpleado() && $tarea->operario_id !== $user->empleado_id) {
+        if ($user->isOperario() && $tarea->operario_id !== $user->id) {
             abort(403);
         }
 
@@ -138,7 +138,7 @@ class TareaController extends Controller
         }
 
         $clientes = Cliente::orderBy('nombre')->get();
-        $operarios = Empleado::where('tipo', 'operario')->orderBy('nombre')->get();
+        $operarios = User::where('tipo', 'operario')->orderBy('name')->get();
 
         return view('tareas.create', [
             'clientes' => $clientes,
@@ -162,7 +162,7 @@ class TareaController extends Controller
 
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
-            'operario_id' => 'required|exists:empleados,id',
+            'operario_id' => 'required|exists:users,id',
             'persona_contacto' => 'required|string|max:255',
             'telefono_contacto' => ['required', 'regex:/^[+()0-9\s\-.]+$/'],
             'descripcion' => 'required|string',
@@ -217,7 +217,7 @@ class TareaController extends Controller
         }
 
         $clientes = Cliente::orderBy('nombre')->get();
-        $operarios = Empleado::where('tipo', 'operario')->orderBy('nombre')->get();
+        $operarios = User::where('tipo', 'operario')->orderBy('name')->get();
 
         return view('tareas.edit', [
             'tarea' => $tarea,
@@ -241,7 +241,7 @@ class TareaController extends Controller
 
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
-            'operario_id' => 'required|exists:empleados,id',
+            'operario_id' => 'required|exists:users,id',
             'persona_contacto' => 'required|string|max:255',
             'telefono_contacto' => ['required', 'regex:/^[+()0-9\s\-.]+$/'],
             'descripcion' => 'required|string',
@@ -308,7 +308,7 @@ class TareaController extends Controller
     {
         $user = Auth::user();
 
-        if ($tarea->operario_id !== $user->empleado_id) {
+        if ($tarea->operario_id !== $user->iid) {
             abort(403);
         }
 

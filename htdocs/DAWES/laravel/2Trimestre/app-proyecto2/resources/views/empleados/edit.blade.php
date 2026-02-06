@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('titulo', 'Gestor de tareas')
+@section('titulo', 'Editar empleado')
 
 @section('content')
 <div class="container">
 
     <h1 class="mb-4">
-        <i class="fas fa-user-edit"></i> Editar Usuario: {{ $usuario->name }}
+        <i class="fas fa-user-edit"></i> Editar Empleado: {{ $empleado->name }}
     </h1>
 
     {{-- ERRORES --}}
@@ -20,26 +20,20 @@
     </div>
     @endif
 
-    <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
+    <form action="{{ route('empleados.update', $empleado->id) }}" method="POST">
         @csrf
         @method('PUT')
 
         {{-- NOMBRE --}}
         <div class="mb-3">
             <label class="form-label">Nombre</label>
-            <input type="text" name="name" class="form-control" value="{{ old('name', $usuario->name) }}" required>
+            <input type="text" name="name" class="form-control" value="{{ old('name', $empleado->name) }}" required>
         </div>
 
         {{-- EMAIL --}}
         <div class="mb-3">
             <label class="form-label">Correo electrónico</label>
-            <input type="email" name="email" class="form-control" value="{{ old('email', $usuario->email) }}" required>
-        </div>
-
-        {{-- CONTRASEÑA ACTUAL --}}
-        <div class="mb-3">
-            <label class="form-label">Contraseña actual</label>
-            <input type="password" name="password_current" class="form-control" value="{{ old('password') }}">
+            <input type="email" name="email" class="form-control" value="{{ old('email', $empleado->email) }}" required>
         </div>
 
         {{-- NUEVA CONTRASEÑA --}}
@@ -59,17 +53,17 @@
             <label class="form-label">Tipo</label>
             <select name="tipo" class="form-select">
                 <option value="">-- Selecciona tipo --</option>
-                <option value="administrador" {{ old('tipo', $usuario->tipo) == 'administrador' ? 'selected' : '' }}>Administrador</option>
-                <option value="operario" {{ old('tipo', $usuario->tipo) == 'operario' ? 'selected' : '' }}>Operario</option>
+                <option value="administrador" {{ old('tipo', $empleado->tipo) == 'administrador' ? 'selected' : '' }}>Administrador</option>
+                <option value="operario" {{ old('tipo', $empleado->tipo) == 'operario' ? 'selected' : '' }}>Operario</option>
             </select>
         </div>
 
         <div class="d-flex gap-2">
             <button type="submit" class="btn btn-primary mb-3">
-                <i class="fas fa-user-edit me-1"></i> Actualizar usuario
+                <i class="fas fa-sync-alt me-1"></i> Actualizar empleado
             </button>
 
-            <a href="{{ route('usuarios.index') }}" class="btn btn-secondary mb-3">
+            <a href="{{ route('empleados.index') }}" class="btn btn-secondary mb-3">
                 <i class="fas fa-times me-1"></i>
                 Cancelar
             </a>

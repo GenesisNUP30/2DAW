@@ -98,11 +98,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('usuarios.index') }}">
-                                    <i class="fas fa-users"></i> Ver lista de usuarios
+                                <a class="nav-link" href="{{ route('empleados.index') }}">
+                                    <i class="fas fa-users"></i> Ver lista de empleados
                                 </a>
                             </li>
-                            @elseif(Auth::check() && Auth::user()->isEmpleado())
+                            @elseif(Auth::check() && Auth::user()->isOperario())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('perfil') }}">
                                     <i class="fas fa-user-edit"></i> Editar mi usuario

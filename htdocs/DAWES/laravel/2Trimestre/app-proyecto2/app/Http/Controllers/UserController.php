@@ -21,8 +21,8 @@ class UserController extends Controller
             abort(403);
         }
 
-        $usuarios = User::with('empleado')->get();
-        return view('usuarios.index', compact('usuarios'));
+        $empleados = User::all();
+        return view('empleados.index', compact('empleados'));
 
     }
 
@@ -38,7 +38,7 @@ class UserController extends Controller
             abort(403);
         }
 
-        return view('usuarios.create');
+        return view('empleados.create');
     }
 
     /**
@@ -54,20 +54,28 @@ class UserController extends Controller
         }
 
         $request->validate([
+            'dni' => 'required|string|max:20|unique:users',
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
+            'telefono' => 'nullable|string|max:20',
+            'direccion' => 'nullable|string|max:255',
+            'fecha_alta' => 'nullable|date',
             'password' => 'required|string|min:8|confirmed',
             'tipo' => 'required|string|in:administrador,operario',
         ]);
 
         User::create($request->only(
+            'dni',
             'name',
             'email',
+            'telefono',
+            'direccion',
+            'fecha_alta',
             'password',
             'tipo',
         ));
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
+        return redirect()->route('empleados.index')->with('success', 'Empleado creado correctamente.');
     }
 
     /**
@@ -81,7 +89,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $usuario)
+    public function edit(User $empleado)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -90,7 +98,7 @@ class UserController extends Controller
             abort(403);
         }
 
-        return view('usuarios.edit', compact('usuario'));
+        return view('empleados.edit', compact('empleado'));
     }
 
     /**

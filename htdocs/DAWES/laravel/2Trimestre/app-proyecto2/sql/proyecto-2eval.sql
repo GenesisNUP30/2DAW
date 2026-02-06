@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-01-2026 a las 11:01:16
+-- Tiempo de generación: 06-02-2026 a las 22:59:57
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -117,35 +117,6 @@ CREATE TABLE `cuotas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `empleados`
---
-
-CREATE TABLE `empleados` (
-  `id` int(11) NOT NULL,
-  `dni` varchar(15) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `correo` varchar(100) NOT NULL,
-  `telefono` varchar(20) DEFAULT NULL,
-  `direccion` varchar(255) DEFAULT NULL,
-  `fecha_alta` date NOT NULL,
-  `tipo` enum('administrador','operario') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `empleados`
---
-
-INSERT INTO `empleados` (`id`, `dni`, `nombre`, `correo`, `telefono`, `direccion`, `fecha_alta`, `tipo`) VALUES
-(1, 'operario', 'operario', 'operario@gmail.com', NULL, NULL, '2026-01-15', 'operario'),
-(2, 'admin', 'admin', 'admin@gmail.com', NULL, NULL, '2026-01-15', 'administrador'),
-(3, 'Genesis', 'Genesis', 'Genesis@gmail.com', NULL, NULL, '2026-01-15', 'administrador'),
-(4, 'jose angel', 'jose angel', 'jose angel@gmail.com', NULL, NULL, '2026-01-15', 'administrador'),
-(5, 'antonio', 'antonio', 'antonio@gmail.com', NULL, NULL, '2026-01-15', 'operario'),
-(6, 'prueba', 'prueba', 'prueba@gmail.com', NULL, NULL, '2026-01-15', 'operario');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `failed_jobs`
 --
 
@@ -211,9 +182,10 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '0001_01_01_000000_create_users_table', 1),
-(2, '0001_01_01_000001_create_cache_table', 1),
-(3, '0001_01_01_000002_create_jobs_table', 1);
+(12, '0001_01_01_000000_create_users_table', 1),
+(13, '0001_01_01_000001_create_cache_table', 1),
+(14, '0001_01_01_000002_create_jobs_table', 1),
+(15, '2026_02_06_205204_add_fields_to_users_table', 1);
 
 -- --------------------------------------------------------
 
@@ -242,6 +214,13 @@ CREATE TABLE `sessions` (
   `last_activity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `sessions`
+--
+
+INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
+('9Po7iLeyWZQpw35Zxy1UsJRjjIMWnlrLlcyp9NQt', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiQUJxcU1zdnd5aXB6YkpzdDliVzVPdG1BckxiR2owcGt4Vk9KTEZnaCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjcyOiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy9lbXBsZWFkb3MiO3M6NToicm91dGUiO3M6MTU6ImVtcGxlYWRvcy5pbmRleCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzcwNDE0MDYzO319', 1770414891);
+
 -- --------------------------------------------------------
 
 --
@@ -251,13 +230,16 @@ CREATE TABLE `sessions` (
 CREATE TABLE `tareas` (
   `id` int(11) NOT NULL,
   `cliente_id` int(11) NOT NULL,
+  `persona_contacto` varchar(255) NOT NULL,
+  `telefono_contacto` varchar(20) NOT NULL,
   `operario_id` int(11) DEFAULT NULL,
   `descripcion` text NOT NULL,
+  `correo_contacto` varchar(255) NOT NULL,
   `direccion` varchar(255) DEFAULT NULL,
   `poblacion` varchar(100) DEFAULT NULL,
   `codigo_postal` char(5) DEFAULT NULL,
   `provincia` char(2) DEFAULT NULL,
-  `estado` enum('P','R','C') DEFAULT 'P',
+  `estado` enum('B','P','R','C') DEFAULT 'P',
   `fecha_creacion` datetime NOT NULL,
   `fecha_realizacion` date DEFAULT NULL,
   `anotaciones_anteriores` text DEFAULT NULL,
@@ -269,17 +251,25 @@ CREATE TABLE `tareas` (
 -- Volcado de datos para la tabla `tareas`
 --
 
-INSERT INTO `tareas` (`id`, `cliente_id`, `operario_id`, `descripcion`, `direccion`, `poblacion`, `codigo_postal`, `provincia`, `estado`, `fecha_creacion`, `fecha_realizacion`, `anotaciones_anteriores`, `anotaciones_posteriores`, `fichero_resumen`) VALUES
-(1, 12, NULL, 'dhftfn', 'Calle Falsa 123', 'Sevilla', '41014', '41', 'R', '2025-11-20 08:41:00', '2025-12-04', '', 'PROBANDO A COMPLETAR OTRA TAREA', NULL),
-(2, 11, NULL, 'Prueba laravel', 'Av Santa Marta', 'Bollullos', '21710', '21', 'R', '2025-11-20 08:20:58', '2025-12-31', '', 'Esto es para probar el rol de administrador. AHORA ESTA MODIFICANDO EL OPERARIO', NULL),
-(3, 15, NULL, 'Probando a ver si el administrador puede crear una tarea', 'Calle Picos', 'Moguer', '21800', '21', 'R', '2025-11-27 08:30:27', '2026-01-02', '', 'subiendo archivo .docx', NULL),
-(4, 16, NULL, 'probando nuevo xampp', 'Calle Espejo, 12', 'Moguer', '21800', '21', 'P', '2026-01-03 18:28:01', '2026-03-19', 'xampp nuevo instalado', 'probando a subir los ficheros despues de instalar xampp de nuevo', NULL),
-(5, 14, NULL, 'foerkpwj', '', '', '21004', '21', 'C', '2025-11-24 23:54:29', '2025-12-24', '', 'regvergv', NULL),
-(6, 13, NULL, 't`kgbodrgb', '', 'sevilla', '41014', '41', 'P', '2025-11-24 22:07:34', '2026-02-20', '', 'fergverbvetbte', NULL);
+INSERT INTO `tareas` (`id`, `cliente_id`, `persona_contacto`, `telefono_contacto`, `operario_id`, `descripcion`, `correo_contacto`, `direccion`, `poblacion`, `codigo_postal`, `provincia`, `estado`, `fecha_creacion`, `fecha_realizacion`, `anotaciones_anteriores`, `anotaciones_posteriores`, `fichero_resumen`) VALUES
+(1, 12, '', '', NULL, 'dhftfn', '', 'Calle Falsa 123', 'Sevilla', '41014', '41', 'R', '2025-11-20 08:41:00', '2025-12-04', '', 'PROBANDO A COMPLETAR OTRA TAREA', NULL),
+(2, 11, '', '', NULL, 'Prueba laravel', '', 'Av Santa Marta', 'Bollullos', '21710', '21', 'R', '2025-11-20 08:20:58', '2025-12-31', '', 'Esto es para probar el rol de administrador. AHORA ESTA MODIFICANDO EL OPERARIO', NULL),
+(3, 15, '', '', NULL, 'Probando a ver si el administrador puede crear una tarea', '', 'Calle Picos', 'Moguer', '21800', '21', 'R', '2025-11-27 08:30:27', '2026-01-02', '', 'subiendo archivo .docx', NULL),
+(4, 16, 'ADIOS', '624985011', 5, 'probando nuevo xampp', 'prueba@gmail.com', 'Calle Espejo, 12', 'Moguer', '21800', '21', 'P', '2026-01-03 18:28:01', '2026-03-19', 'xampp nuevo instalado', 'probando a subir los ficheros despues de instalar xampp de nuevo', NULL),
+(5, 14, '', '', NULL, 'foerkpwj', '', '', '', '21004', '21', 'C', '2025-11-24 23:54:29', '2025-12-24', '', 'regvergv', NULL),
+(6, 13, '', '', NULL, 't`kgbodrgb', '', '', 'sevilla', '41014', '41', 'P', '2025-11-24 22:07:34', '2026-02-20', '', 'fergverbvetbte', NULL),
+(7, 12, 'jesus reyes', '788 09 87 34', 5, 'Aplicacion 2ª evaluacion laravel', 'jesusr6@gmail.com', NULL, NULL, '21005', '21', 'B', '2026-01-21 12:08:39', '2026-03-05', NULL, NULL, NULL),
+(9, 14, 'juan pérez', '987564201', 1, 'NADA', 'AAAAAAA@gmail.com', 'Calle Falsa 123', 'Camas', '41014', '41', 'P', '2026-02-04 22:18:42', '2026-02-23', NULL, NULL, NULL);
 
 --
 -- Disparadores `tareas`
 --
+DELIMITER $$
+CREATE TRIGGER `tareas_before_insert` BEFORE INSERT ON `tareas` FOR EACH ROW BEGIN
+    SET NEW.fecha_creacion = NOW();
+END
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `tr_tareas_fecha_creacion_insert` BEFORE INSERT ON `tareas` FOR EACH ROW BEGIN
     IF NEW.fecha_creacion IS NULL THEN
@@ -310,25 +300,20 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `empleado_id` int(11) DEFAULT NULL,
-  `tipo` enum('administrador','operario') NOT NULL DEFAULT 'operario',
-  `selector_hash` varchar(255) DEFAULT NULL,
-  `validator_hash` varchar(255) DEFAULT NULL,
-  `expiry_date` datetime DEFAULT NULL,
-  `is_expired` tinyint(1) DEFAULT 0
+  `dni` varchar(255) DEFAULT NULL,
+  `telefono` varchar(255) DEFAULT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
+  `fecha_alta` date DEFAULT NULL,
+  `tipo` enum('administrador','operario') NOT NULL DEFAULT 'operario'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `empleado_id`, `tipo`, `selector_hash`, `validator_hash`, `expiry_date`, `is_expired`) VALUES
-(1, 'operario', 'operario@gmail.com', NULL, 'operario', NULL, NULL, NULL, 1, 'operario', NULL, NULL, NULL, 0),
-(2, 'admin', 'admin@gmail.com', NULL, 'admin123', NULL, NULL, NULL, 2, 'administrador', NULL, NULL, NULL, 0),
-(3, 'Genesis', 'Genesis@gmail.com', NULL, 'genesis', NULL, NULL, NULL, 3, 'administrador', NULL, NULL, NULL, 0),
-(4, 'jose angel', 'jose angel@gmail.com', NULL, 'jozeanje', NULL, NULL, NULL, 4, 'administrador', NULL, NULL, NULL, 0),
-(5, 'antonio', 'antonio@gmail.com', NULL, '1234', NULL, NULL, NULL, 5, 'operario', NULL, NULL, NULL, 0),
-(6, 'prueba', 'prueba@gmail.com', NULL, '123', NULL, NULL, NULL, 6, 'operario', NULL, NULL, NULL, 0);
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `dni`, `telefono`, `direccion`, `fecha_alta`, `tipo`) VALUES
+(1, 'admin', 'admin@gmail.com', NULL, '$2y$12$nQ3ZHBePyTTnLERaWUyZBOSClEsWEw3Tdxbt3Y92Q1Bv6xYIFuz0.', NULL, '2026-02-06 20:12:19', '2026-02-06 20:12:19', NULL, NULL, NULL, NULL, 'administrador'),
+(2, 'operario1', 'operario1@gmail.com', NULL, '$2y$12$9hFZKXZkWyzZ0ZnTTvHyP.9Htq3BReXpU6y1JA.2ZFOUzt5eyjPC6', NULL, '2026-02-06 20:12:58', '2026-02-06 20:12:58', NULL, NULL, NULL, NULL, 'operario');
 
 --
 -- Índices para tablas volcadas
@@ -365,12 +350,6 @@ ALTER TABLE `config_avanzada`
 ALTER TABLE `cuotas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cliente_id` (`cliente_id`);
-
---
--- Indices de la tabla `empleados`
---
-ALTER TABLE `empleados`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `failed_jobs`
@@ -426,7 +405,7 @@ ALTER TABLE `tareas`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD KEY `users_empleado_fk` (`empleado_id`);
+  ADD UNIQUE KEY `users_dni_unique` (`dni`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -436,7 +415,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `config_avanzada`
@@ -449,12 +428,6 @@ ALTER TABLE `config_avanzada`
 --
 ALTER TABLE `cuotas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `empleados`
---
-ALTER TABLE `empleados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -472,19 +445,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -500,14 +473,7 @@ ALTER TABLE `cuotas`
 -- Filtros para la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  ADD CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`),
-  ADD CONSTRAINT `tareas_ibfk_2` FOREIGN KEY (`operario_id`) REFERENCES `empleados` (`id`);
-
---
--- Filtros para la tabla `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_empleado_fk` FOREIGN KEY (`empleado_id`) REFERENCES `empleados` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

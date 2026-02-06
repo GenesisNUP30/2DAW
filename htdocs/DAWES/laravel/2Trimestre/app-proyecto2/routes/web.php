@@ -47,17 +47,17 @@ Route::middleware('auth')->group(function () {
 
 
     Route::middleware('role:administrador')->group(function () {
-        // USUARIOS (empleados)
-        Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
+        // EMPLEADOS
+        Route::get('/empleados', [UserController::class, 'index'])->name('empleados.index');
 
-        Route::get('/usuarios/crear', [UserController::class, 'create'])->name('usuarios.create');
-        Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
+        Route::get('/empleados/crear', [UserController::class, 'create'])->name('empleados.create');
+        Route::post('/empleados', [UserController::class, 'store'])->name('empleados.store');
 
-        Route::get('/usuarios/{usuario}/editar', [UserController::class, 'edit'])->name('usuarios.edit');
-        Route::put('/usuarios/{usuario}', [UserController::class, 'update'])->name('usuarios.update');
+        Route::get('/empleados/{empleado}/editar', [UserController::class, 'edit'])->name('empleados.edit');
+        Route::put('/empleados/{empleado}', [UserController::class, 'update'])->name('empleados.update');
 
-        Route::get('/usuarios/{usuario}/eliminar', [UserController::class, 'confirmDelete'])->name('usuarios.confirmDelete');
-        Route::delete('/usuarios/{usuario}', [UserController::class, 'destroy'])->name('usuarios.destroy');
+        Route::get('/empleados/{empleado}/eliminar', [UserController::class, 'confirmDelete'])->name('empleados.confirmDelete');
+        Route::delete('/empleados/{empleado}', [UserController::class, 'destroy'])->name('empleados.destroy');
 
         // CLIENTES
         Route::resource('/clientes', ClienteController::class)->except(['show']);
