@@ -27,6 +27,7 @@ class User extends Authenticatable
         'telefono',
         'direccion',
         'fecha_alta',
+        'fecha_baja',
         'tipo',
     ];
 
@@ -64,5 +65,17 @@ class User extends Authenticatable
     public function isOperario(): bool
     {
         return $this->tipo === 'operario';
+    }
+
+    // Verificar si está dado de baja
+    public function isBaja(): bool
+    {
+        return $this->fecha_baja !== null;
+    }
+
+    // Un usuario puede tener muchas tareas asignadas
+    public function tareasAsignadas()
+    {
+        return $this->hasMany(Tarea::class, 'operario_id');
     }
 }

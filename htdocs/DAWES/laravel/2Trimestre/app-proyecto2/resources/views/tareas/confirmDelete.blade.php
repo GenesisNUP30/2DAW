@@ -6,7 +6,7 @@
 <div class="container">
 
     <h1 class="mb-4">
-        <i class="fas fa-trash-alt me-2"></i> Eliminar Tarea
+        <i class="fas fa-trash-alt me-2"></i> Eliminar tarea
     </h1>
 
     {{-- ERRORES --}}

@@ -103,43 +103,45 @@
                 <option value="C" {{ old('C') == 'C' ? 'selected' : ''}}>Cancelada</option>
             </select>
 
-        {{-- OPERARIO --}}
-        <div class="mb-3">
-            <label class="form-label">Operario asignado</label>
-            <select name="operario_id" class="form-select">
-                <option value="">-- Sin asignar --</option>
-                @foreach ($operarios as $operario)
-                <option value="{{ $operario->id }}"
-                    {{ old('operario_id') == $operario->id ? 'selected' : '' }}>
-                    {{ $operario->name }}
-                </option>
-                @endforeach
-            </select>
-        </div>
+            {{-- OPERARIO --}}
+            <div class="mb-3">
+                <label class="form-label">Operario asignado</label>
+                <select name="operario_id" class="form-select">
+                    <option value="">-- Sin asignar --</option>
+                    @foreach ($operarios as $operario)
+                    <option value="{{ $operario->id }}"
+                        {{ old('operario_id') == $operario->id ? 'selected' : '' }}>
+                        {{ $operario->name }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
 
-                
-        {{-- FECHA --}}
-        <div class="mb-3">
-            <label class="form-label">Fecha de realización</label>
-            <input type="date" name="fecha_realizacion" class="form-control" value="{{ old('fecha_realizacion') }}">
-        </div>
 
-        {{-- ANOTACIONES --}}
-        <div class="mb-3">
-            <label class="form-label">Anotaciones</label>
-            <textarea name="anotaciones" class="form-control" rows="4">{{ old('anotaciones_anteriores') }}</textarea>
-        </div>
+            {{-- FECHA --}}
+            <div class="mb-3">
+                <label class="form-label">Fecha de realización</label>
+                <input type="date" name="fecha_realizacion" class="form-control" value="{{ old('fecha_realizacion') }}">
+            </div>
 
-        {{-- BOTONES --}}
-        <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-success">
-                Guardar tarea
-            </button>
+            {{-- ANOTACIONES --}}
+            <div class="mb-3">
+                <label class="form-label">Anotaciones</label>
+                <textarea name="anotaciones" class="form-control" rows="4">{{ old('anotaciones_anteriores') }}</textarea>
+            </div>
 
-            <a href="{{ route('tareas.index') }}" class="btn btn-secondary">
-                Cancelar
-            </a>
-        </div>
+            {{-- BOTONES --}}
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-1"></i>
+                    Guardar tarea
+                </button>
+
+                <a href="{{ route('tareas.index') }}" class="btn btn-secondary">
+                    <i class="fas fa-times me-1"></i>
+                    Cancelar
+                </a>
+            </div>
 
     </form>
 </div>

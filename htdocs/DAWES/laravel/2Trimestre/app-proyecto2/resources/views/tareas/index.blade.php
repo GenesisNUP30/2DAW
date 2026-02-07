@@ -29,7 +29,7 @@
                         <th>Operario</th>
                         <th>Fecha</th>
                         <th>Estado</th>
-                        <th class="text-end">Acciones</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,17 +55,20 @@
 
                                 {{-- Ver --}}
                                 <a href="{{ route('tareas.show', $tarea) }}" class="btn btn-sm btn-info">
+                                    <i class="far fa-eye"></i>
                                     Ver
                                 </a>
 
                                 {{-- Admin --}}
                                 @if (auth()->user()->isAdmin())
                                     <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i>
                                         Editar
                                     </a>
 
                                     <a href="{{ route('tareas.confirmDelete', $tarea) }}"
                                        class="btn btn-sm btn-danger">
+                                       <i class="fas fa-trash-alt"></i>
                                         Eliminar
                                     </a>
                                 @endif

@@ -82,7 +82,7 @@
         </div>
 
         <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-success mb-3">
+            <button type="submit" class="btn btn-primary mb-3">
                 <i class="fas fa-user-plus me-1"></i> Crear empleado
             </button>
 

@@ -59,6 +59,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/empleados/{empleado}/eliminar', [UserController::class, 'confirmDelete'])->name('empleados.confirmDelete');
         Route::delete('/empleados/{empleado}', [UserController::class, 'destroy'])->name('empleados.destroy');
 
+        Route::get('/empleados/{empleado}/baja', [UserController::class, 'confirmBaja'])->name('empleados.confirmBaja');
+        Route::post('/empleados/{empleado}/baja', [UserController::class, 'baja'])->name('empleados.baja');
+
+        Route::get('/empleados/{empleado}/alta', [UserController::class, 'confirmAlta'])->name('empleados.confirmAlta');
+        Route::post('/empleados/{empleado}/alta', [UserController::class, 'alta'])->name('empleados.alta');
+
         // CLIENTES
         Route::resource('/clientes', ClienteController::class)->except(['show']);
 

@@ -17,6 +17,13 @@
     </div>
     @endif
 
+    {{-- MENSAJE DE ERROR --}}
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
+
     {{-- Tabla de empleados --}}
     <div class="col-md-10">
 
@@ -35,29 +42,55 @@
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Correo</th>
+                            <th>Teléfono</th>
                             <th>Tipo</th>
-                            <th class="text-end">Acciones</th>
+                            <th>Estado</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($empleados as $usu)
+                        @forelse ($empleados as $empleado)
                         <tr>
-                            <td>{{ $usu->id }}</td>
-                            <td>{{ $usu->name }}</td>
-                            <td>{{ $usu->email }}</td>
-                            <td>{{ $usu->tipo }}</td>
+                            <td>{{ $empleado->id }}</td>
+                            <td>{{ $empleado->name }}</td>
+                            <td>{{ $empleado->email }}</td>
+                            <td>{{ $empleado->telefono }}</td>
+                            <td>{{ $empleado->tipo }}</td>
+                            <td>
+                                @if ($empleado->isBaja())
+                                <span class="badge bg-secondary">De baja</span>
+                                @else
+                                <span class="badge bg-primary">Activo</span>
+                                @endif
+                            </td>
                             <td class="text-end">
-                                <a href="{{ route('empleados.edit', $usu) }}" class="btn btn-sm btn-warning">
-                                    Editar
+                                @if (!$empleado->isBaja())
+                                <a href="{{ route('empleados.edit', $empleado) }}" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i> Editar
                                 </a>
 
-                                <a href="{{ route('empleados.confirmDelete', $usu) }}"
-                                    class="btn btn-sm btn-danger">
-                                    Eliminar
+                                <a href="{{ route('empleados.confirmBaja', $empleado) }}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-user-minus"></i> Dar de baja
                                 </a>
+
+                                <a href="{{ route('empleados.confirmDelete', $empleado) }}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </a>
+                                @else
+                                <a href="{{ route('empleados.confirmAlta', $empleado) }}" class="btn btn-sm btn-success">
+                                    <i class="fas fa-user-check"></i> Reactivar
+                                </a>
+                                @endif
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="9" class="text-center py-3">
+                                No hay empleados registrados.
+                            </td>
+                        </tr>
+                        @endforelse
+
                     </tbody>
                 </table>
             </div>

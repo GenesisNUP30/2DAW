@@ -16,14 +16,13 @@ class UserController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        
+
         if (!$user->isAdmin()) {
             abort(403);
         }
 
         $empleados = User::all();
         return view('empleados.index', compact('empleados'));
-
     }
 
     /**
@@ -104,16 +103,201 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $empleado)
     {
-        //
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'dni' => 'nullable|string|max:20|unique:users,dni,' . $empleado->id,
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:users,email,' . $empleado->id,
+            'telefono' => 'nullable|string|max:20',
+            'direccion' => 'nullable|string|max:255',
+            'fecha_alta' => 'nullable|date',
+            'password' => 'nullable|string|min:8|confirmed',
+            'tipo' => 'nullable|string|in:administrador,operario',
+        ]);
+
+        $data = [];
+
+        // Solo actualizar los campos que se hayan enviado
+        if ($request->filled('dni')) {
+            $data['dni'] = $request->dni;
+        }
+
+        if ($request->filled('name')) {
+            $data['name'] = $request->name;
+        }
+
+        if ($request->filled('email')) {
+            $data['email'] = $request->email;
+        }
+
+        if ($request->filled('telefono')) {
+            $data['telefono'] = $request->telefono;
+        }
+
+        if ($request->filled('direccion')) {
+            $data['direccion'] = $request->direccion;
+        }
+
+        if ($request->filled('fecha_alta')) {
+            $data['fecha_alta'] = $request->fecha_alta;
+        }
+
+        if ($request->filled('tipo')) {
+            $data['tipo'] = $request->tipo;
+        }
+
+        // Solo actualizar contraseña si se proporciona
+        if ($request->filled('password')) {
+            $data['password'] = $request->password;
+        }
+
+        $empleado->update($data);
+
+        return redirect()->route('empleados.index')->with('success', 'Empleado actualizado correctamente.');
+    }
+
+    /**
+     * Confirmar la eliminación de un empleado
+     *
+     * @param User $empleado
+     * @return void
+     */
+
+
+    public function confirmDelete(User $empleado)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        if ($empleado->id == $user->id) {
+            return redirect()->route('empleados.index')
+                ->with('error', 'No puedes eliminarte a ti mismo.');
+        }
+
+        if ($empleado->tareasAsignadas()->count() > 0) {
+            return redirect()->route('empleados.index')
+                ->with('error', 'No se puede eliminar este empleado porque tiene tareas asignadas. Asigna sus tareas a otro operario antes de eliminarlo.');
+        }
+
+        return view('empleados.confirmDelete', compact('empleado'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $empleado)
     {
-        //
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        $empleado->delete();
+
+        return redirect()->route('empleados.index')->with('success', 'Empleado eliminado correctamente.');
+    }
+
+    public function confirmBaja(User $empleado)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        if ($empleado->id == $user->id) {
+            return redirect()->route('empleados.index')
+                ->with('error', 'No puedes darte de baja a ti mismo.');
+        }
+
+        if ($empleado->tareasAsignadas()->count() > 0) {
+            return redirect()->route('empleados.index')
+                ->with('error', 'No se puede bajar este empleado porque tiene tareas asignadas. Asigna sus tareas a otro operario antes de bajarlo.');
+        }
+
+        // No permitir dar de baja si ya está dado de baja
+        if ($empleado->isBaja()) {
+            return redirect()->route('empleados.index')
+                ->with('error', 'Este empleado ya está dado de baja.');
+        }
+
+
+        return view('empleados.confirmBaja', compact('empleado'));
+    }
+
+    public function baja(User $empleado)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        $empleado->update([
+            'fecha_baja' => now(),
+        ]);
+
+        return redirect()->route('empleados.index')
+            ->with('success', 'Empleado dado de baja correctamente.');
+    }
+
+    public function confirmAlta(User $empleado)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        if (!$empleado->isBaja()) {
+            return redirect()->route('empleados.index')
+                ->with('error', 'Este empleado ya está activo.');
+        }
+
+        return view('empleados.confirmAlta', compact('empleado'));
+    }
+
+    /**
+     * Dar de alta (reactivar) a un empleado
+     */
+    public function alta(User $empleado)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        // No permitir dar de alta si ya está activo
+        if (!$empleado->isBaja()) {
+            return redirect()->route('empleados.index')
+                ->with('error', 'Este empleado ya está activo.');
+        }
+
+        $empleado->update([
+            'fecha_baja' => null,
+        ]);
+
+        return redirect()->route('empleados.index')
+            ->with('success', 'Empleado reactivado correctamente.');
     }
 }

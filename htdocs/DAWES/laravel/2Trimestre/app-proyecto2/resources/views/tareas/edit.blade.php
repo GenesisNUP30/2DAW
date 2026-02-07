@@ -113,7 +113,7 @@
                     @foreach ($operarios as $operario)
                     <option value="{{ $operario->id }}"
                         {{ old('operario_id', $tarea->operario_id) == $operario->id ? 'selected' : '' }}>
-                        {{ $operario->nombre }}
+                        {{ $operario->name }}
                     </option>
                     @endforeach
                 </select>
@@ -135,10 +135,12 @@
             {{-- BOTONES --}}
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-success">
+                    <i class="fas fa-sync-alt me-1"></i>
                     Actualizar tarea
                 </button>
 
                 <a href="{{ route('tareas.index') }}" class="btn btn-secondary">
+                    <i class="fas fa-times me-1"></i>
                     Cancelar
                 </a>
             </div>
