@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-02-2026 a las 22:59:57
+-- Tiempo de generación: 07-02-2026 a las 19:58:29
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -185,7 +185,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (12, '0001_01_01_000000_create_users_table', 1),
 (13, '0001_01_01_000001_create_cache_table', 1),
 (14, '0001_01_01_000002_create_jobs_table', 1),
-(15, '2026_02_06_205204_add_fields_to_users_table', 1);
+(15, '2026_02_06_205204_add_fields_to_users_table', 1),
+(16, '2026_02_07_180452_add_fecha_baja_to_users_table', 2);
 
 -- --------------------------------------------------------
 
@@ -219,7 +220,13 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('9Po7iLeyWZQpw35Zxy1UsJRjjIMWnlrLlcyp9NQt', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiQUJxcU1zdnd5aXB6YkpzdDliVzVPdG1BckxiR2owcGt4Vk9KTEZnaCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjcyOiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy9lbXBsZWFkb3MiO3M6NToicm91dGUiO3M6MTU6ImVtcGxlYWRvcy5pbmRleCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzcwNDE0MDYzO319', 1770414891);
+('5pJiEdx29tgnIWpXaI4DcNLnZcQEawATxN5YEVh8', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoielJQRXBOdUpJSldFb0p4TjFFWXVTRlpnMG1MMkV6bzN0NGxvdFJ4YiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NjM6Imh0dHA6Ly9sb2NhbGhvc3QvREFXRVMvbGFyYXZlbC8yVHJpbWVzdHJlL3Byb3llY3RvLTJldmFsL3B1YmxpYyI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1770486980),
+('6vp0LtTg5zDTSNc8AHOH9NauJzMQx7cYzSSywFOF', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiRGQ5ZHR3cHh5UThhcGp3aGVDZjlUVDNSNEJScTR2Ynp6WEpVVVRQcyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjc1OiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy90YXJlYXMvY3JlYXIiO3M6NToicm91dGUiO3M6MTM6InRhcmVhcy5jcmVhdGUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTc3MDQ4Njg2MTt9fQ==', 1770486971),
+('bHThWnhUcTiOFNgKHmmfXa3opzwszkmhSoIXJz6I', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiMDVlcGJ0Q1g4dXRqV0NEVjBvZ09RZ2dkTm5LQ2Mwa3pDWU9BWUVJNyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjcxOiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy90YXJlYXMvNCI7czo1OiJyb3V0ZSI7czoxMToidGFyZWFzLnNob3ciO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTc3MDQ4NzAwMjt9fQ==', 1770487116),
+('C5421IuUlRytgSRwxVjsa1403foZc6wsuGuPoPeK', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNWVLSm5SYUF5MkV5eEswTVJHbUJ3TU9OSjRyTk1GWjRsRms2TFd2RSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NzE6Imh0dHA6Ly9sb2NhbGhvc3QvREFXRVMvbGFyYXZlbC8yVHJpbWVzdHJlL3Byb3llY3RvLTJldmFsL3B1YmxpYy90YXJlYS82IjtzOjU6InJvdXRlIjtOO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1770487125),
+('cvlgpgNPp1EEJ6z6riyLNidFiyMRRANsqlt1Np5a', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoibWNGOTZiQkF6d0dqemc5cFpnMms5REJiVEtZU1dtbXhqbEVmQThrUiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjcyOiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy9lbXBsZWFkb3MiO3M6NToicm91dGUiO3M6MTU6ImVtcGxlYWRvcy5pbmRleCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzcwNDg4MDYxO319', 1770490103),
+('rl0QnTEHv12TjWQdFs1slDijrc8HZQ2lvaJdS41z', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoic2lVaGZCcGxJR0JPZ292a1FmbENWekduOEp4c2VvVFVuT3FvbW1QYyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjc1OiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy90YXJlYXMvY3JlYXIiO3M6NToicm91dGUiO3M6MTM6InRhcmVhcy5jcmVhdGUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTc3MDQ3OTU1Nzt9fQ==', 1770486813),
+('vGWot65EyvBgMAxP1Z2WNRcWpTUxh8kKr942F4tN', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicUYzNzNWcVpmd0Z1SzR3SVJ6ZmdTOGtxdkYwaHRoTFQ5SUFCNjNJSSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Njg6Imh0dHA6Ly9sb2NhbGhvc3QvREFXRVMvbGFyYXZlbC8yVHJpbWVzdHJlL3Byb3llY3RvLTJldmFsL3B1YmxpYy9hbHRhIjtzOjU6InJvdXRlIjtOO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1770486828);
 
 -- --------------------------------------------------------
 
@@ -255,11 +262,12 @@ INSERT INTO `tareas` (`id`, `cliente_id`, `persona_contacto`, `telefono_contacto
 (1, 12, '', '', NULL, 'dhftfn', '', 'Calle Falsa 123', 'Sevilla', '41014', '41', 'R', '2025-11-20 08:41:00', '2025-12-04', '', 'PROBANDO A COMPLETAR OTRA TAREA', NULL),
 (2, 11, '', '', NULL, 'Prueba laravel', '', 'Av Santa Marta', 'Bollullos', '21710', '21', 'R', '2025-11-20 08:20:58', '2025-12-31', '', 'Esto es para probar el rol de administrador. AHORA ESTA MODIFICANDO EL OPERARIO', NULL),
 (3, 15, '', '', NULL, 'Probando a ver si el administrador puede crear una tarea', '', 'Calle Picos', 'Moguer', '21800', '21', 'R', '2025-11-27 08:30:27', '2026-01-02', '', 'subiendo archivo .docx', NULL),
-(4, 16, 'ADIOS', '624985011', 5, 'probando nuevo xampp', 'prueba@gmail.com', 'Calle Espejo, 12', 'Moguer', '21800', '21', 'P', '2026-01-03 18:28:01', '2026-03-19', 'xampp nuevo instalado', 'probando a subir los ficheros despues de instalar xampp de nuevo', NULL),
-(5, 14, '', '', NULL, 'foerkpwj', '', '', '', '21004', '21', 'C', '2025-11-24 23:54:29', '2025-12-24', '', 'regvergv', NULL),
+(4, 16, 'ADIOS', '624985011', 2, 'probando nuevo xampp', 'prueba@gmail.com', 'Calle Espejo, 12', 'Moguer', '21800', '21', 'P', '2026-01-03 18:28:01', '2026-03-19', 'xampp nuevo instalado', 'probando a subir los ficheros despues de instalar xampp de nuevo', NULL),
+(5, 14, 'Magdalena Garcia', '987654321', 3, 'foerkpwj', 'magda@gmail.com', 'Calle Ribera, 34 B', 'Huelva', '21004', '21', 'C', '2025-11-24 23:54:29', '2026-03-14', NULL, 'regvergv', NULL),
 (6, 13, '', '', NULL, 't`kgbodrgb', '', '', 'sevilla', '41014', '41', 'P', '2025-11-24 22:07:34', '2026-02-20', '', 'fergverbvetbte', NULL),
-(7, 12, 'jesus reyes', '788 09 87 34', 5, 'Aplicacion 2ª evaluacion laravel', 'jesusr6@gmail.com', NULL, NULL, '21005', '21', 'B', '2026-01-21 12:08:39', '2026-03-05', NULL, NULL, NULL),
-(9, 14, 'juan pérez', '987564201', 1, 'NADA', 'AAAAAAA@gmail.com', 'Calle Falsa 123', 'Camas', '41014', '41', 'P', '2026-02-04 22:18:42', '2026-02-23', NULL, NULL, NULL);
+(7, 12, 'jesus reyes', '788 09 87 34', 2, 'Aplicacion 2ª evaluacion laravel', 'jesusr6@gmail.com', NULL, NULL, '21005', '21', 'B', '2026-01-21 12:08:39', '2026-03-05', NULL, NULL, NULL),
+(9, 14, 'juan pérez', '987564201', 1, 'NADA', 'AAAAAAA@gmail.com', 'Calle Falsa 123', 'Camas', '41014', '41', 'P', '2026-02-04 22:18:42', '2026-02-23', NULL, NULL, NULL),
+(10, 13, 'Antonio Murillo', '987564201', 3, 'Cambios importantes de Empleados a Users', 'correo@gmail.com', 'Av Santa Marta', 'moguer', '21800', '21', 'P', '2026-02-06 23:18:01', '2026-03-06', NULL, NULL, NULL);
 
 --
 -- Disparadores `tareas`
@@ -300,10 +308,11 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `dni` varchar(255) DEFAULT NULL,
+  `dni` varchar(255) NOT NULL,
   `telefono` varchar(255) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
   `fecha_alta` date DEFAULT NULL,
+  `fecha_baja` date DEFAULT NULL,
   `tipo` enum('administrador','operario') NOT NULL DEFAULT 'operario'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -311,9 +320,11 @@ CREATE TABLE `users` (
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `dni`, `telefono`, `direccion`, `fecha_alta`, `tipo`) VALUES
-(1, 'admin', 'admin@gmail.com', NULL, '$2y$12$nQ3ZHBePyTTnLERaWUyZBOSClEsWEw3Tdxbt3Y92Q1Bv6xYIFuz0.', NULL, '2026-02-06 20:12:19', '2026-02-06 20:12:19', NULL, NULL, NULL, NULL, 'administrador'),
-(2, 'operario1', 'operario1@gmail.com', NULL, '$2y$12$9hFZKXZkWyzZ0ZnTTvHyP.9Htq3BReXpU6y1JA.2ZFOUzt5eyjPC6', NULL, '2026-02-06 20:12:58', '2026-02-06 20:12:58', NULL, NULL, NULL, NULL, 'operario');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `dni`, `telefono`, `direccion`, `fecha_alta`, `fecha_baja`, `tipo`) VALUES
+(1, 'admin', 'admin@gmail.com', NULL, '$2y$12$nQ3ZHBePyTTnLERaWUyZBOSClEsWEw3Tdxbt3Y92Q1Bv6xYIFuz0.', NULL, '2026-02-06 20:12:19', '2026-02-07 14:36:26', 'X5114563F', '644789225', 'Calle Galaroza, 21', '2026-02-03', NULL, 'administrador'),
+(2, 'operario1', 'operario1@gmail.com', NULL, '$2y$12$9hFZKXZkWyzZ0ZnTTvHyP.9Htq3BReXpU6y1JA.2ZFOUzt5eyjPC6', NULL, '2026-02-06 20:12:58', '2026-02-06 20:12:58', '70907286B', '778023544', 'Calle Prueba2', '2026-02-04', NULL, 'operario'),
+(3, 'Daniel', 'daniel04@gmail.com', NULL, '$2y$12$GhhcV09sAdCVKo6iqjLyZuZD8Chv9ys9n37yYGtJ6oxhq8o8F.kNq', NULL, '2026-02-06 21:28:58', '2026-02-06 21:28:58', '21237945K', '730021954', 'Calle Ribera, 34 B', '2026-02-05', NULL, 'operario'),
+(4, 'Prueba Baja', 'prueba000@gmail.com', NULL, '$2y$12$oIXAeUOMgMTpvDvK7kT4Q.osApLGeWVnfKqiTSZh2fwd3eD5MDfEa', NULL, '2026-02-07 17:41:05', '2026-02-07 17:47:54', '82572266N', '123456789', 'Calle Baja', '2026-01-27', NULL, 'operario');
 
 --
 -- Índices para tablas volcadas
@@ -445,19 +456,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
