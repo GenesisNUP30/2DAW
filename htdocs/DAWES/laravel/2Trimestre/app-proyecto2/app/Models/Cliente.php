@@ -28,7 +28,7 @@ class Cliente extends Model
         'nombre',
         'telefono',
         'correo',
-        'cuenta_bancaria',
+        'cuenta_corriente',
         'pais',
         'moneda',
         'importe_cuota',
@@ -38,13 +38,54 @@ class Cliente extends Model
         'importe_cuota' => 'decimal:2',
     ];
 
+    /**
+     * Relación: Un cliente puede tener muchas tareas
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function tareas()
     {
         return $this->hasMany(Tarea::class);
     }
 
+    /**
+     * Relación: Un cliente puede tener muchas cuotas
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function cuotas()
     {
         return $this->hasMany(Cuota::class);
+    }
+
+    /**
+     * Relación: Un cliente pertenece a un país
+     */
+    public function paisRelacion()
+    {
+        return $this->belongsTo(Pais::class, 'pais', 'iso2');
+    }
+
+    // ==================== SCOPES ====================
+    /**
+     * Scope: Ordenar clientes por nombre
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOrdenadosPorNombre($query)
+    {
+        return $query->orderBy('nombre');
+    }
+
+    /**
+     * Scope: Cargar la relación del país
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeConPais($query)
+    {
+        return $query->with('paisRelacion');
     }
 }

@@ -65,8 +65,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/empleados/{empleado}/alta', [UserController::class, 'confirmAlta'])->name('empleados.confirmAlta');
         Route::post('/empleados/{empleado}/alta', [UserController::class, 'alta'])->name('empleados.alta');
 
-        // CLIENTES
-        Route::resource('/clientes', ClienteController::class)->except(['show']);
 
         // CUOTAS
         Route::resource('/cuotas', CuotaController::class)->except(['show']);
@@ -75,6 +73,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/facturas/{cuota}/crear', [FacturaController::class, 'create'])->name('facturas.create');
         Route::get('/facturas/{factura}/pdf', [FacturaController::class, 'pdf'])->name('facturas.pdf');
         Route::post('/facturas/{factura}/enviar', [FacturaController::class, 'enviar'])->name('facturas.enviar');
+    });
+
+    Route::middleware('role:administrador')->group(function () {
+        // CLIENTES
+        Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
+
+        Route::get('/clientes/crear', [ClienteController::class, 'create'])->name('clientes.create');
+        Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
+
+        
     });
 
 
