@@ -100,16 +100,12 @@
             <p class="text-muted">
                 {{ $tarea->anotaciones_anteriores ?: '—' }}
             </p>
-
             <hr>
-
             <p><strong>Anotaciones posteriores:</strong></p>
             <p class="text-muted">
                 {{ $tarea->anotaciones_posteriores ?: '—' }}
             </p>
-
             <hr>
-
             <p>
                 <strong><i class="fas fa-file me-1"></i> Fichero resumen:</strong><br>
 
@@ -131,29 +127,9 @@
 
     {{-- ACCIONES --}}
     <div class="d-flex gap-2 mb-4">
-
         <a href="{{ route('tareas.index') }}" class="btn btn-secondary">
             <i class="fas fa-arrow-left me-1"></i> Volver
         </a>
-
-        {{-- ADMIN --}}
-        @if (Auth::user()->isAdmin())
-        <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-primary">
-            <i class="fas fa-edit me-1"></i> Editar
-        </a>
-
-        <a href="{{ route('tareas.confirmDelete', $tarea) }}" class="btn btn-danger">
-            <i class="fas fa-trash me-1"></i> Eliminar
-        </a>
-        @endif
-
-        {{-- OPERARIO --}}
-        @if (Auth::user()->isOperario() && $tarea->estado === 'P')
-        <a href="{{ route('tareas.completeForm', $tarea) }}" class="btn btn-success">
-            <i class="fas fa-check me-1"></i> Completar tarea
-        </a>
-        @endif
-
     </div>
 
 </div>

@@ -45,7 +45,7 @@
         {{-- EMAIL --}}
         <div class="mb-3">
             <label class="form-label">Correo electrónico</label>
-            <input type="email" name="email" class="form-control" value="{{ old('email', $empleado->email) }}">
+            <input type="text" name="email" class="form-control" value="{{ old('email', $empleado->email) }}">
             @error('email')
             <div class="text-danger mt-1">{{ $message }}</div>
             @enderror

@@ -79,10 +79,10 @@ Route::middleware('auth')->group(function () {
 
 
     /*
-    ====== PERFIL EMPLEADO ======
+    ====== PERFIL DE USUARIO ======
     */
     Route::get('/perfil', [UserController::class, 'profile'])->name('perfil');
-    Route::post('/perfil', [UserController::class, 'updateProfile'])->name('perfil.update');
+    Route::put('/perfil', [UserController::class, 'updateProfile'])->name('perfil.update');
 
     /*
     ====== LISTADO PRINCIPAL ======

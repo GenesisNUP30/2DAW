@@ -57,25 +57,144 @@ class User extends Authenticatable
         ];
     }
 
+    // ==================== MÉTODOS DE ACCESO ====================
+
+    /**
+     * Verificar si el usuario es administrador
+     * 
+     * @return bool
+     */
     public function isAdmin(): bool
     {
         return $this->tipo === 'administrador';
     }
 
+    /**
+     * Verificar si el usuario es operario
+     * 
+     * @return bool
+     */
     public function isOperario(): bool
     {
         return $this->tipo === 'operario';
     }
 
-    // Verificar si está dado de baja
-    public function isBaja(): bool
+     // ==================== SCOPES (MÉTODOS DE CONSULTA) ====================
+
+    /**
+     * Scope: Filtrar usuarios activos (sin fecha de baja)
+     * 
+     * Uso: User::activos()->get()
+     * Equivale a: User::whereNull('fecha_baja')->get()
+     * 
+     * Beneficio: Obtiene solo empleados que están dados de alta
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActivos($query)
     {
-        return $this->fecha_baja !== null;
+        return $query->whereNull('fecha_baja');
     }
 
-    // Un usuario puede tener muchas tareas asignadas
+    /**
+     * Scope: Filtrar usuarios dados de baja
+     * 
+     * Uso: User::deBaja()->get()
+     * Beneficio: Obtiene empleados que están dados de baja
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeDeBaja($query)
+    {
+        return $query->whereNotNull('fecha_baja');
+    }
+
+    /**
+     * Scope: Filtrar usuarios de tipo operario
+     * 
+     * Uso: User::operarios()->get()
+     * 
+     * Beneficio: Obtiene solo los empleados con rol de operario
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOperarios($query)
+    {
+        return $query->where('tipo', 'operario');
+    }
+
+
+    /**
+     * Scope: Filtrar usuarios de tipo administrador
+     * 
+     * Uso: User::administradores()->get()
+     * Equivale a: User::where('tipo', 'administrador')->get()
+     * 
+     * Beneficio: Obtiene solo los empleados con rol de administrador
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAdministradores($query)
+    {
+        return $query->where('tipo', 'administrador');
+    }
+
+    /**
+     * Scope: Excluir un usuario específico de los resultados
+     * 
+     * Uso: User::excluyendo($userId)->get()
+     * 
+     * Beneficio: Útil para listar empleados excluyendo al usuario actual
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int $userId ID del usuario a excluir
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeExcluyendo($query, $userId)
+    {
+        return $query->where('id', '!=', $userId);
+    }
+
+
+   // ==================== RELACIONES ====================
+
+    /**
+     * Relación: Un usuario puede tener muchas tareas asignadas
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function tareasAsignadas()
     {
         return $this->hasMany(Tarea::class, 'operario_id');
+    }
+
+    // ==================== MÉTODOS AUXILIARES ====================
+
+    /**
+     * Obtener la última sesión del usuario
+     * 
+     * Busca en la tabla 'sessions' la última actividad del usuario
+     * y la formatea con la zona horaria de España
+     * 
+     * @return string Fecha formateada o 'Nunca'
+     */
+    public function ultimaSesion()
+    {
+        $session = \DB::table('sessions')
+            ->where('user_id', $this->id)
+            ->orderBy('last_activity', 'desc')
+            ->first();
+
+        if ($session) {
+            return \Carbon\Carbon::createFromTimestamp($session->last_activity)
+                ->setTimezone('Europe/Madrid')
+                ->format('d/m/Y H:i');
+        }
+
+        return 'Nunca';
     }
 }

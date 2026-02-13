@@ -38,7 +38,7 @@
         {{-- EMAIL --}}
         <div class="mb-3">
             <label class="form-label">Correo electrónico</label>
-            <input type="email" name="email" class="form-control" value="{{ old('email') }}">
+            <input type="text" name="email" class="form-control" value="{{ old('email') }}">
         </div>
 
         {{-- TELÉFONO --}}

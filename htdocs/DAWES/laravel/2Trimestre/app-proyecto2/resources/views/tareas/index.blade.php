@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('titulo', 'Gestor de tareas')
+@section('titulo', 'SiempreColgando')
 
 @section('content')
 

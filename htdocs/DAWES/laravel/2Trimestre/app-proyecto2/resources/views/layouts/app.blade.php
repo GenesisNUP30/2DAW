@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
@@ -54,16 +54,35 @@
                         </li>
                         @endif
                         @else
+                        <!-- Información del usuario en la navbar -->
+                        <li class="nav-item d-none d-md-flex align-items-center me-3">
+                            <span class="text-muted">Tipo:
+                                <span>
+                                    @if(Auth::user()->isAdmin())
+                                    <i class="fas fa-user-shield"></i> Administrador
+                                    @else
+                                    <i class="fas fa-hard-hat"></i> Operario
+                                    @endif
+                                </span> |
+                                <i class="far fa-clock ms-1"></i>
+                                Última sesión: {{ Auth::user()->ultimaSesion() }}
+                            </span>
+                        </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <i class="fas fa-user me-1"></i>
                                 {{ Auth::user()->name }}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('perfil') }}">
+                                    <i class="fas fa-user-edit"></i> Editar mi perfil
+                                </a>
+
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    <i class="fas fa-sign-out-alt me-2"></i>{{ __('Logout') }}
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -102,12 +121,7 @@
                                     <i class="fas fa-users"></i> Ver lista de empleados
                                 </a>
                             </li>
-                            @elseif(Auth::check() && Auth::user()->isOperario())
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('perfil') }}">
-                                    <i class="fas fa-user-edit"></i> Editar mi usuario
-                                </a>
-                            </li>
+
                             @endif
 
                             @if(Auth::user())

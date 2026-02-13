@@ -21,7 +21,7 @@ class UserController extends Controller
             abort(403);
         }
 
-        $empleados = User::all();
+        $empleados = User::exluyendo($user->id)->get();
         return view('empleados.index', compact('empleados'));
     }
 
@@ -299,5 +299,65 @@ class UserController extends Controller
 
         return redirect()->route('empleados.index')
             ->with('success', 'Empleado reactivado correctamente.');
+    }
+
+    public function profile()
+    {
+        $user = Auth::user();
+        return view('perfil.edit', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $request->validate([
+            'dni' => 'nullable|string|max:20|unique:users,dni,' . $user->id,
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:users,email,' . $user->id,
+            'telefono' => 'nullable|string|max:20',
+            'direccion' => 'nullable|string|max:255',
+            'fecha_alta' => 'nullable|date',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        $data = [];
+
+        // Solo actualizar los campos que se hayan enviado
+        if ($request->filled('dni')) {
+            $data['dni'] = $request->dni;
+        }
+
+        if ($request->filled('name')) {
+            $data['name'] = $request->name;
+        }
+
+        if ($request->filled('email')) {
+            $data['email'] = $request->email;
+        }
+
+        if ($request->filled('telefono')) {
+            $data['telefono'] = $request->telefono;
+        }
+
+        if ($request->filled('direccion')) {
+            $data['direccion'] = $request->direccion;
+        }
+
+        if ($request->filled('fecha_alta')) {
+            $data['fecha_alta'] = $request->fecha_alta;
+        }
+
+        if ($request->filled('password')) {
+            $data['password'] = $request->password;
+        }
+
+        $user->update($data);
+        if ($user->isAdmin()) {
+            return redirect()->route('empleados.index')->with('success', 'Perfil actualizado correctamente.');
+        } else {
+            return redirect()->route('tareas.index')->with('success', 'Perfil actualizado correctamente.');
+        }
     }
 }

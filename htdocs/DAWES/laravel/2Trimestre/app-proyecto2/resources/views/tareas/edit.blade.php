@@ -9,7 +9,7 @@
         <i class="fas fa-edit me-2"></i> Editar tarea ID: {{ $tarea->id }}
     </h1>
 
-    {{-- ERRORES --}}
+    <!-- {{-- ERRORES --}}
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul class="mb-0">
@@ -18,7 +18,7 @@
             @endforeach
         </ul>
     </div>
-    @endif
+    @endif -->
 
     <form action="{{ route('tareas.update', $tarea) }}" method="POST">
         @csrf
@@ -27,7 +27,7 @@
         {{-- CLIENTE --}}
         <div class="mb-3">
             <label class="form-label">Cliente</label>
-            <select name="cliente_id" class="form-select" required>
+            <select name="cliente_id" class="form-select">
                 <option value="">-- Selecciona cliente --</option>
                 @foreach ($clientes as $cliente)
                 <option value="{{ $cliente->id }}"
@@ -36,52 +36,76 @@
                 </option>
                 @endforeach
             </select>
+            @error('cliente_id')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- PERSONA DE CONTACTO --}}
         <div class="mb-3">
             <label class="form-label">Persona de contacto</label>
-            <input type="text" name="persona_contacto" class="form-control" value="{{ old('persona_contacto', $tarea->persona_contacto) }}" required>
+            <input type="text" name="persona_contacto" class="form-control" value="{{ old('persona_contacto', $tarea->persona_contacto) }}">
+            @error('persona_contacto')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- TELÉFONO --}}
         <div class="mb-3">
             <label class="form-label">Teléfono de contacto</label>
-            <input type="text" name="telefono_contacto" class="form-control" value="{{ old('telefono_contacto', $tarea->telefono_contacto) }}" required>
+            <input type="text" name="telefono_contacto" class="form-control" value="{{ old('telefono_contacto', $tarea->telefono_contacto) }}">
+            @error('telefono_contacto')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- DESCRIPCIÓN --}}
         <div class="mb-3">
             <label class="form-label">Descripción</label>
-            <textarea name="descripcion" class="form-control" rows="4" required>{{ old('descripcion', $tarea->descripcion) }}</textarea>
+            <textarea name="descripcion" class="form-control" rows="4">{{ old('descripcion', $tarea->descripcion) }}</textarea>
+            @error('descripcion')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- CORREO --}}
         <div class="mb-3">
             <label class="form-label">Correo electrónico</label>
-            <input type="email" name="correo_contacto" class="form-control" value="{{ old('correo_contacto', $tarea->correo_contacto) }}" required>
+            <input type="text" name="correo_contacto" class="form-control" value="{{ old('correo_contacto', $tarea->correo_contacto) }}">
+            @error('correo_contacto')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- DIRECCIÓN --}}
         <div class="mb-3">
             <label class="form-label">Dirección</label>
             <input type="text" name="direccion" class="form-control" value="{{ old('direccion', $tarea->direccion) }}">
+            @error('direccion')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label class="form-label">Población</label>
                 <input type="text" name="poblacion" class="form-control" value="{{ old('poblacion', $tarea->poblacion) }}">
+                @error('poblacion')
+                <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="col-md-4 mb-3">
                 <label class="form-label">Código postal</label>
                 <input type="text" name="codigo_postal" class="form-control" value="{{ old('codigo_postal', $tarea->codigo_postal) }}">
+                @error('codigo_postal')
+                <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="col-md-4 mb-3">
                 <label class="form-label">Provincia</label>
-                <select name="provincia" class="form-select" required>
+                <select name="provincia" class="form-select">
                     <option value="">-- Selecciona provincia --</option>
                     @foreach ($provincias as $codigo => $nombre)
                     <option value="{{ $codigo }}"
@@ -90,6 +114,9 @@
                     </option>
                     @endforeach
                 </select>
+                @error('provincia')
+                <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
         </div>
 
@@ -102,8 +129,10 @@
                 <option value="P" {{ old('estado', $tarea->estado) === 'P' ? 'selected' : '' }}>Pendiente</option>
                 <option value="R" {{ old('estado', $tarea->estado) === 'R' ? 'selected' : '' }}>Realizada</option>
                 <option value="C" {{ old('estado', $tarea->estado) === 'C' ? 'selected' : '' }}>Cancelada</option>
-
             </select>
+            @error('estado')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
 
             {{-- OPERARIO --}}
             <div class="mb-3">
@@ -117,6 +146,9 @@
                     </option>
                     @endforeach
                 </select>
+                @error('operario_id')
+                <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
 
@@ -124,12 +156,18 @@
             <div class="mb-3">
                 <label class="form-label">Fecha de realización</label>
                 <input type="date" name="fecha_realizacion" class="form-control" value="{{ old('fecha_realizacion', optional($tarea->fecha_realizacion)->format('Y-m-d')) }}">
+                @error('fecha_realizacion')
+                <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             {{-- ANOTACIONES --}}
             <div class="mb-3">
                 <label class="form-label">Anotaciones</label>
                 <textarea name="anotaciones_anteriores" class="form-control" rows="4">{{ old('anotaciones_anteriores', $tarea->anotaciones_anteriores) }}</textarea>
+                @error('anotaciones_anteriores')
+                <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             {{-- BOTONES --}}

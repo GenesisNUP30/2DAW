@@ -9,7 +9,7 @@
         <i class="fas fa-plus-circle me-2"></i> Nueva tarea / incidencia
     </h1>
 
-    {{-- ERRORES --}}
+    <!-- {{-- ERRORES --}}
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul class="mb-0">
@@ -18,7 +18,7 @@
             @endforeach
         </ul>
     </div>
-    @endif
+    @endif -->
 
     <form method="POST" action="{{ route('tareas.store') }}">
         @csrf
@@ -26,7 +26,7 @@
         {{-- CLIENTE --}}
         <div class="mb-3">
             <label class="form-label">Cliente</label>
-            <select name="cliente_id" class="form-select" required>
+            <select name="cliente_id" class="form-select">
                 <option value="">-- Selecciona cliente --</option>
                 @foreach ($clientes as $cliente)
                 <option value="{{ $cliente->id }}"
@@ -35,52 +35,76 @@
                 </option>
                 @endforeach
             </select>
+            @error('cliente_id')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- PERSONA DE CONTACTO --}}
         <div class="mb-3">
             <label class="form-label">Persona de contacto</label>
-            <input type="text" name="persona_contacto" class="form-control" value="{{ old('persona_contacto') }}" required>
+            <input type="text" name="persona_contacto" class="form-control" value="{{ old('persona_contacto') }}">
+            @error('persona_contacto')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- TELÉFONO --}}
         <div class="mb-3">
             <label class="form-label">Teléfono de contacto</label>
-            <input type="text" name="telefono_contacto" class="form-control" value="{{ old('telefono_contacto') }}" required>
+            <input type="text" name="telefono_contacto" class="form-control" value="{{ old('telefono_contacto') }}">
+            @error('telefono_contacto')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- DESCRIPCIÓN --}}
         <div class="mb-3">
             <label class="form-label">Descripción</label>
-            <textarea name="descripcion" class="form-control" rows="4" required>{{ old('descripcion') }}</textarea>
+            <textarea name="descripcion" class="form-control" rows="4">{{ old('descripcion') }}</textarea>
+            @error('descripcion')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- CORREO --}}
         <div class="mb-3">
             <label class="form-label">Correo electrónico</label>
-            <input type="email" name="correo_contacto" class="form-control" value="{{ old('correo_contacto') }}" required>
+            <input type="text" name="correo_contacto" class="form-control" value="{{ old('correo_contacto') }}">
+            @error('correo_contacto')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- DIRECCIÓN --}}
         <div class="mb-3">
             <label class="form-label">Dirección</label>
             <input type="text" name="direccion" class="form-control" value="{{ old('direccion') }}">
+            @error('direccion')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label class="form-label">Población</label>
                 <input type="text" name="poblacion" class="form-control" value="{{ old('poblacion') }}">
+                @error('poblacion')
+                <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="col-md-4 mb-3">
                 <label class="form-label">Código postal</label>
                 <input type="text" name="codigo_postal" class="form-control" value="{{ old('codigo_postal') }}">
+                @error('codigo_postal')
+                <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="col-md-4 mb-3">
                 <label class="form-label">Provincia</label>
-                <select name="provincia" class="form-select" required>
+                <select name="provincia" class="form-select">
                     <option value="">-- Selecciona provincia --</option>
                     @foreach ($provincias as $codigo => $nombre)
                     <option value="{{ $codigo }}"
@@ -89,6 +113,9 @@
                     </option>
                     @endforeach
                 </select>
+                @error('provincia')
+                <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
         </div>
 
@@ -102,46 +129,59 @@
                 <option value="R" {{ old('R') == 'R' ? 'selected' : ''}}>Realizada</option>
                 <option value="C" {{ old('C') == 'C' ? 'selected' : ''}}>Cancelada</option>
             </select>
+            @error('estado')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
 
-            {{-- OPERARIO --}}
-            <div class="mb-3">
-                <label class="form-label">Operario asignado</label>
-                <select name="operario_id" class="form-select">
-                    <option value="">-- Sin asignar --</option>
-                    @foreach ($operarios as $operario)
-                    <option value="{{ $operario->id }}"
-                        {{ old('operario_id') == $operario->id ? 'selected' : '' }}>
-                        {{ $operario->name }}
-                    </option>
-                    @endforeach
-                </select>
-            </div>
+        {{-- OPERARIO --}}
+        <div class="mb-3">
+            <label class="form-label">Operario asignado</label>
+            <select name="operario_id" class="form-select">
+                <option value="">-- Sin asignar --</option>
+                @foreach ($operarios as $operario)
+                <option value="{{ $operario->id }}"
+                    {{ old('operario_id') == $operario->id ? 'selected' : '' }}>
+                    {{ $operario->name }}
+                </option>
+                @endforeach
+            </select>
+            @error('operario_id')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
 
 
-            {{-- FECHA --}}
-            <div class="mb-3">
-                <label class="form-label">Fecha de realización</label>
-                <input type="date" name="fecha_realizacion" class="form-control" value="{{ old('fecha_realizacion') }}">
-            </div>
+        {{-- FECHA --}}
+        <div class="mb-3">
+            <label class="form-label">Fecha de realización</label>
+            <input type="date" name="fecha_realizacion" class="form-control" value="{{ old('fecha_realizacion') }}">
+            @error('fecha_realizacion')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
 
-            {{-- ANOTACIONES --}}
-            <div class="mb-3">
-                <label class="form-label">Anotaciones</label>
-                <textarea name="anotaciones" class="form-control" rows="4">{{ old('anotaciones_anteriores') }}</textarea>
-            </div>
+        {{-- ANOTACIONES --}}
+        <div class="mb-3">
+            <label class="form-label">Anotaciones</label>
+            <textarea name="anotaciones" class="form-control" rows="4">{{ old('anotaciones_anteriores') }}</textarea>
+            @error('anotaciones_anteriores')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
 
-            {{-- BOTONES --}}
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save me-1"></i>
-                    Guardar tarea
-                </button>
+        {{-- BOTONES --}}
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-1"></i>
+                Guardar tarea
+            </button>
 
-                <a href="{{ route('tareas.index') }}" class="btn btn-secondary">
-                    <i class="fas fa-times me-1"></i>
-                    Cancelar
-                </a>
-            </div>
+            <a href="{{ route('tareas.index') }}" class="btn btn-secondary">
+                <i class="fas fa-times me-1"></i>
+                Cancelar
+            </a>
+        </div>
 
     </form>
 </div>
