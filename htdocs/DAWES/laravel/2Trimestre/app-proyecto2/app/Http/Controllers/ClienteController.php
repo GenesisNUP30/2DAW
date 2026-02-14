@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cliente;
 use App\Models\Pais;
+use App\Rules\ValidarCif;
 
 class ClienteController extends Controller
 {
@@ -60,7 +61,7 @@ class ClienteController extends Controller
         }
 
         $validated = $request->validate([
-            'cif' => 'required|string|max:20|unique:clientes',
+            'cif' => ['required', 'string','unique:clientes, cif', new ValidarCif],
             'nombre' => 'required|string|max:100',
             'telefono' => 'required|string|max:20',
             'correo' => 'required|email|max:100',
@@ -71,7 +72,6 @@ class ClienteController extends Controller
         ], [
             'cif.required' => 'El CIF es obligatorio',
             'cif.unique' => 'Ya existe un cliente con ese CIF',
-            'cif.max' => 'El CIF no puede tener más de 20 caracteres',
             'nombre.required' => 'El nombre es obligatorio',
             'nombre.max' => 'El nombre no puede tener más de 100 caracteres',
             'telefono.required' => 'El teléfono es obligatorio',
@@ -90,6 +90,7 @@ class ClienteController extends Controller
             'importe_cuota.min' => 'El importe de la cuota debe ser mayor o igual a 0',
         ]);
 
+        $validated['cif'] = strtoupper(trim($validated['cif']));
         Cliente::create($validated);
 
         return redirect()->route('clientes.index')->with('success', 'Cliente creado correctamente.');

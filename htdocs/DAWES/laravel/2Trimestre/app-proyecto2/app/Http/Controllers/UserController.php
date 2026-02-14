@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Rules\ValidarDni;
 
 
 class UserController extends Controller
@@ -53,7 +54,7 @@ class UserController extends Controller
         }
 
         $request->validate([
-            'dni' => 'required|string|max:20|unique:users',
+            'dni' => ['required', 'string', 'unique:users', new ValidarDni],
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'telefono' => 'nullable|string|max:20',
@@ -113,7 +114,7 @@ class UserController extends Controller
         }
 
         $request->validate([
-            'dni' => 'nullable|string|max:20|unique:users,dni,' . $empleado->id,
+            'dni' => ['required', 'string', 'unique:users', new ValidarDni],
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:users,email,' . $empleado->id,
             'telefono' => 'nullable|string|max:20',
@@ -154,7 +155,6 @@ class UserController extends Controller
             $data['tipo'] = $request->tipo;
         }
 
-        // Solo actualizar contraseña si se proporciona
         if ($request->filled('password')) {
             $data['password'] = $request->password;
         }
@@ -313,7 +313,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'dni' => 'nullable|string|max:20|unique:users,dni,' . $user->id,
+            'dni' => ['required', 'string', 'unique:users', new ValidarDni],
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:users,email,' . $user->id,
             'telefono' => 'nullable|string|max:20',
