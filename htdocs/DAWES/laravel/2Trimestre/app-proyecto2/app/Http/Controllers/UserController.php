@@ -22,7 +22,7 @@ class UserController extends Controller
             abort(403);
         }
 
-        $empleados = User::exluyendo($user->id)->get();
+        $empleados = User::excluyendo($user->id)->get();
         return view('empleados.index', compact('empleados'));
     }
 
@@ -114,7 +114,7 @@ class UserController extends Controller
         }
 
         $request->validate([
-            'dni' => ['required', 'string', 'unique:users', new ValidarDni],
+            'dni' => ['required', 'string', 'unique:users,dni,' . $user->id, new ValidarDni],
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:users,email,' . $empleado->id,
             'telefono' => 'nullable|string|max:20',
@@ -232,7 +232,7 @@ class UserController extends Controller
         }
 
         // No permitir dar de baja si ya está dado de baja
-        if ($empleado->isBaja()) {
+        if ($empleado->deBaja()) {
             return redirect()->route('empleados.index')
                 ->with('error', 'Este empleado ya está dado de baja.');
         }
@@ -267,7 +267,7 @@ class UserController extends Controller
             abort(403);
         }
 
-        if (!$empleado->isBaja()) {
+        if (!$empleado->Baja()) {
             return redirect()->route('empleados.index')
                 ->with('error', 'Este empleado ya está activo.');
         }
@@ -313,7 +313,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'dni' => ['required', 'string', 'unique:users', new ValidarDni],
+            'dni' => ['required', 'string', 'unique:users,dni,' . $user->id, new ValidarDni],
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:users,email,' . $user->id,
             'telefono' => 'nullable|string|max:20',

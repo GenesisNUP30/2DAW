@@ -18,7 +18,7 @@ class ValidarDni implements ValidationRule
 
         // Verificar formato NIF: 8 dígitos + letra
         if (!preg_match('/^[0-9]{8}[A-Z]$/', $dni)) {
-            $fail('El DNI debe tener 8 dígitos seguidos de una letra mayúscula.');
+            $fail('El DNI debe tener 8 dígitos seguidos de una letra.');
             return;
         }
 
