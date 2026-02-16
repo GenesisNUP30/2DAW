@@ -79,7 +79,7 @@ class User extends Authenticatable
         return $this->tipo === 'operario';
     }
 
-     // Verificar si está dado de baja
+    // Verificar si está dado de baja
     public function isBaja(): bool
     {
         return $this->fecha_baja !== null;

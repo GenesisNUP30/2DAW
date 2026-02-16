@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cliente;
 use App\Models\Pais;
+use App\Models\User;
 use App\Rules\ValidarCif;
 
 class ClienteController extends Controller
@@ -99,9 +100,16 @@ class ClienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Cliente $cliente)
     {
-        //
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        return view('clientes.show', compact('cliente'));
     }
 
     /**
@@ -171,6 +179,22 @@ class ClienteController extends Controller
         $cliente->update($validated);
 
         return redirect()->route('clientes.index')->with('success', 'Cliente actualizado correctamente.');
+    }
+
+    public function confirmBaja(Cliente $cliente)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        if ($cliente->id == $user->id) {
+            return redirect()->route('clientes.index')
+                ->with('error', 'No puedes darte de baja a ti mismo.');
+        }
+
+        return view('clientes.confirmBaja', compact('cliente'));
     }
 
     /**

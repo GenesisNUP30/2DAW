@@ -66,6 +66,18 @@ class Cliente extends Model
         return $this->belongsTo(Pais::class, 'pais', 'iso2');
     }
 
+    // Verificar si está dado de baja
+    public function isBaja(): bool
+    {
+        return $this->fecha_baja !== null;
+    }
+
+    // Verificar si está activo
+    public function isActivo(): bool
+    {
+        return $this->fecha_baja === null;
+    }
+
     // ==================== SCOPES ====================
     /**
      * Scope: Ordenar clientes por nombre
