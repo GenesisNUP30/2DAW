@@ -27,7 +27,7 @@
         {{-- Botón crear cliente (solo administrador) --}}
         @if (auth()->user()->isAdmin())
         <a href="{{ route('cuotas.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-user-plus me-2"></i> Añadir cuota
+            <i class="fas fa-money-check-alt me-2"></i> Añadir cuota
         </a>
         @endif
     </div>

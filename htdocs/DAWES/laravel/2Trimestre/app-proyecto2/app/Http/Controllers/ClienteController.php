@@ -63,6 +63,7 @@ class ClienteController extends Controller
             'correo' => 'required|email|max:100',
             'cuenta_corriente' => 'required|string|max:50',
             'pais' => 'required|string|exists:paises,iso2',
+            //TODO: Comprobar si introduciendo solo el numero se añaden automaticamente los decimales
             'importe_cuota_mensual' => 'required|numeric|min:0',
         ], [
             'cif.required' => 'El CIF es obligatorio',
@@ -173,7 +174,7 @@ class ClienteController extends Controller
     public function confirmBaja(Cliente $cliente)
     {
         $user = Auth::user();
-        
+
         if (!$user->isAdmin()) {
             abort(403);
         }

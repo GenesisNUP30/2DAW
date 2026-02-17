@@ -79,6 +79,7 @@
             @enderror
         </div>
 
+        //TODO: Comprobar si introduciendo solo el numero se añaden automaticamente los decimales
         {{-- IMPORTE CUOTA MENSUAL --}}
         <div class="mb-3">
             <label class="form-label">Importe cuota mensual</label>
