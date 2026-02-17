@@ -31,11 +31,13 @@ class Cliente extends Model
         'cuenta_corriente',
         'pais',
         'moneda',
-        'importe_cuota',
+        'importe_cuota_mensual',
     ];
 
+    public $timestamps = false;
+
     protected $casts = [
-        'importe_cuota' => 'decimal:2',
+        'importe_cuota_mensual' => 'decimal:2',
     ];
 
     /**

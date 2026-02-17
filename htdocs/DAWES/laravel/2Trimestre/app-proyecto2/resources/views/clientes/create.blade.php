@@ -58,7 +58,7 @@
         <div class="mb-3">
             <label class="form-label">Cuenta corriente</label>
             <input type="text" name="cuenta_corriente" class="form-control" value="{{ old('cuenta_corriente') }}">
-            @error('cuenta_bancaria')
+            @error('cuenta_corriente')
             <div class="text-danger mt-1">{{ $message }}</div>
             @enderror
         </div>
@@ -75,22 +75,6 @@
                 @endforeach
             </select>
             @error('pais')
-            <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
-        </div>
-
-        {{-- MONEDA --}}
-        <div class="mb-3">
-            <label class="form-label">Moneda</label>
-            <select name="moneda" class="form-control">
-                <option value="">-- Selecciona una moneda --</option>
-                @foreach ($monedas as $codigo => $nombre)
-                <option value="{{ $codigo }}" {{ old('moneda') === $codigo ? 'selected' : '' }}>
-                    {{ $nombre }}
-                </option>
-                @endforeach
-            </select>
-            @error('moneda')
             <div class="text-danger mt-1">{{ $message }}</div>
             @enderror
         </div>

@@ -43,10 +43,7 @@ class ClienteController extends Controller
 
         $paises = Pais::ordenadosPorNombre()->get();
 
-        return view('clientes.create', [
-            'paises' => $paises,
-            'monedas' => $this->monedas(),
-        ]);
+        return view('clientes.create', compact('paises'));
     }
 
     /**
@@ -62,14 +59,13 @@ class ClienteController extends Controller
         }
 
         $validated = $request->validate([
-            'cif' => ['required', 'string','unique:clientes, cif', new ValidarCif],
+            'cif' => ['required', 'string','unique:clientes,cif', new ValidarCif],
             'nombre' => 'required|string|max:100',
             'telefono' => 'required|string|max:20',
             'correo' => 'required|email|max:100',
-            'cuenta_bancaria' => 'required|string|max:50',
+            'cuenta_corriente' => 'required|string|max:50',
             'pais' => 'required|string|exists:paises,iso2',
-            'moneda' => 'required|in:' . implode(',', array_keys($this->monedas())),
-            'importe_cuota' => 'required|numeric|min:0',
+            'importe_cuota_mensual' => 'required|numeric|min:0',
         ], [
             'cif.required' => 'El CIF es obligatorio',
             'cif.unique' => 'Ya existe un cliente con ese CIF',
@@ -80,18 +76,20 @@ class ClienteController extends Controller
             'correo.required' => 'El correo electrónico es obligatorio',
             'correo.email' => 'El correo electrónico no es válido',
             'correo.max' => 'El correo electrónico no puede tener más de 100 caracteres',
-            'cuenta_bancaria.required' => 'La cuenta bancaria es obligatoria',
-            'cuenta_bancaria.max' => 'La cuenta bancaria no puede tener más de 50 caracteres',
+            'cuenta_corriente.required' => 'La cuenta corriente es obligatoria',
+            'cuenta_corriente.max' => 'La cuenta corriente no puede tener más de 50 caracteres',
             'pais.required' => 'El país es obligatorio',
             'pais.in' => 'El país seleccionado no es válido',
-            'moneda.required' => 'La moneda es obligatoria',
-            'moneda.in' => 'La moneda seleccionada no es válida',
-            'importe_cuota.required' => 'El importe de la cuota es obligatorio',
-            'importe_cuota.numeric' => 'El importe de la cuota debe ser numérico',
-            'importe_cuota.min' => 'El importe de la cuota debe ser mayor o igual a 0',
+            'importe_cuota_mensual.required' => 'El importe de la cuota es obligatorio',
+            'importe_cuota_mensual.numeric' => 'El importe de la cuota debe ser numérico',
+            'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 0',
         ]);
 
         $validated['cif'] = strtoupper(trim($validated['cif']));
+
+        $pais = Pais::where('iso2', $validated['pais'])->first();
+        $validated['moneda'] = $pais->iso_moneda;
+
         Cliente::create($validated);
 
         return redirect()->route('clientes.index')->with('success', 'Cliente creado correctamente.');
@@ -115,71 +113,65 @@ class ClienteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cliente $cliente)
-    {
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
+    // public function edit(Cliente $cliente)
+    // {
+    //     /** @var \App\Models\User $user */
+    //     $user = Auth::user();
 
-        if (!$user->isAdmin()) {
-            abort(403);
-        }
+    //     if (!$user->isAdmin()) {
+    //         abort(403);
+    //     }
 
-        $paises = Pais::ordenadosPorNombre()->get();
+    //     $paises = Pais::ordenadosPorNombre()->get();
 
-        return view('clientes.edit', [
-            'cliente' => $cliente,
-            'paises' => $paises,
-            'monedas' => $this->monedas(),
-        ]);
-    }
+    //     return view('clientes.edit', compact('cliente', 'paises'));
+    // }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cliente $cliente)
-    {
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
+    // public function update(Request $request, Cliente $cliente)
+    // {
+    //     /** @var \App\Models\User $user */
+    //     $user = Auth::user();
 
-        if (!$user->isAdmin()) {
-            abort(403);
-        }
+    //     if (!$user->isAdmin()) {
+    //         abort(403);
+    //     }
 
-        $validated = $request->validate([
-            'cif' => 'required|string|max:20|unique:clientes,cif,' . $cliente->id,
-            'nombre' => 'required|string|max:100',
-            'telefono' => 'required|string|max:20',
-            'correo' => 'required|email|max:100',
-            'cuenta_bancaria' => 'required|string|max:50',
-            'pais' => 'required|string|exists:paises,iso2',
-            'moneda' => 'required|in:' . implode(',', array_keys($this->monedas())),
-            'importe_cuota' => 'required|numeric|min:0',
-        ], [
-            'cif.required' => 'El CIF es obligatorio',
-            'cif.unique' => 'Ya existe un cliente con ese CIF',
-            'cif.max' => 'El CIF no puede tener más de 10 caracteres',
-            'nombre.required' => 'El nombre es obligatorio',
-            'nombre.max' => 'El nombre no puede tener más de 100 caracteres',
-            'telefono.required' => 'El teléfono es obligatorio',
-            'telefono.max' => 'El teléfono no puede tener más de 20 caracteres',
-            'correo.required' => 'El correo electrónico es obligatorio',
-            'correo.email' => 'El correo electrónico no es válido',
-            'correo.max' => 'El correo electrónico no puede tener más de 100 caracteres',
-            'cuenta_bancaria.required' => 'La cuenta bancaria es obligatoria',
-            'cuenta_bancaria.max' => 'La cuenta bancaria no puede tener más de 50 caracteres',
-            'pais.required' => 'El país es obligatorio',
-            'pais.in' => 'El país seleccionado no es válido',
-            'moneda.required' => 'La moneda es obligatoria',
-            'moneda.in' => 'La moneda seleccionada no es válida',
-            'importe_cuota.required' => 'El importe de la cuota es obligatorio',
-            'importe_cuota.numeric' => 'El importe de la cuota debe ser numérico',
-            'importe_cuota.min' => 'El importe de la cuota debe ser mayor o igual a 0',
-        ]);
+    //     $validated = $request->validate([
+    //         'cif' => 'required|string|max:20|unique:clientes,cif,' . $cliente->id,
+    //         'nombre' => 'required|string|max:100',
+    //         'telefono' => 'required|string|max:20',
+    //         'correo' => 'required|email|max:100',
+    //         'cuenta_bancaria' => 'required|string|max:50',
+    //         'pais' => 'required|string|exists:paises,iso2',
+    //         'moneda' => 'required|exists:paises,iso_moneda',
+    //         'importe_cuota' => 'required|numeric|min:0',
+    //     ], [
+    //         'cif.required' => 'El CIF es obligatorio',
+    //         'cif.unique' => 'Ya existe un cliente con ese CIF',
+    //         'cif.max' => 'El CIF no puede tener más de 10 caracteres',
+    //         'nombre.required' => 'El nombre es obligatorio',
+    //         'nombre.max' => 'El nombre no puede tener más de 100 caracteres',
+    //         'telefono.required' => 'El teléfono es obligatorio',
+    //         'telefono.max' => 'El teléfono no puede tener más de 20 caracteres',
+    //         'correo.required' => 'El correo electrónico es obligatorio',
+    //         'correo.email' => 'El correo electrónico no es válido',
+    //         'correo.max' => 'El correo electrónico no puede tener más de 100 caracteres',
+    //         'cuenta_bancaria.required' => 'La cuenta bancaria es obligatoria',
+    //         'cuenta_bancaria.max' => 'La cuenta bancaria no puede tener más de 50 caracteres',
+    //         'pais.required' => 'El país es obligatorio',
+    //         'pais.in' => 'El país seleccionado no es válido',
+    //         'importe_cuota.required' => 'El importe de la cuota es obligatorio',
+    //         'importe_cuota.numeric' => 'El importe de la cuota debe ser numérico',
+    //         'importe_cuota.min' => 'El importe de la cuota debe ser mayor o igual a 0',
+    //     ]);
 
-        $cliente->update($validated);
+    //     $cliente->update($validated);
 
-        return redirect()->route('clientes.index')->with('success', 'Cliente actualizado correctamente.');
-    }
+    //     return redirect()->route('clientes.index')->with('success', 'Cliente actualizado correctamente.');
+    // }
 
     public function confirmBaja(Cliente $cliente)
     {
@@ -205,19 +197,4 @@ class ClienteController extends Controller
         //
     }
 
-    private function monedas(): array
-    {
-        return [
-            'EUR' => 'Euro (€)',
-            'USD' => 'Dólar estadounidense ($)',
-            'GBP' => 'Libra esterlina (£)',
-            'JPY' => 'Yen japonés (¥)',
-            'CHF' => 'Franco suizo (CHF)',
-            'CAD' => 'Dólar canadiense (CA$)',
-            'AUD' => 'Dólar australiano (AU$)',
-            'CNY' => 'Yuan chino (¥)',
-            'MXN' => 'Peso mexicano ($)',
-            'BRL' => 'Real brasileño (R$)',
-        ];
-    }
 }

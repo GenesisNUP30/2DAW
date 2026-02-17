@@ -92,6 +92,10 @@ Route::middleware('auth')->group(function () {
         
     });
 
+    Route::middleware('role:administrador')->group(function () {
+        // CUOTAS
+        Route::get('/cuotas', [CuotaController::class, 'index'])->name('cuotas.index');
+    });
 
     /*
     ====== PERFIL DE USUARIO ======

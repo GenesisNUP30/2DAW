@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <h1 class="mb-4">
-        <i class="fas fa-user me-2"></i> Detalles del cliente: {{ $cliente->nombre }}
+        <i class="fas fa-user-tie"></i> Detalles del cliente: {{ $cliente->nombre }}
     </h1>
 
     {{-- MENSAJE DE ÉXITO/ERROR --}}
@@ -43,8 +43,8 @@
                         <p class="form-control-plaintext">{{ $cliente->correo }}</p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-bold"><i class="fas fa-credit-card me-1"></i> Cuenta bancaria</label>
-                        <p class="form-control-plaintext">{{ $cliente->cuenta_bancaria }}</p>
+                        <label class="form-label fw-bold"><i class="fas fa-credit-card me-1"></i> Cuenta corriente</label>
+                        <p class="form-control-plaintext">{{ $cliente->cuenta_corriente }}</p>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -60,12 +60,12 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-bold"><i class="fas fa-euro-sign me-1"></i> Importe cuota</label>
-                        <p class="form-control-plaintext">{{ number_format($cliente->importe_cuota, 2, ',', '.') }} €</p>
+                        <p class="form-control-plaintext">{{ number_format($cliente->importe_cuota_mensual, 2, ',', '.') }} €</p>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-bold"><i class="fas fa-calendar-plus me-1"></i> Fecha de creación</label>
+                        <label class="form-label fw-bold"><i class="fas fa-calendar-plus me-1"></i> Fecha de alta</label>
                         <p class="form-control-plaintext">
-                            {{ $cliente->created_at ? $cliente->created_at->format('d/m/Y H:i') : '-' }}
+                            {{ \Carbon\Carbon::parse($cliente->fecha_alta)->format('d/m/Y') }}
                         </p>
                     </div>
                     @if($cliente->isBaja())

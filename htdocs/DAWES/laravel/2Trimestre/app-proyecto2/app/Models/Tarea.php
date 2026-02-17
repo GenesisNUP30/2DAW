@@ -73,7 +73,7 @@ class Tarea extends Model
         return $this->belongsTo(User::class, 'operario_id');
     }
 
-    // ==================== SCOPES (MÉTODOS DE CONSULTA) ====================
+    // ==================== SCOPES ( DE CONSULTA) ====================
 
     /**
      * Scope: Cargar las relaciones cliente y operario en la consulta

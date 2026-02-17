@@ -44,8 +44,8 @@
             </p>
 
             <p>
-                <strong><i class="fas fa-credit-card me-1"></i> Cuenta bancaria:</strong>
-                {{ $cliente->cuenta_bancaria }}
+                <strong><i class="fas fa-credit-card me-1"></i> Cuenta corriente:</strong>
+                {{ $cliente->cuenta_corriente }}
             </p>
 
             <p>
@@ -60,7 +60,7 @@
 
             <p>
                 <strong><i class="fas fa-euro-sign me-1"></i> Importe cuota:</strong>
-                {{ number_format($cliente->importe_cuota, 2, ',', '.') }} €
+                {{ number_format($cliente->importe_cuota_mensual, 2, ',', '.') }} €
             </p>
 
             <p>

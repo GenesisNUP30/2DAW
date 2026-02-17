@@ -66,7 +66,7 @@
 
             <p>
                 <strong><i class="fas fa-user-cog me-1"></i> Operario asignado:</strong>
-                {{ $tarea->operario->nombre ?? '—' }}
+                {{ $tarea->operario->name ?? '—' }}
             </p>
         </div>
     </div>

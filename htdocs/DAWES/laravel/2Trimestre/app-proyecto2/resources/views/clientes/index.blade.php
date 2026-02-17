@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <h1 class="mb-4">
-        <i class="fas fa-users"></i> Lista de clientes
+        <i class="fas fa-user-tie"></i> Lista de clientes
     </h1>
 
     {{-- Mensaje de éxito --}}

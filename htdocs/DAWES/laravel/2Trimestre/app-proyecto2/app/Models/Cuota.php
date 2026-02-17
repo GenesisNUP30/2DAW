@@ -10,13 +10,6 @@ class Cuota extends Model
     use HasFactory;
 
     /**
-     * Tabla asociada con el modelo en la base de datos.
-     *
-     * @var string
-     */
-    protected $table = 'cuotas';
-
-    /**
      * Campos que se guardarán en la base de datos cuando se
      * haga un create o update.
      *
@@ -27,7 +20,6 @@ class Cuota extends Model
         'concepto',
         'fecha_emision',
         'importe',
-        'pagada',
         'fecha_pago',
         'notas'
     ];
@@ -36,12 +28,36 @@ class Cuota extends Model
         'fecha_emision' => 'date',
         'importe' => 'decimal:2',
         'fecha_pago' => 'date',
-        'pagada' => 'boolean',
     ];
 
+    /**
+     * Relación: Una cuota pertenece a un cliente
+     *
+     * @return void
+     */
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
     }
 
+    // ==================== MÉTODOS DE ACCESO ====================
+    /**
+     * Saber si una cuota está pagada o no
+     */
+    public function isPagada(): bool
+    {
+        return $this->fecha_pago !== null;
+    }
+
+    /**
+     * Saber si una cuota está pendiente
+     *
+     * @return boolean
+     */
+    public function isPendiente(): bool
+    {
+        return $this->fecha_pago === null;
+    }
+
+    
 }
