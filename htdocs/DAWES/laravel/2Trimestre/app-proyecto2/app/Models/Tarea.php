@@ -107,7 +107,6 @@ class Tarea extends Model
     /**
      * Scope: Ordenar tareas por fecha de realización descendente
      * 
-     * Uso: Tarea::ordenadasPorFecha()->get()
      * Beneficio: Las tareas más recientes aparecen primero
      * 
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -120,8 +119,6 @@ class Tarea extends Model
 
     /**
      * Scope: Filtrar tareas con estado 'P' (Pendientes)
-     * 
-     * Uso: Tarea::pendientes()->get()
      * 
      * Beneficio: Obtiene rápidamente las tareas pendientes
      * 

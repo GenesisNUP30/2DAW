@@ -16,7 +16,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        /** @var \App\Models\User $user */
+        
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -34,7 +34,6 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -51,7 +50,6 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -100,7 +98,6 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -175,8 +172,8 @@ class ClienteController extends Controller
 
     public function confirmBaja(Cliente $cliente)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
+        
         if (!$user->isAdmin()) {
             abort(403);
         }

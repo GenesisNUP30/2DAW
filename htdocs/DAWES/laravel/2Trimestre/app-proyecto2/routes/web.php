@@ -95,6 +95,15 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:administrador')->group(function () {
         // CUOTAS
         Route::get('/cuotas', [CuotaController::class, 'index'])->name('cuotas.index');
+
+        Route::get('/cuotas/crear', [CuotaController::class, 'create'])->name('cuotas.create');
+        Route::post('/cuotas', [CuotaController::class, 'store'])->name('cuotas.store');
+
+        Route::get('/cuotas/{cuota}/editar', [CuotaController::class, 'edit'])->name('cuotas.edit');
+        Route::put('/cuotas/{cuota}', [CuotaController::class, 'update'])->name('cuotas.update');
+
+        Route::get('/cuotas/{cuota}/eliminar', [CuotaController::class, 'confirmDelete'])->name('cuotas.confirmDelete');
+        Route::delete('/cuotas/{cuota}', [CuotaController::class, 'destroy'])->name('cuotas.destroy');
     });
 
     /*

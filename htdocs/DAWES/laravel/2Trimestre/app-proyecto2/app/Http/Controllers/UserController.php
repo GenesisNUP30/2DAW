@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -31,7 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -46,7 +46,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -91,7 +91,7 @@ class UserController extends Controller
      */
     public function edit(User $empleado)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -106,7 +106,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $empleado)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -174,7 +174,7 @@ class UserController extends Controller
 
     public function confirmDelete(User $empleado)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -200,7 +200,7 @@ class UserController extends Controller
     public function destroy(User $empleado)
     {
 
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -214,7 +214,7 @@ class UserController extends Controller
 
     public function confirmBaja(User $empleado)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -243,7 +243,7 @@ class UserController extends Controller
 
     public function baja(User $empleado)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -260,7 +260,7 @@ class UserController extends Controller
 
     public function confirmAlta(User $empleado)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -280,7 +280,7 @@ class UserController extends Controller
      */
     public function alta(User $empleado)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -309,7 +309,7 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         $request->validate([

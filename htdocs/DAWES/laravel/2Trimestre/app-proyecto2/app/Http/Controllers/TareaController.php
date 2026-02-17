@@ -20,7 +20,7 @@ class TareaController extends Controller
      */
     public function index()
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
         $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
 
@@ -43,7 +43,7 @@ class TareaController extends Controller
      */
     public function show(Tarea $tarea)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if ($user->isOperario() && $tarea->operario_id !== $user->id) {
@@ -55,7 +55,7 @@ class TareaController extends Controller
 
     public function downloadFile(Tarea $tarea)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if ($user->isOperario() && $tarea->operario_id !== $user->id) {
@@ -66,7 +66,7 @@ class TareaController extends Controller
             abort(404);
         }
 
-        
+
         return Storage::disk('private')->download($tarea->fichero_resumen);
     }
 
@@ -133,7 +133,7 @@ class TareaController extends Controller
      */
     public function create()
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -156,7 +156,7 @@ class TareaController extends Controller
      */
     public function store(Request $request)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -263,7 +263,7 @@ class TareaController extends Controller
      */
     public function edit(Tarea $tarea)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
@@ -286,7 +286,7 @@ class TareaController extends Controller
      */
     public function update(Request $request, Tarea $tarea)
     {
-        /** @var \App\Models\User $user */
+
         $user = Auth::user();
 
         if (!$user->isAdmin()) {

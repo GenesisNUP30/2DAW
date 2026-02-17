@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Cuota;
 
 class CuotaController extends Controller
@@ -12,13 +13,18 @@ class CuotaController extends Controller
      */
     public function index()
     {
-        /** @var \App\Models\User $user */
+        
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
             abort(403);
         }
 
+        $cuotas = Cuota::conRelaciones()
+        ->ordenadasPorFecha()
+        ->get();
+
+        return view('cuotas.index', compact('cuotas'));
 
     }
 

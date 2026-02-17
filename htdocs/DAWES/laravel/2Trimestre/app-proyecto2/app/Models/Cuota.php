@@ -59,5 +59,26 @@ class Cuota extends Model
         return $this->fecha_pago === null;
     }
 
-    
+    // ==================== SCOPES ====================
+    /**
+     * Scope: Ordenar cuotas por fecha de emisión descendente
+     *
+     * @param [type] $query
+     * @return void
+     */
+    public function scopeOrdenadasPorFecha($query)
+    {
+        return $query->orderByDesc('fecha_emision');
+    }
+
+    /**
+     * Scope: Cargar las relaciones cliente en la consulta
+     * Beneficio: Evita el problema N+1 al mostrar cuotas con sus relaciones
+     * @param [type] $query
+     * @return void
+     */
+    public function scopeConRelaciones($query)
+    {
+        return $query->with(['cliente']);
+    }
 }

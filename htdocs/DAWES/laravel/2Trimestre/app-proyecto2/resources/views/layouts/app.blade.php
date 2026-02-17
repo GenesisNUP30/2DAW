@@ -126,6 +126,11 @@
                                     <i class="fas fa-user-tie"></i> Ver lista de clientes
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('clientes.index') }}">
+                                    <i class="fas fa-wallet me-1"></i> Ver lista de cuotas
+                                </a>
+                            </li>
 
                             @endif
 
