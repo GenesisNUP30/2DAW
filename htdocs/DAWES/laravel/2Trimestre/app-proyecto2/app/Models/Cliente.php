@@ -34,10 +34,20 @@ class Cliente extends Model
         'importe_cuota_mensual',
     ];
 
+    /**
+     * Evitamos que se actualicen automáticamente las fechas
+     *
+     * @var boolean
+     */
     public $timestamps = false;
 
+    /**
+     * Convertir automáticamente los atributos a tipos de datos específicos
+     *
+     * @return array<string, string>
+     */
     protected $casts = [
-        'importe_cuota_mensual' => 'decimal:2',
+        'importe_cuota_mensual' => 'float',
     ];
 
     /**

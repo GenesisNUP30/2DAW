@@ -26,7 +26,7 @@
     <div class="d-flex justify-content-between mb-3">
         {{-- Botón crear cliente (solo administrador) --}}
         @if (auth()->user()->isAdmin())
-        <a href="{{ route('clientes.create') }}" class="btn btn-primary mb-3">
+        <a href="{{ route('cuotas.create') }}" class="btn btn-primary mb-3">
             <i class="fas fa-user-plus me-2"></i> Añadir cuota
         </a>
         @endif
@@ -56,7 +56,7 @@
                         <td>{{ number_format($cuota->importe, 2, ',', '.') }} €</td>
                         <td>{{ \Carbon\Carbon::parse($cuota->fecha_emision)->format('d/m/Y') }}</td>
                         <td>
-                            @if ($cuota->pagada)
+                            @if ($cuota->isPagada())
                             <span class="badge bg-success">Pagada</span>
                             @else
                             <span class="badge bg-secondary">Pendiente</span>

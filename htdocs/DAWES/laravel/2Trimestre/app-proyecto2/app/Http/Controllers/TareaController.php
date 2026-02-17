@@ -140,8 +140,8 @@ class TareaController extends Controller
             abort(403);
         }
 
-        $clientes = Cliente::orderBy('nombre')->get();
-        $operarios = User::where('tipo', 'operario')->orderBy('name')->get();
+        $clientes = Cliente::ordenadosPorNombre()->get();
+        $operarios = User::operarios()->ordenadosPorNombre()->get();
 
         return view('tareas.create', [
             'clientes' => $clientes,

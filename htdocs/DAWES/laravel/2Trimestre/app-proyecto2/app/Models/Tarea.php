@@ -46,6 +46,11 @@ class Tarea extends Model
      */
     public $timestamps = false;
 
+    /**
+     * Convertir automáticamente los atributos a tipos de datos específicos
+     *
+     * @return array<string, string>
+     */
     protected $casts = [
         'fecha_creacion' => 'datetime',
         'fecha_realizacion' => 'date',

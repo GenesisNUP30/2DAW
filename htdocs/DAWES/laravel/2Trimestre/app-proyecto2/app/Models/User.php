@@ -44,7 +44,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Convertir automáticamente los atributos a tipos de datos específicos
      *
      * @return array<string, string>
      */
@@ -153,6 +153,17 @@ class User extends Authenticatable
     public function scopeAdministradores($query)
     {
         return $query->where('tipo', 'administrador');
+    }
+
+    /**
+     * Scope: Ordenar usuarios por nombre
+     *
+     * @param [type] $query
+     * @return void
+     */
+    public function scopeOrdenadosPorNombre($query)
+    {
+        return $query->orderBy('name');
     }
 
     /**

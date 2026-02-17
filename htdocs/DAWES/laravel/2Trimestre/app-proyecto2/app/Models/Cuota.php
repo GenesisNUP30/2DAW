@@ -23,10 +23,22 @@ class Cuota extends Model
         'fecha_pago',
         'notas'
     ];
+
+    /**
+     * Evitamos que se actualicen automáticamente las fechas
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
     
+    /**
+     * Convertir automáticamente los atributos a tipos de datos específicos
+     *
+     * @return array<string, string>
+     */
     protected $casts = [
         'fecha_emision' => 'date',
-        'importe' => 'decimal:2',
+        'importe' => 'float',
         'fecha_pago' => 'date',
     ];
 
@@ -80,5 +92,27 @@ class Cuota extends Model
     public function scopeConRelaciones($query)
     {
         return $query->with(['cliente']);
+    }
+
+    /**
+     * Scope: Filtrar cuotas pendientes de pagar
+     *
+     * @param [type] $query
+     * @return void
+     */
+    public function scopePendientes($query)
+    {
+        return $query->whereNull('fecha_pago');
+    }
+
+    /**
+     * Scope: Filtrar cuotas ya pagadas
+     *
+     * @param [type] $query
+     * @return void
+     */
+    public function scopePagadas($query)
+    {
+        return $query->whereNotNull('fecha_pago');
     }
 }

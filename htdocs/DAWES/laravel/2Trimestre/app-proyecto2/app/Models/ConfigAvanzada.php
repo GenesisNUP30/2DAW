@@ -13,6 +13,11 @@ class ConfigAvanzada extends Model
      */
     protected $table = 'config_avanzada';
 
+    /**
+     * Evitamos que se actualicen automáticamente las fechas
+     *
+     * @var boolean
+     */
     public $timestamps = false;
 
     /**
