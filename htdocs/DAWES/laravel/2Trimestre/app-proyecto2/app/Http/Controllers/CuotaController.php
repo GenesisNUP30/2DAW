@@ -89,6 +89,25 @@ class CuotaController extends Controller
         //
     }
 
+    //TODO: Definir si la remesa se genera sola (con importe fijo) o manualmente con importe variable 
+    public function generarRemesa()
+    {
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        $clientes = Cliente::whereNull('fecha_baja')->get();
+
+        $mes = now()->month;
+        $anio = now()->year;
+
+        foreach ($clientes as $cliente) {
+            $existe = Cuota::where('cliente_id', $cliente->id)
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

@@ -18,6 +18,7 @@ class Cuota extends Model
     protected $fillable = [
         'cliente_id',
         'concepto',
+        'tipo',
         'fecha_emision',
         'importe',
         'fecha_pago',
@@ -114,5 +115,24 @@ class Cuota extends Model
     public function scopePagadas($query)
     {
         return $query->whereNotNull('fecha_pago');
+    }
+
+    /***
+     * Scope: Filtrar cuotas mensuales
+     */
+    public function scopeMensuales($query)
+    {
+        return $query->where('tipo', 'mensual');
+    }
+
+    /**
+     * Scope: Filtrar cuotas excepcionales
+     *
+     * @param [type] $query
+     * @return void
+     */
+    public function scopeExcepcionales($query)
+    {
+        return $query->where('tipo', 'excepcional');
     }
 }
