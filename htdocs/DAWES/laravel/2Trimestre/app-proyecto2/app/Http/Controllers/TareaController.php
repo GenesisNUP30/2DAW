@@ -396,6 +396,12 @@ class TareaController extends Controller
 
     public function confirmDelete(Tarea $tarea)
     {
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
         return view('tareas.confirmDelete', compact('tarea'));
     }
 
@@ -404,6 +410,12 @@ class TareaController extends Controller
      */
     public function destroy(Tarea $tarea)
     {
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+        
         $tarea->delete();
 
         return redirect('/')->with('success', 'Tarea eliminada correctamente');

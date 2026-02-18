@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('titulo', 'Lista de empleados')
+@section('titulo', 'Lista de cuotas')
 
 @section('content')
 <div class="container">
     <h1 class="mb-4">
-        <i class="fas fa-wallet me-1"></i> Lista de cuotas
+        <i class="fas fa-file-invoice-dollar"></i> Lista de cuotas
     </h1>
 
     {{-- Mensaje de éxito --}}
@@ -27,7 +27,7 @@
         {{-- Botón crear cliente (solo administrador) --}}
         @if (auth()->user()->isAdmin())
         <a href="{{ route('cuotas.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-money-check-alt me-2"></i> Añadir cuota
+            <i class="fas fa-file-invoice me-1"></i> Añadir cuota
         </a>
         @endif
     </div>

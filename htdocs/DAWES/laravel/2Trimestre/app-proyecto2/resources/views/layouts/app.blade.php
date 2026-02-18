@@ -127,8 +127,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('clientes.index') }}">
-                                    <i class="fas fa-wallet me-1"></i> Ver lista de cuotas
+                                <a class="nav-link" href="{{ route('cuotas.index') }}">
+                                    <i class="fas fa-file-invoice-dollar me-1"></i> Ver lista de cuotas
                                 </a>
                             </li>
 

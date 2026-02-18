@@ -6,7 +6,7 @@
 <div class="container">
 
     <h1 class="mb-4">
-        <i class="fas fa-wallet me-1"></i> Editar cuota
+        <i class="fas fa-pen"></i> Editar cuota
     </h1>
 
     {{-- ERRORES --}}
@@ -73,7 +73,8 @@
         {{-- FECHA PAGO --}}
         <div class="mb-3">
             <label class="form-label">Fecha de pago</label>
-            <input type="date" name="fecha_pago" class="form-control" value="{{ old('fecha_pago', $cuota->fecha_pago) }}">
+            <input type="date" name="fecha_pago" class="form-control" 
+            value="{{ old('fecha_pago', $cuota->fecha_pago ? $cuota->fecha_pago->format('Y-m-d') : '') }}">
             @error('fecha_pago')
             <div class="text-danger mt-1">{{ $message }}</div>
             @enderror

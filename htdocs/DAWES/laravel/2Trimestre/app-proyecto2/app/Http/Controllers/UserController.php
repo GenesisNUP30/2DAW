@@ -181,6 +181,7 @@ class UserController extends Controller
             abort(403);
         }
 
+        // TODO: Cambiar los mensajes de error para que se muestren cuando confirme la eliminación, no antes
         if ($empleado->id == $user->id) {
             return redirect()->route('empleados.index')
                 ->with('error', 'No puedes eliminarte a ti mismo.');

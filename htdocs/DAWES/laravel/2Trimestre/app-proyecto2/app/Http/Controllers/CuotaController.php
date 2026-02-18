@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cuota;
@@ -144,10 +145,34 @@ class CuotaController extends Controller
     }
 
     /**
+     * Confirmar la eliminación de una cuota
+     *
+     * @param Cuota $cuota
+     * @return void
+     */
+    public function confirmDelete(Cuota $cuota)
+    {
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        return view('cuotas.confirmDelete', compact('cuota'));
+    }
+    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Cuota $cuota)
     {
-        //
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        $cuota->delete();
+
+        return redirect()->route('cuotas.index')->with('success', 'Cuota eliminada correctamente.');
     }
 }
