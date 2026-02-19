@@ -79,11 +79,10 @@
             @enderror
         </div>
 
-        //TODO: Comprobar si introduciendo solo el numero se añaden automaticamente los decimales
         {{-- IMPORTE CUOTA MENSUAL --}}
         <div class="mb-3">
             <label class="form-label">Importe cuota mensual</label>
-            <input type="number" name="importe_cuota_mensual" class="form-control" value="{{ old('importe_cuota_mensual') }}">
+            <input type="text" name="importe_cuota_mensual" class="form-control" value="{{ old('importe_cuota_mensual') }}">
             @error('importe_cuota_mensual')
             <div class="text-danger mt-1">{{ $message }}</div>
             @enderror
