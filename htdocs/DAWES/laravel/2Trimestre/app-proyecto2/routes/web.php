@@ -96,6 +96,7 @@ Route::middleware('auth')->group(function () {
         // CUOTAS
         Route::get('/cuotas', [CuotaController::class, 'index'])->name('cuotas.index');
 
+        Route::get('/cuotas/remesa', [CuotaController::class, 'generarRemesa'])->name('cuotas.generarRemesa');
         Route::get('/cuotas/crear', [CuotaController::class, 'create'])->name('cuotas.create');
         Route::post('/cuotas', [CuotaController::class, 'store'])->name('cuotas.store');
 
