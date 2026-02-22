@@ -57,7 +57,7 @@
         {{-- IMPORTE --}}
         <div class="mb-3">
             <label class="form-label">Importe</label>
-            <input type="number" name="importe" class="form-control" value="{{ old('importe') }}">
+            <input type="text" name="importe" class="form-control" value="{{ old('importe') }}">
             @error('importe')
             <div class="text-danger mt-1">{{ $message }}</div>
             @enderror

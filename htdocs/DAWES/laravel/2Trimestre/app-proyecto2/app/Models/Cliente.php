@@ -112,4 +112,15 @@ class Cliente extends Model
     {
         return $query->with('paisRelacion');
     }
+
+    /**
+     * Scope: Filtrar clientes que están activos
+     *
+     * @param [type] $query
+     * @return void
+     */
+    public function scopeActivos($query)
+    {
+        return $query->whereNull('fecha_baja');
+    }
 }

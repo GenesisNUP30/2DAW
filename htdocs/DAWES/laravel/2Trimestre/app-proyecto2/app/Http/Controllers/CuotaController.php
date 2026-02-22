@@ -97,7 +97,7 @@ class CuotaController extends Controller
             abort(403);
         }
 
-        $clientes = Cliente::whereNull('fecha_baja')->get();
+        $clientes = Cliente::activos()->get();
 
         $mes = now()->month;
         $anio = now()->year;

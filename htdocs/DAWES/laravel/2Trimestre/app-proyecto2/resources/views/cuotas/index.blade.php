@@ -34,7 +34,7 @@
         </a>
         @endif
     </div>
-
+    //TODO: Mejorar la vista de las remesas y las cuotas excepcionales
     {{-- Tabla de cuotas --}}
     <div class="card">
         <div class="card-body p-0">
