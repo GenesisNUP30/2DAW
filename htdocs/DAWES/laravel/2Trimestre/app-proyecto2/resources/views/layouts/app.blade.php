@@ -14,7 +14,7 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
 
     <!-- Scripts -->
@@ -76,7 +76,7 @@
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('perfil') }}">
-                                    <i class="fas fa-user-edit"></i> Editar mi perfil
+                                    <i class="fas fa-user-edit"></i> Editar perfil
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"
@@ -112,23 +112,23 @@
 
                             @if(Auth::check() && Auth::user()->isAdmin())
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tareas.create') }}">
-                                    <i class="fas fa-plus-circle"></i> Crear nueva tarea
+                                <a class="nav-link" href="{{ route('tareas.index') }}">
+                                    <i class="fas fa-tasks me-1"></i> Lista de tareas
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('empleados.index') }}">
-                                    <i class="fas fa-users"></i> Ver lista de empleados
+                                    <i class="fas fa-users me-1"></i> Lista de empleados
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('clientes.index') }}">
-                                    <i class="fas fa-user-tie"></i> Ver lista de clientes
+                                    <i class="fas fa-user-tie"></i> Lista de clientes
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('cuotas.index') }}">
-                                    <i class="fas fa-file-invoice-dollar me-1"></i> Ver lista de cuotas
+                                    <i class="fas fa-file-invoice-dollar me-1"></i> Lista de cuotas
                                 </a>
                             </li>
 

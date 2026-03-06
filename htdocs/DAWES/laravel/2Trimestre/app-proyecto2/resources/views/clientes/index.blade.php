@@ -86,5 +86,9 @@
         </div>
     </div>
 
+    {{-- Paginación --}}
+    <div class="mt-3">
+        {{ $clientes->links() }}
+    </div>
 </div>
 @endsection

@@ -97,7 +97,9 @@
         </div>
     </div>
 
-
-
+    {{-- Paginación --}}
+    <div class="mt-3">
+        {{ $empleados->links() }}
+    </div>
 </div>
 @endsection

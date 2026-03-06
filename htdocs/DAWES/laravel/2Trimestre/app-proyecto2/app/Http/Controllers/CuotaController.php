@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\ConfigAvanzada;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,7 @@ class CuotaController extends Controller
     {
 
         $user = Auth::user();
+        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
 
         if (!$user->isAdmin()) {
             abort(403);
@@ -24,7 +26,7 @@ class CuotaController extends Controller
 
         $cuotas = Cuota::conRelaciones()
             ->ordenadasPorFecha()
-            ->get();
+            ->paginate($itemsPorPagina);
 
         return view('cuotas.index', compact('cuotas'));
     }
@@ -102,25 +104,25 @@ class CuotaController extends Controller
         $mes = now()->month;
         $anio = now()->year;
 
-        $cuotasCreadas =0;
+        $cuotasCreadas = 0;
         foreach ($clientes as $cliente) {
             $existe = Cuota::where('cliente_id', $cliente->id)
                 ->whereMonth('fecha_emision', $mes)
                 ->whereYear('fecha_emision', $anio)
                 ->exists();
 
-                if (!$existe) {
-                    Cuota::create([
-                        'cliente_id' => $cliente->id,
-                        'concepto' => "Cuota mes de ". \Carbon\Carbon::create($anio, $mes, 1)->format('d/m/Y'),
-                        //TODO: Corregir fecha de emisión, no se si deberia ser el primer día del mes siempre o el dia actual
-                        'fecha_emision' => \Carbon\Carbon::create($anio, $mes, 1),
-                        'importe' => $cliente->importe_cuota_mensual,
-                        'fecha_pago' => null,
-                        'notas' => "Cuota generada automáticamente",
-                    ]);
-                    $cuotasCreadas++;
-                }
+            if (!$existe) {
+                Cuota::create([
+                    'cliente_id' => $cliente->id,
+                    'concepto' => "Cuota mes de " . \Carbon\Carbon::create($anio, $mes, 1)->format('d/m/Y'),
+                    //TODO: Corregir fecha de emisión, no se si deberia ser el primer día del mes siempre o el dia actual
+                    'fecha_emision' => \Carbon\Carbon::create($anio, $mes, 1),
+                    'importe' => $cliente->importe_cuota_mensual,
+                    'fecha_pago' => null,
+                    'notas' => "Cuota generada automáticamente",
+                ]);
+                $cuotasCreadas++;
+            }
         }
         return redirect()->route('cuotas.index')->with('success', "Remesa mensual generada:  $cuotasCreadas cuotas mensuales");
     }

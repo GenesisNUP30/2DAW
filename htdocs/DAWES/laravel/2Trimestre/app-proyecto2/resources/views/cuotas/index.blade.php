@@ -27,14 +27,14 @@
         {{-- Botón para generar remesa mensual (solo administrador) --}}
         @if (auth()->user()->isAdmin())
         <a href="{{ route('cuotas.generarRemesa') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-file-invoice me-2"></i> Generar Remesa Mensual
+            <i class="fas fa-file-invoice"></i> Generar Remesa Mensual
         </a>
         <a href="{{ route('cuotas.create') }}" class="btn btn-success mb-3">
-            <i class="fas fa-file-invoice me-2"></i> Añadir cuota excepcional
+            <i class="fas fa-file-invoice"></i> Añadir cuota excepcional
         </a>
         @endif
     </div>
-    //TODO: Mejorar la vista de las remesas y las cuotas excepcionales
+    TODO: Mejorar la vista de las remesas y las cuotas excepcionales
     {{-- Tabla de cuotas --}}
     <div class="card">
         <div class="card-body p-0">
@@ -92,6 +92,11 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    {{-- Paginación --}}
+    <div class="mt-3">
+        {{ $cuotas->links() }}
     </div>
 </div>
 @endsection

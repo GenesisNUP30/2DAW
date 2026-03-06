@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConfigAvanzada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -15,14 +16,14 @@ class UserController extends Controller
      */
     public function index()
     {
-
         $user = Auth::user();
+        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
 
         if (!$user->isAdmin()) {
             abort(403);
         }
 
-        $empleados = User::excluyendo($user->id)->get();
+        $empleados = User::excluyendo($user->id)->paginate($itemsPorPagina);
         return view('empleados.index', compact('empleados'));
     }
 

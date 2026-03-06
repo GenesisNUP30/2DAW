@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cliente;
+use App\Models\ConfigAvanzada;
 use App\Models\Pais;
 use App\Models\User;
 use App\Rules\ValidarCif;
@@ -16,8 +17,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        
         $user = Auth::user();
+        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
 
         if (!$user->isAdmin()) {
             abort(403);
@@ -25,7 +26,7 @@ class ClienteController extends Controller
 
         $clientes = Cliente::ordenadosPorNombre()
         ->conPais()
-        ->get();
+        ->paginate($itemsPorPagina);
         return view('clientes.index', compact('clientes'));
     }
 
