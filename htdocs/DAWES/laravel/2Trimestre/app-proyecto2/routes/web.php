@@ -6,6 +6,7 @@ use App\Http\Controllers\TareaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CuotaController;
 use App\Http\Controllers\FacturaController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 
 /* Rutas públicas */
@@ -116,9 +117,8 @@ Route::middleware('auth')->group(function () {
     /*
     ====== LISTADO PRINCIPAL ======
     */
-    Route::get('/', function () {
-        return view('layouts.home');
-    });
+    
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/tareas/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
     Route::get('/tareas/{tarea}/descargar', [TareaController::class, 'downloadFile'])->name('tareas.downloadFile');
 });

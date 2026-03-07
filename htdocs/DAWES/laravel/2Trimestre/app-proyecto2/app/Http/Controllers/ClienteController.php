@@ -187,6 +187,8 @@ class ClienteController extends Controller
         return view('clientes.confirmBaja', compact('cliente'));
     }
 
+    
+
     /**
      * Remove the specified resource from storage.
      */
