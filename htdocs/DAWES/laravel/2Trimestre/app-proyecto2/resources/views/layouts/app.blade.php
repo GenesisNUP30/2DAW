@@ -102,15 +102,13 @@
 
                     <nav class="nav flex-column">
                         <ul class="nav flex-column">
-                            @if(Auth::check())
+                            @if(Auth::check() && Auth::user()->isAdmin())
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tareas.index') }}">
+                                <a class="nav-link" href="{{ route('home') }}">
                                     <i class="fas fa-home"></i> Inicio
                                 </a>
                             </li>
-                            @endif
-
-                            @if(Auth::check() && Auth::user()->isAdmin())
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('tareas.index') }}">
                                     <i class="fas fa-tasks me-1"></i> Lista de tareas
@@ -129,6 +127,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('cuotas.index') }}">
                                     <i class="fas fa-file-invoice-dollar me-1"></i> Lista de cuotas
+                                </a>
+                            </li>
+                            @elseif(Auth::check() && Auth::user()->isOperario())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('tareas.index') }}">
+                                    <i class="fas fa-tasks me-1"></i> Lista de tareas
                                 </a>
                             </li>
 

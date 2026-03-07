@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -133,5 +134,15 @@ class Tarea extends Model
     public function scopePendientes($query)
     {
         return $query->where('estado', 'P');
+    }
+
+    public function scopeTareasProximas($query)
+    {
+        $hoy = Carbon::today();
+        $limite = Carbon::today()->addDays(5);
+
+        return $query
+            ->whereBetween('fecha_realizacion', [$hoy, $limite])
+            ->orderBy('fecha_realizacion', 'asc');
     }
 }
