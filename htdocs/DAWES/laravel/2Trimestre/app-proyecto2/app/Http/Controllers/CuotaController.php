@@ -16,7 +16,6 @@ class CuotaController extends Controller
      */
     public function index()
     {
-
         $user = Auth::user();
         $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
 
@@ -24,11 +23,17 @@ class CuotaController extends Controller
             abort(403);
         }
 
-        $cuotas = Cuota::conRelaciones()
+        $cuotasMensuales = Cuota::mensuales()
+            ->conRelaciones()
             ->ordenadasPorFecha()
-            ->paginate($itemsPorPagina);
+            ->paginate($itemsPorPagina, ['*'], 'mensuales');
 
-        return view('cuotas.index', compact('cuotas'));
+        $cuotasExcepcionales = Cuota::excepcionales()
+            ->conRelaciones()
+            ->ordenadasPorFecha()
+            ->paginate($itemsPorPagina, ['*'], 'excepcionales');
+
+        return view('cuotas.index', compact('cuotasMensuales', 'cuotasExcepcionales'));
     }
 
     /**
@@ -64,6 +69,7 @@ class CuotaController extends Controller
             'fecha_emision' => 'required|date',
             'importe' => 'required|numeric|min:0.01',
             'fecha_pago' => 'nullable|date|after_or_equal:fecha_emision',
+            'tipo' => 'required|in:excepcional',
             'notas' => 'nullable|string|max:255',
         ], [
             'concepto.required' => 'El concepto es obligatorio',
@@ -119,6 +125,7 @@ class CuotaController extends Controller
                     'fecha_emision' => \Carbon\Carbon::create($anio, $mes, 1),
                     'importe' => $cliente->importe_cuota_mensual,
                     'fecha_pago' => null,
+                    'tipo' => 'mensual',
                     'notas' => "Cuota generada automáticamente",
                 ]);
                 $cuotasCreadas++;

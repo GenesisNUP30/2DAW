@@ -34,71 +34,80 @@
         </a>
         @endif
     </div>
-    TODO: Mejorar la vista de las remesas y las cuotas excepcionales
 
-    
-    {{-- Tabla de cuotas --}}
-    <div class="card">
-        <div class="card-body p-0">
-            <table class="table table-striped mb-0">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Cliente</th>
-                        <th>Concepto</th>
-                        <th>Importe</th>
-                        <th>Fecha de emisión</th>
-                        <th>Pagada</th>
-                        <th>Fecha de pago</th>
-                        <th class="text-center">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($cuotas as $cuota)
-                    <tr>
-                        <td>{{ $cuota->id }}</td>
-                        <td>{{ $cuota->cliente->nombre }}</td>
-                        <td>{{ $cuota->concepto }}</td>
-                        <td>{{ number_format($cuota->importe, 2, ',', '.') }} €</td>
-                        <td>{{ \Carbon\Carbon::parse($cuota->fecha_emision)->format('d/m/Y') }}</td>
-                        <td>
-                            @if ($cuota->isPagada())
-                            <span class="badge bg-success">Pagada</span>
-                            @else
-                            <span class="badge bg-secondary">Pendiente</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if ($cuota->isPagada())
-                            {{ \Carbon\Carbon::parse($cuota->fecha_pago)->format('d/m/Y') }}
-                            @endif
-                        </td>
-                        <td class="text-end">
-                            <a href="{{ route('cuotas.edit', $cuota) }}" class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i> Editar
-                            </a>
+    {{-- Tabs --}}
+    <ul class="nav nav-tabs mb-3" id="cuotasTabs">
+        <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#mensuales">
+                Cuotas mensuales
+            </button>
+        </li>
 
-                            <a href="{{ route('cuotas.confirmDelete', $cuota) }}" class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash"></i> Eliminar
-                            </a>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="9" class="text-center py-3">
-                            No hay cuotas registradas.
-                        </td>
-                    </tr>
-                    @endforelse
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#excepcionales">
+                Cuotas excepcionales
+            </button>
+        </li>
+    </ul>
 
-                </tbody>
-            </table>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="mensuales">
+            <div class="card">
+                <div class="card-body p-0">
+                    <table class="table table-striped mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Concepto</th>
+                                <th>Importe</th>
+                                <th>Fecha emisión</th>
+                                <th>Estado</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($cuotasMensuales as $cuota)
+                            <tr>
+                                <td>{{ $cuota->id }}</td>
+                                <td>{{ $cuota->cliente->nombre }}</td>
+                                <td>{{ $cuota->concepto }}</td>
+                                <td>{{ number_format($cuota->importe,2,',','.') }} €</td>
+
+                                <td>{{ $cuota->fecha_emision->format('d/m/Y') }}</td>
+
+                                <td>
+                                    @if ($cuota->isPagada())
+                                    <span class="badge bg-success">Pagada</span>
+                                    @else
+                                    <span class="badge bg-secondary">Pendiente</span>
+                                    @endif
+                                </td>
+                                <td class="text-end">
+                                    <a href="{{ route('cuotas.edit', $cuota) }}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+
+                                    <a href="{{ route('cuotas.confirmDelete', $cuota) }}" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="7" class="text-center py-3">
+                                    No hay cuotas mensuales.
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="mt-3">
+                {{ $cuotasMensuales->links() }}
+            </div>
+
         </div>
     </div>
-
-    {{-- Paginación --}}
-    <div class="mt-3">
-        {{ $cuotas->links() }}
-    </div>
-</div>
-@endsection
+    @endsection

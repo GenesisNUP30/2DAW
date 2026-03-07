@@ -21,6 +21,7 @@ class Cuota extends Model
         'fecha_emision',
         'importe',
         'fecha_pago',
+        'tipo',
         'notas'
     ];
 
@@ -30,7 +31,7 @@ class Cuota extends Model
      * @var boolean
      */
     public $timestamps = false;
-    
+
     /**
      * Convertir automáticamente los atributos a tipos de datos específicos
      *
@@ -116,4 +117,19 @@ class Cuota extends Model
         return $query->whereNotNull('fecha_pago');
     }
 
+    /**
+     * Scope: cuotas mensuales
+     */
+    public function scopeMensuales($query)
+    {
+        return $query->where('tipo', 'mensual');
+    }
+
+    /**
+     * Scope: cuotas excepcionales
+     */
+    public function scopeExcepcionales($query)
+    {
+        return $query->where('tipo', 'excepcional');
+    }
 }
