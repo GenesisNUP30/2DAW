@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <h1 class="mb-4">
-        <i class="fas fa-money-check-alt"></i> Añadir nueva cuota
+        <i class="fas fa-money-check-alt"></i> Añadir cuota excepcional
     </h1>
 
     {{-- ERRORES --}}

@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:administrador')->group(function () {
 
         // CRUD TAREAS: crear, leer, modificar, eliminar
+        Route::get('/tareas/index', [TareaController::class, 'index'])->name('tareas.index');
         Route::get('/tareas/crear', [TareaController::class, 'create'])->name('tareas.create');
         Route::post('/tareas', [TareaController::class, 'store'])->name('tareas.store');
 
@@ -89,7 +90,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/clientes/{cliente}/alta', [ClienteController::class, 'alta'])->name('clientes.alta');
 
         Route::get('/clientes/{cliente}', [ClienteController::class, 'show'])->name('clientes.show');
-        
     });
 
     Route::middleware('role:administrador')->group(function () {
@@ -116,7 +116,9 @@ Route::middleware('auth')->group(function () {
     /*
     ====== LISTADO PRINCIPAL ======
     */
-    Route::get('/', [TareaController::class, 'index'])->name('tareas.index');
+    Route::get('/', function () {
+        return view('layouts.home');
+    });
     Route::get('/tareas/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
     Route::get('/tareas/{tarea}/descargar', [TareaController::class, 'downloadFile'])->name('tareas.downloadFile');
 });

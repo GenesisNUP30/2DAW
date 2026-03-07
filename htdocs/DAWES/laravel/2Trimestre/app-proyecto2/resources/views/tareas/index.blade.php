@@ -7,7 +7,7 @@
 <div class="container">
 
     <h1 class="mb-4">
-        <i class="fas fa-clipboard-check"></i> Gestor de tareas
+        <i class="fas fa-tasks me-1"></i> Lista de tareas
     </h1>
 
     {{-- Mensaje de éxito --}}

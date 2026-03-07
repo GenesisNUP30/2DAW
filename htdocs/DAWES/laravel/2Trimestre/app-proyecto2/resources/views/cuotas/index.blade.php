@@ -35,6 +35,8 @@
         @endif
     </div>
     TODO: Mejorar la vista de las remesas y las cuotas excepcionales
+
+    
     {{-- Tabla de cuotas --}}
     <div class="card">
         <div class="card-body p-0">
@@ -43,11 +45,11 @@
                     <tr>
                         <th>ID</th>
                         <th>Cliente</th>
+                        <th>Concepto</th>
                         <th>Importe</th>
                         <th>Fecha de emisión</th>
                         <th>Pagada</th>
                         <th>Fecha de pago</th>
-                        <th>Notas</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -56,6 +58,7 @@
                     <tr>
                         <td>{{ $cuota->id }}</td>
                         <td>{{ $cuota->cliente->nombre }}</td>
+                        <td>{{ $cuota->concepto }}</td>
                         <td>{{ number_format($cuota->importe, 2, ',', '.') }} €</td>
                         <td>{{ \Carbon\Carbon::parse($cuota->fecha_emision)->format('d/m/Y') }}</td>
                         <td>
@@ -70,7 +73,6 @@
                             {{ \Carbon\Carbon::parse($cuota->fecha_pago)->format('d/m/Y') }}
                             @endif
                         </td>
-                        <td>{{ $cuota->notas }}</td>
                         <td class="text-end">
                             <a href="{{ route('cuotas.edit', $cuota) }}" class="btn btn-sm btn-warning">
                                 <i class="fas fa-edit"></i> Editar
