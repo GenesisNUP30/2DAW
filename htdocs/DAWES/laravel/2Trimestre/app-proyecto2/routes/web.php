@@ -26,11 +26,10 @@ Route::middleware('auth')->group(function () {
     */
     Route::middleware('role:administrador')->group(function () {
 
-        // PÁGINA DE INICIO
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
         // CRUD TAREAS: crear, leer, modificar, eliminar
-        Route::get('/tareas/index', [TareaController::class, 'index'])->name('tareas.index');
+        Route::get('/tareas', [TareaController::class, 'index'])->name('tareas.index');
         Route::get('/tareas/crear', [TareaController::class, 'create'])->name('tareas.create');
         Route::post('/tareas', [TareaController::class, 'store'])->name('tareas.store');
 
@@ -45,8 +44,7 @@ Route::middleware('auth')->group(function () {
     ====== OPERARIO ======
     */
     Route::middleware(['role:operario'])->group(function () {
-
-        Route::get('/tareas', [TareaController::class, 'index'])->name('tareas.index');
+        Route::get('/tareas/index', [TareaController::class, 'index'])->name('tareas.index');
         Route::get('/tareas/{tarea}/completar', [TareaController::class, 'completeForm'])->name('tareas.completeForm');
         Route::post('/tareas/{tarea}/completar', [TareaController::class, 'complete'])->name('tareas.complete');
     });
@@ -121,7 +119,6 @@ Route::middleware('auth')->group(function () {
     /*
     ====== LISTADO PRINCIPAL ======
     */
-
     Route::get('/tareas/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
     Route::get('/tareas/{tarea}/descargar', [TareaController::class, 'downloadFile'])->name('tareas.downloadFile');
 });

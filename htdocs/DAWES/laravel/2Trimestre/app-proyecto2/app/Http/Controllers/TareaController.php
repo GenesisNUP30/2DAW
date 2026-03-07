@@ -20,7 +20,6 @@ class TareaController extends Controller
      */
     public function index()
     {
-
         $user = Auth::user();
         $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
 

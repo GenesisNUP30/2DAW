@@ -7,6 +7,7 @@ use App\Models\Cuota;
 use App\Models\Tarea;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
