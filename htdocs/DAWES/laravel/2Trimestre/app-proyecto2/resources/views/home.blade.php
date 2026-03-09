@@ -120,7 +120,7 @@
 
         <div class="card-header d-flex justify-content-between align-items-center">
             <i class="fas fa-file-invoice-dollar"></i>
-            Cuotas pendientes
+            Cuotas mensuales y excepcionales pendientes
 
             <span class="badge bg-danger">
                 {{ number_format($importePendiente,2) }} €

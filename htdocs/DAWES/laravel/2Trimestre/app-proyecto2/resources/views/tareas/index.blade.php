@@ -33,7 +33,6 @@
             <table class="table table-striped mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th>ID</th>
                         <th>Cliente</th>
                         <th>Descripción</th>
                         <th>Operario</th>
@@ -45,7 +44,6 @@
                 <tbody>
                     @forelse ($tareas as $tarea)
                     <tr>
-                        <td>{{ $tarea->id }}</td>
                         <td>{{ $tarea->cliente->nombre ?? '-' }}</td>
                         <td>{{ $tarea->descripcion }}</td>
                         <td>{{ $tarea->operario->name ?? '-' }}</td>

@@ -69,7 +69,6 @@ class CuotaController extends Controller
             'fecha_emision' => 'required|date',
             'importe' => 'required|numeric|min:0.01',
             'fecha_pago' => 'nullable|date|after_or_equal:fecha_emision',
-            'tipo' => 'required|in:excepcional',
             'notas' => 'nullable|string|max:255',
         ], [
             'concepto.required' => 'El concepto es obligatorio',
@@ -83,6 +82,7 @@ class CuotaController extends Controller
             'notas.max' => 'Las notas no pueden superar los 255 caracteres',
         ]);
 
+        $validated['tipo'] = 'excepcional';
         Cuota::create($validated);
 
 

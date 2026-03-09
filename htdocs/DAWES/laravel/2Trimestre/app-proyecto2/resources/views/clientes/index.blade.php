@@ -38,7 +38,6 @@
             <table class="table table-striped mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th>ID</th>
                         <th>CIF</th>
                         <th>Nombre</th>
                         <th>Teléfono</th>
@@ -50,7 +49,6 @@
                 <tbody>
                     @forelse ($clientes as $cliente)
                     <tr>
-                        <td>{{ $cliente->id }}</td>
                         <td>{{ $cliente->cif }}</td>
                         <td>{{ $cliente->nombre }}</td>
                         <td>{{ $cliente->telefono }}</td>

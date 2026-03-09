@@ -40,7 +40,6 @@
             <table class="table table-striped mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Correo</th>
                         <th>Teléfono</th>
@@ -52,7 +51,6 @@
                 <tbody>
                     @forelse ($empleados as $empleado)
                     <tr>
-                        <td>{{ $empleado->id }}</td>
                         <td>{{ $empleado->name }}</td>
                         <td>{{ $empleado->email }}</td>
                         <td>{{ $empleado->telefono }}</td>
