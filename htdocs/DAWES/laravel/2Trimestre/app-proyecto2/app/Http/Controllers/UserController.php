@@ -175,22 +175,10 @@ class UserController extends Controller
 
     public function confirmDelete(User $empleado)
     {
-
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
             abort(403);
-        }
-
-        // TODO: Cambiar los mensajes de error para que se muestren cuando confirme la eliminación, no antes
-        if ($empleado->id == $user->id) {
-            return redirect()->route('empleados.index')
-                ->with('error', 'No puedes eliminarte a ti mismo.');
-        }
-
-        if ($empleado->tareasAsignadas()->count() > 0) {
-            return redirect()->route('empleados.index')
-                ->with('error', 'No se puede eliminar este empleado porque tiene tareas asignadas. Asigna sus tareas a otro operario antes de eliminarlo.');
         }
 
         return view('empleados.confirmDelete', compact('empleado'));
@@ -201,12 +189,20 @@ class UserController extends Controller
      */
     public function destroy(User $empleado)
     {
-
-
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
             abort(403);
+        }
+
+        if ($empleado->id == $user->id) {
+            return redirect()->route('empleados.index')
+                ->with('error', 'No puedes eliminarte a ti mismo.');
+        }
+
+        if ($empleado->tareasAsignadas()->count() > 0) {
+            return redirect()->route('empleados.index')
+                ->with('error', 'No se puede eliminar este empleado porque tiene tareas asignadas. Asigna sus tareas a otro operario antes de eliminarlo.');
         }
 
         $empleado->delete();
@@ -215,6 +211,18 @@ class UserController extends Controller
     }
 
     public function confirmBaja(User $empleado)
+    {
+
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        return view('empleados.confirmBaja', compact('empleado'));
+    }
+
+    public function baja(User $empleado)
     {
 
         $user = Auth::user();
@@ -237,19 +245,6 @@ class UserController extends Controller
         if ($empleado->deBaja()) {
             return redirect()->route('empleados.index')
                 ->with('error', 'Este empleado ya está dado de baja.');
-        }
-
-
-        return view('empleados.confirmBaja', compact('empleado'));
-    }
-
-    public function baja(User $empleado)
-    {
-
-        $user = Auth::user();
-
-        if (!$user->isAdmin()) {
-            abort(403);
         }
 
         $empleado->update([
@@ -287,12 +282,6 @@ class UserController extends Controller
 
         if (!$user->isAdmin()) {
             abort(403);
-        }
-
-        // No permitir dar de alta si ya está activo
-        if (!$empleado->isBaja()) {
-            return redirect()->route('empleados.index')
-                ->with('error', 'Este empleado ya está activo.');
         }
 
         $empleado->update([

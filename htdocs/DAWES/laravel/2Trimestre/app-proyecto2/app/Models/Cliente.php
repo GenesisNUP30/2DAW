@@ -90,6 +90,16 @@ class Cliente extends Model
         return $this->fecha_baja === null;
     }
 
+    /**
+     * Relación: Un cliente puede tener muchas cuotas pendientes de pago
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cuotasPendientes()
+    {
+        return $this->cuotas()->where('fecha_pago', null);
+    }
+
     // ==================== SCOPES ====================
     /**
      * Scope: Ordenar clientes por nombre
@@ -122,5 +132,15 @@ class Cliente extends Model
     public function scopeActivos($query)
     {
         return $query->whereNull('fecha_baja');
+    }
+
+    /**
+     * Verificar si el cliente tiene cuotas pendientes de pago
+     * 
+     * @return bool
+     */
+    public function tieneCuotasPendientes(): bool
+    {
+        return $this->cuotasPendientes()->count() > 0;
     }
 }

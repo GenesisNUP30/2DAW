@@ -25,8 +25,8 @@ class ClienteController extends Controller
         }
 
         $clientes = Cliente::ordenadosPorNombre()
-        ->conPais()
-        ->paginate($itemsPorPagina);
+            ->conPais()
+            ->paginate($itemsPorPagina);
         return view('clientes.index', compact('clientes'));
     }
 
@@ -58,7 +58,7 @@ class ClienteController extends Controller
         }
 
         $validated = $request->validate([
-            'cif' => ['required', 'string','unique:clientes,cif', new ValidarCif],
+            'cif' => ['required', 'string', 'unique:clientes,cif', new ValidarCif],
             'nombre' => 'required|string|max:100',
             'telefono' => 'required|string|max:20',
             'correo' => 'required|email|max:100',
@@ -179,15 +179,65 @@ class ClienteController extends Controller
             abort(403);
         }
 
-        if ($cliente->id == $user->id) {
-            return redirect()->route('clientes.index')
-                ->with('error', 'No puedes darte de baja a ti mismo.');
-        }
-
         return view('clientes.confirmBaja', compact('cliente'));
     }
 
-    
+    public function baja(Cliente $cliente)
+    {
+        $user = Auth::user();
+
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        if ($cliente->isBaja()) {
+            return redirect()->route('clientes.index')
+                ->with('error', 'Este cliente ya está dado de baja.');
+        }
+
+        if ($cliente->tieneCuotasPendientes()) {
+            $pendientes = $cliente->cuotas()->where('fecha_pago', null)->count();
+            return redirect()->route('clientes.index')
+                ->with('error', "No se puede dar de baja este cliente porque tiene {$pendientes} cuota(s) pendiente(s) de pago.
+                Debes marcar las cuotas como pagadas o eliminarlas antes.");
+        }
+        $cliente->update([
+            'fecha_baja' => now(),
+        ]);
+
+        return redirect()->route('clientes.index')
+            ->with('success', 'Cliente dado de baja correctamente.');
+    }
+
+    public function confirmAlta(Cliente $cliente)
+    {
+        $user = Auth::user();
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        if ($cliente->isActivo()) {
+            return redirect()->route('clientes.index')
+                ->with('error', 'Este cliente ya está activo.');
+        }
+
+        return view('clientes.confirmAlta', compact('cliente'));
+    }
+
+    public function alta(Cliente $cliente)
+    {
+        $user = Auth::user();
+        if (!$user->isAdmin()) {
+            abort(403);
+        }
+
+        $cliente->update([
+            'fecha_baja' => null,
+        ]);
+
+        return redirect()->route('clientes.index')
+            ->with('success', 'Cliente dado de alta correctamente.');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -196,5 +246,4 @@ class ClienteController extends Controller
     {
         //
     }
-
 }
