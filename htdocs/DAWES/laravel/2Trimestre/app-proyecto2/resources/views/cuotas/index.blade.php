@@ -23,14 +23,14 @@
     @endif
 
     {{-- Botones de acción --}}
-    <div class="d-flex justify-content-between mb-3">
+    <div class=" mb-3">
         {{-- Botón para generar remesa mensual (solo administrador) --}}
         @if (auth()->user()->isAdmin())
-        <a href="{{ route('cuotas.generarRemesa') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-file-invoice"></i> Generar Remesa Mensual
+        <a href="{{ route('cuotas.generarRemesa') }}" class="btn btn-black">
+            <i class="fa-solid fa-circle-plus"></i> Generar Remesa Mensual
         </a>
-        <a href="{{ route('cuotas.create') }}" class="btn btn-success mb-3">
-            <i class="fas fa-file-invoice"></i> Añadir cuota excepcional
+        <a href="{{ route('cuotas.create') }}" class="btn btn-black">
+            <i class="fa-solid fa-circle-plus"></i> Añadir cuota excepcional
         </a>
         @endif
     </div>

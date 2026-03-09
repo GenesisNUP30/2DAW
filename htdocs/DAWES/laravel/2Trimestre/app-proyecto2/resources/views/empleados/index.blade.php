@@ -29,7 +29,7 @@
 
         {{-- Botón crear empleado (solo administrador) --}}
         @if (auth()->user()->isAdmin())
-        <a href="{{ route('empleados.create') }}" class="btn btn-primary mb-3">
+        <a href="{{ route('empleados.create') }}" class="btn btn-black">
             <i class="fas fa-user-plus me-2"></i> Añadir empleado
         </a>
         @endif

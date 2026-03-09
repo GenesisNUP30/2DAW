@@ -26,7 +26,7 @@
     <div class="d-flex justify-content-between mb-3">
         {{-- Botón crear cliente (solo administrador) --}}
         @if (auth()->user()->isAdmin())
-        <a href="{{ route('clientes.create') }}" class="btn btn-primary mb-3">
+        <a href="{{ route('clientes.create') }}" class="btn btn-black">
             <i class="fas fa-user-plus me-2"></i> Añadir cliente
         </a>
         @endif

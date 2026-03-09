@@ -146,11 +146,11 @@
             <li class="list-group-item text-center text-muted">
                 No hay cuotas pendientes
             </li>
-
             @endforelse
-
         </ul>
-
+    </div>
+    <div class="mt-3">
+        {{ $cuotas->links() }}
     </div>
 </div>
 @endsection

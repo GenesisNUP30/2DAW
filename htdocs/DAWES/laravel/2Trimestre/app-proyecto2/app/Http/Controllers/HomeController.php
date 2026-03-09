@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\ConfigAvanzada;
 use App\Models\Cuota;
 use App\Models\Tarea;
 use App\Models\User;
@@ -28,6 +29,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
+        
         $clientesActivos = Cliente::activos()->count();
         $operariosActivos = User::operarios()->activos()->count();
         $tareasPendientes = Tarea::pendientes()->count();
@@ -43,8 +46,7 @@ class HomeController extends Controller
         $cuotas = Cuota::pendientes()
             ->conRelaciones()
             ->ordenadasPorFecha()
-            ->limit(5)
-            ->get();
+            ->paginate($itemsPorPagina, ['*'], 'cuotas');
 
         return view('home', compact(
             'clientesActivos',

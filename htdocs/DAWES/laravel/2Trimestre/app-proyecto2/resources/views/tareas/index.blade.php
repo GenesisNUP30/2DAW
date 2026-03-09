@@ -21,8 +21,8 @@
 
         {{-- Botón crear tarea (solo administrador) --}}
         @if (auth()->user()->isAdmin())
-        <a href="{{ route('tareas.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-file-archive"></i> Crear nueva tarea
+        <a href="{{ route('tareas.create') }}" class="btn btn-black">
+            <i class="fa-solid fa-file-circle-plus"></i> Crear nueva tarea
         </a>
         @endif
     </div>
