@@ -12,7 +12,7 @@
     <div class="alert alert-warning" role="alert">
         <h4>
             <i class="fas fa-exclamation-triangle me-2"></i>
-            ¿Estás seguro de que deseas dar de baja al cliente <span class="text-danger">{{ $cliente->name }}</span>?
+            ¿Estás seguro de que deseas dar de baja al cliente <span class="text-danger">{{ $cliente->nombre }}</span>?
         </h4>
         <br>
         <h5>Esta acción no elimina el cliente, solo lo marca como dado de baja. Se mantendrá su historial.</h5>
@@ -65,7 +65,7 @@
 
             <p>
                 <strong><i class="fas fa-calendar-check me-1"></i> Fecha de alta:</strong>
-                {{ \Carbon\Carbon::parse($cliente->fecha_alta)->format('d/m/Y') }}
+                {{ optional($cliente->fecha_alta)->format('d/m/Y') ?? '-' }}
             </p>
         </div>
     </div>

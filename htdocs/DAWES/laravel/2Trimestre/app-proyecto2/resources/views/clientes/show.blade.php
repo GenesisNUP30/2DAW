@@ -65,14 +65,14 @@
                     <div class="mb-3">
                         <label class="form-label fw-bold"><i class="fas fa-calendar-plus me-1"></i> Fecha de alta</label>
                         <p class="form-control-plaintext">
-                            {{ \Carbon\Carbon::parse($cliente->fecha_alta)->format('d/m/Y') }}
+                            {{ optional($cliente->fecha_alta)->format('d/m/Y') ?? '-' }}
                         </p>
                     </div>
                     @if($cliente->isBaja())
                     <div class="mb-3">
                         <label class="form-label fw-bold text-danger"><i class="fas fa-calendar-times me-1"></i> Fecha de baja</label>
                         <p class="form-control-plaintext text-danger">
-                            {{ $cliente->fecha_baja ? \Carbon\Carbon::parse($cliente->fecha_baja)->format('d/m/Y') : '-' }}
+                            {{ optional($cliente->fecha_baja)->format('d/m/Y') ?? '-' }}
                         </p>
                     </div>
                     @endif
@@ -109,7 +109,7 @@
                             </span>
                             {{ \Illuminate\Support\Str::limit($tarea->descripcion, 50) }}
                             <small class="text-muted d-block mt-1">
-                                <i class="fas fa-calendar me-1"></i> {{ $tarea->fecha_realizacion ? $tarea->fecha_realizacion->format('d/m/Y') : '-' }}
+                                <i class="fas fa-calendar me-1"></i> {{ optional($tarea->fecha_realizacion)->format('d/m/Y') ?? '-' }}
                             </small>
                         </li>
                         @endforeach
@@ -134,7 +134,7 @@
                             </span>
                             {{ $cuota->concepto }} - {{ number_format($cuota->importe, 2, ',', '.') }} €
                             <small class="text-muted d-block mt-1">
-                                <i class="fas fa-calendar me-1"></i> {{ $cuota->fecha_emision ? \Carbon\Carbon::parse($cuota->fecha_emision)->format('d/m/Y') : '-' }}
+                                <i class="fas fa-calendar me-1"></i> {{ optional($cuota->fecha_emision)->format('d/m/Y') ?? '-' }}
                             </small>
                         </li>
                         @endforeach

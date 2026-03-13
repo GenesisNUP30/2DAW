@@ -137,25 +137,6 @@
                             </li>
 
                             @endif
-
-                            @if(Auth::user())
-                            <div class="nav-item">
-                                <a class="nav-link" href="">
-                                    <i class="fas fa-cogs me-2"></i> Configuración
-                                </a>
-                            </div>
-                            @endif
-
-                            <!-- @auth
-                            <li class="nav-item mt-auto">
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="btn btn-link nav-link p-0 text-danger">
-                                        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-                                    </button>
-                                </form>
-                            </li>
-                            @endauth -->
                         </ul>
                     </nav>
                 </aside>

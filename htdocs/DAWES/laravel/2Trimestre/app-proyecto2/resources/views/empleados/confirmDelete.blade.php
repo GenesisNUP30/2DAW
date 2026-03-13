@@ -62,7 +62,7 @@
 
             <p>
                 <strong><i class="fas fa-calendar-check me-1"></i> Fecha de alta:</strong>
-                {{ \Carbon\Carbon::parse($empleado->fecha_alta)->format('d/m/Y') }}
+                {{ optional($empleado->fecha_alta)->format('d/m/Y') ?? '-' }}
             </p>
         </div>
     </div>

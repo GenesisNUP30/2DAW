@@ -47,7 +47,7 @@
 
             <p>
                 <strong><i class="fas fa-calendar-day me-1"></i> Fecha de emisión:</strong>
-                {{ \Carbon\Carbon::parse($cuota->fecha_emision)->format('d/m/Y') }}
+                {{ optional($cuota->fecha_emision)->format('d/m/Y') ?? '-' }}
             </p>
 
             <p>
@@ -57,7 +57,7 @@
 
             <p>
                 <strong><i class="fas fa-hand-holding-usd me-1"></i> Fecha de pago:</strong>
-                {{ \Carbon\Carbon::parse($cuota->fecha_pago)->format('d/m/Y') }}
+                {{ optional($cuota->fecha_pago)->format('d/m/Y') ?? '-' }}
             </p>
 
             <p>

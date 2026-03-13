@@ -32,6 +32,9 @@ class Cliente extends Model
         'pais',
         'moneda',
         'importe_cuota_mensual',
+        'tipo',
+        'fecha_alta',
+        'fecha_baja',
     ];
 
     /**
@@ -48,6 +51,7 @@ class Cliente extends Model
      */
     protected $casts = [
         'importe_cuota_mensual' => 'float',
+        'fecha_alta' => 'date',
     ];
 
     /**

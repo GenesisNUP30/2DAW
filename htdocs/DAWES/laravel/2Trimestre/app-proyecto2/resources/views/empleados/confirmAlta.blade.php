@@ -45,12 +45,12 @@
 
             <p>
                 <strong><i class="fas fa-calendar-check me-1"></i> Fecha de alta:</strong>
-                {{ \Carbon\Carbon::parse($empleado->fecha_alta)->format('d/m/Y') }}
+                {{ optional($empleado->fecha_alta)->format('d/m/Y') ?? '-' }}
             </p>
 
             <p>
                 <strong><i class="fas fa-calendar-times me-1"></i> Fecha de baja:</strong>
-                {{ \Carbon\Carbon::parse($empleado->fecha_baja)->format('d/m/Y') }}
+                {{ optional($empleado->fecha_baja)->format('d/m/Y') ?? '-' }}
             </p>
 
             <p>

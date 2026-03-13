@@ -48,14 +48,13 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'expiry_date' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'expiry_date' => 'datetime',
+        'password' => 'hashed',
+        'fecha_alta' => 'date',
+        'fecha_baja' => 'date',
+    ];
 
     // ==================== MÉTODOS DE ACCESO ====================
 
