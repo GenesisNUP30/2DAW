@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     ====== ADMINISTRADOR ======
     */
     Route::middleware('role:administrador')->group(function () {
-
+        //TODO: Comprobar la ruta otra vez
         Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
         // CRUD TAREAS: crear, leer, modificar, eliminar
