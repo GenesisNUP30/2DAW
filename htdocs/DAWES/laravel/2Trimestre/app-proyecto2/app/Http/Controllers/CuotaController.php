@@ -71,6 +71,8 @@ class CuotaController extends Controller
             'fecha_pago' => 'nullable|date|after_or_equal:fecha_emision',
             'notas' => 'nullable|string|max:255',
         ], [
+            'cliente.required' => 'El cliente es obligatorio',
+            'cliente.exists' => 'El cliente seleccionado no existe',
             'concepto.required' => 'El concepto es obligatorio',
             'concepto.max' => 'El concepto no puede tener más de 50 caracteres',
             'fecha_emision.required' => 'La fecha de emisión es obligatoria',
@@ -173,6 +175,7 @@ class CuotaController extends Controller
             'fecha_pago' => 'nullable|date|after_or_equal:fecha_emision',
             'notas' => 'nullable|string|max:255',
         ], [
+            'cliente.required' => 'El cliente es obligatorio',
             'concepto.required' => 'El concepto es obligatorio',
             'concepto.max' => 'El concepto no puede tener más de 50 caracteres',
             'fecha_emision.required' => 'La fecha de emisión es obligatoria',

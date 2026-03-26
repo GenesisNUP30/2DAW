@@ -70,6 +70,9 @@
             @error('fecha_pago')
             <div class="text-danger mt-1">{{ $message }}</div>
             @enderror
+            <small class="form-text text-muted">
+                Nota: Si no hay fecha de pago, deje el campo vacío
+            </small>
         </div>
 
         {{-- NOTAS --}}

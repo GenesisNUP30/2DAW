@@ -111,28 +111,28 @@
                             
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('tareas.index') }}">
-                                    <i class="fas fa-tasks me-1"></i> Lista de tareas
+                                    <i class="fas fa-tasks me-1"></i> Tareas
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('empleados.index') }}">
-                                    <i class="fas fa-users me-1"></i> Lista de empleados
+                                    <i class="fas fa-users me-1"></i> Empleados
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('clientes.index') }}">
-                                    <i class="fas fa-user-tie"></i> Lista de clientes
+                                    <i class="fas fa-user-tie"></i> Clientes
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('cuotas.index') }}">
-                                    <i class="fas fa-file-invoice-dollar me-1"></i> Lista de cuotas
+                                    <i class="fas fa-file-invoice-dollar me-1"></i> Cuotas
                                 </a>
                             </li>
                             @elseif(Auth::check() && Auth::user()->isOperario())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('tareas.index') }}">
-                                    <i class="fas fa-tasks me-1"></i> Lista de tareas
+                                    <i class="fas fa-tasks me-1"></i> Tareas
                                 </a>
                             </li>
 
