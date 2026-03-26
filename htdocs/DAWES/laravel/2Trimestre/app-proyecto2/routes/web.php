@@ -21,15 +21,21 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
 
+    Route::get('/', function () {
+        if (Auth::user()->isAdmin()) {
+            return redirect()->route('home');
+        }
+        return redirect()->route('tareas.index');
+    });
     /*
     ====== ADMINISTRADOR ======
     */
     Route::middleware('role:administrador')->group(function () {
-
-        Route::get('/', [HomeController::class, 'index'])->name('home');
+        //TODO: Comprobar la ruta otra vez
+        Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
         // CRUD TAREAS: crear, leer, modificar, eliminar
-        Route::get('/tareas', [TareaController::class, 'index'])->name('tareas.index');
+        // Route::get('/tareas', [TareaController::class, 'index'])->name('tareas.index');
         Route::get('/tareas/crear', [TareaController::class, 'create'])->name('tareas.create');
         Route::post('/tareas', [TareaController::class, 'store'])->name('tareas.store');
 
@@ -44,7 +50,7 @@ Route::middleware('auth')->group(function () {
     ====== OPERARIO ======
     */
     Route::middleware(['role:operario'])->group(function () {
-        Route::get('/tareas/index', [TareaController::class, 'index'])->name('tareas.index');
+        // Route::get('/tareas/index', [TareaController::class, 'index'])->name('tareas.index');
         Route::get('/tareas/{tarea}/completar', [TareaController::class, 'completeForm'])->name('tareas.completeForm');
         Route::post('/tareas/{tarea}/completar', [TareaController::class, 'complete'])->name('tareas.complete');
     });
@@ -119,6 +125,7 @@ Route::middleware('auth')->group(function () {
     /*
     ====== LISTADO PRINCIPAL ======
     */
+    Route::get('/tareas', [TareaController::class, 'index'])->name('tareas.index');
     Route::get('/tareas/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
     Route::get('/tareas/{tarea}/descargar', [TareaController::class, 'downloadFile'])->name('tareas.downloadFile');
 });
