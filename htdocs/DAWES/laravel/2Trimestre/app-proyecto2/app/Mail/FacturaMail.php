@@ -4,9 +4,11 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Queue\SerializesModels;
 
 class FacturaMail extends Mailable
@@ -39,7 +41,7 @@ class FacturaMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.factura',
         );
     }
 
@@ -50,6 +52,11 @@ class FacturaMail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        $pdf = PDF::loadView('pdf.factura', ['factura' => $this->factura]);
+
+        return [
+            Attachment::fromData(fn() => $pdf->output(), "Factura_{$this->factura->id}.pdf")
+                ->withMime('application/pdf'),
+        ];
     }
 }
