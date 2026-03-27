@@ -23,8 +23,7 @@ class Cuota extends Model
         'importe',
         'fecha_pago',
         'tipo',
-        'notas',
-        'deleted_at'
+        'notas'
     ];
 
     /**
@@ -43,6 +42,7 @@ class Cuota extends Model
         'fecha_emision' => 'date',
         'importe' => 'float',
         'fecha_pago' => 'date',
+        'deleted_at' => 'datetime',
     ];
 
     /**
@@ -53,6 +53,14 @@ class Cuota extends Model
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
+    }
+
+    /**
+     * Relación: Una cuota tiene una factura (o ninguna)
+     */
+    public function factura()
+    {
+        return $this->hasOne(Factura::class);
     }
 
     // ==================== MÉTODOS DE ACCESO ====================
