@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-02-2026 a las 18:04:54
+-- Tiempo de generación: 27-03-2026 a las 01:08:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,6 +32,16 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `cache`
+--
+
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('laravel-cache-liamjh070@gmail.com|::1', 'i:1;', 1774521471),
+('laravel-cache-liamjh070@gmail.com|::1:timer', 'i:1774521471;', 1774521471),
+('laravel-cache-operario1@gmail.com|::1', 'i:2;', 1774521358),
+('laravel-cache-operario1@gmail.com|::1:timer', 'i:1774521358;', 1774521358);
 
 -- --------------------------------------------------------
 
@@ -70,12 +80,12 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `cif`, `nombre`, `telefono`, `correo`, `cuenta_corriente`, `pais`, `moneda`, `importe_cuota_mensual`, `fecha_alta`, `fecha_baja`) VALUES
-(11, 'A78818549', 'Manuel García', '+34 684 247 233', 'manuelgarcia@gmail.com', NULL, 'ES', 'EUR', NULL, '2026-01-13', NULL),
-(12, 'U56648900', 'Francesco', '986 562 147', 'prueba2@gmail.com', NULL, 'IT', 'EUR', NULL, '2026-01-13', NULL),
-(13, 'X0153310S', 'Camille', '986 562 147', 'prueba5@gmail.com', NULL, 'FR', 'EUR', NULL, '2026-01-13', NULL),
-(14, 'Q6501800D', 'Tiago', '+34 654 874 320', 'prueba2@gmail.com', NULL, 'PT', 'EUR', NULL, '2026-01-14', NULL),
-(15, 'V27619139', 'Viktoria', '123456789', 'viki62@gmail.com', NULL, 'AT', 'EUR', NULL, '2026-01-14', NULL),
-(16, 'A59244095', 'Roos', '959 78 65 01', 'roos.prueba@gmail.com', NULL, 'NL', 'EUR', NULL, '2026-01-14', NULL);
+(11, 'A78818549', 'Manuel García', '+34 684 247 233', 'manuelgarcia@gmail.com', NULL, 'ES', 'EUR', 450.00, '2026-01-13', NULL),
+(12, 'U56648900', 'Francesco', '986 562 147', 'prueba2@gmail.com', NULL, 'IT', 'EUR', 565.00, '2026-01-13', NULL),
+(13, 'X0153310S', 'Camille', '986 562 147', 'prueba5@gmail.com', NULL, 'FR', 'EUR', 850.00, '2026-01-13', NULL),
+(14, 'Q6501800D', 'Tiago', '+34 654 874 320', 'prueba2@gmail.com', NULL, 'PT', 'EUR', 595.50, '2026-01-14', NULL),
+(15, 'V27619139', 'Viktoria', '123456789', 'viki62@gmail.com', NULL, 'AT', 'EUR', 420.10, '2026-01-14', NULL),
+(16, 'A59244095', 'Roos', '959 78 65 01', 'roos.prueba@gmail.com', NULL, 'NL', 'EUR', 450.75, '2026-01-14', NULL);
 
 -- --------------------------------------------------------
 
@@ -113,8 +123,21 @@ CREATE TABLE `cuotas` (
   `importe` decimal(10,2) DEFAULT NULL,
   `pagada` tinyint(1) DEFAULT 0,
   `fecha_pago` date DEFAULT NULL,
+  `tipo` enum('mensual','excepcional') NOT NULL,
   `notas` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `cuotas`
+--
+
+INSERT INTO `cuotas` (`id`, `cliente_id`, `concepto`, `fecha_emision`, `importe`, `pagada`, `fecha_pago`, `tipo`, `notas`) VALUES
+(7, 11, 'Cuota mes de 01/03/2026', '2026-03-01', 450.00, 0, NULL, 'mensual', 'Cuota generada automáticamente'),
+(8, 12, 'Cuota mes de 01/03/2026', '2026-03-01', 565.00, 0, NULL, 'mensual', 'Cuota generada automáticamente'),
+(9, 13, 'Cuota mes de 01/03/2026', '2026-03-01', 850.00, 0, NULL, 'mensual', 'Cuota generada automáticamente'),
+(10, 14, 'Cuota mes de 01/03/2026', '2026-03-01', 595.50, 0, NULL, 'mensual', 'Cuota generada automáticamente'),
+(11, 15, 'Cuota mes de 01/03/2026', '2026-03-01', 420.10, 0, NULL, 'mensual', 'Cuota generada automáticamente'),
+(12, 16, 'Cuota mes de 01/03/2026', '2026-03-01', 450.75, 0, NULL, 'mensual', 'Cuota generada automáticamente');
 
 -- --------------------------------------------------------
 
@@ -467,6 +490,13 @@ CREATE TABLE `password_reset_tokens` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `password_reset_tokens`
+--
+
+INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
+('liamjh070@gmail.com', '$2y$12$HVhNwDxqyB58ScqEaIbA6eBpXTXsxTGRwoCgeMC0mi0Iyj2m.ngm6', '2026-03-26 10:36:57');
+
 -- --------------------------------------------------------
 
 --
@@ -487,7 +517,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('DEzHYjhvOA0lfw5sOAMwB9J84asjoHBxNRVxTgkB', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiOE5SZXJPNjl4S1BkN294eHhucE41V25xaTZrSkprMEhFZGczUHk2eSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjc0OiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy9jbGllbnRlcy8xMyI7czo1OiJyb3V0ZSI7czoxMzoiY2xpZW50ZXMuc2hvdyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzcxMzQ0NTMzO319', 1771347690);
+('a3qRJiyihqmHswX5Ogrr3nml9b8mDPTjs1DvOpFm', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNUV3aUg1YVNqQ2w5SWtyTWRPYWtqMmhTZURMakN2blNoNVhHbjRvQiI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo3MjoiaHR0cDovL2xvY2FsaG9zdC9EQVdFUy9sYXJhdmVsLzJUcmltZXN0cmUvYXBwLXByb3llY3RvMi9wdWJsaWMvZGFzaGJvYXJkIjt9czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Njg6Imh0dHA6Ly9sb2NhbGhvc3QvREFXRVMvbGFyYXZlbC8yVHJpbWVzdHJlL2FwcC1wcm95ZWN0bzIvcHVibGljL2xvZ2luIjtzOjU6InJvdXRlIjtzOjU6ImxvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1774541101),
+('S4r6yuoeQ7pxkMXiNHbuw2VgUIlL87x1x7S7k0Eo', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiT1FsdmFKc3JDN3djaTFYT2hZbmVrbHBCam1NSjcyM2t3c2ZFNEd5RiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjcyOiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy9kYXNoYm9hcmQiO3M6NToicm91dGUiO3M6NDoiaG9tZSI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzc0NTYxOTIwO319', 1774568732),
+('vPhnqGYFcvv3fWteVsEIBI24gY5jF6VEaqp6kJlP', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVDE5V01Bb3FMbENBaXo0ZklJRm1OOEozbE42RVZxZWR2M1BDQW11MyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo2MjoiaHR0cDovL2xvY2FsaG9zdC9EQVdFUy9sYXJhdmVsLzJUcmltZXN0cmUvYXBwLXByb3llY3RvMi9wdWJsaWMiO31zOjk6Il9wcmV2aW91cyI7YToyOntzOjM6InVybCI7czo2ODoiaHR0cDovL2xvY2FsaG9zdC9EQVdFUy9sYXJhdmVsLzJUcmltZXN0cmUvYXBwLXByb3llY3RvMi9wdWJsaWMvbG9naW4iO3M6NToicm91dGUiO3M6NToibG9naW4iO319', 1774549912);
 
 -- --------------------------------------------------------
 
@@ -529,7 +561,9 @@ INSERT INTO `tareas` (`id`, `cliente_id`, `persona_contacto`, `telefono_contacto
 (7, 12, 'jesus reyes', '788 09 87 34', 2, 'Aplicacion 2ª evaluacion laravel', 'jesusr6@gmail.com', NULL, NULL, '21005', '21', 'B', '2026-01-21 12:08:39', '2026-03-05', NULL, NULL, NULL),
 (9, 14, 'juan pérez', '987564201', 2, 'Asignando tareas a operarios', 'AAAAAAA@gmail.com', 'Calle Falsa 123', 'Camas', '41014', '41', 'P', '2026-02-04 22:18:42', '2026-02-23', NULL, NULL, NULL),
 (10, 13, 'Antonio Murillo', '987564201', 4, 'Cambios importantes de Empleados a Users', 'correo@gmail.com', 'Av Santa Marta', 'moguer', '21800', '21', 'P', '2026-02-06 23:18:01', '2026-03-06', NULL, NULL, NULL),
-(11, 12, 'Laura Castillo', '745 200 341', 2, 'Probar validaciones de los campos de la creación de tareas', 'pepe001@gmail.com', 'Calle Vallejo, 3', 'Valverde del Camino', '21600', '21', 'P', '2026-02-13 11:51:59', '2026-04-09', NULL, NULL, NULL);
+(11, 12, 'Laura Castillo', '745 200 341', 2, 'Probar validaciones de los campos de la creación de tareas', 'pepe001@gmail.com', 'Calle Vallejo, 3', 'Valverde del Camino', '21600', '21', 'P', '2026-02-13 11:51:59', '2026-04-09', NULL, NULL, NULL),
+(12, 16, 'Laura Castillo', '875 009 677', 4, 'Probando rutas sin conflictos', 'prueba@gmail.com', 'Calle Plus Ultra, Bloque 3, 1º', 'Huelva', '21005', '21', 'P', '2026-03-26 11:51:05', '2026-03-31', NULL, NULL, NULL),
+(13, 15, 'Magdalena Garcia', '666777222', 4, 'Probar redireccion correcta a home', 'pepe001@gmail.com', NULL, 'Huelva', '21005', '21', 'P', '2026-03-26 11:53:03', '2026-03-30', NULL, NULL, NULL);
 
 --
 -- Disparadores `tareas`
@@ -583,7 +617,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `dni`, `telefono`, `direccion`, `fecha_alta`, `fecha_baja`, `tipo`) VALUES
-(1, 'admin', 'admin123@gmail.com', NULL, '$2y$12$nQ3ZHBePyTTnLERaWUyZBOSClEsWEw3Tdxbt3Y92Q1Bv6xYIFuz0.', '3JiKLNM9iiQwCEoEB4lZpv0rGhPHlngynUXGxpIbCsQNMKjW33Hb3h9tdVxY', '2026-02-06 20:12:19', '2026-02-16 16:22:21', '73504055B', '644789336', 'Calle Galaroza, Bloque 3, 3A', '2026-02-03', NULL, 'administrador'),
+(1, 'admin', 'admin123@gmail.com', NULL, '$2y$12$nQ3ZHBePyTTnLERaWUyZBOSClEsWEw3Tdxbt3Y92Q1Bv6xYIFuz0.', 'KqbDAExoh8Qhb3lN3RpFKxybZpZ62omAkKFvKeR6B3NyyeE5W9HHoy1eISii', '2026-02-06 20:12:19', '2026-02-16 16:22:21', '73504055B', '644789336', 'Calle Galaroza, Bloque 3, 3A', '2026-02-03', NULL, 'administrador'),
 (2, 'operario1', 'operario1@gmail.com', NULL, '$2y$12$bBDoN2HXIqKeeSkZxd4lMeInu6ct7V9GXjLHN5JS/zMFslcymtyRC', NULL, '2026-02-06 20:12:58', '2026-02-13 08:26:01', '70907286B', '778023544', 'Calle San Marino, Puerta 5A', '2026-02-04', NULL, 'operario'),
 (3, 'Daniel', 'daniel04@gmail.com', NULL, '$2y$12$GhhcV09sAdCVKo6iqjLyZuZD8Chv9ys9n37yYGtJ6oxhq8o8F.kNq', NULL, '2026-02-06 21:28:58', '2026-02-06 21:28:58', '21237945K', '730021954', 'Calle Ribera, 34 B', '2026-02-05', NULL, 'operario'),
 (4, 'Prueba Baja', 'prueba000@gmail.com', NULL, '$2y$12$oIXAeUOMgMTpvDvK7kT4Q.osApLGeWVnfKqiTSZh2fwd3eD5MDfEa', NULL, '2026-02-07 17:41:05', '2026-02-07 17:47:54', '82572266N', '123456789', 'Calle Baja', '2026-01-27', NULL, 'operario');
@@ -708,7 +742,7 @@ ALTER TABLE `config_avanzada`
 -- AUTO_INCREMENT de la tabla `cuotas`
 --
 ALTER TABLE `cuotas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -732,7 +766,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
