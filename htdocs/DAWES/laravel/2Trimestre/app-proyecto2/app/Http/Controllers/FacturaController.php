@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Mail\FacturaMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class FacturaController extends Controller
 {
@@ -17,10 +19,19 @@ class FacturaController extends Controller
         }
 
         try {
-            // 2. Enviar el correo
-            Mail::to($factura->cuota->cliente->correo)->send(new FacturaMail($factura));
+            // Generar el PDF
+            $pdf = PDF::loadView('pdf.factura', ['factura' => $factura]);
 
-            // 3. Marcar como enviada (opcional, si tienes ese campo)
+            // Definir nombre y ruta
+            $nombreFichero = "facturas/Factura_{$factura->id}.pdf";
+
+            // Guardar en el disco 'private' (storage/app/private/)
+            Storage::disk('private')->put($nombreFichero, $pdf->output());
+
+            // Enviar el correo
+            Mail::to($factura->cuota->cliente->correo)->queue(new FacturaMail($factura));
+
+            // Marcar como enviada (opcional, si existe ese campo)
             // $factura->update(['enviada' => true]);
 
             return back()->with('success', 'Factura enviada correctamente al cliente.');
