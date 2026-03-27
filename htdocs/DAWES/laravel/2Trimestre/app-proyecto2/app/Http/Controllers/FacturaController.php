@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\FacturaMail;
+use App\Models\Cuota;
+use App\Models\Factura;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -10,13 +12,33 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class FacturaController extends Controller
 {
-    public function enviar($id)
+    /**
+     * Proceso principal: Crea el registro, genera el PDF y lo envía.
+     */
+    public function enviar($cuota_id)
     {
-        $factura = FacturaMail::with('cuota.cliente')->findOrFail($id);
+        // Cargamos la cuota con su cliente
+        $cuota = Cuota::with('cliente')->findOrFail($cuota_id);
+        $cliente = $cuota->cliente;
 
-        if (!$factura->cuota->cliente->correo) {
-            return back()->withErrors('El cliente no tiene email');
+        if (!$cliente->correo) {
+            return back()->with('error', 'El cliente no tiene un correo electrónico configurado.');
         }
+
+        // 1. Generamos un número de factura único (FAC-Año-ID de cuota con ceros)
+        $numero = 'FAC-' . date('Y') . '-' . str_pad($cuota->id, 4, '0', STR_PAD_LEFT);
+
+        // 2. CREAR EL MODELO FACTURA (Congelamos datos legales)
+        $factura = Factura::create([
+            'cuota_id'       => $cuota->id,
+            'numero_factura' => $numero,
+            'cliente_nombre' => $cliente->nombre,
+            'cliente_cif'    => $cliente->cif,
+            'concepto'       => $cuota->concepto,
+            'importe'        => $cuota->importe,
+            'moneda'         => $cliente->moneda ?? 'EUR',
+            'enviada'        => false,
+        ]);
 
         try {
             // Generar el PDF
@@ -28,21 +50,33 @@ class FacturaController extends Controller
             // Guardar en el disco 'private' (storage/app/private/)
             Storage::disk('private')->put($nombreFichero, $pdf->output());
 
+            // Actualizar la ruta en la base de datos
+            $factura->update(['ruta_pdf' => $nombreFichero]);
+
             // Enviar el correo
             Mail::to($factura->cuota->cliente->correo)->queue(new FacturaMail($factura));
 
             // Marcar como enviada (opcional, si existe ese campo)
-            // $factura->update(['enviada' => true]);
+            $factura->update(['enviada' => true]);
 
-            // Guardar la ruta en la BD
-            $factura->ruta_pdf = $nombreFichero;
-            $factura->save();
-
-            return back()->with('success', 'Factura enviada correctamente al cliente.');
+            return back()->with('success', 'La Factura {$numero} ha sido generada y enviada correctamente al cliente.');
         } catch (\Exception $e) {
             return back()->with('error', 'Error al enviar el correo: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Permite al administrador descargar el PDF generado.
+     */
+    public function descargar(Factura $factura)
+    {
+        if (!$factura->ruta_pdf || !Storage::disk('private')->exists($factura->ruta_pdf)) {
+            abort(404, 'El archivo PDF no se encuentra en el servidor.');
+        }
+
+        return Storage::disk('private')->download($factura->ruta_pdf, "{$factura->numero_factura}.pdf");
+    }
+
     /**
      * Display a listing of the resource.
      */
