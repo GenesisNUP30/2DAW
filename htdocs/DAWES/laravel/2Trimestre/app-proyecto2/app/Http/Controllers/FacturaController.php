@@ -34,6 +34,10 @@ class FacturaController extends Controller
             // Marcar como enviada (opcional, si existe ese campo)
             // $factura->update(['enviada' => true]);
 
+            // Guardar la ruta en la BD
+            $factura->ruta_pdf = $nombreFichero;
+            $factura->save();
+
             return back()->with('success', 'Factura enviada correctamente al cliente.');
         } catch (\Exception $e) {
             return back()->with('error', 'Error al enviar el correo: ' . $e->getMessage());
