@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cuota extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * Campos que se guardarán en la base de datos cuando se
@@ -41,6 +42,7 @@ class Cuota extends Model
         'fecha_emision' => 'date',
         'importe' => 'float',
         'fecha_pago' => 'date',
+        'deleted_at' => 'datetime',
     ];
 
     /**
@@ -51,6 +53,14 @@ class Cuota extends Model
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
+    }
+
+    /**
+     * Relación: Una cuota tiene una factura (o ninguna)
+     */
+    public function factura()
+    {
+        return $this->hasOne(Factura::class);
     }
 
     // ==================== MÉTODOS DE ACCESO ====================

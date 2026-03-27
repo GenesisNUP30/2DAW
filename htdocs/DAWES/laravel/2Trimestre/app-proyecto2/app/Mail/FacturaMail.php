@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Attachment;
+use Illuminate\Queue\SerializesModels;
+
+class FacturaMail extends Mailable
+{
+    public $factura;
+
+    use Queueable, SerializesModels;
+
+    /**
+     * Create a new message instance.
+     */
+    public function __construct($factura)
+    {
+        $this->factura = $factura;
+    }
+
+    /**
+     * Get the message envelope.
+     */
+    public function envelope(): Envelope
+    {
+        return new Envelope(
+            subject: 'Factura de servicio #' . $this->factura->id,
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     */
+    public function content(): Content
+    {
+        return new Content(
+            view: 'emails.factura',
+        );
+    }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     */
+    public function attachments(): array
+    {
+        $pdf = PDF::loadView('pdf.factura', ['factura' => $this->factura]);
+
+        return [
+            Attachment::fromData(fn() => $pdf->output(), "Factura_{$this->factura->id}.pdf")
+                ->withMime('application/pdf'),
+        ];
+    }
+}

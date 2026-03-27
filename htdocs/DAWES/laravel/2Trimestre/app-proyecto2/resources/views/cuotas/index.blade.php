@@ -89,6 +89,9 @@
                                     <a href="{{ route('cuotas.confirmDelete', $cuota) }}" class="btn btn-sm btn-danger">
                                         <i class="fas fa-trash"></i> Eliminar
                                     </a>
+                                    <a href="{{ route('facturas.confirmar', $cuota->id) }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fa-solid fa-file-invoice"></i> Factura
+                                    </a>
                                 </td>
                             </tr>
                             @empty
