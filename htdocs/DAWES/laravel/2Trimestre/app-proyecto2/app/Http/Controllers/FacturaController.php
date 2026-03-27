@@ -72,6 +72,7 @@ class FacturaController extends Controller
             Mail::to($factura->cuota->cliente->correo)->send(new FacturaMail($factura));
             $factura->update(['enviada' => true]);
 
+            //TODO: No aparece el mensaje de exito (revisar vista)
             return back()->with('success', 'Correo enviado correctamente.');
         } catch (\Exception $e) {
             return back()->with('error', 'Error: ' . $e->getMessage());
