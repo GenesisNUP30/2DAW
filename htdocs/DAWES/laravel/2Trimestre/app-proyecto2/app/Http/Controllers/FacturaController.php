@@ -61,12 +61,29 @@ class FacturaController extends Controller
         }
     }
 
+    // Solo enviar (para facturas ya generadas)
+    public function enviar(Factura $factura)
+    {
+        if (!$factura->cuota->cliente->correo) {
+            return back()->with('error', 'El cliente no tiene correo.');
+        }
+
+        try {
+            Mail::to($factura->cuota->cliente->correo)->send(new FacturaMail($factura));
+            $factura->update(['enviada' => true]);
+
+            return back()->with('success', 'Correo enviado correctamente.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error: ' . $e->getMessage());
+        }
+    }
+
     /**
      * Permite al administrador descargar el PDF generado.
      */
     public function descargar(Factura $factura)
     {
-        if (!$factura->ruta_pdf || !Storage::disk('private')->exists($factura->ruta_pdf)) {
+        if (!Storage::disk('private')->exists($factura->ruta_pdf)) {
             abort(404, 'El archivo PDF no se encuentra en el servidor.');
         }
 
