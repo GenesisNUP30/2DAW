@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cuota extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * Campos que se guardarán en la base de datos cuando se
@@ -22,7 +23,8 @@ class Cuota extends Model
         'importe',
         'fecha_pago',
         'tipo',
-        'notas'
+        'notas',
+        'deleted_at'
     ];
 
     /**
