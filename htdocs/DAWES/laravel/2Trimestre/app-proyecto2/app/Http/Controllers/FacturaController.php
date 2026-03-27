@@ -12,20 +12,21 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class FacturaController extends Controller
 {
-    /**
-     * Proceso principal: Crea el registro, genera el PDF y lo envía.
-     */
-    public function enviar($cuota_id)
+    // PASO 1: Vista previa antes de crear nada
+    public function confirmar($cuota_id)
+    {
+        $cuota = Cuota::with('cliente')->findOrFail($cuota_id);
+        return view('facturas.confirmar', compact('cuota'));
+    }
+
+    // Crear registro y guardar PDF físicamente
+    public function generar(Request $request, $cuota_id)
     {
         // Cargamos la cuota con su cliente
         $cuota = Cuota::with('cliente')->findOrFail($cuota_id);
         $cliente = $cuota->cliente;
 
-        if (!$cliente->correo) {
-            return back()->with('error', 'El cliente no tiene un correo electrónico configurado.');
-        }
-
-        // 1. Generamos un número de factura único (FAC-Año-ID de cuota con ceros)
+        // Generamos un número de factura único (FAC-Año-ID de cuota con ceros)
         $numero = 'FAC-' . date('Y') . '-' . str_pad($cuota->id, 4, '0', STR_PAD_LEFT);
 
         // 2. CREAR EL MODELO FACTURA (Congelamos datos legales)
@@ -53,13 +54,8 @@ class FacturaController extends Controller
             // Actualizar la ruta en la base de datos
             $factura->update(['ruta_pdf' => $nombreFichero]);
 
-            // Enviar el correo
-            Mail::to($factura->cuota->cliente->correo)->queue(new FacturaMail($factura));
-
-            // Marcar como enviada (opcional, si existe ese campo)
-            $factura->update(['enviada' => true]);
-
-            return back()->with('success', 'La Factura {$numero} ha sido generada y enviada correctamente al cliente.');
+            return redirect()->route('facturas.confirmar', $cuota->id)
+                ->with('success', 'Factura generada con éxito. Ahora puede enviarla.');
         } catch (\Exception $e) {
             return back()->with('error', 'Error al enviar el correo: ' . $e->getMessage());
         }

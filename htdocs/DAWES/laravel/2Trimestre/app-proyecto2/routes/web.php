@@ -75,14 +75,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/empleados/{empleado}/alta', [UserController::class, 'confirmAlta'])->name('empleados.confirmAlta');
         Route::post('/empleados/{empleado}/alta', [UserController::class, 'alta'])->name('empleados.alta');
 
-
-        // CUOTAS
-        Route::resource('/cuotas', CuotaController::class)->except(['show']);
-
-        // FACTURAS
-        Route::get('/facturas/{cuota}/crear', [FacturaController::class, 'create'])->name('facturas.create');
-        Route::get('/facturas/{factura}/pdf', [FacturaController::class, 'pdf'])->name('facturas.pdf');
-        Route::post('/facturas/{factura}/enviar', [FacturaController::class, 'enviar'])->name('facturas.enviar');
     });
 
     Route::middleware('role:administrador')->group(function () {
@@ -114,10 +106,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/cuotas/{cuota}/eliminar', [CuotaController::class, 'confirmDelete'])->name('cuotas.confirmDelete');
         Route::delete('/cuotas/{cuota}', [CuotaController::class, 'destroy'])->name('cuotas.destroy');
-
-        Route::get('/cuotas/enviar/{cuota_id}', [FacturaController::class, 'enviar'])->name('facturas.enviar');
-        Route::get('/facturas/descargar/{factura}', [FacturaController::class, 'descargar'])->name('facturas.descargar');
     });
+    
 
     /*
     ====== PERFIL DE USUARIO ======
