@@ -114,6 +114,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/cuotas/{cuota}/eliminar', [CuotaController::class, 'confirmDelete'])->name('cuotas.confirmDelete');
         Route::delete('/cuotas/{cuota}', [CuotaController::class, 'destroy'])->name('cuotas.destroy');
+
+        Route::get('/cuotas/enviar/{cuota_id}', [FacturaController::class, 'enviar'])->name('facturas.enviar');
+        Route::get('/facturas/descargar/{factura}', [FacturaController::class, 'descargar'])->name('facturas.descargar');
     });
 
     /*
