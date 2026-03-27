@@ -74,7 +74,6 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/empleados/{empleado}/alta', [UserController::class, 'confirmAlta'])->name('empleados.confirmAlta');
         Route::post('/empleados/{empleado}/alta', [UserController::class, 'alta'])->name('empleados.alta');
-
     });
 
     Route::middleware('role:administrador')->group(function () {
@@ -107,7 +106,30 @@ Route::middleware('auth')->group(function () {
         Route::get('/cuotas/{cuota}/eliminar', [CuotaController::class, 'confirmDelete'])->name('cuotas.confirmDelete');
         Route::delete('/cuotas/{cuota}', [CuotaController::class, 'destroy'])->name('cuotas.destroy');
     });
-    
+
+    /*
+|--------------------------------------------------------------------------
+| ADMINISTRACIÓN DE FACTURAS
+|--------------------------------------------------------------------------
+*/
+    Route::middleware('role:administrador')->group(function () {
+
+        // 1. Vista de gestión/confirmación (pasamos el ID de la cuota)
+        Route::get('/facturas/gestionar/{cuota}', [FacturaController::class, 'confirmar'])
+            ->name('facturas.confirmar');
+
+        // 2. Acción de generar el registro y el PDF físico
+        Route::post('/facturas/generar/{cuota}', [FacturaController::class, 'generar'])
+            ->name('facturas.generar');
+
+        // 3. Descarga del PDF (usamos el ID de la factura ya creada)
+        Route::get('/facturas/descargar/{factura}', [FacturaController::class, 'descargar'])
+            ->name('facturas.descargar');
+
+        // 4. Envío por email (POST por seguridad al disparar correos)
+        Route::post('/facturas/enviar/{factura}', [FacturaController::class, 'enviar'])
+            ->name('facturas.enviar');
+    });
 
     /*
     ====== PERFIL DE USUARIO ======
