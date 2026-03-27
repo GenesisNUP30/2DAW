@@ -2,8 +2,23 @@
 
 @section('content')
 <div class="container">
-    <h1><i class="fa-solid fa-file-invoice"></i> Gestión de Factura</h1>
+
+    {{-- Mensaje de éxito --}}
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    {{-- MENSAJE DE ERROR --}}
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
     
+    <h1><i class="fa-solid fa-file-invoice"></i> Gestión de Factura</h1>
+
     <div class="card mt-4">
         <div class="card-header bg-dark text-white">
             Datos de la Cuota #{{ $cuota->id }}
@@ -18,27 +33,27 @@
             @php $factura = \App\Models\Factura::where('cuota_id', $cuota->id)->first(); @endphp
 
             @if(!$factura)
-                {{-- Si no existe factura, botón para crearla --}}
-                <form action="{{ route('facturas.generar', $cuota->id) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa-solid fa-gear"></i> Generar Registro y PDF
-                    </button>
-                </form>
+            {{-- Si no existe factura, botón para crearla --}}
+            <form action="{{ route('facturas.generar', $cuota->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-gear"></i> Generar Registro y PDF
+                </button>
+            </form>
             @else
-                {{-- Si ya existe, botones de descargar y enviar --}}
-                <div class="alert alert-info">Esta cuota ya tiene una factura generada ({{ $factura->numero_factura }})</div>
-                
-                <a href="{{ route('facturas.descargar', $factura->id) }}" class="btn btn-secondary">
-                    <i class="fa-solid fa-download"></i> Descargar PDF
-                </a>
+            {{-- Si ya existe, botones de descargar y enviar --}}
+            <div class="alert alert-info">Esta cuota ya tiene una factura generada ({{ $factura->numero_factura }})</div>
 
-                <form action="{{ route('facturas.enviar', $factura->id) }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-success">
-                        <i class="fa-solid fa-paper-plane"></i> Enviar por Email
-                    </button>
-                </form>
+            <a href="{{ route('facturas.descargar', $factura->id) }}" class="btn btn-secondary">
+                <i class="fa-solid fa-download"></i> Descargar PDF
+            </a>
+
+            <form action="{{ route('facturas.enviar', $factura->id) }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-success">
+                    <i class="fa-solid fa-paper-plane"></i> Enviar por Email
+                </button>
+            </form>
             @endif
         </div>
     </div>
