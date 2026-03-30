@@ -25,7 +25,6 @@ class Tarea extends Model
      */
     protected $fillable = [
         'cliente_id',
-        'operario_id',
         'persona_contacto',
         'telefono_contacto',
         'operario_id',
