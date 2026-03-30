@@ -8,7 +8,7 @@
     {{-- Cabecera --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold m-0">
-            <i class="fas fa-tasks text-primary me-2"></i>Listado de tareas
+            <i class="fas fa-tasks me-2"></i>Listado de tareas
         </h2>
         @if(auth()->user()->isAdmin())
         <a href="{{ route('tareas.create') }}" class="btn btn-dark btn-sm px-3">
