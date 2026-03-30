@@ -14,16 +14,21 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
+        $estado = $request->get('estado', '');
 
-        if (!$user->isAdmin()) {
-            abort(403);
+        $query = User::excluyendo($user->id)->ordenadosPorNombre();
+
+        if ($estado === 'activo') {
+            $query->activos();
+        } elseif ($estado === 'baja') {
+            $query->deBaja();
         }
 
-        $empleados = User::excluyendo($user->id)->paginate(3);
+        $empleados = $query->paginate(5)->withQueryString();
+
         return view('empleados.index', compact('empleados'));
     }
 
