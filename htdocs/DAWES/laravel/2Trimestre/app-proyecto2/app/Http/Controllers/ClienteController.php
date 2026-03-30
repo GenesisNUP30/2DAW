@@ -15,18 +15,39 @@ class ClienteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
 
         if (!$user->isAdmin()) {
             abort(403);
         }
 
-        $clientes = Cliente::ordenadosPorNombre()
-            ->conPais()
-            ->paginate(3);
+        // Capturamos los filtros
+        $estado = $request->get('estado'); // 'activos', 'baja' o null
+        $pago = $request->get('pago');     // 'pendiente' o null
+
+        $query = Cliente::ordenadosPorNombre()
+            ->conPais();
+
+        // Filtro por Estado
+        if ($estado === 'activos') {
+            $query->activos();
+        } elseif ($estado === 'baja') {
+            $query->whereNotNull('fecha_baja');
+        }
+
+        // Filtro por Cuotas Pendientes
+        if ($pago === 'pendiente') {
+            // Usamos whereHas para filtrar clientes que tengan al menos una cuota sin fecha_pago
+            $query->whereHas('cuotas', function ($q) {
+                $q->whereNull('fecha_pago');
+            });
+        }
+
+        // withQueryString() mantiene los filtros al cambiar de página
+        $clientes = $query->paginate(3)->withQueryString();
+
         return view('clientes.index', compact('clientes'));
     }
 
