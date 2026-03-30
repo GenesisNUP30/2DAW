@@ -237,7 +237,7 @@ class TareaController extends Controller
             'anotaciones_anteriores',
         ));
 
-        return redirect('/')->with('success', 'Tarea creada correctamente');
+        return redirect()->route('tareas.index')->with('success', 'Tarea creada correctamente');
     }
 
 
@@ -367,7 +367,7 @@ class TareaController extends Controller
             'fecha_realizacion',
             'anotaciones_anteriores',
         ));
-        return redirect('/')->with('success', 'Tarea actualizada correctamente');
+        return redirect()->route('tareas.index')->with('success', 'Tarea actualizada correctamente');
     }
 
     /**

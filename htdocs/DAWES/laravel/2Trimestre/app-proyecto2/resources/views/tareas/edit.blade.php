@@ -9,17 +9,6 @@
         <i class="fas fa-edit me-2"></i> Editar tarea ID: {{ $tarea->id }}
     </h1>
 
-    <!-- {{-- ERRORES --}}
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif -->
-
     <form action="{{ route('tareas.update', $tarea) }}" method="POST">
         @csrf
         @method('PUT')
