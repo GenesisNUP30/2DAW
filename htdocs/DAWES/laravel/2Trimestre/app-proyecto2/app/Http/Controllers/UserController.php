@@ -247,7 +247,7 @@ class UserController extends Controller
         }
 
         // No permitir dar de baja si ya está dado de baja
-        if ($empleado->deBaja()) {
+        if ($empleado->isBaja()) {
             return redirect()->route('empleados.index')
                 ->with('error', 'Este empleado ya está dado de baja.');
         }
@@ -269,7 +269,7 @@ class UserController extends Controller
             abort(403);
         }
 
-        if (!$empleado->Baja()) {
+        if (!$empleado->isBaja()) {
             return redirect()->route('empleados.index')
                 ->with('error', 'Este empleado ya está activo.');
         }

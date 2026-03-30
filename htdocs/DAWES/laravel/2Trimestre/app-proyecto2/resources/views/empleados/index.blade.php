@@ -87,7 +87,7 @@
                                     {{ $empleado->name }}
                                 </div>
                                 <div style="font-size:11px;color:#9ca3af;">
-                                    Última sesión: {{ $empleado->ultimaSesion() }}
+                                    Última sesión: {{ Auth::user()->ultimaSesion() }}
                                 </div>
                             </div>
                         </div>
