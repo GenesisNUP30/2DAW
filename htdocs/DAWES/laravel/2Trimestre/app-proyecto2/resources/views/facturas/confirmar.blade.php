@@ -16,18 +16,18 @@
         {{ session('error') }}
     </div>
     @endif
-    
+
     <h1><i class="fa-solid fa-file-invoice"></i> Gestión de Factura</h1>
 
     <div class="card mt-4">
         <div class="card-header bg-dark text-white">
-            Datos de la Cuota #{{ $cuota->id }}
+            Datos de la Cuota Nº{{ $cuota->id }}
         </div>
         <div class="card-body">
             <p><strong>Cliente:</strong> {{ $cuota->cliente->nombre }}</p>
             <p><strong>Concepto:</strong> {{ $cuota->concepto }}</p>
             <p><strong>Importe:</strong> {{ $cuota->importe }} {{ $cuota->cliente->moneda }}</p>
-
+            <p><strong>Fecha de Emisión:</strong> {{ $cuota->fecha_emision->format('d/m/Y') }}</p>
             <hr>
 
             @php $factura = \App\Models\Factura::where('cuota_id', $cuota->id)->first(); @endphp
