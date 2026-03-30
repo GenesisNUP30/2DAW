@@ -55,9 +55,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/tareas/{tarea}/completar', [TareaController::class, 'complete'])->name('tareas.complete');
     });
 
-
-    Route::middleware('role:administrador')->group(function () {
-        // EMPLEADOS
+    /*
+    ====== EMPLEADOS ======
+    */
+    Route::middleware('role:administrador')->group(function () { 
         Route::get('/empleados', [UserController::class, 'index'])->name('empleados.index');
 
         Route::get('/empleados/crear', [UserController::class, 'create'])->name('empleados.create');
