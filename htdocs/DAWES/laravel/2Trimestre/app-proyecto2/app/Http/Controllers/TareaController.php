@@ -583,7 +583,7 @@ class TareaController extends Controller
             'poblacion'         => $request->poblacion,
             'codigo_postal'     => $request->codigo_postal,
             'provincia'         => $request->provincia,
-            'estado'            => 'P',
+            'estado'            => $request->estado ?? 'P',
             'fecha_realizacion' => $request->fecha_realizacion,
             'anotaciones_anteriores' => $request->anotaciones_anteriores,
         ]);
