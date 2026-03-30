@@ -29,8 +29,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
-        
         $clientesActivos = Cliente::activos()->count();
         $operariosActivos = User::operarios()->activos()->count();
         $tareasPendientes = Tarea::pendientes()->count();
@@ -46,7 +44,13 @@ class HomeController extends Controller
         $cuotas = Cuota::pendientes()
             ->conRelaciones()
             ->ordenadasPorFecha()
-            ->paginate(3, ['*'], 'cuotas');
+            ->limit(3)
+            ->get();
+
+        $incidenciasRecientes = Tarea::conRelaciones()
+            ->incidenciasSinAsignar()
+            ->limit(3)
+            ->get();
 
         return view('home', compact(
             'clientesActivos',
@@ -55,7 +59,8 @@ class HomeController extends Controller
             'cuotasPendientes',
             'tareasProximas',
             'cuotas',
-            'importePendiente'
+            'importePendiente',
+            'incidenciasRecientes'
         ));
     }
 }
