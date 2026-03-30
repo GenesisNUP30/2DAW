@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('titulo', 'Lista de empleados')
+@section('titulo', 'Listado de empleados')
 
 @section('content')
 <div class="container py-3">
@@ -8,7 +8,7 @@
     {{-- Cabecera --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold m-0">
-            <i class="fas fa-users text-primary me-2"></i>Lista de empleados
+            <i class="fas fa-users text-primary me-2"></i>Listado de empleados
         </h2>
         @if(auth()->user()->isAdmin())
         <a href="{{ route('empleados.create') }}" class="btn btn-dark btn-sm px-3">
