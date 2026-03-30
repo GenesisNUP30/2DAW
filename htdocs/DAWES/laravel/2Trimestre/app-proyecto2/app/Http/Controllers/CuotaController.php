@@ -211,7 +211,7 @@ class CuotaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    //TODO: No eliminar, ahora usar SoftDeletes para concordar con facturas
+    
     public function destroy(Cuota $cuota)
     {
         $user = Auth::user();
