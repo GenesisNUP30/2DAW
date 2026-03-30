@@ -533,14 +533,37 @@ class TareaController extends Controller
         $request->validate([
             'persona_contacto' => 'required|string|max:100',
             'telefono_contacto' => 'required|string|max:20',
-            'descripcion' => 'required|string|min:10',
+            'descripcion' => 'required|string|min:1',
             'correo_contacto' => 'required|email|max:100',
-            'direccion' => 'required|string|max:200',
+            'direccion' => 'required|string|max:100',
             'poblacion' => 'required|string|max:100',
             'codigo_postal' => 'required|regex:/^\d{5}$/',
             'provincia' => 'required|in:' . implode(',', array_keys($this->provincias())),
+            'estado' => 'required|in:B,P,R,C',
             'fecha_realizacion' => 'required|date|after_or_equal:today',
             'anotaciones_anteriores' => 'nullable|string',
+        ], [
+            'persona_contacto.required' => 'La persona de contacto es obligatoria',
+            'persona_contacto.max' => 'La persona de contacto no puede tener más de 100 caracteres',
+            'telefono_contacto.required' => 'El teléfono de contacto es obligatorio',
+            'telefono_contacto.max' => 'El teléfono de contacto no puede tener más de 20 caracteres',
+            'descripcion.required' => 'La descripción es obligatoria',
+            'descripcion.min' => 'La descripción debe tener al menos 1 caracter',
+            'descripcion.string' => 'La descripción debe ser un texto válido',
+            'correo_contacto.required' => 'El correo electrónico es obligatorio',
+            'correo_contacto.email' => 'El correo electrónico no es válido',
+            'correo_contacto.max' => 'El correo electrónico no puede tener más de 100 caracteres',
+            'direccion.required' => 'La dirección es obligatoria',
+            'direccion.max' => 'La dirección no puede tener más de 100 caracteres',
+            'poblacion.required' => 'La población es obligatoria',
+            'poblacion.max' => 'La población no puede tener más de 100 caracteres',
+            'codigo_postal.required' => 'El código postal es obligatorio',
+            'codigo_postal.regex' => 'El código postal debe tener exactamente 5 dígitos.',
+            'provincia.required' => 'La provincia es obligatoria',
+            'fecha_realizacion.required' => 'La fecha de realización es obligatoria',
+            'fecha_realizacion.after_or_equal' => 'La fecha de realización debe ser posterior o igual a la fecha actual',
+            'estado.required' => 'El estado es obligatorio',
+            'estado.in' => 'El estado seleccionado no es válido',
         ]);
 
         // Validar que la provincia corresponda con el código postal
@@ -551,7 +574,7 @@ class TareaController extends Controller
         // Asignar automáticamente el cliente_id encontrado y dejar operario_id como null
         Tarea::create([
             'cliente_id'        => $cliente->id,
-            'operario_id'       => null, 
+            'operario_id'       => null,
             'persona_contacto'  => $request->persona_contacto,
             'telefono_contacto' => $request->telefono_contacto,
             'descripcion'       => $request->descripcion,
@@ -560,7 +583,7 @@ class TareaController extends Controller
             'poblacion'         => $request->poblacion,
             'codigo_postal'     => $request->codigo_postal,
             'provincia'         => $request->provincia,
-            'estado'            => 'P', 
+            'estado'            => 'P',
             'fecha_realizacion' => $request->fecha_realizacion,
             'anotaciones_anteriores' => $request->anotaciones_anteriores,
         ]);

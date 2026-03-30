@@ -15,7 +15,7 @@
                     <i class="fas fa-user-check me-2"></i> Verificación de Identidad
                 </div>
                 <div class="card-body bg-light">
-                    <p class="small text-muted">Para garantizar su identidad, introduzca sus datos de registro:</p>
+                    <p class=" text-muted">Para garantizar su identidad, primero introduzca sus datos de registro:</p>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">CIF del Cliente</label>
@@ -53,44 +53,64 @@
 
                             {{-- DESCRIPCIÓN --}}
                             <div class="col-12 mb-3">
-                                <label class="form-label">Descripción de la avería</label>
-                                <textarea name="description" class="form-control" rows="3">{{ old('descripcion') }}</textarea>
+                                <label class="form-label">Descripción de la incidencia</label>
+                                <textarea name="descripcion" class="form-control" rows="3">{{ old('descripcion') }}</textarea>
                                 @error('descripcion') <div class="text-danger small">{{ $message }}</div> @enderror
                             </div>
 
-                            {{-- CORREO Y DIRECCIÓN --}}
+                            {{-- CORREO  --}}
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Correo electrónico</label>
                                 <input type="email" name="correo_contacto" class="form-control" value="{{ old('correo_contacto') }}">
+                                @error('correo_contacto') <div class="text-danger small">{{ $message }}</div> @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Dirección exacta</label>
+                                <label class="form-label">Dirección</label>
                                 <input type="text" name="direccion" class="form-control" value="{{ old('direccion') }}">
+                                @error('direccion') <div class="text-danger small">{{ $message }}</div> @enderror
                             </div>
 
-                            {{-- UBICACIÓN --}}
+                            {{-- DIRECCIÓN --}}
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Población</label>
                                 <input type="text" name="poblacion" class="form-control" value="{{ old('poblacion') }}">
+                                @error('poblacion') <div class="text-danger small">{{ $message }}</div> @enderror
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Código postal</label>
                                 <input type="text" name="codigo_postal" class="form-control" value="{{ old('codigo_postal') }}">
+                                @error('codigo_postal') <div class="text-danger small">{{ $message }}</div> @enderror
                             </div>
+
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Provincia</label>
                                 <select name="provincia" class="form-select">
                                     <option value="">-- Seleccione --</option>
                                     @foreach ($provincias as $codigo => $nombre)
-                                        <option value="{{ $codigo }}" {{ old('provincia') == $codigo ? 'selected' : '' }}>{{ $nombre }}</option>
+                                    <option value="{{ $codigo }}" {{ old('provincia') == $codigo ? 'selected' : '' }}>{{ $nombre }}</option>
                                     @endforeach
                                 </select>
+                                @error('provincia') <div class="text-danger small">{{ $message }}</div> @enderror
+                            </div>
+
+                            {{-- ESTADO --}}
+                            <div class="mb-3">
+                                <label class="form-label">Estado</label>
+                                <select name="estado" class="form-select">
+                                    <option value="">-- Elija un estado --</option>
+                                    <option value="B" {{ old('B') == 'B' ? 'selected' : ''}}>Esperando a ser aprobada</option>
+                                    <option value="P" {{ old('P') == 'P' ? 'selected' : ''}}>Pendiente</option>
+                                </select>
+                                @error('estado')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             {{-- FECHA --}}
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Fecha preferente de realización</label>
                                 <input type="date" name="fecha_realizacion" class="form-control" value="{{ old('fecha_realizacion') }}">
+                                @error('fecha_realizacion') <div class="text-danger small">{{ $message }}</div> @enderror
                             </div>
 
                             {{-- ANOTACIONES --}}
@@ -103,7 +123,7 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="{{ route('login') }}" class="btn btn-secondary">Volver al Login</a>
                             <button type="submit" class="btn btn-success px-5">
-                                <i class="fas fa-paper-plane me-2"></i>Enviar Incidencia
+                                <i class="fas fa-save me-2"></i>Registrar Incidencia
                             </button>
                         </div>
                     </div>
