@@ -508,7 +508,7 @@ class TareaController extends Controller
     public function createFromCliente()
     {
         // No verificamos la autenticacion porque es para clientes no logueados
-        return view('tareas.create_cliente', [
+        return view('incidencias.create', [
             'provincias' => $this->provincias(),
         ]);
     }
