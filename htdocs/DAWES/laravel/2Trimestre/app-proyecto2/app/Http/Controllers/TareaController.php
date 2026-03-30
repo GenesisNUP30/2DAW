@@ -518,16 +518,24 @@ class TareaController extends Controller
      */
     public function storeFromCliente(Request $request)
     {
-        // Validar si el cliente existe con ese CIF y ese teléfono
-        $cliente = Cliente::where('cif', $request->cif)
-            ->where('telefono', $request->telefono_cliente)
-            ->first();
+        $clientePorCif = Cliente::where('cif', $request->cif)->first();
 
-        if (!$cliente) {
+        // Comprobar si existe algun cliente con ese CIF
+        if (!$clientePorCif) {
             return back()
-                ->withErrors(['identidad' => 'Los datos de cliente (CIF/Teléfono) no coinciden con nuestros registros.'])
+                ->withErrors(['cif' => 'El CIF introducido no figura en nuestros registros.'])
                 ->withInput();
         }
+
+        // Si el CIF existe, comprobar si el teléfono coincide con ese cliente
+        if ($clientePorCif->telefono !== $request->telefono_cliente) {
+            return back()
+                ->withErrors(['telefono_cliente' => 'El teléfono no coincide con el registrado para este CIF.'])
+                ->withInput();
+        }
+
+        // Si pasa ambas, ya tenemos nuestro cliente
+        $cliente = $clientePorCif;
 
         // Validación de los campos del formulario
         $request->validate([

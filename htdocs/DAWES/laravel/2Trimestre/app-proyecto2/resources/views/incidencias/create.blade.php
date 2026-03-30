@@ -25,11 +25,12 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">CIF del Cliente</label>
                             <input type="text" name="cif" form="form-incidencia" class="form-control" value="{{ old('cif') }}" placeholder="Ej: B12345678">
-                            @error('identidad') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            @error('cif') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Teléfono de Registro</label>
                             <input type="text" name="telefono_cliente" form="form-incidencia" class="form-control" value="{{ old('telefono_cliente') }}" placeholder="Teléfono con el que se registró">
+                            @error('telefono_cliente') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
                     </div>
                 </div>
