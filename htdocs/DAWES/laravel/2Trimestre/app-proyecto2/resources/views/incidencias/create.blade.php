@@ -6,9 +6,14 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <h1 class="mb-4 text-success">
-                <i class="fas fa-clipboard-list me-2"></i> Nueva Incidencia de Cliente
-            </h1>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="mb-4 text-success">
+                    <i class="fas fa-clipboard-list me-2"></i> Nueva Incidencia de Cliente
+                </h1>
+                <a href="{{ route('login') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Volver al Login
+                </a>
+            </div>
 
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-success text-white">
@@ -98,8 +103,8 @@
                                 <label class="form-label">Estado</label>
                                 <select name="estado" class="form-select">
                                     <option value="">-- Elija un estado --</option>
-                                    <option value="B" {{ old('B') == 'B' ? 'selected' : ''}}>Esperando a ser aprobada</option>
-                                    <option value="P" {{ old('P') == 'P' ? 'selected' : ''}}>Pendiente</option>
+                                    <option value="B" {{ old('estado') == 'B' ? 'selected' : ''}}>Esperando a ser aprobada</option>
+                                    <option value="P" {{ old('estado') == 'P' ? 'selected' : ''}}>Pendiente</option>
                                 </select>
                                 @error('estado')
                                 <div class="text-danger mt-1">{{ $message }}</div>
@@ -121,7 +126,6 @@
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{{ route('login') }}" class="btn btn-secondary">Volver al Login</a>
                             <button type="submit" class="btn btn-success px-5">
                                 <i class="fas fa-save me-2"></i>Registrar Incidencia
                             </button>
