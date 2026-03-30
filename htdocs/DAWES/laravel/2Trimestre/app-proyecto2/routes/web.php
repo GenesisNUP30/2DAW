@@ -105,6 +105,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/cuotas/{cuota}/eliminar', [CuotaController::class, 'confirmDelete'])->name('cuotas.confirmDelete');
         Route::delete('/cuotas/{cuota}', [CuotaController::class, 'destroy'])->name('cuotas.destroy');
+
+        Route::get('/cuotas/papelera', [CuotaController::class, 'papelera'])->name('cuotas.papelera');
+        Route::post('/cuotas/{id}/restore', [CuotaController::class, 'restore'])->name('cuotas.restore');
     });
 
     /*

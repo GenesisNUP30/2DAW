@@ -32,6 +32,11 @@
         <a href="{{ route('cuotas.create') }}" class="btn btn-black">
             <i class="fa-solid fa-circle-plus"></i> Añadir cuota excepcional
         </a>
+
+        {{-- Botón Papelera --}}
+        <a href="{{ route('cuotas.papelera') }}" class="btn btn-outline-danger">
+            <i class="fas fa-trash"></i> Ver Papelera
+        </a>
         @endif
     </div>
 

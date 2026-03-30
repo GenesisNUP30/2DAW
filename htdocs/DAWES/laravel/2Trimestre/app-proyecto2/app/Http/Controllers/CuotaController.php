@@ -230,4 +230,38 @@ class CuotaController extends Controller
 
         return redirect()->route('cuotas.index')->with('success', 'Cuota eliminada correctamente.');
     }
+
+    /**
+     * Muestra la papelera de cuotas (solo las eliminadas)
+     */
+    public function papelera()
+    {
+
+        if (!auth()->user()->isAdmin()) abort(403);
+
+        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
+
+        // onlyTrashed() filtra solo las que tienen deleted_at NOT NULL
+        $cuotasEliminadas = Cuota::onlyTrashed()
+            ->conRelaciones()
+            ->orderByDesc('deleted_at')
+            ->paginate($itemsPorPagina);
+
+        return view('cuotas.papelera', compact('cuotasEliminadas'));
+    }
+
+    /**
+     * Restaura una cuota eliminada
+     */
+    public function restore($id)
+    {
+        if (!auth()->user()->isAdmin()) abort(403);
+
+        // Buscamos en la papelera específicamente
+        $cuota = Cuota::onlyTrashed()->findOrFail($id);
+        $cuota->restore();
+
+        return redirect()->route('cuotas.papelera')
+            ->with('success', 'Cuota restaurada correctamente.');
+    }
 }
