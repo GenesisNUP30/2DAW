@@ -225,10 +225,7 @@ class TareaController extends Controller
             'estado.in' => 'El estado seleccionado no es válido',
         ]);
 
-        $cp = $request->codigo_postal;
-        $provincia = $request->provincia;
-
-        if (substr($cp, 0, 2) !== $provincia) {
+        if (substr($request->codigo_postal, 0, 2) !== $request->provincia) {
             return back()
                 ->withErrors([
                     'provincia' => 'La provincia seleccionada no corresponde con el código postal',
@@ -414,7 +411,7 @@ class TareaController extends Controller
         if (!$user->isAdmin()) {
             abort(403);
         }
-        
+
         $tarea->delete();
 
         return redirect('/')->with('success', 'Tarea eliminada correctamente');
@@ -503,5 +500,71 @@ class TareaController extends Controller
 
         return redirect()->route('tareas.index')
             ->with('success', 'Tarea completada correctamente');
+    }
+
+    /**
+     * Muestra el formulario de incidencias para clientes
+     */
+    public function createFromCliente()
+    {
+        // No verificamos la autenticacion porque es para clientes no logueados
+        return view('tareas.create_cliente', [
+            'provincias' => $this->provincias(),
+        ]);
+    }
+
+    /**
+     * Guarda la incidencia enviada por el cliente
+     */
+    public function storeFromCliente(Request $request)
+    {
+        // Validar si el cliente existe con ese CIF y ese teléfono
+        $cliente = Cliente::where('cif', $request->cif)
+            ->where('telefono', $request->telefono_cliente)
+            ->first();
+
+        if (!$cliente) {
+            return back()
+                ->withErrors(['identidad' => 'Los datos de cliente (CIF/Teléfono) no coinciden con nuestros registros.'])
+                ->withInput();
+        }
+
+        // Validación de los campos del formulario
+        $request->validate([
+            'persona_contacto' => 'required|string|max:100',
+            'telefono_contacto' => 'required|string|max:20',
+            'descripcion' => 'required|string|min:10',
+            'correo_contacto' => 'required|email|max:100',
+            'direccion' => 'required|string|max:200',
+            'poblacion' => 'required|string|max:100',
+            'codigo_postal' => 'required|regex:/^\d{5}$/',
+            'provincia' => 'required|in:' . implode(',', array_keys($this->provincias())),
+            'fecha_realizacion' => 'required|date|after_or_equal:today',
+            'anotaciones_anteriores' => 'nullable|string',
+        ]);
+
+        // Validar que la provincia corresponda con el código postal
+        if (substr($request->codigo_postal, 0, 2) !== $request->provincia) {
+            return back()->withErrors(['provincia' => 'La provincia no corresponde con el CP'])->withInput();
+        }
+
+        // Asignar automáticamente el cliente_id encontrado y dejar operario_id como null
+        Tarea::create([
+            'cliente_id'        => $cliente->id,
+            'operario_id'       => null, 
+            'persona_contacto'  => $request->persona_contacto,
+            'telefono_contacto' => $request->telefono_contacto,
+            'descripcion'       => $request->descripcion,
+            'correo_contacto'   => $request->correo_contacto,
+            'direccion'         => $request->direccion,
+            'poblacion'         => $request->poblacion,
+            'codigo_postal'     => $request->codigo_postal,
+            'provincia'         => $request->provincia,
+            'estado'            => 'P', 
+            'fecha_realizacion' => $request->fecha_realizacion,
+            'anotaciones_anteriores' => $request->anotaciones_anteriores,
+        ]);
+
+        return redirect()->route('login')->with('success', 'Incidencia registrada. Un administrador la revisará pronto.');
     }
 }
