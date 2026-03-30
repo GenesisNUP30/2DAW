@@ -46,7 +46,7 @@ class HomeController extends Controller
         $cuotas = Cuota::pendientes()
             ->conRelaciones()
             ->ordenadasPorFecha()
-            ->paginate($itemsPorPagina, ['*'], 'cuotas');
+            ->paginate(3, ['*'], 'cuotas');
 
         return view('home', compact(
             'clientesActivos',

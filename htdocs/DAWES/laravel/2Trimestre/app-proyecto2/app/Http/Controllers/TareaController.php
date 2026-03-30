@@ -22,17 +22,16 @@ class TareaController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
 
         if ($user->isAdmin()) {
             $tareas = Tarea::conRelaciones()
                 ->ordenadasPorFecha()
-                ->paginate($itemsPorPagina);
+                ->paginate(3);
         } else {
             $tareas = Tarea::conRelaciones()
                 ->paraOperario($user->id)
                 ->ordenadasPorFecha()
-                ->paginate($itemsPorPagina);
+                ->paginate(3);
         }
 
         return view('tareas.index', compact('tareas'));

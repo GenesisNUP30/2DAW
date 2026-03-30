@@ -26,12 +26,12 @@ class CuotaController extends Controller
         $cuotasMensuales = Cuota::mensuales()
             ->conRelaciones()
             ->ordenadasPorFecha()
-            ->paginate($itemsPorPagina, ['*'], 'mensuales');
+            ->paginate(3, ['*'], 'mensuales');
 
         $cuotasExcepcionales = Cuota::excepcionales()
             ->conRelaciones()
             ->ordenadasPorFecha()
-            ->paginate($itemsPorPagina, ['*'], 'excepcionales');
+            ->paginate(3, ['*'], 'excepcionales');
 
         return view('cuotas.index', compact('cuotasMensuales', 'cuotasExcepcionales'));
     }
@@ -211,7 +211,7 @@ class CuotaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    
+
     public function destroy(Cuota $cuota)
     {
         $user = Auth::user();
@@ -245,7 +245,7 @@ class CuotaController extends Controller
         $cuotasEliminadas = Cuota::onlyTrashed()
             ->conRelaciones()
             ->orderByDesc('deleted_at')
-            ->paginate($itemsPorPagina);
+            ->paginate(3);
 
         return view('cuotas.papelera', compact('cuotasEliminadas'));
     }

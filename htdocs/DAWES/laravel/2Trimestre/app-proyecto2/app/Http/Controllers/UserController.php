@@ -23,7 +23,7 @@ class UserController extends Controller
             abort(403);
         }
 
-        $empleados = User::excluyendo($user->id)->paginate($itemsPorPagina);
+        $empleados = User::excluyendo($user->id)->paginate(3);
         return view('empleados.index', compact('empleados'));
     }
 

@@ -33,20 +33,31 @@
             <table class="table table-striped mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th>Cliente</th>
-                        <th>Descripción</th>
-                        <th>Operario</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th class="text-center">Acciones</th>
+                        <th class="ps-4 border-0 text-uppercase fw-bold">Cliente</th>
+                        <th class="border-0 text-uppercase fw-bold">Descripción</th>
+                        <th class="border-0 text-uppercase fw-bold">Operario</th>
+                        <th class="border-0 text-uppercase fw-bold">Fecha de realización</th>
+                        <th class="border-0 text-uppercase fw-bold">Estado</th>
+                        <th class="text-center border-0 text-uppercase fw-bold">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($tareas as $tarea)
                     <tr>
                         <td>{{ $tarea->cliente->nombre ?? '-' }}</td>
-                        <td>{{ $tarea->descripcion }}</td>
-                        <td>{{ $tarea->operario->name ?? '-' }}</td>
+                        <td>
+                            <span class="text-truncate d-inline-block" style="max-width: 220px;" title="{{ $tarea->descripcion }}">
+                                {{ $tarea->descripcion }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm me-2 bg-light rounded-circle text-center" style="width: 30px; height: 30px; line-height: 30px;">
+                                    <i class="fas fa-user-gear text-secondary small"></i>
+                                </div>
+                                <span>{{ $tarea->operario->name ?? 'Sin asignar' }}</span>
+                            </div>
+                        </td>
                         <td>{{ optional($tarea->fecha_realizacion)->format('d/m/Y') }}</td>
                         <td>
                             @if ($tarea->estado === 'B')
@@ -105,7 +116,7 @@
 
     {{-- Paginación --}}
     <div class="mt-3">
-        {{ $tareas->links() }}
+        {{ $tareas->onEachSide(1)->links() }}
     </div>
 
 </div>

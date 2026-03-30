@@ -26,7 +26,7 @@ class ClienteController extends Controller
 
         $clientes = Cliente::ordenadosPorNombre()
             ->conPais()
-            ->paginate($itemsPorPagina);
+            ->paginate(3);
         return view('clientes.index', compact('clientes'));
     }
 
