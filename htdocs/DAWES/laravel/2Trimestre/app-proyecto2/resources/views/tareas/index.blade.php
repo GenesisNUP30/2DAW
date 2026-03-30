@@ -1,117 +1,165 @@
 @extends('layouts.app')
 
-@section('titulo', 'SiempreColgando')
+@section('titulo', 'Listado de tareas')
 
 @section('content')
+<div class="container-fluid px-4 py-3">
 
-<div class="container">
-
-    <h1 class="mb-4">
-        <i class="fas fa-tasks me-1"></i> Lista de tareas
-    </h1>
-
-    {{-- Mensaje de éxito --}}
-    @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-    @endif
-
-    <div class="d-flex justify-content-between mb-3">
-
-        {{-- Botón crear tarea (solo administrador) --}}
-        @if (auth()->user()->isAdmin())
-        <a href="{{ route('tareas.create') }}" class="btn btn-black">
-            <i class="fa-solid fa-file-circle-plus"></i> Crear nueva tarea
+    {{-- Cabecera --}}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold m-0">
+            <i class="fas fa-tasks text-primary me-2"></i>Listado de tareas
+        </h2>
+        @if(auth()->user()->isAdmin())
+        <a href="{{ route('tareas.create') }}" class="btn btn-dark btn-sm px-3">
+            <i class="fas fa-plus me-1"></i> Nueva tarea
         </a>
         @endif
     </div>
 
-    {{-- Tabla de tareas --}}
-    <div class="card">
-        <div class="card-body p-0">
-            <table class="table table-striped mb-0">
-                <thead class="table-dark">
-                    <tr>
-                        <th class="ps-4 border-0 text-uppercase fw-bold">Cliente</th>
-                        <th class="border-0 text-uppercase fw-bold">Descripción</th>
-                        <th class="border-0 text-uppercase fw-bold">Operario</th>
-                        <th class="border-0 text-uppercase fw-bold">Fecha de realización</th>
-                        <th class="border-0 text-uppercase fw-bold">Estado</th>
-                        <th class="text-center border-0 text-uppercase fw-bold">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($tareas as $tarea)
-                    <tr>
-                        <td>{{ $tarea->cliente->nombre ?? '-' }}</td>
-                        <td>
-                            <span class="text-truncate d-inline-block" style="max-width: 220px;" title="{{ $tarea->descripcion }}">
-                                {{ $tarea->descripcion }}
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-sm me-2 bg-light rounded-circle text-center" style="width: 30px; height: 30px; line-height: 30px;">
-                                    <i class="fas fa-user-gear text-secondary small"></i>
-                                </div>
-                                <span>{{ $tarea->operario->name ?? 'Sin asignar' }}</span>
+    {{-- Mensaje de éxito --}}
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    @endif
+
+    {{-- Chips de filtro por estado --}}
+    <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
+        @php
+            $estadoActual = request('estado', '');
+            $chips = [
+                '' =>  'Todas',
+                'P' =>  'Pendientes',
+                'B' =>  'En espera',
+                'R' =>  'Realizadas',
+                'C' =>  'Canceladas',
+            ];
+        @endphp
+
+        @foreach($chips as $valor => $etiqueta)
+        <a href="{{ request()->fullUrlWithQuery(['estado' => $valor]) }}"
+           class="badge rounded-pill text-decoration-none border
+                  {{ $estadoActual === $valor ? 'bg-dark text-white border-dark' : 'bg-white text-muted border-secondary' }}"
+           style="font-size: 0.78rem; padding: 6px 14px;">
+            {{ $etiqueta }}
+        </a>
+        @endforeach
+    </div>
+
+    {{-- Tabla --}}
+    <div class="card border shadow-sm" style="border-color: #e5e7eb !important; border-radius: 12px; overflow: hidden;">
+        <table class="table table-hover align-middle mb-0">
+            <thead style="background: #f9fafb;">
+                <tr class="text-uppercase small fw-bold text-muted" style="font-size: 0.7rem; letter-spacing: .05em;">
+                    <th class="ps-4 py-3 border-0">Cliente</th>
+                    <th class="py-3 border-0">Descripción</th>
+                    <th class="py-3 border-0">Operario</th>
+                    <th class="py-3 border-0">Fecha</th>
+                    <th class="py-3 border-0">Estado</th>
+                    <th class="py-3 pe-4 border-0 text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($tareas as $tarea)
+                <tr style="border-top: 1px solid #f3f4f6;">
+                    <td class="ps-4">
+                        <span class="fw-semibold text-dark">{{ $tarea->cliente->nombre ?? '-' }}</span>
+                    </td>
+                    <td>
+                        <span class="text-muted text-truncate d-inline-block" style="max-width: 220px;"
+                              title="{{ $tarea->descripcion }}">
+                            {{ $tarea->descripcion }}
+                        </span>
+                    </td>
+                    <td>
+                        @if($tarea->operario)
+                        @php
+                            $iniciales = collect(explode(' ', $tarea->operario->name))
+                                ->take(2)->map(fn($p) => strtoupper($p[0]))->implode('');
+                        @endphp
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center fw-semibold"
+                                 style="width:28px;height:28px;background:#e0f2fe;color:#0369a1;font-size:11px;flex-shrink:0;">
+                                {{ $iniciales }}
                             </div>
-                        </td>
-                        <td>{{ optional($tarea->fecha_realizacion)->format('d/m/Y') }}</td>
-                        <td>
-                            @if ($tarea->estado === 'B')
-                            <span class="badge bg-secondary">Esperando aprobación</span>
-                            @elseif ($tarea->estado === 'P')
-                            <span class="badge bg-warning text-dark">Pendiente</span>
-                            @elseif ($tarea->estado === 'R')
-                            <span class="badge bg-success">Realizada</span>
-                            @elseif ($tarea->estado === 'C')
-                            <span class="badge bg-danger">Cancelada</span>
-                            @endif
-                        </td>
-                        <td class="text-end">
+                            <span class="small">{{ $tarea->operario->name }}</span>
+                        </div>
+                        @else
+                        <span class="text-muted small fst-italic">Sin asignar</span>
+                        @endif
+                    </td>
+                    <td class="small text-muted">
+                        {{ $tarea->fecha_realizacion?->format('d/m/Y') ?? '-' }}
+                    </td>
+                    <td>
+                        @php
+                            $badges = [
+                                'B' => ['bg-secondary bg-opacity-10 text-secondary', 'En espera'],
+                                'P' => ['bg-warning bg-opacity-10 text-warning',    'Pendiente'],
+                                'R' => ['bg-success bg-opacity-10 text-success',    'Realizada'],
+                                'C' => ['bg-danger bg-opacity-10 text-danger',      'Cancelada'],
+                            ];
+                            [$clase, $texto] = $badges[$tarea->estado] ?? ['bg-light text-dark', $tarea->estado];
+                        @endphp
+                        <span class="badge rounded-pill border {{ $clase }}"
+                              style="font-size:0.72rem; padding: 4px 10px;">
+                            {{ $texto }}
+                        </span>
+                    </td>
+                    <td class="pe-4">
+                        <div class="d-flex gap-1 justify-content-end">
 
                             {{-- Ver --}}
-                            <a href="{{ route('tareas.show', $tarea) }}" class="btn btn-sm btn-info">
-                                <i class="far fa-eye"></i>
-                                Ver
+                            <a href="{{ route('tareas.show', $tarea) }}"
+                               class="btn btn-sm btn-light border"
+                               style="width:30px;height:30px;padding:0;display:flex;align-items:center;justify-content:center;"
+                               title="Ver">
+                                <i class="fas fa-eye text-info" style="font-size:12px;"></i>
                             </a>
 
-                            {{-- Admin --}}
-                            @if (auth()->user()->isAdmin())
-                            <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i>
-                                Editar
+                            @if(auth()->user()->isAdmin())
+                            {{-- Editar --}}
+                            <a href="{{ route('tareas.edit', $tarea) }}"
+                               class="btn btn-sm btn-light border"
+                               style="width:30px;height:30px;padding:0;display:flex;align-items:center;justify-content:center;"
+                               title="Editar">
+                                <i class="fas fa-pen text-warning" style="font-size:12px;"></i>
                             </a>
 
+                            {{-- Eliminar --}}
                             <a href="{{ route('tareas.confirmDelete', $tarea) }}"
-                                class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash-alt"></i>
-                                Eliminar
+                               class="btn btn-sm btn-light border"
+                               style="width:30px;height:30px;padding:0;display:flex;align-items:center;justify-content:center;"
+                               title="Eliminar">
+                                <i class="fas fa-trash text-danger" style="font-size:12px;"></i>
                             </a>
                             @endif
 
-                            {{-- Operario --}}
-                            @if (auth()->user()->isOperario() && $tarea->estado === 'P')
+                            {{-- Completar (operario) --}}
+                            @if(auth()->user()->isOperario() && $tarea->estado === 'P')
                             <a href="{{ route('tareas.completeForm', $tarea) }}"
-                                class="btn btn-sm btn-success">
-                                Completar
+                               class="btn btn-sm btn-light border"
+                               style="width:30px;height:30px;padding:0;display:flex;align-items:center;justify-content:center;"
+                               title="Completar">
+                                <i class="fas fa-check text-success" style="font-size:12px;"></i>
                             </a>
                             @endif
 
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="7" class="text-center py-3">
-                            No hay tareas registradas.
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" class="text-center py-5 text-muted">
+                        <i class="fas fa-clipboard-list fa-2x mb-2 d-block opacity-25"></i>
+                        No hay tareas registradas.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 
     {{-- Paginación --}}

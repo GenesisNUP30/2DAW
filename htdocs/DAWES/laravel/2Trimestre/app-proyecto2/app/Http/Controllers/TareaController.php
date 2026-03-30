@@ -19,20 +19,25 @@ class TareaController extends Controller
     /**
      * Listado de tareas paginadas
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
+        $estado = $request->get('estado'); // null si no hay filtro
+
+        $query = Tarea::conRelaciones()->ordenadasPorFecha();
 
         if ($user->isAdmin()) {
-            $tareas = Tarea::conRelaciones()
-                ->ordenadasPorFecha()
-                ->paginate(3);
+            if ($estado) {
+                $query->where('estado', $estado);
+            }
         } else {
-            $tareas = Tarea::conRelaciones()
-                ->paraOperario($user->id)
-                ->ordenadasPorFecha()
-                ->paginate(3);
+            $query->paraOperario($user->id);
+            if ($estado) {
+                $query->where('estado', $estado);
+            }
         }
+
+        $tareas = $query->paginate(6)->withQueryString();
 
         return view('tareas.index', compact('tareas'));
     }
