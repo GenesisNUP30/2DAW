@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-03-2026 a las 01:08:53
+-- Tiempo de generación: 30-03-2026 a las 12:11:07
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -80,7 +80,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `cif`, `nombre`, `telefono`, `correo`, `cuenta_corriente`, `pais`, `moneda`, `importe_cuota_mensual`, `fecha_alta`, `fecha_baja`) VALUES
-(11, 'A78818549', 'Manuel García', '+34 684 247 233', 'manuelgarcia@gmail.com', NULL, 'ES', 'EUR', 450.00, '2026-01-13', NULL),
+(11, 'A78818549', 'Manuel García', '+34 684 247 233', 'liamjh070@gmail.com', NULL, 'ES', 'EUR', 450.00, '2026-01-13', NULL),
 (12, 'U56648900', 'Francesco', '986 562 147', 'prueba2@gmail.com', NULL, 'IT', 'EUR', 565.00, '2026-01-13', NULL),
 (13, 'X0153310S', 'Camille', '986 562 147', 'prueba5@gmail.com', NULL, 'FR', 'EUR', 850.00, '2026-01-13', NULL),
 (14, 'Q6501800D', 'Tiago', '+34 654 874 320', 'prueba2@gmail.com', NULL, 'PT', 'EUR', 595.50, '2026-01-14', NULL),
@@ -124,20 +124,42 @@ CREATE TABLE `cuotas` (
   `pagada` tinyint(1) DEFAULT 0,
   `fecha_pago` date DEFAULT NULL,
   `tipo` enum('mensual','excepcional') NOT NULL,
-  `notas` text DEFAULT NULL
+  `notas` text DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `cuotas`
 --
 
-INSERT INTO `cuotas` (`id`, `cliente_id`, `concepto`, `fecha_emision`, `importe`, `pagada`, `fecha_pago`, `tipo`, `notas`) VALUES
-(7, 11, 'Cuota mes de 01/03/2026', '2026-03-01', 450.00, 0, NULL, 'mensual', 'Cuota generada automáticamente'),
-(8, 12, 'Cuota mes de 01/03/2026', '2026-03-01', 565.00, 0, NULL, 'mensual', 'Cuota generada automáticamente'),
-(9, 13, 'Cuota mes de 01/03/2026', '2026-03-01', 850.00, 0, NULL, 'mensual', 'Cuota generada automáticamente'),
-(10, 14, 'Cuota mes de 01/03/2026', '2026-03-01', 595.50, 0, NULL, 'mensual', 'Cuota generada automáticamente'),
-(11, 15, 'Cuota mes de 01/03/2026', '2026-03-01', 420.10, 0, NULL, 'mensual', 'Cuota generada automáticamente'),
-(12, 16, 'Cuota mes de 01/03/2026', '2026-03-01', 450.75, 0, NULL, 'mensual', 'Cuota generada automáticamente');
+INSERT INTO `cuotas` (`id`, `cliente_id`, `concepto`, `fecha_emision`, `importe`, `pagada`, `fecha_pago`, `tipo`, `notas`, `deleted_at`) VALUES
+(7, 11, 'Cuota mes de 01/03/2026', '2026-03-01', 450.00, 0, NULL, 'mensual', 'Cuota generada automáticamente', NULL),
+(8, 12, 'Cuota mes de 01/03/2026', '2026-03-01', 565.00, 0, NULL, 'mensual', 'Cuota generada automáticamente', NULL),
+(9, 13, 'Cuota mes de 01/03/2026', '2026-03-01', 850.00, 0, NULL, 'mensual', 'Cuota generada automáticamente', NULL),
+(10, 14, 'Cuota mes de 01/03/2026', '2026-03-01', 595.50, 0, NULL, 'mensual', 'Cuota generada automáticamente', NULL),
+(11, 15, 'Cuota mes de 01/03/2026', '2026-03-01', 420.10, 0, NULL, 'mensual', 'Cuota generada automáticamente', NULL),
+(12, 16, 'Cuota mes de 01/03/2026', '2026-03-01', 450.75, 0, NULL, 'mensual', 'Cuota generada automáticamente', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `facturas`
+--
+
+CREATE TABLE `facturas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cuota_id` int(11) NOT NULL,
+  `numero_factura` varchar(255) NOT NULL,
+  `cliente_nombre` varchar(255) NOT NULL,
+  `cliente_cif` varchar(255) NOT NULL,
+  `concepto` varchar(255) NOT NULL,
+  `importe` decimal(10,2) NOT NULL,
+  `moneda` varchar(10) NOT NULL DEFAULT 'EUR',
+  `enviada` tinyint(1) NOT NULL DEFAULT 0,
+  `ruta_pdf` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -517,9 +539,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('a3qRJiyihqmHswX5Ogrr3nml9b8mDPTjs1DvOpFm', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNUV3aUg1YVNqQ2w5SWtyTWRPYWtqMmhTZURMakN2blNoNVhHbjRvQiI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo3MjoiaHR0cDovL2xvY2FsaG9zdC9EQVdFUy9sYXJhdmVsLzJUcmltZXN0cmUvYXBwLXByb3llY3RvMi9wdWJsaWMvZGFzaGJvYXJkIjt9czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Njg6Imh0dHA6Ly9sb2NhbGhvc3QvREFXRVMvbGFyYXZlbC8yVHJpbWVzdHJlL2FwcC1wcm95ZWN0bzIvcHVibGljL2xvZ2luIjtzOjU6InJvdXRlIjtzOjU6ImxvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1774541101),
-('S4r6yuoeQ7pxkMXiNHbuw2VgUIlL87x1x7S7k0Eo', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiT1FsdmFKc3JDN3djaTFYT2hZbmVrbHBCam1NSjcyM2t3c2ZFNEd5RiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjcyOiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy9kYXNoYm9hcmQiO3M6NToicm91dGUiO3M6NDoiaG9tZSI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzc0NTYxOTIwO319', 1774568732),
-('vPhnqGYFcvv3fWteVsEIBI24gY5jF6VEaqp6kJlP', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVDE5V01Bb3FMbENBaXo0ZklJRm1OOEozbE42RVZxZWR2M1BDQW11MyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo2MjoiaHR0cDovL2xvY2FsaG9zdC9EQVdFUy9sYXJhdmVsLzJUcmltZXN0cmUvYXBwLXByb3llY3RvMi9wdWJsaWMiO31zOjk6Il9wcmV2aW91cyI7YToyOntzOjM6InVybCI7czo2ODoiaHR0cDovL2xvY2FsaG9zdC9EQVdFUy9sYXJhdmVsLzJUcmltZXN0cmUvYXBwLXByb3llY3RvMi9wdWJsaWMvbG9naW4iO3M6NToicm91dGUiO3M6NToibG9naW4iO319', 1774549912);
+('3mLz74Cnj2DoJCRGPVnvPJtWvdtS1QmT16twJZP0', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiVUtFZVZuQ05EdWpDc0FMSTdUTElRZzVUemxKcTlhY3FZNUN2eUxudCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjcyOiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy9kYXNoYm9hcmQiO3M6NToicm91dGUiO3M6NDoiaG9tZSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzc0ODYzODcwO319', 1774863873),
+('Iwyw62jxOv7eeBr14StOaimHLsPKUNRMIkFodRWR', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiRU9CMWZrS21VQ2ptSHoyQW9WRDlJN3laWGtsSkRhUHhnWWF4Y01qQyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjg0OiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy9mYWN0dXJhcy9nZXN0aW9uYXIvMTAiO3M6NToicm91dGUiO3M6MTg6ImZhY3R1cmFzLmNvbmZpcm1hciI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzc0NjI2MjkzO319', 1774627696),
+('SDVVQlcdFPdwCK8nijceVP0EnV5jOPrKCJIRV6KW', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiWGRMbXpnS2h2V1lkUEhWcEJ3VnlqSDlUbmVNa1pXVmw5SmluZ25hVyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjY5OiJodHRwOi8vbG9jYWxob3N0L0RBV0VTL2xhcmF2ZWwvMlRyaW1lc3RyZS9hcHAtcHJveWVjdG8yL3B1YmxpYy9jdW90YXMiO3M6NToicm91dGUiO3M6MTI6ImN1b3Rhcy5pbmRleCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzc0NTcyMzQwO319', 1774574362);
 
 -- --------------------------------------------------------
 
@@ -617,7 +639,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `dni`, `telefono`, `direccion`, `fecha_alta`, `fecha_baja`, `tipo`) VALUES
-(1, 'admin', 'admin123@gmail.com', NULL, '$2y$12$nQ3ZHBePyTTnLERaWUyZBOSClEsWEw3Tdxbt3Y92Q1Bv6xYIFuz0.', 'KqbDAExoh8Qhb3lN3RpFKxybZpZ62omAkKFvKeR6B3NyyeE5W9HHoy1eISii', '2026-02-06 20:12:19', '2026-02-16 16:22:21', '73504055B', '644789336', 'Calle Galaroza, Bloque 3, 3A', '2026-02-03', NULL, 'administrador'),
+(1, 'admin', 'admin123@gmail.com', NULL, '$2y$12$nQ3ZHBePyTTnLERaWUyZBOSClEsWEw3Tdxbt3Y92Q1Bv6xYIFuz0.', 'I4i6revnLGqanRKlgblel6Q6zz45YzNri7q9laFvLjmpss8hHh1N7wdHcs9i', '2026-02-06 20:12:19', '2026-02-16 16:22:21', '73504055B', '644789336', 'Calle Galaroza, Bloque 3, 3A', '2026-02-03', NULL, 'administrador'),
 (2, 'operario1', 'operario1@gmail.com', NULL, '$2y$12$bBDoN2HXIqKeeSkZxd4lMeInu6ct7V9GXjLHN5JS/zMFslcymtyRC', NULL, '2026-02-06 20:12:58', '2026-02-13 08:26:01', '70907286B', '778023544', 'Calle San Marino, Puerta 5A', '2026-02-04', NULL, 'operario'),
 (3, 'Daniel', 'daniel04@gmail.com', NULL, '$2y$12$GhhcV09sAdCVKo6iqjLyZuZD8Chv9ys9n37yYGtJ6oxhq8o8F.kNq', NULL, '2026-02-06 21:28:58', '2026-02-06 21:28:58', '21237945K', '730021954', 'Calle Ribera, 34 B', '2026-02-05', NULL, 'operario'),
 (4, 'Prueba Baja', 'prueba000@gmail.com', NULL, '$2y$12$oIXAeUOMgMTpvDvK7kT4Q.osApLGeWVnfKqiTSZh2fwd3eD5MDfEa', NULL, '2026-02-07 17:41:05', '2026-02-07 17:47:54', '82572266N', '123456789', 'Calle Baja', '2026-01-27', NULL, 'operario');
@@ -657,6 +679,14 @@ ALTER TABLE `config_avanzada`
 ALTER TABLE `cuotas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cliente_id` (`cliente_id`);
+
+--
+-- Indices de la tabla `facturas`
+--
+ALTER TABLE `facturas`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `facturas_numero_factura_unique` (`numero_factura`),
+  ADD KEY `facturas_cuota_id_foreign` (`cuota_id`);
 
 --
 -- Indices de la tabla `failed_jobs`
@@ -745,6 +775,12 @@ ALTER TABLE `cuotas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT de la tabla `facturas`
+--
+ALTER TABLE `facturas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -783,6 +819,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `cuotas`
   ADD CONSTRAINT `cuotas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`);
+
+--
+-- Filtros para la tabla `facturas`
+--
+ALTER TABLE `facturas`
+  ADD CONSTRAINT `facturas_cuota_id_fk` FOREIGN KEY (`cuota_id`) REFERENCES `cuotas` (`id`);
 
 --
 -- Filtros para la tabla `tareas`
