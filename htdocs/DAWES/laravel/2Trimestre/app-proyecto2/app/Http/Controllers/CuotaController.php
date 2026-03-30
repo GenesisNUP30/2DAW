@@ -220,6 +220,12 @@ class CuotaController extends Controller
             abort(403);
         }
 
+        if ($cuota->factura()->exists()) {
+            $cuota->delete(); // Se borra lógicamente
+            return redirect()->route('cuotas.index')
+                ->with('info', 'La cuota se ha marcado como eliminada, pero la factura asociada permanece en el sistema.');
+        }
+
         $cuota->delete();
 
         return redirect()->route('cuotas.index')->with('success', 'Cuota eliminada correctamente.');
