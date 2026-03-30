@@ -524,7 +524,7 @@ class TareaController extends Controller
         // Validación de los campos del formulario
         $request->validate([
             'persona_contacto' => 'required|string|max:100',
-            'telefono_contacto' => 'required|string|max:20',
+            'telefono_contacto' => ['required', 'string', 'max:20', new ValidarTelefono],
             'descripcion' => 'required|string|min:1',
             'correo_contacto' => 'required|email|max:100',
             'direccion' => 'required|string|max:100',
