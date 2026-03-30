@@ -27,7 +27,7 @@
             ¿Estás seguro de que deseas eliminar la cuota número <span class="text-danger">{{ $cuota->id}}</span>?
         </h4>
         <br>
-        <h5>Esta acción no se puede deshacer.</h5>
+        <h5>Esta acción marcará esta cuota como eliminada, pero podrá restuararla más adelante.</h5>
     </div>
 
     <div class="alert alert-primary" role="alert">
