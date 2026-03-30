@@ -6,6 +6,7 @@ use App\Models\Cliente;
 use App\Models\ConfigAvanzada;
 use App\Models\Tarea;
 use App\Models\User;
+use App\Rules\ValidarTelefono;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -170,24 +171,7 @@ class TareaController extends Controller
                 'required',
                 'string',
                 'max:20',
-                function ($attribute, $value, $fail) {
-                    // Eliminar todos los caracteres no numéricos
-                    $soloDigitos = preg_replace('/[^0-9]/', '', $value);
-
-                    // Verificar que el número resultante tenga entre 9 y 15 dígitos
-                    if (strlen($soloDigitos) < 9) {
-                        $fail('El teléfono debe tener al menos 9 dígitos.');
-                    }
-
-                    if (strlen($soloDigitos) > 15) {
-                        $fail('El teléfono no puede tener más de 15 dígitos.');
-                    }
-
-                    // Verificar formato (solo caracteres permitidos)
-                    if (!preg_match('/^[\+()0-9\s\-.]+$/', $value)) {
-                        $fail('El teléfono contiene caracteres no permitidos. Solo se permiten números, +, (), -, . y espacios.');
-                    }
-                }
+                new ValidarTelefono,
             ],
             'descripcion' => 'required|string|min:10',
             'correo_contacto' => 'required|email|max:100',
@@ -540,7 +524,7 @@ class TareaController extends Controller
         // Validación de los campos del formulario
         $request->validate([
             'persona_contacto' => 'required|string|max:100',
-            'telefono_contacto' => 'required|string|max:20',
+            'telefono_contacto' => ['required', 'string', 'max:20', new ValidarTelefono],
             'descripcion' => 'required|string|min:1',
             'correo_contacto' => 'required|email|max:100',
             'direccion' => 'required|string|max:100',
