@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Rules\ValidarDni;
-
+use App\Rules\ValidarTelefono;
 
 class UserController extends Controller
 {
@@ -58,7 +58,7 @@ class UserController extends Controller
             'dni' => ['required', 'string', 'unique:users', new ValidarDni],
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'telefono' => 'nullable|string|max:20',
+            'telefono' => ['nullable', 'string', 'max:20', new ValidarTelefono],
             'direccion' => 'nullable|string|max:255',
             'fecha_alta' => 'nullable|date',
             'password' => 'required|string|min:8|confirmed',
@@ -118,7 +118,7 @@ class UserController extends Controller
             'dni' => ['required', 'string', 'unique:users,dni,' . $user->id, new ValidarDni],
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:users,email,' . $empleado->id,
-            'telefono' => 'nullable|string|max:20',
+            'telefono' => ['nullable', 'string', 'max:20', new ValidarTelefono],
             'direccion' => 'nullable|string|max:255',
             'fecha_alta' => 'nullable|date',
             'password' => 'nullable|string|min:8|confirmed',
@@ -307,7 +307,7 @@ class UserController extends Controller
             'dni' => ['required', 'string', 'unique:users,dni,' . $user->id, new ValidarDni],
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:users,email,' . $user->id,
-            'telefono' => 'nullable|string|max:20',
+            'telefono' => ['nullable', 'string', 'max:20', new ValidarTelefono],
             'direccion' => 'nullable|string|max:255',
             'fecha_alta' => 'nullable|date',
             'password' => 'nullable|string|min:8|confirmed',
