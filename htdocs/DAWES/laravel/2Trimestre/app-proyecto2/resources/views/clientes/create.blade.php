@@ -114,7 +114,7 @@
                                 <label class="form-label small fw-bold text-muted text-uppercase">Importe de Cuota Mensual</label>
                                 <div class="input-group">
                                     <input type="number" step="0.01" name="importe_cuota_mensual" class="form-control fw-bold @error('importe_cuota_mensual') is-invalid @enderror"
-                                        value="{{ old('importe_cuota_mensual') }}" placeholder="0.00">
+                                        value="{{ old('importe_cuota_mensual') }}" placeholder="0,00">
                                     <span class="input-group-text bg-light text-muted small">€/mes</span>
                                     @error('importe_cuota_mensual') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>

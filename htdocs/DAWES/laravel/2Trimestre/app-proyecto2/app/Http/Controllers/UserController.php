@@ -70,6 +70,7 @@ class UserController extends Controller
             'tipo' => 'required|string|in:administrador,operario',
         ]);
 
+        //TODO: Agregar mensajes de error personalizados
         User::create($request->only(
             'dni',
             'name',
