@@ -59,28 +59,37 @@ class UserController extends Controller
             abort(403);
         }
 
-        $request->validate([
+        $validated = $request->validate([
             'dni' => ['required', 'string', 'unique:users', new ValidarDni],
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\-]+$/',
             'email' => 'required|email|unique:users',
-            'telefono' => ['nullable', 'string', 'max:20', new ValidarTelefono],
-            'direccion' => 'nullable|string|max:255',
-            'fecha_alta' => 'nullable|date',
+            'telefono' => ['required', 'max:20', new ValidarTelefono],
+            'direccion' => 'required|string|regex:/[a-zA-Z]/|max:255',
+            'fecha_alta' => 'required|date',
             'password' => 'required|string|min:8|confirmed',
             'tipo' => 'required|string|in:administrador,operario',
+        ], [
+            'dni.required' => 'El DNI es obligatorio',
+            'dni.unique' => 'Ya existe un usuario con ese DNI',
+            'name.required' => 'El nombre es obligatorio',
+            'name.max' => 'El nombre no puede tener más de 255 caracteres',
+            'name.regex' => 'El nombre solo puede contener letras y espacios (sin números)',
+            'email.required' => 'El correo electrónico es obligatorio',
+            'email.unique' => 'Ya existe un usuario con ese correo electrónico',
+            'telefono.required' => 'El teléfono es obligatorio',
+            'telefono.max' => 'El teléfono no puede tener más de 20 caracteres',
+            'direccion.required' => 'La dirección es obligatoria',
+            'direccion.regex' => 'La dirección debe contener al menos una letra (no puede ser solo números)',
+            'direccion.max' => 'La dirección no puede tener más de 255 caracteres',
+            'fecha_alta.required' => 'La fecha de alta es obligatoria',
+            'password.required' => 'La contraseña es obligatoria',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres',
+            'password.confirmed' => 'La contraseña no coincide',
+            'tipo.required' => 'El tipo de usuario es obligatorio',
+            'tipo.in' => 'El tipo de usuario seleccionado no es válido',
         ]);
 
-        //TODO: Agregar mensajes de error personalizados
-        User::create($request->only(
-            'dni',
-            'name',
-            'email',
-            'telefono',
-            'direccion',
-            'fecha_alta',
-            'password',
-            'tipo',
-        ));
+        User::created($validated);
 
         return redirect()->route('empleados.index')->with('success', 'Empleado creado correctamente.');
     }
@@ -121,14 +130,27 @@ class UserController extends Controller
         }
 
         $request->validate([
-            'dni' => ['required', 'string', 'unique:users,dni,' . $user->id, new ValidarDni],
-            'name' => 'nullable|string|max:255',
+            'dni' => ['required', 'string', 'unique:users,dni,' . $empleado->id, new ValidarDni],
+            'name' => 'nullable|string|max:255|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\-]+$/',
             'email' => 'nullable|email|unique:users,email,' . $empleado->id,
             'telefono' => ['nullable', 'string', 'max:20', new ValidarTelefono],
-            'direccion' => 'nullable|string|max:255',
+            'direccion' => 'nullable|string|regex:/[a-zA-Z]/|max:255',
             'fecha_alta' => 'nullable|date',
             'password' => 'nullable|string|min:8|confirmed',
             'tipo' => 'nullable|string|in:administrador,operario',
+        ], [
+            'dni.required' => 'El DNI es obligatorio',
+            'dni.unique' => 'Ya existe un usuario con ese DNI',
+            'name.regex' => 'El nombre solo puede contener letras y espacios',
+            'name.max' => 'El nombre no puede tener más de 255 caracteres',
+            'email.email' => 'El formato del correo electrónico no es válido',
+            'email.unique' => 'Este correo electrónico ya está en uso',
+            'telefono.max' => 'El teléfono no puede tener más de 20 caracteres',
+            'direccion.regex' => 'La dirección debe contener al menos una letra',
+            'direccion.max' => 'La dirección no puede tener más de 255 caracteres',
+            'password.min' => 'La nueva contraseña debe tener al menos 8 caracteres',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide',
+            'tipo.in' => 'El tipo de usuario seleccionado no es válido',
         ]);
 
         $data = [];
@@ -311,46 +333,42 @@ class UserController extends Controller
 
         $request->validate([
             'dni' => ['required', 'string', 'unique:users,dni,' . $user->id, new ValidarDni],
-            'name' => 'nullable|string|max:255',
+            'name' => ['nullable', 'string', 'max:255', 'regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\-]+$/'],
             'email' => 'nullable|email|unique:users,email,' . $user->id,
             'telefono' => ['nullable', 'string', 'max:20', new ValidarTelefono],
-            'direccion' => 'nullable|string|max:255',
+            'direccion' => 'nullable|string|max:255|regex:/[a-zA-Z]/',
             'fecha_alta' => 'nullable|date',
             'password' => 'nullable|string|min:8|confirmed',
+        ], [
+            'dni.required' => 'El DNI es obligatorio',
+            'dni.unique' => 'Este DNI ya está registrado en el sistema',
+            'name.regex' => 'El nombre solo puede contener letras y espacios',
+            'name.max' => 'El nombre no puede tener más de 255 caracteres',
+            'email.email' => 'El formato del correo electrónico no es válido',
+            'email.unique' => 'Este correo electrónico ya está en uso por otro usuario',
+            'telefono.max' => 'El teléfono no puede tener más de 20 caracteres',
+            'direccion.regex' => 'La dirección debe contener al menos una letra',
+            'direccion.max' => 'La dirección no puede tener más de 255 caracteres',
+            'password.min' => 'La nueva contraseña debe tener al menos 8 caracteres',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide',
         ]);
 
         $data = [];
 
         // Solo actualizar los campos que se hayan enviado
-        if ($request->filled('dni')) {
-            $data['dni'] = $request->dni;
-        }
-
-        if ($request->filled('name')) {
-            $data['name'] = $request->name;
-        }
-
-        if ($request->filled('email')) {
-            $data['email'] = $request->email;
-        }
-
-        if ($request->filled('telefono')) {
-            $data['telefono'] = $request->telefono;
-        }
-
-        if ($request->filled('direccion')) {
-            $data['direccion'] = $request->direccion;
-        }
-
-        if ($request->filled('fecha_alta')) {
-            $data['fecha_alta'] = $request->fecha_alta;
-        }
+        if ($request->filled('dni')) $data['dni'] = $request->dni;
+        if ($request->filled('name')) $data['name'] = $request->name;
+        if ($request->filled('email')) $data['email'] = $request->email;
+        if ($request->filled('telefono')) $data['telefono'] = $request->telefono;
+        if ($request->filled('direccion')) $data['direccion'] = $request->direccion;
+        if ($request->filled('fecha_alta')) $data['fecha_alta'] = $request->fecha_alta;
 
         if ($request->filled('password')) {
             $data['password'] = $request->password;
         }
 
         $user->update($data);
+        
         if ($user->isAdmin()) {
             return redirect()->route('empleados.index')->with('success', 'Perfil actualizado correctamente.');
         } else {
