@@ -29,12 +29,12 @@
 
                 <div class="card border-0 shadow-sm mb-4" style="border-radius: 15px;">
                     <div class="card-body p-4">
-                        
+
                         {{-- SECCIÓN 1: CLIENTE Y CONTACTO --}}
                         <h5 class="fw-bold mb-4 text-primary border-bottom pb-2">
                             <i class="fas fa-user-tie me-2"></i>Información del Cliente y Contacto
                         </h5>
-                        
+
                         <div class="row g-3 mb-4">
                             <div class="col-md-12">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Cliente</label>
@@ -49,13 +49,13 @@
                                 @error('cliente_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Persona de contacto</label>
                                 <input type="text" name="persona_contacto" class="form-control @error('persona_contacto') is-invalid @enderror" value="{{ old('persona_contacto') }}" placeholder="Nombre del contacto">
                                 @error('persona_contacto') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Teléfono</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light"><i class="fas fa-phone-alt small text-muted"></i></span>
@@ -64,7 +64,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Correo electrónico</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light"><i class="fas fa-envelope small text-muted"></i></span>
@@ -85,29 +85,33 @@
                                 @error('direccion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Población</label>
                                 <input type="text" name="poblacion" class="form-control @error('poblacion') is-invalid @enderror" value="{{ old('poblacion') }}">
                                 @error('poblacion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="col-md-4">
-                                <label class="form-label small fw-bold text-muted text-uppercase">Código postal</label>
-                                <input type="text" name="codigo_postal" class="form-control @error('codigo_postal') is-invalid @enderror" value="{{ old('codigo_postal') }}">
-                                @error('codigo_postal') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="form-label small fw-bold text-muted text-uppercase">Código postal</label>
+                                        <input type="text" name="codigo_postal" class="form-control @error('codigo_postal') is-invalid @enderror" value="{{ old('codigo_postal') }}">
+                                        @error('codigo_postal') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
 
-                            <div class="col-md-4">
-                                <label class="form-label small fw-bold text-muted text-uppercase">Provincia</label>
-                                <select name="provincia" class="form-select @error('provincia') is-invalid @enderror">
-                                    <option value="">-- Selecciona provincia --</option>
-                                    @foreach ($provincias as $codigo => $nombre)
-                                    <option value="{{ $codigo }}" {{ old('provincia') == $codigo ? 'selected' : '' }}>
-                                        {{ $nombre }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('provincia') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    <div class="col-6">
+                                        <label class="form-label small fw-bold text-muted text-uppercase">Provincia</label>
+                                        <select name="provincia" class="form-select @error('provincia') is-invalid @enderror">
+                                            <option value="">-- Selecciona provincia --</option>
+                                            @foreach ($provincias as $codigo => $nombre)
+                                            <option value="{{ $codigo }}" {{ old('provincia') == $codigo ? 'selected' : '' }}>
+                                                {{ $nombre }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('provincia') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

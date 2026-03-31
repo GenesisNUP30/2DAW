@@ -11,7 +11,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <h2 class="fw-bold m-0 text-dark">
-                        <i class="fas fa-file-invoice-dollar me-2 text-primary"></i>Nueva cuota excepcional
+                        <i class="fas fa-file-invoice-dollar me-2"></i>Nueva cuota excepcional
                     </h2>
                     <p class="text-muted small mb-0">Registra un cargo puntual fuera de la remesa mensual.</p>
                 </div>

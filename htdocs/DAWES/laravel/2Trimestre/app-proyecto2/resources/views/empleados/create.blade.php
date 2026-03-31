@@ -7,7 +7,7 @@
 
     {{-- Cabecera --}}
     <div class="row justify-content-center mb-4">
-        <div class="col-lg-9">
+        <div class="col-lg-10">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <h2 class="fw-bold m-0 text-dark">
@@ -23,7 +23,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-lg-9">
+        <div class="col-lg-10">
             <form method="POST" action="{{ route('empleados.store') }}">
                 @csrf
 
