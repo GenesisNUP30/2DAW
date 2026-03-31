@@ -21,7 +21,7 @@
         <div class="d-flex align-items-center">
             <i class="fas fa-exclamation-circle me-3 fa-lg"></i>
             <div>
-                <span class="fw-bold">Se encontraron algunos problemas.</span> 
+                <span class="fw-bold">Se encontraron algunos problemas.</span>
                 Por favor, revisa los campos marcados en rojo a continuación.
             </div>
         </div>
@@ -44,15 +44,15 @@
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label class="form-label small fw-bold">CIF / NIF</label>
-                                <input type="text" name="cif" class="form-control @error('cif') is-invalid @enderror" 
-                                       value="{{ old('cif') }}" placeholder="Ej: B12345678">
+                                <input type="text" name="cif" class="form-control @error('cif') is-invalid @enderror"
+                                    value="{{ old('cif') }}" placeholder="Ej: B12345678">
                                 @error('cif') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-md-8">
                                 <label class="form-label small fw-bold">Nombre o Razón Social</label>
-                                <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror" 
-                                       value="{{ old('nombre') }}" placeholder="Nombre completo de la empresa">
+                                <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror"
+                                    value="{{ old('nombre') }}" placeholder="Nombre completo de la empresa">
                                 @error('nombre') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
@@ -60,8 +60,8 @@
                                 <label class="form-label small fw-bold">Correo electrónico</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light text-muted"><i class="fas fa-envelope"></i></span>
-                                    <input type="email" name="correo" class="form-control @error('correo') is-invalid @enderror" 
-                                           value="{{ old('correo') }}" placeholder="ejemplo@correo.com">
+                                    <input type="email" name="correo" class="form-control @error('correo') is-invalid @enderror"
+                                        value="{{ old('correo') }}" placeholder="ejemplo@correo.com">
                                 </div>
                                 @error('correo') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                             </div>
@@ -70,8 +70,8 @@
                                 <label class="form-label small fw-bold">Teléfono de contacto</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light text-muted"><i class="fas fa-phone"></i></span>
-                                    <input type="text" name="telefono" class="form-control @error('telefono') is-invalid @enderror" 
-                                           value="{{ old('telefono') }}" placeholder="+34 000 000 000">
+                                    <input type="text" name="telefono" class="form-control @error('telefono') is-invalid @enderror"
+                                        value="{{ old('telefono') }}" placeholder="+34 000 000 000">
                                 </div>
                                 @error('telefono') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                             </div>
@@ -81,9 +81,9 @@
                                 <select name="pais" class="form-select @error('pais') is-invalid @enderror">
                                     <option value="" selected disabled>Selecciona un país...</option>
                                     @foreach ($paises as $pais)
-                                        <option value="{{ $pais->iso2 }}" {{ old('pais') === $pais->iso2 ? 'selected' : '' }}>
-                                            {{ $pais->nombre }}
-                                        </option>
+                                    <option value="{{ $pais->iso2 }}" {{ old('pais') === $pais->iso2 ? 'selected' : '' }}>
+                                        {{ $pais->nombre }}
+                                    </option>
                                     @endforeach
                                 </select>
                                 @error('pais') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -104,22 +104,24 @@
                     <div class="card-body">
                         <div class="mb-4">
                             <label class="form-label small fw-bold">Cuenta Corriente (IBAN)</label>
-                            <input type="text" name="cuenta_corriente" class="form-control @error('cuenta_corriente') is-invalid @enderror" 
-                                   value="{{ old('cuenta_corriente') }}" placeholder="ES00 0000 0000...">
+                            <input type="text" name="cuenta_corriente" class="form-control @error('cuenta_corriente') is-invalid @enderror"
+                                value="{{ old('cuenta_corriente') }}" placeholder="ES00 0000 0000...">
                             @error('cuenta_corriente') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label small fw-bold">Importe Cuota Mensual</label>
                             <div class="input-group">
-                                <input type="number" step="0.01" name="importe_cuota_mensual" class="form-control fw-bold @error('importe_cuota_mensual') is-invalid @enderror" 
-                                       value="{{ old('importe_cuota_mensual') }}" placeholder="0.00">
+                                <input type="text" step="0.01" name="importe_cuota_mensual" class="form-control fw-bold @error('importe_cuota_mensual') is-invalid @enderror"
+                                    value="{{ old('importe_cuota_mensual') }}" placeholder="0.00">
                                 <span class="input-group-text bg-white">€ / mes</span>
                             </div>
-                            @error('importe_cuota_mensual') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             <div class="form-text mt-2 small text-muted">
                                 <i class="fas fa-info-circle me-1"></i> Este importe se utilizará para la generación automática de cuotas mensuales. Si va a introducir decimales, use el punto (.) como separador.
                             </div>
+                            @error('importe_cuota_mensual')
+                            <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <hr class="my-4 opacity-50">
