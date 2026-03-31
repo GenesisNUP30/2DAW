@@ -24,14 +24,14 @@
 
             {{-- Alertas de Sistema --}}
             @if (session('success'))
-                <div class="alert alert-success border-0 shadow-sm mb-4 d-flex align-items-center">
-                    <i class="fa-solid fa-check-circle me-2 fs-5"></i> {{ session('success') }}
-                </div>
+            <div class="alert alert-success border-0 shadow-sm mb-4 d-flex align-items-center">
+                <i class="fa-solid fa-check-circle me-2 fs-5"></i> {{ session('success') }}
+            </div>
             @endif
             @if (session('error'))
-                <div class="alert alert-danger border-0 shadow-sm mb-4 d-flex align-items-center">
-                    <i class="fa-solid fa-circle-exclamation me-2 fs-5"></i> {{ session('error') }}
-                </div>
+            <div class="alert alert-danger border-0 shadow-sm mb-4 d-flex align-items-center">
+                <i class="fa-solid fa-circle-exclamation me-2 fs-5"></i> {{ session('error') }}
+            </div>
             @endif
 
             <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
@@ -76,24 +76,27 @@
                     @php $factura = \App\Models\Factura::where('cuota_id', $cuota->id)->first(); @endphp
 
                     <div class="d-flex flex-wrap gap-3">
+                        <a href="{{ route('cuotas.index') }}" class="btn btn-outline-dark px-4 rounded-pill">
+                            <i class="fas fa-arrow-left me-1"></i> Volver al listado
+                        </a>
                         @if(!$factura)
-                            <form action="{{ route('facturas.generar', $cuota->id) }}" method="POST" class="w-100">
-                                @csrf
-                                <button type="submit" class="btn btn-primary btn-lg shadow-sm px-4 rounded-pill">
-                                    <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Generar Factura Legal
-                                </button>
-                            </form>
+                        <form action="{{ route('facturas.generar', $cuota->id) }}" method="POST" class="w-100">
+                            @csrf
+                            <button type="submit" class="btn btn-primary btn-lg shadow-sm px-4 rounded-pill">
+                                <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Generar Factura Legal
+                            </button>
+                        </form>
                         @else
-                            <a href="{{ route('facturas.descargar', $factura->id) }}" class="btn btn-outline-dark px-4 rounded-pill">
-                                <i class="fa-solid fa-file-pdf me-2 text-danger"></i>Descargar PDF
-                            </a>
+                        <a href="{{ route('facturas.descargar', $factura->id) }}" class="btn btn-outline-dark px-4 rounded-pill">
+                            <i class="fa-solid fa-file-pdf me-2 text-danger"></i>Descargar PDF
+                        </a>
 
-                            <form action="{{ route('facturas.enviar', $factura->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-success px-4 rounded-pill shadow-sm">
-                                    <i class="fa-solid fa-paper-plane me-2"></i>Enviar al Cliente
-                                </button>
-                            </form>
+                        <form action="{{ route('facturas.enviar', $factura->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success px-4 rounded-pill shadow-sm">
+                                <i class="fa-solid fa-paper-plane me-2"></i>Enviar al Cliente
+                            </button>
+                        </form>
                         @endif
                     </div>
                 </div>
@@ -105,7 +108,7 @@
             <div class="card border-0 shadow-sm bg-white" style="border-radius: 12px;">
                 <div class="card-body p-4">
                     <h5 class="fw-bold text-dark mb-4 small text-uppercase"><i class="fa-solid fa-timeline me-2 text-primary"></i>Estado del Proceso</h5>
-                    
+
                     <div class="position-relative ps-4 border-start ms-2">
                         {{-- Paso 1: Cuota --}}
                         <div class="mb-4">
@@ -117,13 +120,13 @@
                         {{-- Paso 2: Factura --}}
                         <div class="mb-4">
                             @if($factura)
-                                <span class="position-absolute start-0 translate-middle-x bg-success rounded-circle" style="width: 12px; height: 12px; margin-top: 6px;"></span>
-                                <h6 class="mb-1 fw-bold text-dark">Factura Generada</h6>
-                                <p class="small text-muted mb-0">Documento <strong>{{ $factura->numero_factura }}</strong> creado.</p>
+                            <span class="position-absolute start-0 translate-middle-x bg-success rounded-circle" style="width: 12px; height: 12px; margin-top: 6px;"></span>
+                            <h6 class="mb-1 fw-bold text-dark">Factura Generada</h6>
+                            <p class="small text-muted mb-0">Documento <strong>{{ $factura->numero_factura }}</strong> creado.</p>
                             @else
-                                <span class="position-absolute start-0 translate-middle-x bg-light border border-secondary rounded-circle" style="width: 12px; height: 12px; margin-top: 6px;"></span>
-                                <h6 class="mb-1 fw-bold text-muted">Factura Pendiente</h6>
-                                <p class="small text-muted mb-0">Esperando emisión del PDF legal.</p>
+                            <span class="position-absolute start-0 translate-middle-x bg-light border border-secondary rounded-circle" style="width: 12px; height: 12px; margin-top: 6px;"></span>
+                            <h6 class="mb-1 fw-bold text-muted">Factura Pendiente</h6>
+                            <p class="small text-muted mb-0">Esperando emisión del PDF legal.</p>
                             @endif
                         </div>
 
