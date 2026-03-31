@@ -11,7 +11,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <h2 class="fw-bold m-0 text-dark">
-                        <i class="fas fa-pen-to-square me-2"></i>Editar Cuota
+                        <i class="fas fa-edit me-2"></i>Editar Cuota <span class="text-muted">ID: {{ $cuota->id }}</span>
                     </h2>
                     <p class="text-muted small mb-0">Actualiza los términos económicos o el estado de pago de la cuota.</p>
                 </div>
@@ -32,7 +32,7 @@
                     <div class="card-body p-4">
 
                         {{-- SECCIÓN 1: ASIGNACIÓN Y CONCEPTO --}}
-                        <h5 class="fw-bold mb-4 text-success border-bottom pb-2 text-uppercase small">
+                        <h5 class="fw-bold mb-4 text-success border-bottom pb-2">
                             <i class="fas fa-file-invoice-dollar me-2"></i>Información General
                         </h5>
 
@@ -52,14 +52,14 @@
 
                             <div class="col-md-12">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Concepto de la cuota</label>
-                                <input type="text" name="concepto" class="form-control @error('concepto') is-invalid @enderror" 
-                                       value="{{ old('concepto', $cuota->concepto) }}" placeholder="Ej: Mantenimiento Mensual">
+                                <input type="text" name="concepto" class="form-control @error('concepto') is-invalid @enderror"
+                                    value="{{ old('concepto', $cuota->concepto) }}" placeholder="Ej: Mantenimiento Mensual">
                                 @error('concepto') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
 
                         {{-- SECCIÓN 2: ECONOMÍA Y FECHAS --}}
-                        <h5 class="fw-bold mb-4 text-success border-bottom pb-2 text-uppercase small">
+                        <h5 class="fw-bold mb-4 text-success border-bottom pb-2">
                             <i class="fas fa-calendar-check me-2"></i>Importe y Plazos
                         </h5>
 
@@ -67,39 +67,44 @@
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Importe</label>
                                 <div class="input-group">
+                                    <input type="number" step="0.01" name="importe" class="form-control @error('importe') is-invalid @enderror"
+                                        value="{{ old('importe', $cuota->importe) }}">
                                     <span class="input-group-text bg-light fw-bold text-muted">€</span>
-                                    <input type="text" step="0.01" name="importe" class="form-control @error('importe') is-invalid @enderror" 
-                                           value="{{ old('importe', $cuota->importe) }}">
                                     @error('importe') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
-                                <div class="form-text text-muted small">Usa coma o punto para decimales.</div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Fecha de Emisión</label>
-                                <input type="date" name="fecha_emision" class="form-control @error('fecha_emision') is-invalid @enderror" 
-                                       value="{{ old('fecha_emision', $cuota->fecha_emision ? $cuota->fecha_emision->format('Y-m-d') : '') }}">
-                                @error('fecha_emision') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-calendar-alt text-muted"></i></span>
+                                    <input type="date" name="fecha_emision" class="form-control @error('fecha_emision') is-invalid @enderror"
+                                        value="{{ old('fecha_emision', $cuota->fecha_emision ? $cuota->fecha_emision->format('Y-m-d') : '') }}">
+                                    @error('fecha_emision') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Fecha de Pago</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light text-success"><i class="fas fa-check-circle"></i></span>
-                                    <input type="date" name="fecha_pago" class="form-control @error('fecha_pago') is-invalid @enderror" 
-                                           value="{{ old('fecha_pago', $cuota->fecha_pago ? $cuota->fecha_pago->format('Y-m-d') : '') }}">
+                                    <input type="date" name="fecha_pago" class="form-control @error('fecha_pago') is-invalid @enderror"
+                                        value="{{ old('fecha_pago', $cuota->fecha_pago ? $cuota->fecha_pago->format('Y-m-d') : '') }}">
                                     @error('fecha_pago') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
-                                <div class="form-text text-muted small text-end">Dejar vacío si aún no se ha cobrado.</div>
+                                <div class="form-text text-muted small">Dejar vacío si la cuota aún está pendiente de cobro.</div>
                             </div>
                         </div>
 
                         {{-- SECCIÓN 3: NOTAS ADICIONALES --}}
+                        <h5 class="fw-bold mb-4 text-success border-bottom pb-2">
+                            <i class="fas fa-sticky-note me-2"></i>Observaciones
+                        </h5>
                         <div class="row g-3">
                             <div class="col-12">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Notas internas</label>
-                                <textarea name="notes" class="form-control @error('notas') is-invalid @enderror" rows="3" 
-                                          placeholder="Anotaciones sobre el cobro o incidencias...">{{ old('notas', $cuota->notas) }}</textarea>
+                                <textarea name="notas" class="form-control @error('notas') is-invalid @enderror" rows="3"
+                                    placeholder="Anotaciones sobre el cobro o incidencias...">{{ old('notas', $cuota->notas) }}</textarea>
                                 @error('notas') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
