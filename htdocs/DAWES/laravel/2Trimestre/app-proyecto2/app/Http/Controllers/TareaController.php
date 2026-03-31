@@ -183,8 +183,25 @@ class TareaController extends Controller
             'poblacion' => 'nullable|string|max:100',
             'codigo_postal' => 'required|regex:/^\d{5}$/',
             'provincia' => 'required|in:' . implode(',', array_keys($this->provincias())),
-            'fecha_realizacion' => 'required|date|after_or_equal:today',
             'estado' => 'required|in:B,P,R,C',
+            'fecha_realizacion' => [
+                // Es obligatorio solo si el estado es 'Realizada' (R)
+                'required_if:estado,R',
+                'nullable',
+                'date',
+                function ($attribute, $value, $fail) use ($request) {
+                    $estado = $request->estado;
+                    $hoy = now()->startOfDay();
+                    $fechaInput = \Carbon\Carbon::parse($value)->startOfDay();
+
+                    // 2. Si es Pendiente (P) o Esperando (B), la fecha DEBE ser hoy o futura
+                    if (in_array($estado, ['P', 'B'])) {
+                        if ($fechaInput->lt($hoy)) {
+                            $fail('Para tareas pendientes o a la espera de aprobación, la fecha no puede ser anterior a hoy.');
+                        }
+                    }
+                },
+            ],
             'anotaciones_anteriores' => 'nullable|string',
         ], [
             'cliente_id.required' => 'Debes seleccionar un cliente',
@@ -207,8 +224,7 @@ class TareaController extends Controller
             'codigo_postal.regex' => 'El código postal debe tener exactamente 5 dígitos.',
             'provincia.required' => 'La provincia es obligatoria',
             'provincia.in' => 'La provincia seleccionada no es válida',
-            'fecha_realizacion.required' => 'La fecha de realización es obligatoria',
-            'fecha_realizacion.after_or_equal' => 'La fecha de realización debe ser posterior o igual a la fecha actual',
+            'fecha_realizacion.required_if' => 'Si la tarea está realizada, debes indicar cuándo se hizo.',
             'estado.required' => 'El estado es obligatorio',
             'estado.in' => 'El estado seleccionado no es válido',
         ]);
