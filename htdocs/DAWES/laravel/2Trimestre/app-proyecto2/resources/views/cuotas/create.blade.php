@@ -120,7 +120,7 @@
                             <div class="col-12 mt-4 text-end">
                                 <hr class="opacity-50">
                                 <a href="{{ route('cuotas.index') }}" class="btn btn-light border px-4 me-2">
-                                    Cancelar
+                                    <i class="fas fa-times me-1"></i> Cancelar
                                 </a>
                                 <button type="submit" class="btn btn-primary px-5 fw-bold shadow-sm">
                                     <i class="fas fa-wallet me-2"></i>Guardar cuota

@@ -163,7 +163,7 @@
                     </div>
                     <div class="card-footer bg-light p-4 border-0 text-end" style="border-radius: 0 0 15px 15px;">
                         <a href="{{ route('tareas.index') }}" class="btn btn-light border px-4 me-2">
-                            Cancelar
+                            <i class="fas fa-times me-1"></i> Cancelar
                         </a>
                         <button type="submit" class="btn btn-success px-5 fw-bold shadow-sm text-white">
                             <i class="fas fa-save me-2"></i>Actualizar Tarea

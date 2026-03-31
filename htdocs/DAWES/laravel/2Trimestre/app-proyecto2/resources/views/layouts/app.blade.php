@@ -20,132 +20,132 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+<style>
+    /* Sidebar pegado a la izquierda */
+    .sidebar {
+        min-height: calc(100vh - 60px);
+        background-color: #f8f9fa;
+        border-right: 1px solid #dee2e6;
+        padding: 0; /* Eliminamos paddings externos */
+    }
 
+    .nav-link {
+        color: #495057;
+        padding: 0.8rem 1.2rem;
+        border-radius: 0; /* Volvemos a estilo rectangular para que pegue bien */
+        margin: 0; 
+        border-bottom: 1px solid #eee;
+        transition: background 0.2s;
+    }
+
+    .nav-link:hover {
+        background-color: #e9ecef;
+        color: #000;
+    }
+
+    .nav-link.active {
+        background-color: #0d6efd !important;
+        color: white !important;
+    }
+
+    .sidebar-heading {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #6c757d;
+        padding: 1rem 1.2rem 0.5rem;
+        background-color: #f1f1f1;
+    }
+
+    /* FIX CRÍTICO: Asegurar que el texto de los botones se vea siempre */
+    .btn-dark, .btn-secondary, .btn-primary, .btn-success {
+        color: #fff !important; /* Texto blanco para botones oscuros */
+    }
+    
+    /* Si el botón "Cuota excepcional" es negro manual o btn-dark */
+    .btn-dark i {
+        color: #fff !important;
+    }
+</style>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+        {{-- NAVBAR --}}
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm sticky-top">
+            <div class="container-fluid px-4"> {{-- Usamos container-fluid para más ancho --}}
+                <a class="navbar-brand fw-bold" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
+                
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                        @if (Route::has('login'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        @endif
-
-                        @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                        @endif
-                        @else
-                        <!-- Información del usuario en la navbar -->
-                        <li class="nav-item d-none d-md-flex align-items-center me-3">
-                            <span class="text-muted">Tipo:
-                                <span>
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        @auth
+                            <li class="nav-item d-none d-md-flex align-items-center me-3">
+                                <span class="text-muted small">
+                                    <strong>Tipo:</strong> 
                                     @if(Auth::user()->isAdmin())
-                                    <i class="fas fa-user-shield"></i> Administrador
+                                        <span class="text-primary"><i class="fas fa-user-shield"></i> Administrador</span>
                                     @else
-                                    <i class="fas fa-hard-hat"></i> Operario
+                                        <span class="text-success"><i class="fas fa-hard-hat"></i> Operario</span>
                                     @endif
-                                </span> |
-                                <i class="far fa-clock ms-1"></i>
-                                Última sesión: {{ Auth::user()->ultimaSesion() }}
-                            </span>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <i class="fas fa-user me-1"></i>
-                                {{ Auth::user()->name }}
-                            </a>
+                                    <span class="mx-2">|</span>
+                                    <i class="far fa-clock me-1"></i>Última sesión: {{ Auth::user()->ultimaSesion() }}
+                                </span>
+                            </li>
 
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('perfil') }}">
-                                    <i class="fas fa-user-edit"></i> Editar perfil
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                    <i class="fas fa-user me-1"></i> {{ Auth::user()->name }}
                                 </a>
-
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    <i class="fas fa-sign-out-alt me-2"></i>{{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                        @endguest
+                                <div class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <a class="dropdown-item" href="{{ route('perfil') }}"><i class="fas fa-user-edit me-2"></i>Editar perfil</a>
+                                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt me-2"></i>Salir</button>
+                                    </form>
+                                </div>
+                            </li>
+                        @endauth
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <main class="py-4">
-            <div class="row">
-                <aside class="col-md-3 col-lg-2 bg-light">
-
+        {{-- CUERPO DE LA APP --}}
+        <div class="container-fluid p-0"> {{-- p-0 quita los márgenes de los lados --}}
+            <div class="row g-0"> {{-- g-0 quita el "gutter" (espacio entre columnas) --}}
+                
+                <aside class="col-md-3 col-lg-2 sidebar">
                     <nav class="nav flex-column">
-                        <ul class="nav flex-column">
-                            @if(Auth::check() && Auth::user()->isAdmin())
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
-                                    <i class="fas fa-home"></i> Inicio
-                                </a>
-                            </li>
-                            
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tareas.index') }}">
-                                    <i class="fas fa-tasks me-1"></i> Tareas
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('empleados.index') }}">
-                                    <i class="fas fa-users me-1"></i> Empleados
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('clientes.index') }}">
-                                    <i class="fas fa-user-tie"></i> Clientes
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('cuotas.index') }}">
-                                    <i class="fas fa-file-invoice-dollar me-1"></i> Cuotas
-                                </a>
-                            </li>
-                            @elseif(Auth::check() && Auth::user()->isOperario())
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tareas.index') }}">
-                                    <i class="fas fa-tasks me-1"></i> Tareas
-                                </a>
-                            </li>
+                        @auth
+                            <div class="sidebar-heading">Navegación</div>
+                            <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
+                                <i class="fas fa-home me-2"></i>Inicio
+                            </a>
+                            <a class="nav-link {{ request()->routeIs('tareas.*') ? 'active' : '' }}" href="{{ route('tareas.index') }}">
+                                <i class="fas fa-tasks me-2"></i>Tareas
+                            </a>
 
+                            @if(Auth::user()->isAdmin())
+                                <div class="sidebar-heading">Gestión</div>
+                                <a class="nav-link {{ request()->routeIs('empleados.*') ? 'active' : '' }}" href="{{ route('empleados.index') }}">
+                                    <i class="fas fa-users me-2"></i>Empleados
+                                </a>
+                                <a class="nav-link {{ request()->routeIs('clientes.*') ? 'active' : '' }}" href="{{ route('clientes.index') }}">
+                                    <i class="fas fa-user-tie me-2"></i>Clientes
+                                </a>
+                                <a class="nav-link {{ request()->routeIs('cuotas.*') ? 'active' : '' }}" href="{{ route('cuotas.index') }}">
+                                    <i class="fas fa-file-invoice-dollar me-2"></i>Cuotas
+                                </a>
                             @endif
-                        </ul>
+                        @endauth
                     </nav>
                 </aside>
-                <section class="col-md-9 col-lg-9">
-                    @yield('content')
-                </section>
 
+                <main class="col-md-9 col-lg-10 p-4">
+                    @yield('content')
+                </main>
             </div>
-        </main>
+        </div>
     </div>
 </body>
 

@@ -131,7 +131,7 @@
                                 <i class="fas fa-save me-2"></i>Registrar cliente
                             </button>
                             <a href="{{ route('clientes.index') }}" class="btn btn-light border py-2 text-muted">
-                                Cancelar
+                                <i class="fas fa-times me-1"></i> Cancelar
                             </a>
                         </div>
                     </div>
