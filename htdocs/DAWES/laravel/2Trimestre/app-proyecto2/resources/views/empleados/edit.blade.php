@@ -39,9 +39,12 @@
                         <div class="row g-3 mb-4">
                             <div class="col-md-4">
                                 <label class="form-label small fw-bold text-muted text-uppercase">DNI / NIE</label>
-                                <input type="text" name="dni" class="form-control @error('dni') is-invalid @enderror" 
-                                       value="{{ old('dni', $empleado->dni) }}">
-                                @error('dni') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-fingerprint text-muted"></i></span>
+                                    <input type="text" name="dni" class="form-control @error('dni') is-invalid @enderror" 
+                                           value="{{ old('dni', $empleado->dni) }}">
+                                    @error('dni') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                </div>
                             </div>
 
                             <div class="col-md-8">
@@ -53,9 +56,12 @@
 
                             <div class="col-md-12">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Dirección de Residencia</label>
-                                <input type="text" name="direccion" class="form-control @error('direccion') is-invalid @enderror" 
-                                       value="{{ old('direccion', $empleado->direccion) }}">
-                                @error('direccion') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-map-marker-alt text-muted"></i></span>
+                                    <input type="text" name="direccion" class="form-control @error('direccion') is-invalid @enderror" 
+                                           value="{{ old('direccion', $empleado->direccion) }}">
+                                    @error('direccion') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                </div>
                             </div>
                         </div>
 
@@ -86,9 +92,12 @@
 
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Fecha de Alta</label>
-                                <input type="date" name="fecha_alta" class="form-control @error('fecha_alta') is-invalid @enderror" 
-                                       value="{{ old('fecha_alta', $empleado->fecha_alta) }}">
-                                @error('fecha_alta') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-calendar-check text-muted"></i></span>
+                                    <input type="date" name="fecha_alta" class="form-control @error('fecha_alta') is-invalid @enderror" 
+                                           value="{{ old('fecha_alta', $empleado->fecha_alta) }}">
+                                    @error('fecha_alta') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                </div>
                             </div>
 
                             <div class="col-md-6">
@@ -103,21 +112,28 @@
 
                         {{-- SECCIÓN 3: SEGURIDAD --}}
                         <h5 class="fw-bold mb-4 text-success border-bottom pb-2">
-                            <i class="fas fa-key me-2"></i>Seguridad
+                            <i class="fas fa-shield-alt me-2"></i>Seguridad y Acceso
                         </h5>
-                        <div class="alert alert-light border small text-muted mb-4">
-                            <i class="fas fa-info-circle me-1"></i> Deja los campos de contraseña en blanco si **no** deseas cambiar la clave actual del empleado.
+                        <div class="alert alert-warning border-0 shadow-sm small mb-4 py-2">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Si no deseas cambiar la contraseña, deja los siguientes campos vacíos.
                         </div>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Nueva Contraseña</label>
-                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="••••••••">
-                                @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-lock text-muted"></i></span>
+                                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Mín. 8 caracteres">
+                                    @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                </div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Confirmar Nueva Contraseña</label>
-                                <input type="password" name="password_confirmation" class="form-control" placeholder="••••••••">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-lock text-muted"></i></span>
+                                    <input type="password" name="password_confirmation" class="form-control" placeholder="Repite la contraseña">
+                                </div>
                             </div>
                         </div>
 
@@ -127,7 +143,7 @@
                             <i class="fas fa-times me-1"></i> Cancelar
                         </a>
                         <button type="submit" class="btn btn-success px-5 fw-bold shadow-sm text-white">
-                            <i class="fas fa-sync-alt me-2"></i>Actualizar Empleado
+                            <i class="fas fa-save me-2"></i>Actualizar Empleado
                         </button>
                     </div>
                 </div>
