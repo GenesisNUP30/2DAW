@@ -101,6 +101,7 @@ class ClienteController extends Controller
             'pais.required' => 'El país es obligatorio',
             'pais.in' => 'El país seleccionado no es válido',
             'importe_cuota_mensual.required' => 'El importe de la cuota es obligatorio',
+            'importe_cuota_mensual.numeric' => 'El importe de la cuota debe ser numérico',
             'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 0',
         ]);
 

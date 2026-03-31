@@ -69,6 +69,7 @@ class CuotaController extends Controller
             'fecha_emision' => 'required|date',
             'importe' => 'required|numeric|min:0.01',
             'fecha_pago' => 'nullable|date|after_or_equal:fecha_emision',
+            'importe_cuota_mensual' => 'required|numeric|min:1',
             'notas' => 'nullable|string|max:255',
         ], [
             'cliente_id.required' => 'El cliente es obligatorio',
