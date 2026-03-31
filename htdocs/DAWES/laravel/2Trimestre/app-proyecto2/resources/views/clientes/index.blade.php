@@ -72,8 +72,8 @@
                     <th class="ps-4 py-3 border-0">Cliente / CIF</th>
                     <th class="py-3 border-0">Contacto</th>
                     <th class="py-3 border-0">País</th>
-                    <th class="py-3 border-0 text-center">Cuotas</th>
-                    <th class="py-3 border-0">Estado</th>
+                    <th class="py-3 border-0 text-center">Importe de cuota mensual</th>
+                    <th class="py-3 border-0 text-center">Estado</th>
                     <th class="py-3 pe-4 border-0 text-end">Acciones</th>
                 </tr>
             </thead>
@@ -99,21 +99,15 @@
                         </span>
                     </td>
 
-                    {{-- Indicador de Cuotas --}}
+                    {{-- Importe Cuota Mensual --}}
                     <td class="text-center">
-                        @if($cliente->tieneCuotasPendientes())
-                        <span class="badge rounded-pill border bg-danger bg-opacity-10 text-danger px-3 py-2" title="Tiene cobros pendientes">
-                            <i class="fas fa-file-invoice-dollar me-1"></i> Pendiente
+                        <span class="fw-bold text-dark">
+                            {{ number_format($cliente->importe_cuota_mensual, 2, ',', '.') }}€
                         </span>
-                        @else
-                        <span class="badge rounded-pill bg-success bg-opacity-10 text-success px-3 py-2">
-                            <i class="fas fa-check me-1"></i> Al día
-                        </span>
-                        @endif
                     </td>
 
                     {{-- Estado (Activo/Baja) --}}
-                    <td>
+                    <td class="text-center">
                         @if($cliente->isActivo())
                         <span class="badge rounded-pill border bg-success bg-opacity-10 text-success px-3 py-2">
                             Activo
