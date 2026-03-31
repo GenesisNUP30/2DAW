@@ -3,122 +3,136 @@
 @section('titulo', 'Editar empleado')
 
 @section('content')
-<div class="container">
+<div class="container py-4">
 
-    <h1 class="mb-4">
-        <i class="fas fa-user-edit"></i> Editar Empleado: {{ $empleado->name }}
-    </h1>
-
-    {{-- ERRORES --}}
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    {{-- Cabecera --}}
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-9">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h2 class="fw-bold m-0 text-dark">
+                        <i class="fas fa-user-edit me-2"></i>Editar Empleado
+                    </h2>
+                    <p class="text-muted small mb-0">Actualizando el perfil de <strong>{{ $empleado->name }}</strong></p>
+                </div>
+                <a href="{{ route('empleados.index') }}" class="btn btn-sm btn-light border shadow-sm px-3">
+                    <i class="fas fa-arrow-left me-1"></i> Volver
+                </a>
+            </div>
+        </div>
     </div>
-    @endif
 
-    <form action="{{ route('empleados.update', $empleado->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <form action="{{ route('empleados.update', $empleado->id) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-        {{-- DNI --}}
-        <div class="mb-3">
-            <label class="form-label">DNI</label>
-            <input type="text" name="dni" class="form-control" value="{{ old('dni', $empleado->dni) }}">
-            @error('dni')
-            <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
+                <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+                    <div class="card-body p-4">
+
+                        {{-- SECCIÓN 1: DATOS PERSONALES --}}
+                        <h5 class="fw-bold mb-4 text-success border-bottom pb-2">
+                            <i class="fas fa-id-card me-2"></i>Información Personal
+                        </h5>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold text-muted text-uppercase">DNI / NIE</label>
+                                <input type="text" name="dni" class="form-control @error('dni') is-invalid @enderror" 
+                                       value="{{ old('dni', $empleado->dni) }}">
+                                @error('dni') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="col-md-8">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Nombre Completo</label>
+                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" 
+                                       value="{{ old('name', $empleado->name) }}">
+                                @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Dirección de Residencia</label>
+                                <input type="text" name="direccion" class="form-control @error('direccion') is-invalid @enderror" 
+                                       value="{{ old('direccion', $empleado->direccion) }}">
+                                @error('direccion') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+
+                        {{-- SECCIÓN 2: CONTACTO Y EMPRESA --}}
+                        <h5 class="fw-bold mb-4 text-success border-bottom pb-2">
+                            <i class="fas fa-briefcase me-2"></i>Contacto y Empresa
+                        </h5>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Correo Electrónico</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-envelope text-muted"></i></span>
+                                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
+                                           value="{{ old('email', $empleado->email) }}">
+                                    @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Teléfono</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-phone text-muted"></i></span>
+                                    <input type="tel" name="telefono" class="form-control @error('telefono') is-invalid @enderror" 
+                                           value="{{ old('telefono', $empleado->telefono) }}">
+                                    @error('telefono') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Fecha de Alta</label>
+                                <input type="date" name="fecha_alta" class="form-control @error('fecha_alta') is-invalid @enderror" 
+                                       value="{{ old('fecha_alta', $empleado->fecha_alta) }}">
+                                @error('fecha_alta') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Rol de Usuario</label>
+                                <select name="tipo" class="form-select @error('tipo') is-invalid @enderror">
+                                    <option value="administrador" {{ old('tipo', $empleado->tipo) == 'administrador' ? 'selected' : '' }}>Administrador</option>
+                                    <option value="operario" {{ old('tipo', $empleado->tipo) == 'operario' ? 'selected' : '' }}>Operario</option>
+                                </select>
+                                @error('tipo') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+
+                        {{-- SECCIÓN 3: SEGURIDAD --}}
+                        <h5 class="fw-bold mb-4 text-success border-bottom pb-2">
+                            <i class="fas fa-key me-2"></i>Seguridad
+                        </h5>
+                        <div class="alert alert-light border small text-muted mb-4">
+                            <i class="fas fa-info-circle me-1"></i> Deja los campos de contraseña en blanco si **no** deseas cambiar la clave actual del empleado.
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Nueva Contraseña</label>
+                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="••••••••">
+                                @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Confirmar Nueva Contraseña</label>
+                                <input type="password" name="password_confirmation" class="form-control" placeholder="••••••••">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer bg-light p-4 border-0 text-end" style="border-radius: 0 0 15px 15px;">
+                        <a href="{{ route('empleados.index') }}" class="btn btn-light border px-4 me-2">
+                            <i class="fas fa-times me-1"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-success px-5 fw-bold shadow-sm text-white">
+                            <i class="fas fa-sync-alt me-2"></i>Actualizar Empleado
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-
-        {{-- NOMBRE --}}
-        <div class="mb-3">
-            <label class="form-label">Nombre</label>
-            <input type="text" name="name" class="form-control" value="{{ old('name', $empleado->name) }}">
-            @error('name')
-            <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
-        </div>
-
-        {{-- EMAIL --}}
-        <div class="mb-3">
-            <label class="form-label">Correo electrónico</label>
-            <input type="text" name="email" class="form-control" value="{{ old('email', $empleado->email) }}">
-            @error('email')
-            <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
-        </div>
-
-        {{-- TELEFONO --}}
-        <div class="mb-3">
-            <label class="form-label">Teléfono</label>
-            <input type="tel" name="telefono" class="form-control" value="{{ old('telefono', $empleado->telefono) }}">
-            @error('telefono')
-            <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
-        </div>
-
-        {{-- DIRECCION --}}
-        <div class="mb-3">
-            <label class="form-label">Dirección</label>
-            <input type="text" name="direccion" class="form-control" value="{{ old('direccion', $empleado->direccion) }}">
-            @error('direccion')
-            <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
-        </div>
-
-        {{-- FECHA DE ALTA --}}
-        <div class="mb-3">
-            <label class="form-label">Fecha de alta</label>
-            <input type="date" name="fecha_alta" class="form-control" value="{{ old('fecha_alta', $empleado->fecha_alta) }}">
-            @error('fecha_alta')
-            <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
-        </div>
-
-        {{-- NUEVA CONTRASEÑA --}}
-        <div class="mb-3">
-            <label class="form-label">Nueva contraseña (opcional)</label>
-            <input type="password" name="password" class="form-control" value="{{ old('password') }}">
-            @error('password')
-            <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
-        </div>
-
-        {{-- CONFIRMAR NUEVA CONTRASEÑA --}}
-        <div class="mb-3">
-            <label class="form-label">Confirmar contraseña</label>
-            <input type="password" name="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}">
-            @error('password_confirmation')
-            <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
-        </div>
-
-        {{-- TIPO --}}
-        <div class="mb-3">
-            <label class="form-label">Tipo</label>
-            <select name="tipo" class="form-select">
-                <option value="">-- Selecciona tipo --</option>
-                <option value="administrador" {{ old('tipo', $empleado->tipo) == 'administrador' ? 'selected' : '' }}>Administrador</option>
-                <option value="operario" {{ old('tipo', $empleado->tipo) == 'operario' ? 'selected' : '' }}>Operario</option>
-            </select>
-            @error('tipo')
-            <div class="text-danger mt-1">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-success mb-3">
-                <i class="fas fa-sync-alt me-1"></i> Actualizar empleado
-            </button>
-
-            <a href="{{ route('empleados.index') }}" class="btn btn-secondary mb-3">
-                <i class="fas fa-times me-1"></i>
-                Cancelar
-            </a>
-        </div>
-    </form>
+    </div>
 </div>
 @endsection
