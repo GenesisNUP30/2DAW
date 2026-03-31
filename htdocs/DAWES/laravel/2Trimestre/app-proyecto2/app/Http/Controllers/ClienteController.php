@@ -85,7 +85,7 @@ class ClienteController extends Controller
             'correo' => 'required|email|max:100',
             'cuenta_corriente' => 'required|string|max:50',
             'pais' => 'required|string|exists:paises,iso2',
-            'importe_cuota_mensual' => 'required|numeric|min:0',
+            'importe_cuota_mensual' => 'required|numeric|min:1',
         ], [
             'cif.required' => 'El CIF es obligatorio',
             'cif.unique' => 'Ya existe un cliente con ese CIF',

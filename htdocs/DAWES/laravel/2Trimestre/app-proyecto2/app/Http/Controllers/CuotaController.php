@@ -69,6 +69,7 @@ class CuotaController extends Controller
             'fecha_emision' => 'required|date',
             'importe' => 'required|numeric|min:0.01',
             'fecha_pago' => 'nullable|date|after_or_equal:fecha_emision',
+            'importe_cuota_mensual' => 'required|numeric|min:1',
             'notas' => 'nullable|string|max:255',
         ], [
             'cliente_id.required' => 'El cliente es obligatorio',
@@ -167,11 +168,7 @@ class CuotaController extends Controller
             'cliente_id' => 'required|exists:clientes,id',
             'concepto' => 'required|string|max:50',
             'fecha_emision' => 'required|date',
-            'importe' => [
-                'required',
-                'regex:/^\d+(\.\d{1,2})?$/',
-                'min:0.01'
-            ],
+            'importe' => 'required|numeric|min:1',
             'fecha_pago' => 'nullable|date|after_or_equal:fecha_emision',
             'notas' => 'nullable|string|max:255',
         ], [
@@ -180,7 +177,7 @@ class CuotaController extends Controller
             'concepto.max' => 'El concepto no puede tener más de 50 caracteres',
             'fecha_emision.required' => 'La fecha de emisión es obligatoria',
             'importe.required' => 'El importe es obligatorio',
-            'importe.numeric' => 'El importe debe ser un número válido (usa punto para decimales, ej: 500.50)',
+            'importe.numeric' => 'El importe debe ser un número válido',
             'importe.min' => 'El importe debe ser mayor o igual a 0',
             'fecha_pago.date' => 'La fecha de pago debe ser una fecha valida',
             'fecha_pago.after_or_equal' => 'La fecha de pago debe ser igual o posterior a la fecha de emisión',
