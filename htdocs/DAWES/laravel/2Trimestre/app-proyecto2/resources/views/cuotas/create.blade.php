@@ -90,7 +90,7 @@
                                 <label class="form-label small fw-bold text-muted text-uppercase">Importe Total</label>
                                 <div class="input-group">
                                     <input type="number" step="0.01" name="importe" class="form-control form-control-lg fw-bold @error('importe') is-invalid @enderror"
-                                        value="{{ old('importe') }}" placeholder="0.00">
+                                        value="{{ old('importe') }}" placeholder="0,00">
                                     <span class="input-group-text bg-white fw-bold">€</span>
                                     @error('importe') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
