@@ -85,7 +85,7 @@ class ClienteController extends Controller
             'correo' => 'required|email|max:100',
             'cuenta_corriente' => 'required|string|max:50',
             'pais' => 'required|string|exists:paises,iso2',
-            'importe_cuota_mensual' => 'required|numeric|min:0',
+            'importe_cuota_mensual' => 'required|numeric|min:1',
         ], [
             'cif.required' => 'El CIF es obligatorio',
             'cif.unique' => 'Ya existe un cliente con ese CIF',
@@ -101,7 +101,6 @@ class ClienteController extends Controller
             'pais.required' => 'El país es obligatorio',
             'pais.in' => 'El país seleccionado no es válido',
             'importe_cuota_mensual.required' => 'El importe de la cuota es obligatorio',
-            'importe_cuota_mensual.numeric' => 'El importe de la cuota debe ser numérico',
             'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 0',
         ]);
 

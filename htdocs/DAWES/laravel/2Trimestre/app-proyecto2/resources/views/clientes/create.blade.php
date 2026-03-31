@@ -103,10 +103,9 @@
                             <div class="col-md-4">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Cuota Mensual</label>
                                 <div class="input-group">
-                                    <input type="text" step="0.01" name="importe_cuota_mensual" class="form-control fw-bold @error('importe_cuota_mensual') is-invalid @enderror"
+                                    <input type="number" step="0.01" name="importe_cuota_mensual" class="form-control fw-bold @error('importe_cuota_mensual') is-invalid @enderror"
                                         value="{{ old('importe_cuota_mensual') }}" placeholder="0.00">
                                     <span class="input-group-text bg-light text-muted small">€/mes</span>
-                                    <div class="form-text mt-1 text-muted small">Para decimales, use el punto (.) como separador.</div>
                                     @error('importe_cuota_mensual') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
                             </div>
