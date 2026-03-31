@@ -38,7 +38,7 @@
                 <div class="card-header bg-white py-3 border-bottom">
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="fw-bold text-uppercase small text-muted">Detalles de la Cuota Origen</span>
-                        <span class="badge rounded-pill bg-light text-dark border">Ref: Nº {{ $cuota->id }}</span>
+                        <span class="badge rounded-pill bg-light text-dark border">Ref: ID {{ $cuota->id }}</span>
                     </div>
                 </div>
                 <div class="card-body p-4">

@@ -38,7 +38,7 @@
                 <p class="fw-semibold text-danger mb-1">Esta acción no se puede deshacer</p>
                 <p class="text-muted mb-0">
                     Estás a punto de eliminar permanentemente la tarea
-                    <strong>nº {{ $tarea->id }}</strong> del cliente
+                    <strong>con ID {{ $tarea->id }}</strong> del cliente
                     <strong>{{ $tarea->cliente->nombre }}</strong>.
                 </p>
             </div>

@@ -22,7 +22,7 @@
             <div>
                 <h5 class="fw-bold text-danger mb-1">¿Estás seguro de que deseas eliminar esta cuota?</h5>
                 <p class="text-muted mb-0 small">
-                    La cuota <strong>nº {{ $cuota->id }}</strong> será enviada a la papelera.
+                    La cuota <strong>con ID {{ $cuota->id }}</strong> será enviada a la papelera.
                     Podrás restaurarla más tarde si lo necesitas, y la <strong>factura asociada no se borrará</strong> del sistema.
                 </p>
             </div>

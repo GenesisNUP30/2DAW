@@ -11,7 +11,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <h2 class="fw-bold m-0 text-dark">
-                        <i class="fas fa-edit me-2 text-success"></i>Editar Tarea <span class="text-muted">Nº {{ $tarea->id }}</span>
+                        <i class="fas fa-edit me-2"></i>Editar Tarea <span class="text-muted">ID: {{ $tarea->id }}</span>
                     </h2>
                     <p class="text-muted small mb-0">Modifica los detalles de la incidencia o asignación técnica.</p>
                 </div>
