@@ -7,13 +7,13 @@
 
     {{-- Cabecera --}}
     <div class="row justify-content-center mb-4">
-        <div class="col-lg-8">
+        <div class="col-lg-10">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <h2 class="fw-bold m-0 text-dark">
-                        <i class="fas fa-file-invoice-dollar me-2"></i>Nueva cuota excepcional
+                        <i class="fas fa-file-invoice-dollar me-2"></i>Nueva Cuota Excepcional
                     </h2>
-                    <p class="text-muted small mb-0">Registra un cargo puntual fuera de la remesa mensual.</p>
+                    <p class="text-muted small mb-0">Registra un cargo puntual fuera de la remesa mensual ordinaria.</p>
                 </div>
                 <a href="{{ route('cuotas.index') }}" class="btn btn-sm btn-light border shadow-sm">
                     <i class="fas fa-arrow-left me-1"></i> Volver
@@ -23,17 +23,22 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-lg-10">
+            <form action="{{ route('cuotas.store') }}" method="POST">
+                @csrf
 
-            <div class="card border-0 shadow-sm" style="border-radius: 15px;">
-                <div class="card-body p-4">
-                    <form action="{{ route('cuotas.store') }}" method="POST">
-                        @csrf
+                <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+                    <div class="card-body p-4">
 
-                        <div class="row g-3">
-                            {{-- Seleccionar Cliente --}}
-                            <div class="col-12">
-                                <label class="form-label small fw-bold text-uppercase text-muted">Cliente beneficiario</label>
+                        {{-- SECCIÓN 1: DETALLES DEL CARGO --}}
+                        <h5 class="fw-bold mb-4 text-primary border-bottom pb-2">
+                            <i class="fas fa-info-circle me-2"></i>Detalles del Cargo
+                        </h5>
+
+                        <div class="row g-3 mb-4">
+                            {{-- Cliente --}}
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Cliente beneficiario</label>
                                 <select name="cliente_id" class="form-select @error('cliente_id') is-invalid @enderror">
                                     <option value="" selected disabled>-- Selecciona el cliente --</option>
                                     @foreach ($clientes as $cliente)
@@ -42,94 +47,77 @@
                                     </option>
                                     @endforeach
                                 </select>
-                                @error('cliente_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                @error('cliente_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
                             {{-- Concepto --}}
-                            <div class="col-12">
-                                <label class="form-label small fw-bold text-uppercase text-muted">Concepto del cargo</label>
-                                <input type="text" name="concepto" class="form-control @error('concepto') is-invalid @enderror"
-                                    value="{{ old('concepto') }}" placeholder="Ej: Venta de material informático">
-                                @error('concepto')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @else
-                                <div class="form-text small text-muted">Breve descripción para la factura.</div>
-                                @enderror
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Concepto del cargo</label>
+                                <input type="text" name="concept" class="form-control @error('concepto') is-invalid @enderror"
+                                    value="{{ old('concepto') }}" placeholder="Ej: Venta de material informático / Configuración servidor">
+                                @error('concepto') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            {{-- Fecha Emisión --}}
+                            {{-- Fechas --}}
                             <div class="col-md-6">
-                                <label class="form-label small fw-bold text-uppercase text-muted">Fecha de emisión</label>
-                                <div class="input-group has-validation">
-                                    <span class="input-group-text bg-light"><i class="far fa-calendar-alt"></i></span>
+                                <label class="form-label small fw-bold text-muted text-uppercase">Fecha de emisión</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="far fa-calendar-alt text-muted"></i></span>
                                     <input type="date" name="fecha_emision" class="form-control @error('fecha_emision') is-invalid @enderror"
                                         value="{{ old('fecha_emision', date('Y-m-d')) }}">
-                                    @error('fecha_emision')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    @error('fecha_emision') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
                             </div>
 
-                            {{-- Fecha Pago --}}
                             <div class="col-md-6">
-                                <label class="form-label small fw-bold text-uppercase text-muted">Fecha de pago (Opcional)</label>
-                                <div class="input-group has-validation">
-                                    <span class="input-group-text bg-light text-success"><i class="fas fa-check-circle"></i></span>
+                                <label class="form-label small fw-bold text-muted text-uppercase">Fecha de pago (Opcional)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-check-circle text-success"></i></span>
                                     <input type="date" name="fecha_pago" class="form-control @error('fecha_pago') is-invalid @enderror"
                                         value="{{ old('fecha_pago') }}">
-                                    @error('fecha_pago')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    @error('fecha_pago') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
-                                <small class="form-text text-muted">
-                                    Si no hay fecha de pago, deje el campo vacío
-                                </small>
-                            </div>
-
-                            {{-- Importe --}}
-                            <div class="col-12">
-                                <div class="bg-light p-3 rounded-3 mt-2 border">
-                                    <label class="form-label small fw-bold text-uppercase text-muted">Importe total</label>
-                                    <div class="input-group input-group-lg w-50 has-validation">
-                                        <input type="text" step="0.01" name="importe" class="form-control fw-bold @error('importe') is-invalid @enderror"
-                                            value="{{ old('importe') }}" placeholder="0.00">
-                                        <span class="input-group-text bg-white fw-bold text-muted">€</span>
-                                        @error('importe')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    @if(!$errors->has('importe'))
-                                    <div class="form-text mt-1 text-muted small">Usa punto para los decimales (ej: 45.50).</div>
-                                    @endif
-                                </div>
-                            </div>
-
-                            {{-- Notas --}}
-                            <div class="col-12">
-                                <label class="form-label small fw-bold text-uppercase text-muted">Notas internas</label>
-                                <textarea name="notas" class="form-control @error('notas') is-invalid @enderror"
-                                    rows="2" placeholder="Observaciones privadas...">{{ old('notas') }}</textarea>
-                                @error('notas')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            {{-- Botones --}}
-                            <div class="col-12 mt-4 text-end">
-                                <hr class="opacity-50">
-                                <a href="{{ route('cuotas.index') }}" class="btn btn-light border px-4 me-2">
-                                    <i class="fas fa-times me-1"></i> Cancelar
-                                </a>
-                                <button type="submit" class="btn btn-primary px-5 fw-bold shadow-sm">
-                                    <i class="fas fa-wallet me-2"></i>Guardar cuota
-                                </button>
                             </div>
                         </div>
-                    </form>
+
+                        {{-- SECCIÓN 2: IMPORTE Y NOTAS --}}
+                        <h5 class="fw-bold mb-4 text-primary border-bottom pb-2">
+                            <i class="fas fa-cash-register me-2"></i>Cuantía y Observaciones
+                        </h5>
+
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Importe Total</label>
+                                <div class="input-group">
+                                    <input type="text" step="0.01" name="importe" class="form-control form-control-lg fw-bold @error('importe') is-invalid @enderror"
+                                        value="{{ old('importe') }}" placeholder="0.00">
+                                    <span class="input-group-text bg-white fw-bold">€</span>
+                                    <div class="form-text mt-1 text-muted small">Para decimales, use el punto (.) como separador.</div>
+                                    @error('importe') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Notas internas</label>
+                                <textarea name="notas" class="form-control @error('notas') is-invalid @enderror"
+                                    rows="2" placeholder="Observaciones ...">{{ old('notas') }}</textarea>
+                                @error('notas') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {{-- Footer con acciones --}}
+                    <div class="card-footer bg-light p-4 border-0 text-end" style="border-radius: 0 0 15px 15px;">
+                        <a href="{{ route('cuotas.index') }}" class="btn btn-light border px-4 me-2">
+                            <i class="fas fa-times me-1"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary px-5 fw-bold shadow-sm">
+                            <i class="fas fa-save me-2"></i>Guardar Cuota
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
