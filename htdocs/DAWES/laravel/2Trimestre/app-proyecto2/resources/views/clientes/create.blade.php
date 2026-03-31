@@ -70,7 +70,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">País</label>
                                 <select name="pais" class="form-select @error('pais') is-invalid @enderror">
                                     <option value="" selected disabled>Selecciona un país...</option>
@@ -81,6 +81,16 @@
                                     @endforeach
                                 </select>
                                 @error('pais') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Fecha de Alta</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-calendar-alt small text-muted"></i></span>
+                                    <input type="date" name="fecha_alta" class="form-control @error('fecha_alta') is-invalid @enderror"
+                                        value="{{ old('fecha_alta', date('Y-m-d')) }}">
+                                    @error('fecha_alta') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                </div>
                             </div>
                         </div>
 
