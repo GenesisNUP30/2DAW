@@ -117,12 +117,13 @@
                         {{-- Aquí podrías poner el botón de Editar cuando lo tengas listo --}}
                         {{-- <a href="{{ route('clientes.edit', $cliente) }}" class="btn btn-dark text-white"><i class="fas fa-pen me-2"></i> Editar Cliente</a> --}}
 
+                        <a href="{{ route('clientes.index') }}" class="btn btn-light border px-3">
+                            <i class="fas fa-arrow-left me-1"></i> Volver al listado
+                        </a>
+                        
                         @if($cliente->isActivo())
                         <a href="{{ route('clientes.confirmBaja', $cliente) }}" class="btn btn-outline-warning">
                             <i class="fas fa-user-minus me-2"></i> Dar de baja
-                        </a>
-                        <a href="{{ route('clientes.index') }}" class="btn btn-sm btn-light border px-3">
-                            <i class="fas fa-arrow-left me-1"></i> Volver al listado
                         </a>
                         @else
                         <a href="{{ route('clientes.confirmAlta', $cliente) }}" class="btn btn-outline-success">

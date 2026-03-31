@@ -20,7 +20,7 @@
                 <i class="fas fa-check text-success"></i>
             </div>
             <div>
-                <p class="fw-semibold text-success mb-1" style="color: #065f46 !important;">¿Confirmar reactivación de cuenta?</p>
+                <p class="fw-semibold text-success mb-1" style="color: #065f46 !important;">Confirmar reactivación de cliente</p>
                 <p class="text-muted mb-0">
                     Estás a punto de reactivar a <strong>{{ $cliente->nombre }}</strong>. 
                     El cliente volverá a aparecer en los listados operativos y podrá recibir <strong>nuevas tareas y facturación</strong> de cuotas.
@@ -38,25 +38,25 @@
         <div class="card-body px-3 py-2">
 
             <div class="d-flex justify-content-between py-2 border-bottom">
-                <span class="text-muted small">Nombre / Razón Social</span>
+                <span class="text-muted">Nombre / Razón Social</span>
                 <span class="fw-bold text-dark">{{ $cliente->nombre }}</span>
             </div>
 
             <div class="d-flex justify-content-between py-2 border-bottom">
-                <span class="text-muted small">CIF</span>
+                <span class="text-muted">CIF</span>
                 <span class="text-dark">{{ $cliente->cif ?? '—' }}</span>
             </div>
 
             <div class="d-flex justify-content-between py-2 border-bottom">
-                <span class="text-muted small">Contacto principal</span>
+                <span class="text-muted">Contacto principal</span>
                 <div class="text-end">
                     <div class="text-dark">{{ $cliente->telefono ?? '—' }}</div>
-                    <div class="text-muted small">{{ $cliente->correo }}</div>
+                    <div class="text-muted">{{ $cliente->correo }}</div>
                 </div>
             </div>
 
             <div class="d-flex justify-content-between py-2 border-bottom">
-                <span class="text-muted small">País y Moneda</span>
+                <span class="text-muted">País y Moneda</span>
                 <span class="text-dark">
                     {{ $cliente->paisRelacion ? $cliente->paisRelacion->nombre : $cliente->pais }} 
                     ({{ $cliente->moneda }})
@@ -64,17 +64,17 @@
             </div>
 
             <div class="d-flex justify-content-between py-2 border-bottom">
-                <span class="text-muted small">Cuota Mensual</span>
+                <span class="text-muted">Cuota Mensual</span>
                 <span class="fw-bold text-dark">{{ number_format($cliente->importe_cuota_mensual, 2, ',', '.') }} {{ $cliente->moneda }}</span>
             </div>
 
             <div class="d-flex justify-content-between py-2 border-bottom">
-                <span class="text-muted small">Fecha de alta original</span>
+                <span class="text-muted">Fecha de alta original</span>
                 <span class="text-dark">{{ optional($cliente->fecha_alta)->format('d/m/Y') ?? '—' }}</span>
             </div>
 
             <div class="d-flex justify-content-between py-2 text-danger">
-                <span class="small fw-bold">Inactivo desde el</span>
+                <span class="fw-bold">Inactivo desde el</span>
                 <span class="fw-bold">{{ optional($cliente->fecha_baja)->format('d/m/Y') ?? '—' }}</span>
             </div>
 
