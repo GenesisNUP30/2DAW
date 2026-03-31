@@ -166,7 +166,7 @@ class TareaController extends Controller
         if (!$user->isAdmin()) {
             abort(403);
         }
-
+        //TODO: Aplicar nueva logica de estado en las vistas
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'operario_id' => 'required|exists:users,id',
