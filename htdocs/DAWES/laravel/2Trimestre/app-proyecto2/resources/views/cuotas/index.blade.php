@@ -1,108 +1,111 @@
 @extends('layouts.app')
 
-@section('titulo', 'Lista de cuotas')
+@section('titulo', 'Listado de Cuotas')
 
 @section('content')
-<div class="container">
-    <h1 class="mb-4">
-        <i class="fas fa-file-invoice-dollar"></i> Lista de cuotas
-    </h1>
+<div class="container-fluid px-4 py-3">
 
-    {{-- Mensaje de éxito --}}
-    @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-    @endif
+    {{-- Cabecera y Acciones Principales --}}
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+        <div>
+            <h2 class="fw-bold m-0 text-dark">
+                <i class="fas fa-file-invoice-dollar me-2"></i>Listado de Cuotas
+            </h2>
+        </div>
 
-    {{-- MENSAJE DE ERROR --}}
-    @if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-    @endif
-
-    {{-- Botones de acción --}}
-    <div class=" mb-3">
-        {{-- Botón para generar remesa mensual (solo administrador) --}}
         @if (auth()->user()->isAdmin())
-        <a href="{{ route('cuotas.generarRemesa') }}" class="btn btn-black">
-            <i class="fa-solid fa-circle-plus"></i> Generar Remesa Mensual
-        </a>
-        <a href="{{ route('cuotas.create') }}" class="btn btn-black">
-            <i class="fa-solid fa-circle-plus"></i> Añadir cuota excepcional
-        </a>
-
-        {{-- Botón Papelera --}}
-        <a href="{{ route('cuotas.papelera') }}" class="btn btn-outline-danger">
-            <i class="fas fa-trash"></i> Ver Papelera
-        </a>
+        <div class="d-flex gap-2">
+            <a href="{{ route('cuotas.generarRemesa') }}" class="btn btn-primary shadow-sm">
+                <i class="fas fa-magic me-2"></i>Generar Remesa
+            </a>
+            <a href="{{ route('cuotas.create') }}" class="btn btn-dark shadow-sm">
+                <i class="fas fa-plus-circle me-2"></i>Cuota Excepcional
+            </a>
+            <a href="{{ route('cuotas.papelera') }}" class="btn btn-outline-danger border shadow-sm">
+                <i class="fas fa-trash-alt me-2"></i>Papelera
+            </a>
+        </div>
         @endif
     </div>
 
-    {{-- Tabs --}}
-    <ul class="nav nav-tabs mb-3" id="cuotasTabs">
-        <li class="nav-item">
-            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#mensuales">
-                Cuotas mensuales
+    {{-- Alertas de Sistema --}}
+    @if (session('success'))
+        <div class="alert alert-success border-0 shadow-sm mb-4">
+            <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+        </div>
+    @endif
+
+    {{-- Tabs de Navegación --}}
+    <ul class="nav nav-pills mb-3 bg-light p-1 rounded-pill d-inline-flex border" id="cuotasTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active rounded-pill px-4 py-2" data-bs-toggle="tab" data-bs-target="#mensuales" type="button">
+                <i class="fas fa-calendar-alt me-2"></i>Mensuales
             </button>
         </li>
-
-        <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#excepcionales">
-                Cuotas excepcionales
+        <li class="nav-item" role="presentation">
+            <button class="nav-link rounded-pill px-4 py-2" data-bs-toggle="tab" data-bs-target="#excepcionales" type="button">
+                <i class="fas fa-star me-2"></i>Excepcionales
             </button>
         </li>
     </ul>
 
-    <div class="tab-content">
-        <div class="tab-pane fade show active" id="mensuales">
-            <div class="card">
-                <div class="card-body p-0">
-                    <table class="table table-striped mb-0">
-                        <thead class="table-dark">
+    <div class="tab-content" id="cuotasTabsContent">
+        
+        {{-- TAB: CUOTAS MENSUALES --}}
+        <div class="tab-pane fade show active" id="mensuales" role="tabpanel">
+            <div class="card border-0 shadow-sm" style="border-radius: 12px;">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="bg-light">
                             <tr>
-                                <th>Cliente</th>
-                                <th>Concepto</th>
-                                <th>Importe</th>
-                                <th>Fecha emisión</th>
-                                <th>Estado</th>
-                                <th class="text-center">Acciones</th>
+                                <th class="ps-4 text-muted small fw-bold text-uppercase">Cliente</th>
+                                <th class="text-muted small fw-bold text-uppercase">Concepto</th>
+                                <th class="text-muted small fw-bold text-uppercase">Importe</th>
+                                <th class="text-muted small fw-bold text-uppercase">Emisión</th>
+                                <th class="text-muted small fw-bold text-uppercase">Estado</th>
+                                <th class="text-end pe-4 text-muted small fw-bold text-uppercase">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($cuotasMensuales as $cuota)
                             <tr>
-                                <td>{{ $cuota->cliente->nombre }}</td>
-                                <td>{{ $cuota->concepto }}</td>
-                                <td>{{ number_format($cuota->importe,2,',','.') }} €</td>
-
+                                <td class="ps-4">
+                                    <div class="fw-bold text-dark">{{ $cuota->cliente->nombre }}</div>
+                                    <div class="text-muted small">{{ $cuota->cliente->cif }}</div>
+                                </td>
+                                <td><span class="text-muted">{{ $cuota->concepto }}</span></td>
+                                <td><span class="fw-bold text-dark">{{ number_format($cuota->importe, 2, ',', '.') }} €</span></td>
                                 <td>{{ $cuota->fecha_emision->format('d/m/Y') }}</td>
-
                                 <td>
                                     @if ($cuota->isPagada())
-                                    <span class="badge bg-success">Pagada</span>
+                                        <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3">
+                                            Pagada el {{ $cuota->fecha_pago->format('d/m/Y') }}
+                                        </span>
                                     @else
-                                    <span class="badge bg-secondary">Pendiente</span>
+                                        <span class="badge rounded-pill bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-3">
+                                            Pendiente
+                                        </span>
                                     @endif
                                 </td>
-                                <td class="text-end">
-                                    <a href="{{ route('cuotas.edit', $cuota) }}" class="btn btn-sm btn-warning">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </a>
-
-                                    <a href="{{ route('cuotas.confirmDelete', $cuota) }}" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash"></i> Eliminar
-                                    </a>
-                                    <a href="{{ route('facturas.confirmar', $cuota->id) }}" class="btn btn-sm btn-outline-primary">
-                                        <i class="fa-solid fa-file-invoice"></i> Factura
-                                    </a>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group">
+                                        <a href="{{ route('cuotas.edit', $cuota) }}" class="btn btn-sm btn-light border text-muted" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{{ route('facturas.confirmar', $cuota->id) }}" class="btn btn-sm btn-light border text-primary" title="Generar Factura">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </a>
+                                        <a href="{{ route('cuotas.confirmDelete', $cuota) }}" class="btn btn-sm btn-light border text-danger" title="Eliminar">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" class="text-center py-3">
-                                    No hay cuotas mensuales.
+                                <td colspan="6" class="text-center py-5 text-muted">
+                                    <i class="fas fa-receipt fa-3x mb-3 opacity-25"></i>
+                                    <p>No se han encontrado cuotas mensuales registradas.</p>
                                 </td>
                             </tr>
                             @endforelse
@@ -110,54 +113,59 @@
                     </table>
                 </div>
             </div>
-            <div class="mt-3">
+            <div class="mt-4 d-flex justify-content-center">
                 {{ $cuotasMensuales->links() }}
             </div>
         </div>
-        <div class="tab-pane fade" id="excepcionales">
-            <div class="class">
-                <div class="card-body p-0">
-                    <table class="table table-striped mb-0">
-                        <thead class="table-dark">
+
+        {{-- TAB: CUOTAS EXCEPCIONALES --}}
+        <div class="tab-pane fade" id="excepcionales" role="tabpanel">
+            <div class="card border-0 shadow-sm" style="border-radius: 12px;">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead class="bg-light">
                             <tr>
-                                <th>Cliente</th>
-                                <th>Concepto</th>
-                                <th>Importe</th>
-                                <th>Fecha emisión</th>
-                                <th>Estado</th>
-                                <th class="text-center">Acciones</th>
+                                <th class="ps-4 text-muted small fw-bold text-uppercase">Cliente</th>
+                                <th class="text-muted small fw-bold text-uppercase">Concepto</th>
+                                <th class="text-muted small fw-bold text-uppercase">Importe</th>
+                                <th class="text-muted small fw-bold text-uppercase">Emisión</th>
+                                <th class="text-muted small fw-bold text-uppercase">Estado</th>
+                                <th class="text-end pe-4 text-muted small fw-bold text-uppercase">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($cuotasExcepcionales as $cuota)
                             <tr>
-                                <td>{{ $cuota->cliente->nombre }}</td>
-                                <td>{{ $cuota->concepto }}</td>
-                                <td>{{ number_format($cuota->importe,2,',','.') }} €</td>
-
+                                <td class="ps-4">
+                                    <div class="fw-bold text-dark">{{ $cuota->cliente->nombre }}</div>
+                                    <div class="text-muted small">{{ $cuota->cliente->cif }}</div>
+                                </td>
+                                <td><span class="text-muted">{{ $cuota->concepto }}</span></td>
+                                <td><span class="fw-bold text-dark">{{ number_format($cuota->importe, 2, ',', '.') }} €</span></td>
                                 <td>{{ $cuota->fecha_emision->format('d/m/Y') }}</td>
-
                                 <td>
                                     @if ($cuota->isPagada())
-                                    <span class="badge bg-success">Pagada</span>
+                                        <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3">Pagada</span>
                                     @else
-                                    <span class="badge bg-secondary">Pendiente</span>
+                                        <span class="badge rounded-pill bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-3">Pendiente</span>
                                     @endif
                                 </td>
-                                <td class="text-end">
-                                    <a href="{{ route('cuotas.edit', $cuota) }}" class="btn btn-sm btn-warning">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </a>
-
-                                    <a href="{{ route('cuotas.confirmDelete', $cuota) }}" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash"></i> Eliminar
-                                    </a>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group">
+                                        <a href="{{ route('cuotas.edit', $cuota) }}" class="btn btn-sm btn-light border text-muted" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{{ route('cuotas.confirmDelete', $cuota) }}" class="btn btn-sm btn-light border text-danger" title="Eliminar">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" class="text-center py-3">
-                                    No hay cuotas mensuales.
+                                <td colspan="6" class="text-center py-5 text-muted">
+                                    <i class="fas fa-star fa-3x mb-3 opacity-25"></i>
+                                    <p>No hay cuotas excepcionales pendientes.</p>
                                 </td>
                             </tr>
                             @endforelse
@@ -165,9 +173,10 @@
                     </table>
                 </div>
             </div>
-            <div class="mt-3">
+            <div class="mt-4 d-flex justify-content-center">
                 {{ $cuotasExcepcionales->links() }}
             </div>
         </div>
     </div>
-    @endsection
+</div>
+@endsection

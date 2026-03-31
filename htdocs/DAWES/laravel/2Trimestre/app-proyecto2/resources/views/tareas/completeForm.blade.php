@@ -133,7 +133,7 @@
 
             <a href="{{ route('tareas.index') }}" class="btn btn-secondary">
                 <i class="fas fa-times me-1"></i>
-                Cancelar
+                <i class="fas fa-times me-1"></i> Cancelar
             </a>
         </div>
     </form>

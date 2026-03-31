@@ -144,4 +144,17 @@ class Tarea extends Model
             ->whereBetween('fecha_realizacion', [$hoy, $limite])
             ->orderBy('fecha_realizacion', 'asc');
     }
+
+    /**
+     * Scope: Incidencias registradas en la última semana
+     */
+    public function scopeIncidenciasSinAsignar($query)
+    {
+        return $query->whereNull('operario_id')
+            ->where(function ($q) {
+                $q->where('estado', 'B')
+                    ->orWhere('estado', 'P');
+            })
+            ->orderBy('fecha_realizacion', 'asc');
+    }
 }
