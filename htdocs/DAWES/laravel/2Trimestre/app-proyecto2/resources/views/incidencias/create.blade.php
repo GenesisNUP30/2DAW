@@ -3,143 +3,147 @@
 @section('titulo', 'Registrar Incidencia')
 
 @section('content')
-<div class="container">
+<div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-lg-10">
+            
+            {{-- Cabecera de Página --}}
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="mb-4 text-success">
-                    <i class="fas fa-clipboard-list me-2"></i> Nueva Incidencia de Cliente
-                </h1>
-                <a href="{{ route('login') }}" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left me-2"></i>Volver al Login
+                <div>
+                    <h2 class="fw-bold m-0 text-dark">
+                        <i class="fas fa-clipboard-list text-success me-2"></i>Nueva Incidencia
+                    </h2>
+                    <p class="text-muted m-0">Por favor, rellene los datos para solicitar asistencia técnica.</p>
+                </div>
+                <a href="{{ route('login') }}" class="btn btn-light border px-3">
+                    <i class="fas fa-arrow-left me-1"></i> Volver al Login
                 </a>
             </div>
 
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-success text-white">
-                    <i class="fas fa-user-check me-2"></i> Verificación de Identidad
-                </div>
-                <div class="card-body bg-light">
-                    <p class=" text-muted">Para garantizar su identidad, primero introduzca sus datos de registro:</p>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">CIF del Cliente</label>
-                            <input type="text" name="cif" form="form-incidencia" class="form-control @error('cif') is-invalid @enderror" 
-                            value="{{ old('cif') }}" placeholder="Ej: B12345678">
-                            @error('cif') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+            {{-- SECCIÓN 1: Verificación de Identidad --}}
+            <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3 text-success">
+                        <i class="fas fa-user-check me-2"></i>1. Verificación de Cliente
+                    </h5>
+                    <p class="small text-muted mb-4">Introduzca sus datos de registro para validar la solicitud.</p>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-muted text-uppercase">CIF del Cliente</label>
+                            <input type="text" name="cif" form="form-incidencia" 
+                                   class="form-control @error('cif') is-invalid @enderror" 
+                                   value="{{ old('cif') }}" placeholder="Ej: B12345678">
+                            @error('cif') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Teléfono de Registro</label>
-                            <input type="text" name="telefono_cliente" form="form-incidencia" class="form-control @error('telefono_cliente') is-invalid @enderror" 
-                            value="{{ old('telefono_cliente') }}" placeholder="Teléfono con el que se registró">
-                            @error('telefono_cliente') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-muted text-uppercase">Teléfono de Registro</label>
+                            <input type="text" name="telefono_cliente" form="form-incidencia" 
+                                   class="form-control @error('telefono_cliente') is-invalid @enderror" 
+                                   value="{{ old('telefono_cliente') }}" placeholder="Teléfono asociado a su cuenta">
+                            @error('telefono_cliente') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                     </div>
                 </div>
             </div>
 
+            {{-- SECCIÓN 2: Datos de la Incidencia --}}
             <form method="POST" action="{{ route('incidencia.store') }}" id="form-incidencia">
                 @csrf
+                <div class="card border-0 shadow-sm" style="border-radius: 12px;">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4 text-primary">
+                            <i class="fas fa-info-circle me-2"></i>2. Detalles 
+                        </h5>
 
-                <div class="card shadow-sm">
-                    <div class="card-header bg-primary text-white">
-                        <i class="fas fa-info-circle me-2"></i> Datos de la Incidencia
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
+                        <div class="row g-3">
                             {{-- CONTACTO --}}
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Nombre de contacto</label>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Persona de contacto</label>
                                 <input type="text" name="persona_contacto" class="form-control @error('persona_contacto') is-invalid @enderror" 
-                                value="{{ old('persona_contacto') }}">
-                                @error('persona_contacto') <div class="text-danger small">{{ $message }}</div> @enderror
+                                       value="{{ old('persona_contacto') }}" placeholder="Nombre del responsable">
+                                @error('persona_contacto') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Teléfono de contacto para esta avería</label>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Teléfono de contacto</label>
                                 <input type="text" name="telefono_contacto" class="form-control @error('telefono_contacto') is-invalid @enderror" 
-                                value="{{ old('telefono_contacto') }}">
-                                @error('telefono_contacto') <div class="text-danger small">{{ $message }}</div> @enderror
+                                       value="{{ old('telefono_contacto') }}" placeholder="Ej: 666 555 444">
+                                @error('telefono_contacto') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
                             {{-- DESCRIPCIÓN --}}
-                            <div class="col-12 mb-3">
-                                <label class="form-label">Descripción de la incidencia</label>
-                                <textarea name="descripcion" class="form-control @error('descripcion') is-invalid @enderror" 
-                                rows="3">{{ old('descripcion') }}</textarea>
-                                @error('descripcion') <div class="text-danger small">{{ $message }}</div> @enderror
+                            <div class="col-12 mt-3">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Descripción de la incidencia</label>
+                                <textarea name="description" class="form-control @error('description') is-invalid @enderror" 
+                                          rows="3" placeholder="Describa brevemente qué sucede..."></textarea>
+                                @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            {{-- CORREO  --}}
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Correo electrónico</label>
+                            {{-- CORREO Y DIRECCIÓN --}}
+                            <div class="col-md-6 mt-3">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Correo electrónico de contacto</label>
                                 <input type="email" name="correo_contacto" class="form-control @error('correo_contacto') is-invalid @enderror" 
-                                value="{{ old('correo_contacto') }}">
-                                @error('correo_contacto') <div class="text-danger small">{{ $message }}</div> @enderror
+                                       value="{{ old('correo_contacto') }}">
+                                @error('correo_contacto') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Dirección</label>
+                            <div class="col-md-6 mt-3">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Dirección (Calle, número)</label>
                                 <input type="text" name="direccion" class="form-control @error('direccion') is-invalid @enderror" 
-                                value="{{ old('direccion') }}">
-                                @error('direccion') <div class="text-danger small">{{ $message }}</div> @enderror
+                                       value="{{ old('direccion') }}">
+                                @error('direccion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            {{-- DIRECCIÓN --}}
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Población</label>
+                            {{-- UBICACIÓN --}}
+                            <div class="col-md-4 mt-3">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Población</label>
                                 <input type="text" name="poblacion" class="form-control @error('poblacion') is-invalid @enderror" 
-                                value="{{ old('poblacion') }}">
-                                @error('poblacion') <div class="text-danger small">{{ $message }}</div> @enderror
+                                       value="{{ old('poblacion') }}">
+                                @error('poblacion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Código postal</label>
+                            <div class="col-md-4 mt-3">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Código Postal</label>
                                 <input type="text" name="codigo_postal" class="form-control @error('codigo_postal') is-invalid @enderror" 
-                                value="{{ old('codigo_postal') }}">
-                                @error('codigo_postal') <div class="text-danger small">{{ $message }}</div> @enderror
+                                       value="{{ old('codigo_postal') }}">
+                                @error('codigo_postal') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
-
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Provincia</label>
+                            <div class="col-md-4 mt-3">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Provincia</label>
                                 <select name="provincia" class="form-select @error('provincia') is-invalid @enderror">
-                                    <option value="">-- Seleccione --</option>
+                                    <option value="" selected disabled>-- Seleccione --</option>
                                     @foreach ($provincias as $codigo => $nombre)
-                                    <option value="{{ $codigo }}" {{ old('provincia') == $codigo ? 'selected' : '' }}>{{ $nombre }}</option>
+                                        <option value="{{ $codigo }}" {{ old('provincia') == $codigo ? 'selected' : '' }}>{{ $nombre }}</option>
                                     @endforeach
                                 </select>
-                                @error('provincia') <div class="text-danger small">{{ $message }}</div> @enderror
+                                @error('provincia') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="row">
-                                {{-- ESTADO --}}
-                                <div class=" col-md-6 mb-3">
-                                    <label class="form-label">Estado</label>
-                                    <select name="estado" class="form-select @error('estado') is-invalid @enderror">
-                                        <option value="">-- Elija un estado --</option>
-                                        <option value="B" {{ old('estado') == 'B' ? 'selected' : ''}}>Esperando a ser aprobada</option>
-                                        <option value="P" {{ old('estado') == 'P' ? 'selected' : ''}}>Pendiente</option>
-                                    </select>
-                                    @error('estado')
-                                    <div class="text-danger small mt-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                {{-- FECHA --}}
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Fecha preferente de realización</label>
-                                    <input type="date" name="fecha_realizacion" class="form-control @error('fecha_realizacion') is-invalid @enderror" value="{{ old('fecha_realizacion') }}">
-                                    @error('fecha_realizacion') <div class="text-danger small">{{ $message }}</div> @enderror
-                                </div>
+                            {{-- ESTADO Y FECHA --}}
+                            <div class="col-md-6 mt-3">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Estado inicial</label>
+                                <select name="estado" class="form-select @error('estado') is-invalid @enderror">
+                                    <option value="" selected disabled>-- Elegir estado --</option>
+                                    <option value="B" {{ old('estado') == 'B' ? 'selected' : ''}}>Esperando aprobación</option>
+                                    <option value="P" {{ old('estado') == 'P' ? 'selected' : ''}}>Pendiente</option>
+                                </select>
+                                @error('estado') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Fecha de realización preferente</label>
+                                <input type="date" name="fecha_realizacion" class="form-control @error('fecha_realizacion') is-invalid @enderror" 
+                                       value="{{ old('fecha_realizacion') }}">
+                                @error('fecha_realizacion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
                             {{-- ANOTACIONES --}}
-                            <div class="col-12 mb-4">
-                                <label class="form-label">Anotaciones adicionales</label>
-                                <textarea name="anotaciones_anteriores" class="form-control" rows="2">{{ old('anotaciones_anteriores') }}</textarea>
+                            <div class="col-12 mt-3">
+                                <label class="form-label small fw-bold text-muted text-uppercase">Anotaciones adicionales</label>
+                                <textarea name="anotaciones_anteriores" class="form-control" rows="2"></textarea>
                             </div>
                         </div>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="submit" class="btn btn-success px-5">
-                                <i class="fas fa-save me-2"></i>Registrar Incidencia
+                        <div class="mt-4 pt-4 border-top">
+                            <button type="submit" class="btn btn-success fw-bold px-5 py-2 shadow-sm w-100 w-md-auto float-md-end">
+                                <i class="fas fa-paper-plane me-2"></i>Enviar Solicitud
                             </button>
                         </div>
                     </div>
