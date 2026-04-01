@@ -124,7 +124,6 @@ class CuotaController extends Controller
                 Cuota::create([
                     'cliente_id' => $cliente->id,
                     'concepto' => "Cuota mes de " . \Carbon\Carbon::create($anio, $mes, 1)->format('d/m/Y'),
-                    //TODO: Corregir fecha de emisión, no se si deberia ser el primer día del mes siempre o el dia actual
                     'fecha_emision' => \Carbon\Carbon::create($anio, $mes, 1),
                     'importe' => $cliente->importe_cuota_mensual,
                     'fecha_pago' => null,

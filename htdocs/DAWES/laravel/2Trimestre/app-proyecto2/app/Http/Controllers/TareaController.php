@@ -166,7 +166,6 @@ class TareaController extends Controller
         if (!$user->isAdmin()) {
             abort(403);
         }
-
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'operario_id' => 'required|exists:users,id',
@@ -183,8 +182,25 @@ class TareaController extends Controller
             'poblacion' => 'nullable|string|max:100',
             'codigo_postal' => 'required|regex:/^\d{5}$/',
             'provincia' => 'required|in:' . implode(',', array_keys($this->provincias())),
-            'fecha_realizacion' => 'required|date|after_or_equal:today',
             'estado' => 'required|in:B,P,R,C',
+            'fecha_realizacion' => [
+                // Es obligatorio solo si el estado es 'Realizada' (R)
+                'required_if:estado,R,P,B',
+                'nullable',
+                'date',
+                function ($attribute, $value, $fail) use ($request) {
+                    $estado = $request->estado;
+                    $hoy = now()->startOfDay();
+                    $fechaInput = \Carbon\Carbon::parse($value)->startOfDay();
+
+                    // Si es Pendiente (P) o Esperando (B), la fecha DEBE ser hoy o futura
+                    if (in_array($estado, ['P', 'B'])) {
+                        if ($fechaInput->lt($hoy)) {
+                            $fail('Para tareas pendientes o a la espera de aprobación, la fecha no puede ser anterior a hoy.');
+                        }
+                    }
+                },
+            ],
             'anotaciones_anteriores' => 'nullable|string',
         ], [
             'cliente_id.required' => 'Debes seleccionar un cliente',
@@ -207,8 +223,8 @@ class TareaController extends Controller
             'codigo_postal.regex' => 'El código postal debe tener exactamente 5 dígitos.',
             'provincia.required' => 'La provincia es obligatoria',
             'provincia.in' => 'La provincia seleccionada no es válida',
-            'fecha_realizacion.required' => 'La fecha de realización es obligatoria',
-            'fecha_realizacion.after_or_equal' => 'La fecha de realización debe ser posterior o igual a la fecha actual',
+            'fecha_realizacion.required_if' => 'Debes indicar una fecha de realización para este estado',
+            'fecha_realizacion.date' => 'La fecha de realización no es válida.',
             'estado.required' => 'El estado es obligatorio',
             'estado.in' => 'El estado seleccionado no es válido',
         ]);
@@ -310,8 +326,25 @@ class TareaController extends Controller
             'poblacion' => 'nullable|string|max:100',
             'codigo_postal' => 'required|regex:/^\d{5}$/',
             'provincia' => 'required|in:' . implode(',', array_keys($this->provincias())),
-            'fecha_realizacion' => 'required|date|after_or_equal:today',
             'estado' => 'required|in:B,P,R,C',
+            'fecha_realizacion' => [
+                // Es obligatorio solo si el estado es 'Realizada' (R)
+                'required_if:estado,R,P,B',
+                'nullable',
+                'date',
+                function ($attribute, $value, $fail) use ($request) {
+                    $estado = $request->estado;
+                    $hoy = now()->startOfDay();
+                    $fechaInput = $value ? \Carbon\Carbon::parse($value)->startOfDay() : null;
+
+                    // Si es Pendiente (P) o Esperando (B), la fecha DEBE ser hoy o futura
+                    if (in_array($estado, ['P', 'B'])) {
+                        if ($fechaInput->lt($hoy)) {
+                            $fail('Para tareas pendientes o a la espera de aprobación, la fecha no puede ser anterior a hoy.');
+                        }
+                    }
+                },
+            ],
             'anotaciones_anteriores' => 'nullable|string',
         ], [
             'cliente_id.required' => 'Debes seleccionar un cliente',
@@ -334,9 +367,8 @@ class TareaController extends Controller
             'codigo_postal.regex' => 'El código postal debe tener exactamente 5 dígitos.',
             'provincia.required' => 'La provincia es obligatoria',
             'provincia.in' => 'La provincia seleccionada no es válida',
-            'fecha_realizacion.required' => 'La fecha de realización es obligatoria',
-            'fecha_realizacion.date' => 'La fecha de realización debe tener un formato válido',
-            'fecha_realizacion.after_or_equal' => 'La fecha de realización debe ser posterior o igual a la fecha actual',
+            'fecha_realizacion.required_if' => 'Debes indicar una fecha para este estado.',
+            'fecha_realizacion.date' => 'La fecha de realización no es válida.',
             'estado.required' => 'El estado es obligatorio',
             'estado.in' => 'El estado seleccionado no es válido',
         ]);
@@ -352,7 +384,7 @@ class TareaController extends Controller
                 ->withInput();
         }
 
-        $tarea->update($request->only(
+        $data = $request->only([
             'cliente_id',
             'operario_id',
             'persona_contacto',
@@ -366,7 +398,15 @@ class TareaController extends Controller
             'estado',
             'fecha_realizacion',
             'anotaciones_anteriores',
-        ));
+        ]);
+
+        if ($request->estado === 'C') {
+            $data['fecha_realizacion'] = null;
+        }
+
+        // Actualizamos el modelo con el array modificado
+        $tarea->update($data);
+
         return redirect()->route('tareas.index')->with('success', 'Tarea actualizada correctamente');
     }
 
@@ -426,39 +466,38 @@ class TareaController extends Controller
         }
 
         $request->validate([
-            'estado' => 'required|in:R,C,B,P',
+            'estado' => 'required|in:R,C',
             'anotaciones_posteriores' => 'nullable|string|min:5',
-            'fecha_realizacion' => 'nullable|date|after_or_equal:today',
-            'fichero_resumen' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,txt,png,jpg,jpeg|max:5120',
+            'fecha_realizacion' => [
+                // Es obligatorio solo si el estado es 'Realizada' (R)
+                'required_if:estado,R',
+                'nullable',
+                'date',
+            ],
+            'fichero_resumen' => [
+                'required_if:estado,R', // Obligatorio si es Realizada
+                'nullable',
+                'file',
+                'mimes:pdf,doc,docx,xls,xlsx,txt,png,jpg,jpeg',
+                'max:5120'
+            ],
         ], [
             'estado.required' => 'El estado es obligatorio',
             'estado.in' => 'El estado seleccionado no es válido',
             'anotaciones_posteriores.min' => 'Las anotaciones posteriores deben tener al menos 5 caracteres',
-            'fecha_realizacion.date' => 'La fecha de realización debe tener un formato válido',
-            'fecha_realizacion.after_or_equal' => 'La fecha de realización debe ser posterior o igual a la fecha actual',
+            'fecha_realizacion.required_if' => 'Si la tarea está realizada, debes indicar cuándo se hizo.',
+            'fichero_resumen.required_if' => 'Debe adjuntar un fichero justificante si la tarea está realizada.',
             'fichero_resumen.file' => 'El fichero debe ser un archivo válido',
             'fichero_resumen.mimes' => 'El fichero debe ser un archivo de tipo: pdf, doc, docx, xls, xlsx o txt',
             'fichero_resumen.max' => 'El fichero no puede superar los 5MB de tamaño',
         ]);
 
-        $estadoTarea = $request->estado;
-        $fechaRealizacion = $request->fecha_realizacion;
-
-        // Si el estado es "Realizada", validar la fecha y fichero
-        if ($estadoTarea === 'R') {
-            if (empty($fechaRealizacion)) {
-                return back()
-                    ->withErrors(['fecha_realizacion' => 'La fecha de realización es obligatoria cuando se marca como Realizada'])
-                    ->withInput();
-            }
-
-            if (!$request->hasFile('fichero_resumen')) {
-                return back()
-                    ->withErrors(['fichero_resumen' => 'El fichero resumen es obligatorio cuando se marca como Realizada'])
-                    ->withInput();
-            }
+        // Limpieza lógica: si es cancelada, nos aseguramos de que la fecha sea null
+        if ($request->estado === 'C') {
+            $data['fecha_realizacion'] = null;
+        } else {
+            $tarea->fecha_realizacion = $request->fecha_realizacion;
         }
-
 
         // Si hay un fichero, guardarlo
         if ($request->hasFile('fichero_resumen')) {
@@ -478,11 +517,6 @@ class TareaController extends Controller
         // Actualizar la tarea
         $tarea->estado = $request->estado;
         $tarea->anotaciones_posteriores = $request->anotaciones_posteriores ?? null;
-
-        // Solo actualizar la fecha de realización si el estado es "Realizada"
-        if ($estadoTarea === 'R') {
-            $tarea->fecha_realizacion = $fechaRealizacion;
-        }
 
         $tarea->save();
 

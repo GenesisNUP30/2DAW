@@ -80,7 +80,6 @@ class ClienteController extends Controller
 
         $validated = $request->validate([
             'cif' => ['required', 'string', 'unique:clientes,cif', new ValidarCif],
-            //TODO: Añadir regex para nombre
             'nombre' => 'required|string|max:100',
             'telefono' => 'required|string|max:20',
             'correo' => 'required|email|max:100',

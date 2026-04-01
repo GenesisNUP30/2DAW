@@ -59,7 +59,7 @@
                                 <label for="fecha_realizacion" class="form-label fw-bold">Fecha de realización</label>
                                 <input type="date" name="fecha_realizacion" id="fecha_realizacion" 
                                        class="form-control @error('fecha_realizacion') is-invalid @enderror" 
-                                       value="{{ old('fecha_realizacion', date('Y-m-d')) }}">
+                                       value="{{ old('fecha_realizacion') }}">
                                 @error('fecha_realizacion')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
