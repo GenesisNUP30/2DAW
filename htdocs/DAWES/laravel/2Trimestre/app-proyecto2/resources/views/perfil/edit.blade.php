@@ -13,7 +13,7 @@
             </h2>
             <p class="text-muted m-0">Gestiona tu información personal y credenciales de acceso.</p>
         </div>
-        <a href="{{ route('tareas.index') }}" class="btn btn-light border px-3">
+        <a href="{{ route('home') }}" class="btn btn-light border px-3">
             <i class="fas fa-arrow-left me-1"></i> Volver
         </a>
     </div>
