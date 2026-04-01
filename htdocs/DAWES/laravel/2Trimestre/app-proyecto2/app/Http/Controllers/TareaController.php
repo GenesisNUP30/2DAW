@@ -12,12 +12,33 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 /**
- * 
+ * @class TareaController
+ *
+ * @brief Controlador encargado de la gestión integral de las tareas e incidencias.
+ *
+ * Este controlador administra el ciclo de vida completo de una tarea:
+ * - Listado filtrado según el rol del usuario (Administrador u Operario).
+ * - Creación, edición y eliminación de tareas por parte de administradores.
+ * - Proceso de finalización de tareas por operarios, incluyendo la subida de archivos justificantes.
+ * - Recepción de incidencias externas enviadas por clientes no autenticados.
+ *
+ * La seguridad se gestiona mediante comprobaciones de rol y middleware, asegurando que 
+ * los operarios solo accedan a sus tareas asignadas.
+ *
+ * @package App\Http\Controllers
  */
 class TareaController extends Controller
 {
     /**
-     * Listado de tareas paginadas
+     * @brief Lista las tareas con paginación y filtros.
+     *
+     * Recupera las tareas de la base de datos aplicando los siguientes criterios:
+     * - **Filtro de Rol**: Los administradores ven todas las tareas; los operarios solo las asignadas a ellos.
+     * - **Filtro de Estado**: Permite filtrar por estados específicos (Pendiente, Realizada, etc.).
+     * - **Orden**: Las tareas aparecen ordenadas cronológicamente.
+     *
+     * @param Request $request Contiene los parámetros de filtrado (estado).
+     * @return \Illuminate\View\View Vista con el listado de tareas paginado.
      */
     public function index(Request $request)
     {
@@ -43,7 +64,12 @@ class TareaController extends Controller
     }
 
     /**
-     * Ver detalle de una tarea
+     * @brief Muestra el detalle exhaustivo de una tarea específica.
+     *
+     * Verifica que el usuario tenga permisos para visualizar la tarea antes de cargar la vista.
+     *
+     * @param Tarea $tarea Instancia de la tarea a consultar.
+     * @return \Illuminate\View\View Detalle de la tarea.
      */
     public function show(Tarea $tarea)
     {
@@ -57,6 +83,15 @@ class TareaController extends Controller
         return view('tareas.show', compact('tarea'));
     }
 
+    /**
+     * @brief Gestiona la descarga segura de archivos adjuntos a la tarea.
+     *
+     * El método comprueba que el archivo exista en el disco privado y que el 
+     * usuario tenga permisos (ser administrador o el operario asignado).
+     *
+     * @param Tarea $tarea Tarea de la cual se desea descargar el resumen.
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse Descarga del fichero.
+     */
     public function downloadFile(Tarea $tarea)
     {
 
@@ -74,6 +109,13 @@ class TareaController extends Controller
         return Storage::disk('private')->download($tarea->fichero_resumen);
     }
 
+    /**
+     * @brief Proporciona el listado de provincias españolas y sus códigos.
+     *
+     * Método auxiliar utilizado para validar códigos postales y rellenar selectores en formularios.
+     *
+     * @return array Listado asociativo ['código' => 'nombre de provincia'].
+     */
     private function provincias(): array
     {
         return [
@@ -133,7 +175,12 @@ class TareaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @brief Muestra el formulario para crear una nueva tarea.
+     *
+     * Carga los datos necesarios para el formulario de alta (clientes y operarios disponibles).
+     *
+     * @note Solo accesible para administradores.
+     * @return \Illuminate\View\View Formulario de creación.
      */
     public function create()
     {
@@ -156,7 +203,15 @@ class TareaController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * @brief Procesa el almacenamiento de una nueva tarea.
+     *
+     * Realiza una validación exhaustiva de los datos:
+     * - Coherencia entre Código Postal y provincia.
+     * - Validación de formatos de teléfono y correo.
+     * - Restricción de fechas según el estado de la tarea.
+     *
+     * @param Request $request Datos enviados desde el formulario.
+     * @return \Illuminate\Http\RedirectResponse Redirección al listado con mensaje de éxito o error.
      */
     public function store(Request $request)
     {
@@ -259,7 +314,10 @@ class TareaController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
+     * @brief Muestra el formulario de edición de una tarea.
+     *
+     * @param Tarea $tarea Tarea a editar.
+     * @return \Illuminate\View\View Formulario de edición con datos precargados.
      */
     public function edit(Tarea $tarea)
     {
@@ -282,7 +340,14 @@ class TareaController extends Controller
     }
 
     /**
-     * Actualizar los datos de una tarea
+     * @brief Actualiza los datos de una tarea existente.
+     *
+     * Implementa lógica de limpieza de datos (ej. eliminar fecha si se cancela) 
+     * y validaciones de coherencia geográfica similares a {@see store}.
+     *
+     * @param Request $request Datos actualizados.
+     * @param Tarea $tarea Instancia del modelo a actualizar.
+     * @return \Illuminate\Http\RedirectResponse Redirección tras la actualización.
      */
     public function update(Request $request, Tarea $tarea)
     {
@@ -411,13 +476,11 @@ class TareaController extends Controller
     }
 
     /**
-     * Confirmar la eliminación de una tarea
+     * @brief Muestra la confirmación de borrado de una tarea.
      *
-     * @param Tarea $tarea
-     * @return void
+     * @param Tarea $tarea Tarea que se pretende eliminar.
+     * @return \Illuminate\View\View Vista de confirmación.
      */
-
-
     public function confirmDelete(Tarea $tarea)
     {
         $user = Auth::user();
@@ -430,7 +493,10 @@ class TareaController extends Controller
     }
 
     /**
-     * Eliminar una tarea
+     * @brief Elimina permanentemente una tarea del sistema.
+     *
+     * @param Tarea $tarea Tarea a eliminar.
+     * @return \Illuminate\Http\RedirectResponse Redirección al inicio con éxito.
      */
     public function destroy(Tarea $tarea)
     {
@@ -445,6 +511,12 @@ class TareaController extends Controller
         return redirect('/')->with('success', 'Tarea eliminada correctamente');
     }
 
+    /**
+     * @brief Muestra el formulario para que un operario complete su tarea.
+     *
+     * @param Tarea $tarea Tarea asignada al operario.
+     * @return \Illuminate\View\View Formulario de finalización.
+     */
     public function completeForm(Tarea $tarea)
     {
         $user = Auth::user();
@@ -457,6 +529,17 @@ class TareaController extends Controller
         return view('tareas.completeForm', compact('tarea'));
     }
 
+    /**
+     * @brief Procesa la finalización de una tarea por parte del operario.
+     *
+     * Gestiona la actualización del estado final y la **subida del archivo justificante**:
+     * - El archivo es obligatorio si el estado es 'Realizada'.
+     * - El archivo se almacena en el disco privado con un nombre único identificativo.
+     *
+     * @param Request $request Datos del cierre y archivo adjunto.
+     * @param Tarea $tarea Tarea que se completa.
+     * @return \Illuminate\Http\RedirectResponse Redirección al listado.
+     */
     public function complete(Request $request, Tarea $tarea)
     {
         $user = Auth::user();
@@ -525,7 +608,11 @@ class TareaController extends Controller
     }
 
     /**
-     * Muestra el formulario de incidencias para clientes
+     * @brief Muestra el formulario de incidencias público para clientes.
+     *
+     * Permite que clientes externos soliciten servicios sin estar autenticados.
+     *
+     * @return \Illuminate\View\View Formulario de incidencia externa.
      */
     public function createFromCliente()
     {
@@ -536,7 +623,15 @@ class TareaController extends Controller
     }
 
     /**
-     * Guarda la incidencia enviada por el cliente
+     * @brief Procesa y registra una incidencia enviada por un cliente.
+     *
+     * Realiza un proceso de verificación previo:
+     * - Comprueba que el **CIF** exista en el sistema.
+     * - Comprueba que el **Teléfono** proporcionado coincida con el del cliente registrado.
+     * - Crea la tarea marcada como pendiente y sin operario asignado para su posterior revisión.
+     *
+     * @param Request $request Datos de contacto e incidencia.
+     * @return \Illuminate\Http\RedirectResponse Redirección al login con aviso de recepción.
      */
     public function storeFromCliente(Request $request)
     {
