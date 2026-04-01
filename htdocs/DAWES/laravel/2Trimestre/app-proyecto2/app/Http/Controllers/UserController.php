@@ -75,6 +75,7 @@ class UserController extends Controller
             'name.max' => 'El nombre no puede tener más de 255 caracteres',
             'name.regex' => 'El nombre solo puede contener letras y espacios (sin números)',
             'email.required' => 'El correo electrónico es obligatorio',
+            'email.email' => 'El formato del correo electrónico no es válido',
             'email.unique' => 'Ya existe un usuario con ese correo electrónico',
             'telefono.required' => 'El teléfono es obligatorio',
             'telefono.max' => 'El teléfono no puede tener más de 20 caracteres',
@@ -89,7 +90,7 @@ class UserController extends Controller
             'tipo.in' => 'El tipo de usuario seleccionado no es válido',
         ]);
 
-        User::created($validated);
+        User::create($validated);
 
         return redirect()->route('empleados.index')->with('success', 'Empleado creado correctamente.');
     }

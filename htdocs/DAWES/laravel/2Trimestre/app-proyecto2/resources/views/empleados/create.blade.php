@@ -67,7 +67,7 @@
                                 <label class="form-label small fw-bold text-muted text-uppercase">Correo Electrónico Corporativo</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light"><i class="fas fa-envelope text-muted"></i></span>
-                                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
+                                    <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" 
                                            value="{{ old('email') }}" placeholder="usuario@empresa.com">
                                     @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
