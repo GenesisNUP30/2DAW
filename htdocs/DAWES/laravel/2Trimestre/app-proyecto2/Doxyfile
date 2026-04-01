@@ -1048,7 +1048,7 @@ INPUT_FILE_ENCODING    =
 # provided as Doxygen C comment), *.py, *.pyw, *.f90, *.f95, *.f03, *.f08,
 # *.f18, *.f, *.for, *.vhd, *.vhdl, *.ucf, *.qsf and *.ice.
 
-FILE_PATTERNS          = *.php \
+FILE_PATTERNS          = *.php 
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
 # be searched for input files as well.
@@ -1075,7 +1075,7 @@ EXCLUDE                = \
                     app/Http/Controllers/Auth/ForgotPasswordController.php \
                     app/Http/Controllers/Auth/ConfirmPasswordController.php \
                     app/Http/Controllers/Auth/ResetPasswordController.php \
-                    app/Http/Controllers/Auth/VerifyEmailController.php \
+                    app/Http/Controllers/Auth/VerifyEmailController.php 
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
