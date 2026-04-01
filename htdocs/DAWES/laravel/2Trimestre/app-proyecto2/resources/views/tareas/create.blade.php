@@ -154,6 +154,7 @@
                             <div class="col-md-4">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Fecha de Realización</label>
                                 <input type="date" name="fecha_realizacion" class="form-control @error('fecha_realizacion') is-invalid @enderror" value="{{ old('fecha_realizacion') }}">
+                                <p class="text-muted small mb-0">Si el estado es "Cancelada", no es obligatorio.</p>
                                 @error('fecha_realizacion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
