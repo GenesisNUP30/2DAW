@@ -328,7 +328,6 @@ class TareaController extends Controller
             'codigo_postal' => 'required|regex:/^\d{5}$/',
             'provincia' => 'required|in:' . implode(',', array_keys($this->provincias())),
             'estado' => 'required|in:B,P,R,C',
-            //TODO: Lógica si el estado es Cancelada
             'fecha_realizacion' => [
                 // Es obligatorio solo si el estado es 'Realizada' (R)
                 'required_if:estado,R,P,B',
@@ -337,7 +336,7 @@ class TareaController extends Controller
                 function ($attribute, $value, $fail) use ($request) {
                     $estado = $request->estado;
                     $hoy = now()->startOfDay();
-                    $fechaInput = \Carbon\Carbon::parse($value)->startOfDay();
+                    $fechaInput = $value ? \Carbon\Carbon::parse($value)->startOfDay() : null;
 
                     // Si es Pendiente (P) o Esperando (B), la fecha DEBE ser hoy o futura
                     if (in_array($estado, ['P', 'B'])) {
@@ -386,7 +385,7 @@ class TareaController extends Controller
                 ->withInput();
         }
 
-        $tarea->update($request->only(
+        $data = $request->only([
             'cliente_id',
             'operario_id',
             'persona_contacto',
@@ -400,7 +399,15 @@ class TareaController extends Controller
             'estado',
             'fecha_realizacion',
             'anotaciones_anteriores',
-        ));
+        ]);
+
+        if ($request->estado === 'C') {
+            $data['fecha_realizacion'] = null;
+        }
+
+        // Actualizamos el modelo con el array modificado
+        $tarea->update($data);
+
         return redirect()->route('tareas.index')->with('success', 'Tarea actualizada correctamente');
     }
 

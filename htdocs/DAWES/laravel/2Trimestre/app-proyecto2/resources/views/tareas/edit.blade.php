@@ -30,12 +30,12 @@
 
                 <div class="card border-0 shadow-sm" style="border-radius: 15px;">
                     <div class="card-body p-4">
-                        
+
                         {{-- SECCIÓN 1: CLIENTE Y CONTACTO --}}
                         <h5 class="fw-bold mb-4 text-success border-bottom pb-2">
                             <i class="fas fa-user-tie me-2"></i>Información de Contacto
                         </h5>
-                        
+
                         <div class="row g-3 mb-4">
                             <div class="col-md-12">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Cliente</label>
@@ -148,9 +148,13 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label class="form-label small fw-bold text-muted text-uppercase">Fecha realización</label>
+                                <label class="form-label small fw-bold text-muted text-uppercase">Fecha de realización</label>
                                 <input type="date" name="fecha_realizacion" class="form-control @error('fecha_realizacion') is-invalid @enderror" value="{{ old('fecha_realizacion', optional($tarea->fecha_realizacion)->format('Y-m-d')) }}">
                                 @error('fecha_realizacion') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <div class="form-text text-muted mt-2" style="font-size: 0.8rem;">
+                                    <i class="fas fa-info-circle text-primary me-1"></i>
+                                    Si el estado se cambia a <strong>Cancelada</strong>, esta fecha se eliminará automáticamente al guardar.
+                                </div>
                             </div>
 
                             <div class="col-12">
