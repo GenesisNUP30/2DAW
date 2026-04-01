@@ -330,7 +330,7 @@ class TareaController extends Controller
             'estado' => 'required|in:B,P,R,C',
             'fecha_realizacion' => [
                 // Es obligatorio solo si el estado es 'Realizada' (R)
-                'required_if:estado,R',
+                'required_if:estado,R,P,B',
                 'nullable',
                 'date',
                 function ($attribute, $value, $fail) use ($request) {
@@ -368,7 +368,8 @@ class TareaController extends Controller
             'codigo_postal.regex' => 'El código postal debe tener exactamente 5 dígitos.',
             'provincia.required' => 'La provincia es obligatoria',
             'provincia.in' => 'La provincia seleccionada no es válida',
-            'fecha_realizacion.required_if' => 'Si la tarea está realizada, debes indicar cuándo se hizo.',
+            'fecha_realizacion.required_if' => 'Debes indicar una fecha para este estado.',
+            'fecha_realizacion.date' => 'La fecha de realización no es válida.',
             'estado.required' => 'El estado es obligatorio',
             'estado.in' => 'El estado seleccionado no es válido',
         ]);
