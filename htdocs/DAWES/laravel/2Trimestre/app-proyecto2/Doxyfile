@@ -1063,18 +1063,19 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which Doxygen is
 # run.
 
-EXCLUDE                = vendor \
-                         storage \
-                         node_modules \
-                         bootstrap \
-                         config \
-                         database \
-                         public \
-                         app/Http/Controllers/Auth/RegisterController.php \
-                         app/Http/Controllers/Auth/ForgotPasswordController.php \
-                         app/Http/Controllers/Auth/ConfirmPasswordController.php \
-                         app/Http/Controllers/Auth/ResetPasswordController.php \
-                         app/Http/Controllers/Auth/VerifyEmailController.php \
+EXCLUDE                = \
+                    vendor \
+                    storage \
+                    node_modules \
+                    bootstrap \
+                    config \
+                    database \
+                    public \
+                    app/Http/Controllers/Auth/RegisterController.php \
+                    app/Http/Controllers/Auth/ForgotPasswordController.php \
+                    app/Http/Controllers/Auth/ConfirmPasswordController.php \
+                    app/Http/Controllers/Auth/ResetPasswordController.php \
+                    app/Http/Controllers/Auth/VerifyEmailController.php \
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
