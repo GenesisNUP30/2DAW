@@ -121,8 +121,8 @@
                         </h5>
                         <div class="row g-3">
                             <div class="col-12">
-                                <label class="form-label small fw-bold text-muted text-uppercase">Descripción del problema</label>
-                                <textarea name="descripcion" class="form-control @error('descripcion') is-invalid @enderror" rows="3" placeholder="Describe detalladamente la incidencia...">{{ old('descripcion') }}</textarea>
+                                <label class="form-label small fw-bold text-muted text-uppercase">Descripción</label>
+                                <textarea name="descripcion" class="form-control @error('descripcion') is-invalid @enderror" rows="3" placeholder="Describe detalladamente la tarea/incidencia...">{{ old('descripcion') }}</textarea>
                                 @error('descripcion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
@@ -152,7 +152,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label class="form-label small fw-bold text-muted text-uppercase">Fecha Programada</label>
+                                <label class="form-label small fw-bold text-muted text-uppercase">Fecha de Realización</label>
                                 <input type="date" name="fecha_realizacion" class="form-control @error('fecha_realizacion') is-invalid @enderror" value="{{ old('fecha_realizacion') }}">
                                 @error('fecha_realizacion') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
