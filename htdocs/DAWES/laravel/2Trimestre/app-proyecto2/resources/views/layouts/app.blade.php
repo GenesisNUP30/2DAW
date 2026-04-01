@@ -70,11 +70,11 @@
                                     <a class="nav-link border-0" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
-                            @if (Route::has('register'))
+                            <!-- @if (Route::has('register'))
                                 <li class="nav-item mt-1">
                                     <a class="nav-link border-0" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif
+                            @endif -->
                         @else
                             {{-- Info Usuario Logueado --}}
                             <li class="nav-item d-none d-md-flex align-items-center me-3 small text-muted">
@@ -93,7 +93,7 @@
                                     <i class="fas fa-user me-1"></i> {{ Auth::user()->name }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end shadow-sm">
-                                    <a class="dropdown-item" href="{{ route('perfil') }}"><i class="fas fa-user-edit me-2"></i>Perfil</a>
+                                    <a class="dropdown-item" href="{{ route('perfil') }}"><i class="fas fa-user-edit me-2"></i>Editar Perfil</a>
                                     <hr class="dropdown-divider">
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf

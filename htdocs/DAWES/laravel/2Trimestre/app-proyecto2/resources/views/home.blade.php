@@ -10,7 +10,6 @@
         <h2 class="fw-bold text-dark m-0">
             <i class="fas fa-chart-line text-primary me-2"></i>Panel de Administración
         </h2>
-        <span class="text-muted">{{ now()->format('d \d\e F, Y') }}</span>
     </div>
 
     {{-- 1. Fila de Indicadores (Counters) --}}
