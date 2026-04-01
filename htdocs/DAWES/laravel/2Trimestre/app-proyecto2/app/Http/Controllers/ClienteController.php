@@ -10,10 +10,25 @@ use App\Models\Pais;
 use App\Models\User;
 use App\Rules\ValidarCif;
 
+/**
+ * @class ClienteController
+ * @brief Controlador encargado de la gestión integral de clientes.
+ * * Maneja el ciclo de vida de los clientes en el sistema, incluyendo:
+ * - Listado filtrado por estado y pagos pendientes.
+ * - Registro de nuevos clientes vinculados a países y monedas.
+ * - Procesos de alta y baja lógica con restricciones de cuotas impagadas.
+ * * @note Todos los métodos de este controlador requieren privilegios de administrador.
+ */
 class ClienteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @brief Muestra el listado de clientes con soporte para filtrado y paginación.
+     * * Permite filtrar la colección por:
+     * - **Estado**: Activos o de baja.
+     * - **Pago**: Solo clientes con cuotas pendientes.
+     * * @param Request $request Contiene los parámetros de filtro 'estado' y 'pago'.
+     * @return \Illuminate\View\View Vista con la colección paginada de clientes.
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException 403 si el usuario no es admin.
      */
     public function index(Request $request)
     {
@@ -52,7 +67,10 @@ class ClienteController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @brief Muestra el formulario para la creación de un nuevo cliente.
+     * * Recupera la lista de países para que el usuario pueda asignar la moneda 
+     * correspondiente de forma automática en el siguiente paso.
+     * * @return \Illuminate\View\View Vista del formulario de creación.
      */
     public function create()
     {
@@ -68,7 +86,13 @@ class ClienteController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @brief Almacena un nuevo cliente en la base de datos.
+     * * Realiza validaciones estrictas:
+     * - Verifica el CIF mediante una regla personalizada (`ValidarCif`).
+     * - Asegura que el país exista en la base de datos.
+     * - Asigna automáticamente la moneda (`iso_moneda`) basándose en el país seleccionado.
+     * * @param Request $request Datos del formulario validados.
+     * @return \Illuminate\Http\RedirectResponse Redirección al índice con mensaje de éxito.
      */
     public function store(Request $request)
     {
@@ -119,7 +143,9 @@ class ClienteController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @brief Muestra el detalle completo de un cliente específico.
+     * * @param Cliente $cliente Instancia del cliente recuperada por Route Model Binding.
+     * @return \Illuminate\View\View Vista de detalle del cliente.
      */
     public function show(Cliente $cliente)
     {
@@ -195,6 +221,11 @@ class ClienteController extends Controller
     //     return redirect()->route('clientes.index')->with('success', 'Cliente actualizado correctamente.');
     // }
 
+    /**
+     * @brief Muestra la vista de confirmación para dar de baja a un cliente.
+     * * @param Cliente $cliente Cliente que se pretende dar de baja.
+     * @return \Illuminate\View\View Vista de confirmación.
+     */
     public function confirmBaja(Cliente $cliente)
     {
         $user = Auth::user();
@@ -206,6 +237,15 @@ class ClienteController extends Controller
         return view('clientes.confirmBaja', compact('cliente'));
     }
 
+    /**
+     * @brief Ejecuta la baja lógica de un cliente.
+     * * Reglas de negocio:
+     * - No se puede dar de baja si ya está en estado de baja.
+     * - **Restricción crítica**: No se puede dar de baja si el cliente tiene cuotas 
+     * pendientes de pago. Se informa al usuario del número de cuotas adeudadas.
+     * * @param Cliente $cliente Cliente a desactivar.
+     * @return \Illuminate\Http\RedirectResponse Redirección con éxito o mensaje de error de deuda.
+     */
     public function baja(Cliente $cliente)
     {
         $user = Auth::user();
@@ -233,6 +273,11 @@ class ClienteController extends Controller
             ->with('success', 'Cliente dado de baja correctamente.');
     }
 
+    /**
+     * @brief Muestra la vista de confirmación para reactivar a un cliente.
+     * * @param Cliente $cliente Cliente que se pretende reactivar.
+     * @return \Illuminate\View\View Vista de confirmación o redirección si ya está activo.
+     */
     public function confirmAlta(Cliente $cliente)
     {
         $user = Auth::user();
@@ -248,6 +293,12 @@ class ClienteController extends Controller
         return view('clientes.confirmAlta', compact('cliente'));
     }
 
+    /**
+     * @brief Ejecuta la reactivación (alta lógica) de un cliente.
+     * * Elimina la `fecha_baja` del registro del cliente.
+     * * @param Cliente $cliente Cliente a reactivar.
+     * @return \Illuminate\Http\RedirectResponse Redirección con mensaje de éxito.
+     */
     public function alta(Cliente $cliente)
     {
         $user = Auth::user();
