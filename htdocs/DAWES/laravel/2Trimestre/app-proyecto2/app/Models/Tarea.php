@@ -6,22 +6,32 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * @class Tarea
+ * @brief Modelo que representa una orden de trabajo o incidencia en el sistema.
+ * * Gestiona la logística de las intervenciones técnicas, vinculando a los clientes
+ * con los operarios. Incluye información de contacto, ubicación geográfica y 
+ * control de estados (Pendiente, Realizada, etc.).
+ * * @property int $id ID de la tarea.
+ * @property string $estado Código del estado ('P' para pendiente, 'R' para realizada, etc.).
+ * @property int|null $operario_id ID del usuario tipo operario asignado.
+ * @property \Carbon\Carbon $fecha_realizacion Fecha prevista para la intervención.
+ */
 class Tarea extends Model
 {
     use HasFactory;
 
-    /**
-     * Tabla asociada con el modelo en la base de datos.
-     *
+   /**
+     * @brief Tabla asociada en la base de datos.
      * @var string
      */
     protected $table = 'tareas';
 
     /**
-     * Campos que se guardarán en la base de datos cuando se
-     * haga un create o update.
-     *
-     * @var array<string, string>
+     * @brief Atributos asignables de forma masiva.
+     * Incluye datos de contacto directo para que el operario pueda comunicarse
+     * sin necesidad de acceder a la ficha global del cliente.
+     * @var array<int, string>
      */
     protected $fillable = [
         'cliente_id',
@@ -40,15 +50,13 @@ class Tarea extends Model
     ];
 
     /**
-     * Evitamos que se actualicen automáticamente las fechas
-     *
+     * @brief Desactiva el manejo automático de las columnas 'created_at' y 'updated_at'.
      * @var boolean
      */
     public $timestamps = false;
 
-    /**
-     * Convertir automáticamente los atributos a tipos de datos específicos
-     *
+   /**
+     * @brief Casting de atributos a tipos nativos de PHP o Carbon.
      * @return array<string, string>
      */
     protected $casts = [
@@ -58,8 +66,8 @@ class Tarea extends Model
 
     // ======================== RELACIONES ========================
     /**
-     * Relación: Una tarea pertenece a un cliente
-     *
+     * @brief Relación Many-to-One con Cliente.
+     * Una tarea siempre pertenece a un cliente específico.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function cliente()
@@ -67,12 +75,11 @@ class Tarea extends Model
         return $this->belongsTo(Cliente::class);
     }
 
-    /**
-     * Relación: Una tarea está asignada a un operario (usuario)
-     * 
+/**
+     * @brief Relación Many-to-One con User (Operario).
+     * Vincula la tarea con el empleado encargado de ejecutarla.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-
     public function operario()
     {
         return $this->belongsTo(User::class, 'operario_id');
@@ -81,14 +88,9 @@ class Tarea extends Model
     // ==================== SCOPES ( DE CONSULTA) ====================
 
     /**
-     * Scope: Cargar las relaciones cliente y operario en la consulta
-     * 
-     * Uso: Tarea::conRelaciones()->get()
-     * 
-     * Beneficio: Evita el problema N+1 al mostrar tareas con sus relaciones
-     * 
+     * @brief Scope para cargar relaciones y evitar el problema de consultas N+1.
+     * Recomendado para listados generales de tareas.
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeConRelaciones($query)
     {
@@ -96,13 +98,9 @@ class Tarea extends Model
     }
 
     /**
-     * Scope: Filtrar tareas asignadas a un operario específico
-     * 
-     * Uso: Tarea::paraOperario($userId)->get()
-     *  
+     * @brief Filtra las tareas que pertenecen a un operario en particular.
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $operarioId ID del operario
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param int $operarioId ID del usuario.
      */
     public function scopeParaOperario($query, $operarioId)
     {
@@ -110,12 +108,8 @@ class Tarea extends Model
     }
 
     /**
-     * Scope: Ordenar tareas por fecha de realización descendente
-     * 
-     * Beneficio: Las tareas más recientes aparecen primero
-     * 
+     * @brief Ordena cronológicamente las tareas (de más reciente a más antigua).
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeOrdenadasPorFecha($query)
     {
@@ -123,18 +117,19 @@ class Tarea extends Model
     }
 
     /**
-     * Scope: Filtrar tareas con estado 'P' (Pendientes)
-     * 
-     * Beneficio: Obtiene rápidamente las tareas pendientes
-     * 
+     * @brief Filtra solo las tareas con estado 'P' (Pendiente).
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePendientes($query)
     {
         return $query->where('estado', 'P');
     }
 
+    /**
+     * @brief Obtiene las tareas cuya fecha de realización está en los próximos 5 días.
+     * Ideal para widgets de "Próximas Tareas" en el Dashboard.
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
     public function scopeTareasProximas($query)
     {
         $hoy = Carbon::today();
@@ -146,7 +141,9 @@ class Tarea extends Model
     }
 
     /**
-     * Scope: Incidencias registradas en la última semana
+     * @brief Identifica incidencias que aún no han sido asignadas a ningún operario.
+     * Filtra estados 'B' (Borrador/Nueva) o 'P' (Pendiente) sin responsable.
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeIncidenciasSinAsignar($query)
     {

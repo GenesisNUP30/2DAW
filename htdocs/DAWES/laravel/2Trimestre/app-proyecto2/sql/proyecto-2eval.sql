@@ -90,28 +90,6 @@ INSERT INTO `clientes` (`id`, `cif`, `nombre`, `telefono`, `correo`, `cuenta_cor
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `config_avanzada`
---
-
-CREATE TABLE `config_avanzada` (
-  `id` int(11) NOT NULL,
-  `provincia_defecto` varchar(2) DEFAULT NULL,
-  `poblacion_defecto` varchar(50) DEFAULT NULL,
-  `items_por_pagina` int(11) DEFAULT 5,
-  `tiempo_sesion` int(11) NOT NULL,
-  `tema` enum('claro','oscuro') DEFAULT 'claro'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `config_avanzada`
---
-
-INSERT INTO `config_avanzada` (`id`, `provincia_defecto`, `poblacion_defecto`, `items_por_pagina`, `tiempo_sesion`, `tema`) VALUES
-(1, '41', 'Tomares', 2, 360, 'oscuro');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `cuotas`
 --
 
@@ -668,12 +646,6 @@ ALTER TABLE `clientes`
   ADD UNIQUE KEY `cif` (`cif`);
 
 --
--- Indices de la tabla `config_avanzada`
---
-ALTER TABLE `config_avanzada`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `cuotas`
 --
 ALTER TABLE `cuotas`
@@ -761,12 +733,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `clientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT de la tabla `config_avanzada`
---
-ALTER TABLE `config_avanzada`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `cuotas`

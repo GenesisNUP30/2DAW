@@ -5,12 +5,19 @@ namespace App\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
+/**
+ * @class ValidarDni
+ * @brief Regla para validar el Documento Nacional de Identidad (DNI/NIF) en España.
+ * * Realiza una comprobación matemática basada en el módulo 23 para asegurar 
+ * que la letra de control corresponde al número de identificación proporcionado.
+ */
 class ValidarDni implements ValidationRule
 {
     /**
-     * Run the validation rule.
-     *
-     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @brief Valida el formato y la letra del DNI.
+     * * @param string $attribute
+     * @param mixed $value
+     * @param Closure $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

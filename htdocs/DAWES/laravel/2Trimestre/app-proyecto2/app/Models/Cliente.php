@@ -5,23 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-
+/**
+ * @class Cliente
+ * @brief Modelo que representa a los clientes de la plataforma.
+ * * Gestiona la información fiscal, de contacto y de facturación de los clientes.
+ * Actúa como nodo central conectando las tareas realizadas y las cuotas generadas.
+ * * @property int $id ID único del cliente.
+ * @property string $cif Código de Identificación Fiscal.
+ * @property string $nombre Nombre o razón social.
+ * @property float $importe_cuota_mensual Importe base para las remesas automáticas.
+ * @property string $pais Código ISO2 del país vinculado.
+ */
 class Cliente extends Model
 {
     use HasFactory;
 
     /**
-     * Tabla asociada con el modelo en la base de datos.
-     *
+     * @brief Tabla asociada en la base de datos.
      * @var string
      */
     protected $table = 'clientes';
 
     /**
-     * Campos que se guardarán en la base de datos cuando se
-     * haga un create o update.
-     *
-     * @var array<string, string>
+     * @brief Atributos asignables de forma masiva.
+     * @var array<int, string>
      */
     protected $fillable = [
         'cif',
@@ -38,8 +45,7 @@ class Cliente extends Model
     ];
 
     /**
-     * Evitamos que se actualicen automáticamente las fechas
-     *
+     * @brief Desactiva las columnas 'created_at' y 'updated_at' de Eloquent.
      * @var boolean
      */
     public $timestamps = false;
@@ -56,8 +62,8 @@ class Cliente extends Model
     ];
 
     /**
-     * Relación: Un cliente puede tener muchas tareas
-     *
+     * @brief Relación One-to-Many con Tarea.
+     * Un cliente puede tener múltiples solicitudes de trabajo o incidencias.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function tareas()
@@ -66,8 +72,8 @@ class Cliente extends Model
     }
 
     /**
-     * Relación: Un cliente puede tener muchas cuotas
-     * 
+     * @brief Relación One-to-Many con Cuota.
+     * Un cliente acumula un histórico de cuotas (mensuales y excepcionales).
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function cuotas()
@@ -76,28 +82,18 @@ class Cliente extends Model
     }
 
     /**
-     * Relación: Un cliente pertenece a un país
+     * @brief Relación Many-to-One con Pais.
+     * Vincula el código 'pais' del cliente con la columna 'iso2' de la tabla paises.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function paisRelacion()
     {
         return $this->belongsTo(Pais::class, 'pais', 'iso2');
     }
 
-    // Verificar si está dado de baja
-    public function isBaja(): bool
-    {
-        return $this->fecha_baja !== null;
-    }
-
-    // Verificar si está activo
-    public function isActivo(): bool
-    {
-        return $this->fecha_baja === null;
-    }
-
     /**
-     * Relación: Un cliente puede tener muchas cuotas pendientes de pago
-     * 
+     * @brief Relación filtrada para obtener solo cuotas impagadas.
+     * Útil para optimizar consultas de morosidad.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function cuotasPendientes()
@@ -105,23 +101,51 @@ class Cliente extends Model
         return $this->cuotas()->where('fecha_pago', null);
     }
 
-    // ==================== SCOPES ====================
+    // ==================== MÉTODOS DE ESTADO ====================
+
     /**
-     * Scope: Ordenar clientes por nombre
-     * 
+     * @brief Determina si el cliente ha sido dado de baja.
+     * @return bool
+     */
+    public function isBaja(): bool
+    {
+        return $this->fecha_baja !== null;
+    }
+
+    /**
+     * @brief Determina si el cliente está actualmente activo.
+     * @return bool
+     */
+    public function isActivo(): bool
+    {
+        return $this->fecha_baja === null;
+    }
+
+    /**
+     * @brief Verifica si existen cuotas sin fecha de pago asociadas al cliente.
+     * Este método es crucial antes de procesar bajas para evitar deudas perdidas.
+     * @return bool True si tiene al menos una cuota pendiente.
+     */
+    public function tieneCuotasPendientes(): bool
+    {
+        return $this->cuotasPendientes()->count() > 0;
+    }
+    
+    // ==================== SCOPES ====================
+    
+    /**
+     * @brief Ordena los clientes alfabéticamente por su nombre comercial.
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeOrdenadosPorNombre($query)
     {
         return $query->orderBy('nombre');
     }
 
-    /**
-     * Scope: Cargar la relación del país
-     * 
+   /**
+     * @brief Eager Loading para la relación del país.
+     * Mejora el rendimiento al listar clientes con su bandera o moneda.
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeConPais($query)
     {
@@ -129,23 +153,12 @@ class Cliente extends Model
     }
 
     /**
-     * Scope: Filtrar clientes que están activos
-     *
-     * @param [type] $query
-     * @return void
+     * @brief Filtra la consulta para devolver únicamente clientes sin fecha de baja.
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeActivos($query)
     {
         return $query->whereNull('fecha_baja');
     }
-
-    /**
-     * Verificar si el cliente tiene cuotas pendientes de pago
-     * 
-     * @return bool
-     */
-    public function tieneCuotasPendientes(): bool
-    {
-        return $this->cuotasPendientes()->count() > 0;
-    }
+    
 }

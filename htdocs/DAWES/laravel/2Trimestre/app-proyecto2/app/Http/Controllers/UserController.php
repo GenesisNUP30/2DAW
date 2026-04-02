@@ -9,10 +9,32 @@ use App\Models\User;
 use App\Rules\ValidarDni;
 use App\Rules\ValidarTelefono;
 
+/**
+ * @class UserController
+ *
+ * @brief Controlador para la gestión de usuarios y empleados del sistema.
+ *
+ * Esta clase centraliza todas las operaciones administrativas relacionadas con los usuarios:
+ * - Listado de empleados con filtros de estado (activo/baja).
+ * - Altas, modificaciones y eliminaciones de personal.
+ * - Gestión de estados de disponibilidad (dar de baja o reactivar).
+ * - Gestión del perfil personal del usuario autenticado.
+ *
+ * Incluye validaciones estrictas para DNI, teléfonos y restricciones de seguridad para 
+ * evitar que un administrador se elimine a sí mismo o a usuarios con tareas pendientes.
+ *
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @brief Muestra el listado de empleados paginado.
+     *
+     * Permite filtrar la lista por estado (activo/baja) y excluye al usuario 
+     * actualmente autenticado de la lista para evitar autogestión accidental.
+     *
+     * @param Request $request Contiene el parámetro 'estado' para el filtrado.
+     * @return \Illuminate\View\View Vista con la colección de empleados.
      */
     public function index(Request $request)
     {
@@ -33,7 +55,10 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @brief Muestra el formulario para registrar un nuevo empleado.
+     *
+     * @note Requiere privilegios de administrador.
+     * @return \Illuminate\View\View Formulario de creación.
      */
     public function create()
     {
@@ -48,7 +73,15 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @brief Almacena un nuevo usuario en la base de datos.
+     *
+     * Realiza validaciones de:
+     * - **DNI**: Formato y unicidad.
+     * - **Nombre**: Solo caracteres alfabéticos.
+     * - **Seguridad**: Contraseña mínima de 8 caracteres y confirmación.
+     *
+     * @param Request $request Datos del nuevo empleado.
+     * @return \Illuminate\Http\RedirectResponse Redirección al listado con éxito.
      */
     public function store(Request $request)
     {
@@ -104,7 +137,10 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @brief Muestra el formulario de edición para un empleado existente.
+     *
+     * @param User $empleado Modelo del empleado a editar.
+     * @return \Illuminate\View\View Vista de edición.
      */
     public function edit(User $empleado)
     {
@@ -119,7 +155,14 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @brief Actualiza la información de un empleado.
+     *
+     * Permite actualizaciones parciales (solo los campos presentes en la solicitud).
+     * Gestiona la unicidad del DNI y Email ignorando el registro actual.
+     *
+     * @param Request $request Datos actualizados.
+     * @param User $empleado Instancia del usuario a modificar.
+     * @return \Illuminate\Http\RedirectResponse Redirección al listado.
      */
     public function update(Request $request, User $empleado)
     {
@@ -195,13 +238,11 @@ class UserController extends Controller
     }
 
     /**
-     * Confirmar la eliminación de un empleado
+     * @brief Muestra la confirmación para eliminar a un empleado.
      *
-     * @param User $empleado
-     * @return void
+     * @param User $empleado Empleado a eliminar.
+     * @return \Illuminate\View\View Vista de confirmación.
      */
-
-
     public function confirmDelete(User $empleado)
     {
         $user = Auth::user();
@@ -214,7 +255,14 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @brief Elimina un usuario de la base de datos.
+     *
+     * **Restricciones**:
+     * - No permite que un usuario se elimine a sí mismo.
+     * - No permite eliminar usuarios que tengan tareas asignadas en el sistema.
+     *
+     * @param User $empleado Empleado a eliminar.
+     * @return \Illuminate\Http\RedirectResponse Redirección con mensaje de éxito o error.
      */
     public function destroy(User $empleado)
     {
@@ -239,6 +287,12 @@ class UserController extends Controller
         return redirect()->route('empleados.index')->with('success', 'Empleado eliminado correctamente.');
     }
 
+    /**
+     * @brief Muestra la confirmación para dar de baja a un empleado.
+     *
+     * @param User $empleado Empleado a dar de baja.
+     * @return \Illuminate\View\View Vista de confirmación.
+     */
     public function confirmBaja(User $empleado)
     {
 
@@ -251,6 +305,14 @@ class UserController extends Controller
         return view('empleados.confirmBaja', compact('empleado'));
     }
 
+    /**
+     * @brief Gestiona el proceso de dar de baja (desactivar) a un empleado.
+     * * A diferencia de `destroy`, este método mantiene el registro pero marca una `fecha_baja`,
+     * lo cual impide que el usuario inicie sesión pero mantiene su histórico.
+     *
+     * @param User $empleado Empleado a desactivar.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function baja(User $empleado)
     {
 
@@ -284,6 +346,12 @@ class UserController extends Controller
             ->with('success', 'Empleado dado de baja correctamente.');
     }
 
+    /**
+     * @brief Muestra la confirmación para dar de alta a un empleado.
+     *
+     * @param User $empleado Empleado a dar de alta.
+     * @return \Illuminate\View\View Vista de confirmación.
+     */
     public function confirmAlta(User $empleado)
     {
 
@@ -302,7 +370,12 @@ class UserController extends Controller
     }
 
     /**
-     * Dar de alta (reactivar) a un empleado
+     * @brief Reactiva a un empleado que estaba dado de baja.
+     *
+     * Limpia el campo `fecha_baja` para permitir que el usuario acceda de nuevo al sistema.
+     *
+     * @param User $empleado Empleado a reactivar.
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function alta(User $empleado)
     {
@@ -321,12 +394,26 @@ class UserController extends Controller
             ->with('success', 'Empleado reactivado correctamente.');
     }
 
+    /**
+     * @brief Muestra la vista de edición de perfil para el usuario actual.
+     *
+     * @return \Illuminate\View\View Vista del perfil personal.
+     */
     public function profile()
     {
         $user = Auth::user();
         return view('perfil.edit', compact('user'));
     }
 
+    /**
+     * @brief Procesa la actualización de los datos del propio usuario.
+     *
+     * Permite a cualquier usuario (admin u operario) cambiar sus datos de contacto y contraseña.
+     * Al finalizar, redirige a su panel correspondiente según su rol.
+     *
+     * @param Request $request Datos del perfil.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateProfile(Request $request)
     {
 
@@ -369,7 +456,7 @@ class UserController extends Controller
         }
 
         $user->update($data);
-        
+
         if ($user->isAdmin()) {
             return redirect()->route('empleados.index')->with('success', 'Perfil actualizado correctamente.');
         } else {
