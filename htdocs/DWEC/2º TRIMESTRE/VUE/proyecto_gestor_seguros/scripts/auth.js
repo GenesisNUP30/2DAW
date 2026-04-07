@@ -7,6 +7,9 @@ const authLogic = {
             formLogin: { usuario: '', password: '' }
         }
     },
+    mounted() {
+        this.verificarSesion();
+    },
     methods: {
         async hacerLogin() {
             this.errorLogin = '';
@@ -21,7 +24,10 @@ const authLogic = {
                 if (data.status) {
                     this.logueado = true;
                     this.usuarioActivo = data.usuario;
-                    // Llamamos a cargar clientes desde el componente principal
+                    
+                    // Guardamos en localStorage 
+                    localStorage.setItem('usuario_seguros', JSON.stringify(data.usuario));
+
                     if (this.cargarClientes) this.cargarClientes(); 
                 } else {
                     this.errorLogin = data.mensaje;
@@ -30,10 +36,23 @@ const authLogic = {
                 this.errorLogin = "Error de conexión";
             }
         },
+        verificarSesion() {
+            // Intentamos recuperar los datos guardados
+            const sesionGuardada = localStorage.getItem('usuario_seguros');
+            if (sesionGuardada) {
+                this.usuarioActivo = JSON.parse(sesionGuardada);
+                this.logueado = true;
+                // Si ya estamos logueados, cargamos los clientes directamente
+                if (this.cargarClientes) this.cargarClientes();
+            }
+        },
         salir() {
             this.logueado = false;
             this.usuarioActivo = null;
             this.formLogin = { usuario: '', password: '' };
+            
+            // --- LIMPIEZA ---
+            localStorage.removeItem('usuario_seguros');
         }
     }
 };
