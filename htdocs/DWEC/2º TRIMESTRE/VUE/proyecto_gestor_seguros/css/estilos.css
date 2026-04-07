@@ -1,0 +1,79 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --success-color: #27ae60;
+    --bg-light: #f4f7f6;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--primary-color);
+}
+
+/* Estilo para el Login */
+.login-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+    background-color: var(--primary-color) !important;
+    padding: 1.5rem;
+}
+
+/* Navbar Moderna */
+.navbar {
+    background-color: var(--primary-color) !important;
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Botones y Tablas */
+.btn-primary {
+    background-color: var(--accent-color);
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+}
+
+.table thead {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.badge {
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+/* Buscador */
+.search-box {
+    border-radius: 25px;
+    padding-left: 20px;
+}
