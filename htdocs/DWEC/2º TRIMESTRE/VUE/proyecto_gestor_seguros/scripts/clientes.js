@@ -116,8 +116,36 @@ const clientesLogic = {
     async guardarCliente() {
       if (!this.validarFormulario()) return;
 
-      // Lógica de fetch para guardar en la BD...
-      console.log("Enviando datos...", this.formCliente);
+      try {
+        const resp = await fetch("php/insertarcliente.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(this.formCliente),
+        });
+        const data = await resp.json();
+
+        if (data.status) {
+          // Cerrar el modal
+          const modalElement = document.getElementById("modalCliente");
+          const modal = bootstrap.Modal.getInstance(modalElement);
+          modal.hide();
+
+          // Recargar la lista de clientes para ver el nuevo
+          this.cargarClientes();
+
+          // Mostrar un mensaje de éxito
+          alert(data.mensaje);
+        } else {
+          // Si el DNI está duplicado, por ejemplo, lo mostramos como error del campo DNI
+          if (data.mensaje.includes("DNI")) {
+            this.errores.dni = data.mensaje;
+          } else {
+            alert("Error: " + data.mensaje);
+          }
+        }
+      } catch (e) {
+        console.error("Error en la petición", e);
+      }
     },
     abrirModalNuevo() {
       // Limpiar formulario
