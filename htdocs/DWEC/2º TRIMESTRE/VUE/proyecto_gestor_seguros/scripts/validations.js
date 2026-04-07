@@ -61,6 +61,18 @@ const validator = {
     return "El número de identificación no es válido";
   },
 
+  validarCPProvincia(cp, provinciaId) {
+    // 1. Extraemos los dos primeros dígitos del CP introducido
+    const primerosDosCP = cp.substring(0, 2);
+
+    // 2. Convertimos el ID de la provincia a string y le ponemos un 0 delante si es menor de 10
+    // Ejemplo: ID 1 -> "01", ID 28 -> "28"
+    const idEsperado = provinciaId.toString().padStart(2, "0");
+
+    // 3. Comparamos
+    return primerosDosCP === idEsperado;
+  },
+
   validarEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email) ? null : "El formato del email no es válido";

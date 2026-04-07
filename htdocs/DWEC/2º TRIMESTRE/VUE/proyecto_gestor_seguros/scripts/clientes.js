@@ -80,11 +80,21 @@ const clientesLogic = {
         if (err) this.errores.telefono = err;
       }
 
-      // Código Postal
-      if (!f.cp.trim()) {
+      // Validación de Código Postal
+      if (!this.formCliente.cp.trim()) {
         this.errores.cp = "El código postal es obligatorio";
-      } else if (!/^[0-9]{5}$/.test(f.cp)) {
+      } else if (!/^[0-9]{5}$/.test(this.formCliente.cp)) {
         this.errores.cp = "El código postal debe tener 5 dígitos";
+      } else if (this.formCliente.provincia_id) {
+        // Validamos coherencia con la provincia elegida
+        if (
+          !validator.validarCPProvincia(
+            this.formCliente.cp,
+            this.formCliente.provincia_id,
+          )
+        ) {
+          this.errores.cp = "El CP no corresponde a la provincia seleccionada";
+        }
       }
 
       // Provincia
