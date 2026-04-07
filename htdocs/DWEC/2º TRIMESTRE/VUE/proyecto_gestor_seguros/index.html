@@ -312,7 +312,7 @@
                       class="form-check-input"
                       type="radio"
                       value="Particular"
-                      v-model="formCliente.tipo_cliente"
+                      v-model="formCliente.tipo_cliente" @change="cambiarTipoCliente"
                     />
                     <label class="form-check-label">Particular</label>
                   </div>
@@ -321,7 +321,7 @@
                       class="form-check-input"
                       type="radio"
                       value="Empresa"
-                      v-model="formCliente.tipo_cliente"
+                      v-model="formCliente.tipo_cliente" @change="cambiarTipoCliente"
                     />
                     <label class="form-check-label">Empresa</label>
                   </div>
