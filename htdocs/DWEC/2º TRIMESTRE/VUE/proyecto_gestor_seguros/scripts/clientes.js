@@ -23,10 +23,15 @@ const clientesLogic = {
     };
   },
   methods: {
+    cambiarTipoCliente() {
+      this.errores = {}; // Limpiamos todos los errores al cambiar de Particular a Empresa o viceversa
+    },
+
     async cargarProvincias() {
       const resp = await fetch("php/extraer_provincias.php");
       this.provincias = await resp.json();
     },
+
     async cargarMunicipios() {
       this.municipios = [];
       this.formCliente.municipio_id = "";
@@ -37,32 +42,64 @@ const clientesLogic = {
       );
       this.municipios = await resp.json();
     },
+
     validarFormulario() {
       this.errores = {};
+      const f = this.formCliente;
 
-      if (!this.formCliente.nombre)
-        this.errores.nombre = "El nombre es obligatorio";
-      if (
-        this.formCliente.tipo_cliente === "Particular" &&
-        !this.formCliente.apellidos
-      ) {
-        this.errores.apellidos = "Los apellidos son obligatorios";
+      // Nombre
+      if (!f.nombre.trim()) this.errores.nombre = "El nombre es obligatorio";
+
+      // Apellidos (solo particulares)
+      if (f.tipo_cliente === "Particular") {
+        if (!f.apellidos.trim())
+          this.errores.apellidos = "Los apellidos son obligatorios";
       }
 
-      const errDni = validator.validarIdentificacion(this.formCliente.dni);
-      if (errDni) this.errores.dni = errDni;
+      // Identificación
+      if (!f.dni.trim()) {
+        this.errores.dni = "La identificación es obligatoria";
+      } else {
+        const err = validator.validarIdentificacion(f.dni);
+        if (err) this.errores.dni = err;
+      }
 
-      const errEmail = validator.validarEmail(this.formCliente.email);
-      if (errEmail) this.errores.email = errEmail;
+      // Email
+      if (!f.email.trim()) {
+        this.errores.email = "El email es obligatorio";
+      } else {
+        const err = validator.validarEmail(f.email);
+        if (err) this.errores.email = err;
+      }
 
-      const errTel = validator.validarTelefono(this.formCliente.telefono);
-      if (errTel) this.errores.telefono = errTel;
+      // Teléfono
+      if (!f.telefono.trim()) {
+        this.errores.telefono = "El teléfono es obligatorio";
+      } else {
+        const err = validator.validarTelefono(f.telefono);
+        if (err) this.errores.telefono = err;
+      }
 
-      if (!this.formCliente.provincia_id)
-        this.errores.provincia_id = "Selecciona una provincia";
-      if (!this.formCliente.municipio_id)
-        this.errores.municipio_id = "Selecciona un municipio";
+      // Código Postal
+      if (!f.cp.trim()) {
+        this.errores.cp = "El código postal es obligatorio";
+      } else if (!/^[0-9]{5}$/.test(f.cp)) {
+        this.errores.cp = "El código postal debe tener 5 dígitos";
+      }
 
+      // Provincia
+      if (!f.provincia_id) {
+        this.errores.provincia_id = "La provincia es obligatoria";
+      }
+      // LOCALIDAD: Solo se comprueba si la provincia ya está seleccionada
+      else if (!f.municipio_id) {
+        this.errores.municipio_id = "La localidad es obligatoria";
+      }
+
+      // Dirección
+      if (!f.direccion.trim()) {
+        this.errores.direccion = "La dirección es obligatoria";
+      }
       return Object.keys(this.errores).length === 0;
     },
 
