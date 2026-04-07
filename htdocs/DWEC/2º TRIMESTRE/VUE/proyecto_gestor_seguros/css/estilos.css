@@ -13,67 +13,85 @@ body {
 }
 
 /* Estilo para el Login */
+login-container .card {
+    width: 100%;
+    max-width: 450px; /* Un poco más ancha que la estándar */
+    border-radius: 20px; /* Bordes más suaves */
+}
+
+.form-control {
+    padding: 12px 18px; /* Más aire por dentro */
+    font-size: 1.1rem;   /* Texto un poco más grande */
+    border-radius: 10px; /* Bordes más modernos */
+    border: 2px solid #eee; /* Borde más definido para que se vea "limpio" */
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.15);
+}
+
+/* Etiquetas (Labels) más visibles */
+label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+}
+
+/* Espaciado entre grupos de formulario */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Botón de login más grande */
+.btn-lg {
+    padding: 14px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 12px;
+}
+
+/* --- ESTILOS PREVIOS REVISADOS --- */
+
 .login-container {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.card {
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+    padding: 20px;
 }
 
 .card-header {
-    border-radius: 15px 15px 0 0 !important;
+    border-radius: 20px 20px 0 0 !important;
     background-color: var(--primary-color) !important;
-    padding: 1.5rem;
+    padding: 2rem !important; /* Más espacio para el icono y título */
 }
 
-/* Navbar Moderna */
 .navbar {
     background-color: var(--primary-color) !important;
-    padding: 1rem 2rem;
-}
-
-.navbar-brand {
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-/* Botones y Tablas */
-.btn-primary {
-    background-color: var(--accent-color);
-    border: none;
-    transition: 0.3s;
-}
-
-.btn-primary:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
+    padding: 1.2rem 2rem; /* Navbar un pelín más alta */
 }
 
 .table {
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
     background: white;
+    font-size: 1.05rem; /* Tabla un poco más legible */
 }
 
-.table thead {
-    background-color: var(--secondary-color);
-    color: white;
+.table th {
+    padding: 15px !important;
 }
 
-.badge {
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-weight: 500;
+.table td {
+    padding: 12px 15px !important;
+    vertical-align: middle;
 }
 
-/* Buscador */
 .search-box {
-    border-radius: 25px;
-    padding-left: 20px;
+    border-radius: 30px;
+    padding: 25px 20px; /* Buscador más grande */
+    font-size: 1.1rem;
 }
