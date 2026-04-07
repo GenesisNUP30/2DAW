@@ -12,49 +12,7 @@ body {
     color: var(--primary-color);
 }
 
-/* Estilo para el Login */
-login-container .card {
-    width: 100%;
-    max-width: 450px; /* Un poco más ancha que la estándar */
-    border-radius: 20px; /* Bordes más suaves */
-}
-
-.form-control {
-    padding: 12px 18px; /* Más aire por dentro */
-    font-size: 1.1rem;   /* Texto un poco más grande */
-    border-radius: 10px; /* Bordes más modernos */
-    border: 2px solid #eee; /* Borde más definido para que se vea "limpio" */
-    transition: all 0.3s ease;
-}
-
-.form-control:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.15);
-}
-
-/* Etiquetas (Labels) más visibles */
-label {
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 0.95rem;
-    color: var(--secondary-color);
-}
-
-/* Espaciado entre grupos de formulario */
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-/* Botón de login más grande */
-.btn-lg {
-    padding: 14px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border-radius: 12px;
-}
-
-/* --- ESTILOS PREVIOS REVISADOS --- */
-
+/* Corregido el punto inicial */
 .login-container {
     height: 100vh;
     display: flex;
@@ -63,35 +21,61 @@ label {
     padding: 20px;
 }
 
-.card-header {
-    border-radius: 20px 20px 0 0 !important;
-    background-color: var(--primary-color) !important;
-    padding: 2rem !important; /* Más espacio para el icono y título */
+.login-container .card {
+    width: 100%;
+    max-width: 450px;
+    border-radius: 20px;
 }
 
-.navbar {
-    background-color: var(--primary-color) !important;
-    padding: 1.2rem 2rem; /* Navbar un pelín más alta */
+/* Estilos de Formulario */
+.form-group { margin-bottom: 1.5rem; }
+label { font-weight: 600; margin-bottom: 8px; display: block; }
+
+.form-control {
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 2px solid #eee;
 }
 
-.table {
-    border-radius: 15px;
-    overflow: hidden;
-    background: white;
-    font-size: 1.05rem; /* Tabla un poco más legible */
-}
-
-.table th {
-    padding: 15px !important;
-}
-
-.table td {
-    padding: 12px 15px !important;
-    vertical-align: middle;
-}
-
+/* ARREGLO BUSCADOR (Lupa y Altura) */
 .search-box {
-    border-radius: 30px;
-    padding: 25px 20px; /* Buscador más grande */
+    border-radius: 0 30px 30px 0 !important; /* Redondeado solo derecha */
+    height: 60px; /* Altura fija */
     font-size: 1.1rem;
+}
+
+.input-group-text {
+    border-radius: 30px 0 0 30px !important; /* Redondeado solo izquierda */
+    background-color: white !important;
+    border: 2px solid #eee;
+    border-right: none;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+.input-group-text i {
+    font-size: 1.2rem; /* Lupa un poco más grande */
+}
+
+/* TABLA Y BADGES */
+.table { background: white; border-radius: 15px; }
+
+/* Forzamos que el texto del badge sea legible */
+.badge {
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: #fff !important; /* Texto siempre blanco */
+    display: inline-block;
+}
+
+.badge-info { background-color: var(--accent-color) !important; }
+.badge-success { background-color: var(--success-color) !important; }
+
+/* Hover de la tabla para que no "coma" el texto */
+.table-hover tbody tr:hover {
+    background-color: rgba(52, 152, 219, 0.05);
 }

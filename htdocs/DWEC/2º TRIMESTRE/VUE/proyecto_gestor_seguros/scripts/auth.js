@@ -26,7 +26,7 @@ const authLogic = {
                     this.usuarioActivo = data.usuario;
                     
                     // Guardamos en localStorage 
-                    localStorage.setItem('usuario_seguros', JSON.stringify(data.usuario));
+                    localStorage.setItem('usuario', JSON.stringify(data.usuario));
 
                     if (this.cargarClientes) this.cargarClientes(); 
                 } else {
@@ -38,7 +38,7 @@ const authLogic = {
         },
         verificarSesion() {
             // Intentamos recuperar los datos guardados
-            const sesionGuardada = localStorage.getItem('usuario_seguros');
+            const sesionGuardada = localStorage.getItem('usuario');
             if (sesionGuardada) {
                 this.usuarioActivo = JSON.parse(sesionGuardada);
                 this.logueado = true;
@@ -52,7 +52,7 @@ const authLogic = {
             this.formLogin = { usuario: '', password: '' };
             
             // --- LIMPIEZA ---
-            localStorage.removeItem('usuario_seguros');
+            localStorage.removeItem('usuario');
         }
     }
 };
