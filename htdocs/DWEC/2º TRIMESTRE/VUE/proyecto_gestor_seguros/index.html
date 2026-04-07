@@ -239,6 +239,7 @@
                   <tbody>
                     <tr v-for="poliza in polizasFiltradas" :key="poliza.id">
                       <td class="fw-bold">{{ poliza.numero_poliza }}</td>
+                      <!-- //TODO Mostrar fecha en formato dd/mm/yyyy -->
                       <td>{{ poliza.fecha }}</td>
                       <td>{{ poliza.importe_total }}€</td>
                       <td>
