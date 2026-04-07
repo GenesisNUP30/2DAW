@@ -28,7 +28,7 @@ const clientesLogic = {
     },
 
     async cargarProvincias() {
-      const resp = await fetch("php/extraer_provincias.php");
+      const resp = await fetch("php/extraerprovincias.php");
       this.provincias = await resp.json();
     },
 
