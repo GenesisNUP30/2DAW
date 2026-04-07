@@ -4,16 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestión Agencia de Seguros</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="css/estilos.css" />
   </head>
   <body>
@@ -26,37 +18,21 @@
           </div>
           <div class="card-body p-4">
             <form @submit.prevent="hacerLogin">
-              <div class="form-group">
+              <!-- mb-3 en vez de form-group -->
+              <div class="mb-3">
                 <label><i class="fa fa-user"></i> Usuario</label>
-                <input
-                  type="text"
-                  v-model="formLogin.usuario"
-                  class="form-control"
-                  placeholder="Ej: admin"
-                  required
-                />
+                <input type="text" v-model="formLogin.usuario" class="form-control" placeholder="Ej: admin" required />
               </div>
-              <div class="form-group">
+              <div class="mb-3">
                 <label><i class="fa fa-lock"></i> Contraseña</label>
-                <input
-                  type="password"
-                  v-model="formLogin.password"
-                  class="form-control"
-                  placeholder="••••••••"
-                  required
-                />
+                <input type="password" v-model="formLogin.password" class="form-control" placeholder="••••••••" required />
               </div>
-              <button
-                type="submit"
-                class="btn btn-primary btn-block btn-lg mt-4"
-              >
+              <!-- w-100 en vez de btn-block -->
+              <button type="submit" class="btn btn-primary w-100 btn-lg mt-4">
                 Iniciar Sesión
               </button>
             </form>
-            <div
-              v-if="errorLogin"
-              class="alert alert-danger mt-3 small text-center"
-            >
+            <div v-if="errorLogin" class="alert alert-danger mt-3 small text-center">
               {{ errorLogin }}
             </div>
           </div>
@@ -65,13 +41,10 @@
 
       <div v-else>
         <nav class="navbar navbar-expand-lg navbar-dark shadow">
-          <span class="navbar-brand"
-            ><i class="fas fa-briefcase"></i> GESTIÓN AGENCIA</span
-          >
-          <div class="ml-auto text-white">
-            <span class="mr-3 d-none d-sm-inline"
-              >Bienvenido, <strong>{{ usuarioActivo.nombre }}</strong></span
-            >
+          <span class="navbar-brand"><i class="fas fa-briefcase"></i> GESTIÓN AGENCIA</span>
+          <!-- ms-auto en vez de ml-auto, me-3 en vez de mr-3 -->
+          <div class="ms-auto text-white">
+            <span class="me-3 d-none d-sm-inline">Bienvenido, <strong>{{ usuarioActivo.nombre }}</strong></span>
             <button class="btn btn-outline-light btn-sm" @click="salir">
               <i class="fas fa-sign-out-alt"></i> Salir
             </button>
@@ -81,9 +54,10 @@
         <div class="container-fluid mt-4 px-4">
           <div class="row align-items-center mb-4">
             <div class="col-md-6">
-              <h2 class="font-weight-bold text-dark">Cartera de Clientes</h2>
+              <h2 class="fw-bold text-dark">Cartera de Clientes</h2>
             </div>
-            <div class="col-md-6 text-right">
+            <!-- text-end en vez de text-right -->
+            <div class="col-md-6 text-end">
               <button class="btn btn-success shadow-sm">
                 <i class="fa fa-user-plus"></i> Nuevo Cliente
               </button>
@@ -96,12 +70,7 @@
                 <span class="input-group-text">
                   <i class="fa fa-search text-muted"></i>
                 </span>
-                <input
-                  type="text"
-                  class="form-control search-box"
-                  v-model="busqueda"
-                  placeholder="Buscar por nombre, apellidos o DNI..."
-                />
+                <input type="text" class="form-control search-box" v-model="busqueda" placeholder="Buscar por nombre, apellidos o DNI..." />
               </div>
             </div>
           </div>
@@ -121,41 +90,24 @@
                 <tbody>
                   <tr v-for="cliente in clientesFiltrados" :key="cliente.id">
                     <td>
-                      <span
-                        :class="['badge', cliente.tipo_cliente === 'Particular' ? 'badge-success' : 'badge-info']"
-                        >{{ cliente.tipo_cliente }}</span
-                      >
+                      <!-- bg-success-custom / bg-info-custom en vez de badge-success / badge-info -->
+                      <span :class="['badge', cliente.tipo_cliente === 'Particular' ? 'bg-success-custom' : 'bg-info-custom']">
+                        {{ cliente.tipo_cliente }}
+                      </span>
                     </td>
                     <td>{{ cliente.nombre }} {{ cliente.apellidos }}</td>
                     <td>{{ cliente.email }}</td>
                     <td>{{ cliente.telefono }}</td>
                     <td class="text-center">
                       <div class="btn-group">
-                        <button
-                          class="btn btn-sm btn-outline-primary"
-                          title="Ver Pólizas"
-                        >
-                          <i class="fa fa-file-invoice"></i>
-                        </button>
-                        <button
-                          class="btn btn-sm btn-outline-warning mx-1"
-                          title="Editar"
-                        >
-                          <i class="fa fa-edit"></i>
-                        </button>
-                        <button
-                          class="btn btn-sm btn-outline-danger"
-                          title="Borrar"
-                        >
-                          <i class="fa fa-trash"></i>
-                        </button>
+                        <button class="btn btn-sm btn-outline-primary" title="Ver Pólizas"><i class="fa fa-file-invoice"></i></button>
+                        <button class="btn btn-sm btn-outline-warning mx-1" title="Editar"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-sm btn-outline-danger" title="Borrar"><i class="fa fa-trash"></i></button>
                       </div>
                     </td>
                   </tr>
                   <tr v-if="clientesFiltrados.length === 0">
-                    <td colspan="5" class="text-center py-4 text-muted">
-                      No se encontraron clientes.
-                    </td>
+                    <td colspan="5" class="text-center py-4 text-muted">No se encontraron clientes.</td>
                   </tr>
                 </tbody>
               </table>
@@ -166,11 +118,7 @@
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="scripts/auth.js"></script>
     <script src="scripts/clientes.js"></script>
     <script src="scripts/main.js"></script>

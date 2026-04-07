@@ -12,7 +12,7 @@ body {
     color: var(--primary-color);
 }
 
-/* Corregido el punto inicial */
+
 .login-container {
     height: 100vh;
     display: flex;
@@ -28,13 +28,18 @@ body {
 }
 
 /* Estilos de Formulario */
-.form-group { margin-bottom: 1.5rem; }
 label { font-weight: 600; margin-bottom: 8px; display: block; }
 
 .form-control {
     padding: 12px 18px;
     border-radius: 10px;
     border: 2px solid #eee;
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 12px 24px;
 }
 
 /* ARREGLO BUSCADOR (Lupa y Altura) */
@@ -72,8 +77,8 @@ label { font-weight: 600; margin-bottom: 8px; display: block; }
     display: inline-block;
 }
 
-.badge-info { background-color: var(--accent-color) !important; }
-.badge-success { background-color: var(--success-color) !important; }
+.bg-info-custom { background-color: var(--accent-color) !important; }
+.bg-success-custom { background-color: var(--success-color) !important; }
 
 /* Hover de la tabla para que no "coma" el texto */
 .table-hover tbody tr:hover {
