@@ -38,7 +38,7 @@ const clientesLogic = {
       if (!this.formCliente.provincia_id) return;
 
       const resp = await fetch(
-        `php/extraer_municipios.php?provincia_id=${this.formCliente.provincia_id}`,
+        `php/extraermunicipios.php?provincia_id=${this.formCliente.provincia_id}`,
       );
       this.municipios = await resp.json();
     },
