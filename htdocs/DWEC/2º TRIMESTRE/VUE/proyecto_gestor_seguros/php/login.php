@@ -22,17 +22,19 @@ if ($datos && !empty($datos->usuario) && !empty($datos->password)) {
 
     if ($result && $result->num_rows > 0) {
         $u = $result->fetch_assoc();
-        
+
         // Verificamos si la contraseña coincide con el hash
-        if (password_verify($datos->password, $u['password'])) {
+        if ($datos->password === $u['password']) {
             $res = [
                 "status" => true,
                 "mensaje" => "¡Hola de nuevo!",
                 "usuario" => [
-                    "id" => $u['id'], 
+                    "id" => $u['id'],
                     "nombre" => $u['nombre']
                 ]
             ];
+        } else {
+            $res["mensaje"] = "La contraseña no coincide en el sistema";
         }
     }
 }
