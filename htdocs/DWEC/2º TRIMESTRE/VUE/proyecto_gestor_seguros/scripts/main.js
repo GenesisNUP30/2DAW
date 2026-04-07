@@ -10,10 +10,5 @@ createApp({
   },
   mounted() {
     console.log("App montada")
-    // Al arrancar, si hay sesión, cargamos ambos
-    if (this.logueado) {
-      this.cargarClientes();
-      this.cargarPolizas();
-    }
   },
 }).mount("#app");

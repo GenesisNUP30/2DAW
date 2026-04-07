@@ -29,6 +29,7 @@ const authLogic = {
                     localStorage.setItem('usuario', JSON.stringify(data.usuario));
 
                     if (this.cargarClientes) this.cargarClientes(); 
+                    if (this.cargarPolizas) this.cargarPolizas();
                 } else {
                     this.errorLogin = data.mensaje;
                 }
@@ -42,8 +43,9 @@ const authLogic = {
             if (sesionGuardada) {
                 this.usuarioActivo = JSON.parse(sesionGuardada);
                 this.logueado = true;
-                // Si ya estamos logueados, cargamos los clientes directamente
+                // Si ya estamos logueados, cargamos los clientes y pólizas
                 if (this.cargarClientes) this.cargarClientes();
+                if (this.cargarPolizas) this.cargarPolizas();
             }
         },
         salir() {
