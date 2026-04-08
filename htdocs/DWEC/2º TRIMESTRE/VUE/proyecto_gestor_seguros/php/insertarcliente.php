@@ -33,7 +33,7 @@ if ($checkDni->num_rows > 0) {
 }
 
 // 2. Insertar
-$sql = "INSERT INTO clientes (tipo_cliente, nombre, apellidos, dni, email, telefono, cp, provincia_id, municipio_id, direccion) 
+$sql = "INSERT INTO clientes (tipo_cliente, nombre, apellidos, dni, email, telefono, cp, provincia_id, localidad_id, direccion) 
         VALUES ('$tipo', '$nombre', '$apellidos', '$dni', '$email', '$telefono', '$cp', $provincia_id, $municipio_id, '$direccion')";
 
 if ($conexion->query($sql)) {

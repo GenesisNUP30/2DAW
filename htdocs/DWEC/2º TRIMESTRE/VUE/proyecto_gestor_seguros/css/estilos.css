@@ -84,3 +84,136 @@ label { font-weight: 600; margin-bottom: 8px; display: block; }
 .table-hover tbody tr:hover {
     background-color: rgba(52, 152, 219, 0.05);
 }
+
+/* --- ESTILOS DEL MODAL ACTUALIZADOS --- */
+
+/* Forzamos que el modal aparezca arriba de la página */
+.modal-dialog {
+    margin-top: 30px !important; /* Lo sube casi al tope */
+}
+
+/* Contenedor principal */
+.modal-content {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+}
+
+.modal-header {
+    /* Usamos tu color de :root pero con un ligero degradado */
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    padding: 12px 20px;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+}
+
+.modal-header .modal-title {
+    color: #ffffff !important; 
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Sombra suave para que resalte más */
+}
+
+/* Aseguramos que la 'X' de cerrar también sea blanca */
+.modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%); /* Truco CSS para volver blanca la X de Bootstrap */
+    opacity: 0.8;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+.modal-body {
+    padding: 2rem;
+    background-color: #fff;
+}
+
+/* Labels */
+.modal-body .form-label {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin-bottom: 6px;
+}
+
+/* INPUTS: Bordes grises más definidos para que no se pierdan */
+.modal-body .form-control, 
+.modal-body .form-select {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc; /* Gris medio para visibilidad */
+    background-color: #fff;
+    transition: all 0.2s ease;
+}
+
+.modal-body .form-control:focus, 
+.modal-body .form-select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+}
+
+/* Radio Buttons: Bordes definidos */
+.form-check-input {
+    border: 1px solid #999 !important; /* Gris fuerte para el circulito */
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color) !important;
+}
+
+/* Estilo para la sección del Tipo de Cliente */
+.bg-light.border {
+    border: 1px solid #ddd !important;
+    background-color: #f8f9fa !important;
+}
+
+/* Botones */
+.modal-body .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-primary { background-color: var(--accent-color); border: none; }
+.btn-secondary { background-color: #e0e0e0; border: none; color: #3d3939 !important; }
+
+/* Mensajes de error */
+.invalid-feedback {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+/* Reducir padding del body del modal */
+#modalCliente .modal-body {
+    padding: 1rem !important;
+}
+
+/* Reducir el gap entre filas del formulario */
+#modalCliente .row.g-3 {
+    --bs-gutter-y: 0.6rem;
+}
+
+/* Reducir padding de la sección tipo cliente */
+#modalCliente .mb-4.p-3 {
+    padding: 0.6rem 1rem !important;
+    margin-bottom: 0.75rem !important;
+}
+
+/* Reducir margen del botón de guardar */
+#modalCliente .text-end.mt-4 {
+    margin-top: 0.75rem !important;
+}
+
+/* Ajuste para que el modal no sea demasiado alto en pantallas pequeñas */
+@media (min-height: 700px) {
+    .modal-dialog {
+        margin-top: 10vh;
+    }
+}
