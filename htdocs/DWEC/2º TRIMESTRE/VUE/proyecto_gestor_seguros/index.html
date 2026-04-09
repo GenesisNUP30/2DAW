@@ -327,6 +327,7 @@
                       v-model="formCliente.tipo_cliente"
                       @change="cambiarTipoCliente"
                       id="tipoP"
+                      :disabled="formCliente.id"
                     />
                     <label class="form-check-label" for="tipoP"
                       >Particular</label
@@ -340,6 +341,7 @@
                       v-model="formCliente.tipo_cliente"
                       @change="cambiarTipoCliente"
                       id="tipoE"
+                      :disabled="formCliente.id"
                     />
                     <label class="form-check-label" for="tipoE">Empresa</label>
                   </div>
@@ -353,6 +355,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.nombre}"
                       v-model="formCliente.nombre"
+                      :disabled="formCliente.id"
                     />
                     <div class="invalid-feedback">{{ errores.nombre }}</div>
                   </div>
@@ -367,6 +370,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.apellidos}"
                       v-model="formCliente.apellidos"
+                      :disabled="formCliente.id"
                     />
                     <div class="invalid-feedback">{{ errores.apellidos }}</div>
                   </div>
@@ -378,6 +382,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.dni}"
                       v-model="formCliente.dni"
+                      :disabled="formCliente.id"
                     />
                     <div class="invalid-feedback">{{ errores.dni }}</div>
                   </div>
@@ -389,6 +394,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.email}"
                       v-model="formCliente.email"
+                      :disabled="formCliente.id"
                     />
                     <div class="invalid-feedback">{{ errores.email }}</div>
                   </div>
@@ -400,6 +406,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.telefono}"
                       v-model="formCliente.telefono"
+                      :disabled="formCliente.id"
                     />
                     <div class="invalid-feedback">{{ errores.telefono }}</div>
                   </div>
@@ -411,6 +418,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.cp}"
                       v-model="formCliente.cp"
+                      :disabled="formCliente.id"
                     />
                     <div class="invalid-feedback">{{ errores.cp }}</div>
                   </div>
@@ -422,6 +430,7 @@
                       :class="{'is-invalid': errores.provincia_id}"
                       v-model="formCliente.provincia_id"
                       @change="cargarMunicipios"
+                      :disabled="formCliente.id"
                     >
                       <option value="">Seleccione provincia...</option>
                       <option v-for="p in provincias" :key="p.id" :value="p.id">
@@ -439,7 +448,7 @@
                       class="form-select"
                       :class="{'is-invalid': errores.municipio_id}"
                       v-model="formCliente.municipio_id"
-                      :disabled="!municipios.length"
+                      :disabled="municipios.length === 0"
                     >
                       <option value="">Seleccione localidad...</option>
                       <option v-for="m in municipios" :key="m.id" :value="m.id">
@@ -459,6 +468,7 @@
                       :class="{'is-invalid': errores.direccion}"
                       v-model="formCliente.direccion"
                       placeholder="Calle, número, piso..."
+                      :disabled="formCliente.id"
                     />
                   </div>
                   <div class="invalid-feedback">{{ errores.direccion }}</div>
@@ -472,7 +482,11 @@
                   >
                     Cancelar
                   </button>
-                  <button type="submit" class="btn btn-primary">
+                  <button
+                    v-if="!formCliente.id"
+                    type="submit"
+                    class="btn btn-primary"
+                  >
                     Guardar Cliente
                   </button>
                 </div>

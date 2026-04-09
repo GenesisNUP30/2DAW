@@ -6,13 +6,14 @@ header("Content-Type: application/json; charset=UTF-8");
 include "conexion.php";
 
 // Consulta simple para el listado principal
-$sql = "SELECT id, tipo_cliente, nombre, apellidos, email, telefono FROM clientes ORDER BY id DESC";
+$sql = "SELECT id, tipo_cliente, nombre, apellidos, dni, email, telefono, 
+               direccion, cp, provincia_id, localidad_id AS municipio_id FROM clientes ORDER BY id DESC";
 $resultado = $conexion->query($sql);
 
 $clientes = [];
 
 if ($resultado && $resultado->num_rows > 0) {
-    while($fila = $resultado->fetch_assoc()) {
+    while ($fila = $resultado->fetch_assoc()) {
         $clientes[] = $fila;
     }
     echo json_encode([

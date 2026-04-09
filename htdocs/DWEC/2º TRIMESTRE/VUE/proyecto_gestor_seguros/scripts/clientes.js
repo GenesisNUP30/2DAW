@@ -115,11 +115,6 @@ const clientesLogic = {
     },
 
     async guardarCliente() {
-      console.log("Intentando guardar...", this.formCliente); // ¿Sale esto?
-      if (!this.validarFormulario()) {
-        console.log("Validación fallida:", this.errores); // ¿O sale esto?
-        return;
-      }
       if (!this.validarFormulario()) return;
 
       try {
@@ -156,6 +151,7 @@ const clientesLogic = {
     abrirModalNuevo() {
       // Limpiar formulario
       this.formCliente = {
+        id: null,
         tipo_cliente: "Particular",
         nombre: "",
         apellidos: "",
@@ -168,6 +164,7 @@ const clientesLogic = {
         direccion: "",
       };
       this.errores = {};
+      this.municipios = [];
       this.cargarProvincias();
       const modalElement = document.getElementById("modalCliente");
       let modal = bootstrap.Modal.getInstance(modalElement);
@@ -186,6 +183,33 @@ const clientesLogic = {
       } catch (e) {
         console.error("Error al obtener clientes");
       }
+    },
+
+    async verDetalleCliente(cliente) {
+      this.errores = {};
+
+      // Cargar provincias si no existen
+      if (this.provincias.length === 0) await this.cargarProvincias();
+
+      // Cargar municipios de la provincia del cliente específico
+      // Usamos await para que la lista de municipios se llene ANTES de asignar el municipio_id
+      if (cliente.provincia_id) {
+        const resp = await fetch(
+          `php/extraermunicipios.php?provincia_id=${cliente.provincia_id}`,
+        );
+        this.municipios = await resp.json();
+      } else {
+        this.municipios = [];
+      }
+
+      // Clonar el objeto para no editar la fila de la tabla directamente
+      this.formCliente = { ...cliente };
+
+      // Abrir el modal
+      const modalElement = document.getElementById("modalCliente");
+      let modal = bootstrap.Modal.getInstance(modalElement);
+      if (!modal) modal = new bootstrap.Modal(modalElement);
+      modal.show();
     },
   },
   computed: {
