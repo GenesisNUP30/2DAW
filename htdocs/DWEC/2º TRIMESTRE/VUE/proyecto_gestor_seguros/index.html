@@ -171,6 +171,13 @@
                       <td class="text-center">
                         <div class="btn-group">
                           <button
+                            class="btn btn-sm btn-outline-info"
+                            title="Ver Detalle"
+                            @click="verDetalleCliente(cliente)"
+                          >
+                            <i class="fa fa-eye"></i>
+                          </button>
+                          <button
                             class="btn btn-sm btn-outline-primary"
                             title="Ver Pólizas"
                             @click="vistaActual = 'polizas'"
@@ -310,7 +317,8 @@
               <form @submit.prevent="guardarCliente">
                 <div class="mb-4 p-3 rounded-3 bg-light border">
                   <label class="d-block mb-2 fw-bold text-secondary"
-                    >Tipo de Cliente</label>
+                    >Tipo de Cliente</label
+                  >
                   <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
@@ -429,8 +437,8 @@
                     <label class="form-label">Localidad</label>
                     <select
                       class="form-select"
-                      :class="{'is-invalid': errores.localidad_id}"
-                      v-model="formCliente.localidad_id"
+                      :class="{'is-invalid': errores.municipio_id}"
+                      v-model="formCliente.municipio_id"
                       :disabled="!municipios.length"
                     >
                       <option value="">Seleccione localidad...</option>
@@ -439,7 +447,7 @@
                       </option>
                     </select>
                     <div class="invalid-feedback">
-                      {{ errores.localidad_id }}
+                      {{ errores.municipio_id }}
                     </div>
                   </div>
 
@@ -448,10 +456,12 @@
                     <input
                       type="text"
                       class="form-control"
+                      :class="{'is-invalid': errores.direccion}"
                       v-model="formCliente.direccion"
                       placeholder="Calle, número, piso..."
                     />
                   </div>
+                  <div class="invalid-feedback">{{ errores.direccion }}</div>
                 </div>
 
                 <div class="text-end mt-4">

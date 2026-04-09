@@ -30,28 +30,33 @@ const validator = {
     }
 
     // CIF
-    if (/^[ABCDEFGHJNPQRSUVW][0-9]{7}[A-Z0-9]$/.test(value)) {
-      // Validación simplificada de CIF para el ejemplo
+    if (/^[ABCDEFGHJKLMNPQRSUVW][0-9]{7}[A-Z0-9]$/.test(value)) {
       let sumaPar = 0;
       let sumaImpar = 0;
 
-      for (let i = 1; i <= 6; i += 2) {
+      // Posiciones pares: 2, 4, 6
+      for (let i = 2; i <= 6; i += 2) {
         sumaPar += parseInt(value[i], 10);
       }
 
-      for (let i = 0; i <= 6; i += 2) {
+      // Posiciones impares: 1, 3, 5, 7
+      for (let i = 1; i <= 7; i += 2) {
         let doble = parseInt(value[i], 10) * 2;
         sumaImpar += doble > 9 ? doble - 9 : doble;
       }
 
       const sumaTotal = sumaPar + sumaImpar;
       const control = (10 - (sumaTotal % 10)) % 10;
+      const letrasControl = "JABCDEFGHI"; 
       const controlEsperado = value[8];
 
       let esValido = false;
+
+      // Si el último carácter es una letra
       if (/[A-Z]/.test(controlEsperado)) {
-        esValido = controlEsperado === String.fromCharCode(64 + control);
+        esValido = controlEsperado === letrasControl[control];
       } else {
+        // Si el último carácter es un número
         esValido = parseInt(controlEsperado, 10) === control;
       }
 
@@ -62,10 +67,10 @@ const validator = {
   },
 
   validarCPProvincia(cp, provinciaId) {
-    // 1. Extraemos los dos primeros dígitos del CP introducido
+    // Extraemos los dos primeros dígitos del CP introducido
     const primerosDosCP = cp.substring(0, 2);
 
-    // 2. Convertimos el ID de la provincia a string y le ponemos un 0 delante si es menor de 10
+    // Convertimos el ID de la provincia a string y le ponemos un 0 delante si es menor de 10
     // Ejemplo: ID 1 -> "01", ID 28 -> "28"
     const idEsperado = provinciaId.toString().padStart(2, "0");
 

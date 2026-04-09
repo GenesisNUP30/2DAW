@@ -89,7 +89,7 @@ label { font-weight: 600; margin-bottom: 8px; display: block; }
 
 /* Forzamos que el modal aparezca arriba de la página */
 .modal-dialog {
-    margin-top: 30px !important; /* Lo sube casi al tope */
+    margin-top: 30px !important;
 }
 
 /* Contenedor principal */
@@ -112,12 +112,11 @@ label { font-weight: 600; margin-bottom: 8px; display: block; }
     color: #ffffff !important; 
     font-weight: 600;
     font-size: 1.1rem;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Sombra suave para que resalte más */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); 
 }
 
-/* Aseguramos que la 'X' de cerrar también sea blanca */
 .modal-header .btn-close {
-    filter: invert(1) grayscale(100%) brightness(200%); /* Truco CSS para volver blanca la X de Bootstrap */
+    filter: invert(1) grayscale(100%) brightness(200%); 
     opacity: 0.8;
 }
 

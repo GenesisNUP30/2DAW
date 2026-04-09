@@ -101,8 +101,9 @@ const clientesLogic = {
       if (!f.provincia_id) {
         this.errores.provincia_id = "La provincia es obligatoria";
       }
-      // LOCALIDAD: Solo se comprueba si la provincia ya está seleccionada
-      else if (!f.municipio_id) {
+
+      // Localidad
+      if (!f.municipio_id) {
         this.errores.municipio_id = "La localidad es obligatoria";
       }
 
@@ -114,6 +115,11 @@ const clientesLogic = {
     },
 
     async guardarCliente() {
+      console.log("Intentando guardar...", this.formCliente); // ¿Sale esto?
+      if (!this.validarFormulario()) {
+        console.log("Validación fallida:", this.errores); // ¿O sale esto?
+        return;
+      }
       if (!this.validarFormulario()) return;
 
       try {
@@ -163,9 +169,11 @@ const clientesLogic = {
       };
       this.errores = {};
       this.cargarProvincias();
-      const modal = new bootstrap.Modal(
-        document.getElementById("modalCliente"),
-      );
+      const modalElement = document.getElementById("modalCliente");
+      let modal = bootstrap.Modal.getInstance(modalElement);
+      if (!modal) {
+        modal = new bootstrap.Modal(modalElement);
+      }
       modal.show();
     },
     async cargarClientes() {
