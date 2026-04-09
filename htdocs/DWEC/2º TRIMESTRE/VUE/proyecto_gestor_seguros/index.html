@@ -169,7 +169,7 @@
                       <td>{{ cliente.email }}</td>
                       <td>{{ cliente.telefono }}</td>
                       <td class="text-center">
-                        <div class="btn-group">
+                        <div class="d-flex justify-content-center gap-1">
                           <button
                             class="btn btn-sm btn-outline-info"
                             title="Ver Detalle"
@@ -178,24 +178,25 @@
                             <i class="fa fa-eye"></i>
                           </button>
                           <button
-                            class="btn btn-sm btn-outline-primary"
-                            title="Ver Pólizas"
-                            @click="vistaActual = 'polizas'"
-                          >
-                            <i class="fa fa-file-invoice"></i>
-                          </button>
-                          <button
-                            class="btn btn-sm btn-outline-warning mx-1"
-                            title="Editar"
+                          class="btn btn-sm btn-outline-warning"
+                          title="Editar"
+                          @click="prepararEdicion(cliente)"
                           >
                             <i class="fa fa-edit"></i>
                           </button>
                           <button
-                            class="btn btn-sm btn-outline-danger"
-                            title="Borrar"
+                          class="btn btn-sm btn-outline-danger"
+                          title="Borrar"
                           >
-                            <i class="fa fa-trash"></i>
-                          </button>
+                          <i class="fa fa-trash"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-primary"
+                          title="Ver Pólizas"
+                          @click="vistaActual = 'polizas'"
+                        >
+                          <i class="fa fa-file-invoice"></i>
+                        </button>
                         </div>
                       </td>
                     </tr>
@@ -305,7 +306,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">
-                {{ formCliente.id ? 'Detalles del Cliente' : 'Nuevo Cliente' }}
+                {{ modoModal === 'crear' ? 'Nuevo Cliente' : modoModal === 'ver' ? 'Detalles del Cliente' : 'Editar Cliente' }}
               </h5>
               <button
                 type="button"
@@ -327,7 +328,7 @@
                       v-model="formCliente.tipo_cliente"
                       @change="cambiarTipoCliente"
                       id="tipoP"
-                      :disabled="formCliente.id"
+                      :disabled="modoModal === 'ver'"
                     />
                     <label class="form-check-label" for="tipoP"
                       >Particular</label
@@ -341,7 +342,7 @@
                       v-model="formCliente.tipo_cliente"
                       @change="cambiarTipoCliente"
                       id="tipoE"
-                      :disabled="formCliente.id"
+                      :disabled="modoModal === 'ver'"
                     />
                     <label class="form-check-label" for="tipoE">Empresa</label>
                   </div>
@@ -355,7 +356,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.nombre}"
                       v-model="formCliente.nombre"
-                      :disabled="formCliente.id"
+                      :disabled="modoModal === 'ver'"
                     />
                     <div class="invalid-feedback">{{ errores.nombre }}</div>
                   </div>
@@ -370,7 +371,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.apellidos}"
                       v-model="formCliente.apellidos"
-                      :disabled="formCliente.id"
+                      :disabled="modoModal === 'ver'"
                     />
                     <div class="invalid-feedback">{{ errores.apellidos }}</div>
                   </div>
@@ -382,7 +383,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.dni}"
                       v-model="formCliente.dni"
-                      :disabled="formCliente.id"
+                      :disabled="modoModal === 'ver'"
                     />
                     <div class="invalid-feedback">{{ errores.dni }}</div>
                   </div>
@@ -394,7 +395,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.email}"
                       v-model="formCliente.email"
-                      :disabled="formCliente.id"
+                      :disabled="modoModal === 'ver'"
                     />
                     <div class="invalid-feedback">{{ errores.email }}</div>
                   </div>
@@ -406,7 +407,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.telefono}"
                       v-model="formCliente.telefono"
-                      :disabled="formCliente.id"
+                      :disabled="modoModal === 'ver'"
                     />
                     <div class="invalid-feedback">{{ errores.telefono }}</div>
                   </div>
@@ -418,7 +419,7 @@
                       class="form-control"
                       :class="{'is-invalid': errores.cp}"
                       v-model="formCliente.cp"
-                      :disabled="formCliente.id"
+                      :disabled="modoModal === 'ver'"
                     />
                     <div class="invalid-feedback">{{ errores.cp }}</div>
                   </div>
@@ -430,7 +431,7 @@
                       :class="{'is-invalid': errores.provincia_id}"
                       v-model="formCliente.provincia_id"
                       @change="cargarMunicipios"
-                      :disabled="formCliente.id"
+                      :disabled="modoModal === 'ver'"
                     >
                       <option value="">Seleccione provincia...</option>
                       <option v-for="p in provincias" :key="p.id" :value="p.id">
@@ -448,7 +449,7 @@
                       class="form-select"
                       :class="{'is-invalid': errores.municipio_id}"
                       v-model="formCliente.municipio_id"
-                      :disabled="municipios.length === 0"
+                      :disabled="modoModal === 'ver' || municipios.length === 0"
                     >
                       <option value="">Seleccione localidad...</option>
                       <option v-for="m in municipios" :key="m.id" :value="m.id">
@@ -468,7 +469,7 @@
                       :class="{'is-invalid': errores.direccion}"
                       v-model="formCliente.direccion"
                       placeholder="Calle, número, piso..."
-                      :disabled="formCliente.id"
+                      :disabled="modoModal === 'ver'"
                     />
                   </div>
                   <div class="invalid-feedback">{{ errores.direccion }}</div>
@@ -480,14 +481,14 @@
                     class="btn btn-secondary me-2"
                     data-bs-dismiss="modal"
                   >
-                    Cancelar
+                    {{ modoModal === 'ver' ? 'Cerrar' : 'Cancelar' }}
                   </button>
                   <button
-                    v-if="!formCliente.id"
+                    v-if="modoModal !== 'ver'"
                     type="submit"
                     class="btn btn-primary"
                   >
-                    Guardar Cliente
+                    {{ modoModal === 'crear' ? 'Guardar Cliente' : 'Actualizar Cambios' }}
                   </button>
                 </div>
               </form>

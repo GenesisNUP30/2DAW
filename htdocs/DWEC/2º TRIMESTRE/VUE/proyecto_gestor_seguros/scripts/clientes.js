@@ -5,6 +5,7 @@ const clientesLogic = {
       busqueda: "",
       provincias: [],
       municipios: [],
+      modoModal: "crear",
       // Objeto para el formulario
       formCliente: {
         id: null,
@@ -41,6 +42,62 @@ const clientesLogic = {
         `php/extraermunicipios.php?provincia_id=${this.formCliente.provincia_id}`,
       );
       this.municipios = await resp.json();
+    },
+
+    // Método auxiliar compartido por verDetalleCliente y prepararEdicion
+    async cargarDatosCliente(cliente) {
+      this.errores = {};
+      if (this.provincias.length === 0) await this.cargarProvincias();
+      if (cliente.provincia_id) {
+        const resp = await fetch(
+          `php/extraermunicipios.php?provincia_id=${cliente.provincia_id}`,
+        );
+        this.municipios = await resp.json();
+      } else {
+        this.municipios = [];
+      }
+      this.formCliente = { ...cliente };
+    },
+
+    mostrarModal() {
+      const modalElement = document.getElementById("modalCliente");
+      let modal = bootstrap.Modal.getInstance(modalElement);
+      if (!modal) modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    },
+
+    abrirModalNuevo() {
+      // Limpiar formulario
+      this.modoModal = "crear";
+      this.formCliente = {
+        id: null,
+        tipo_cliente: "Particular",
+        nombre: "",
+        apellidos: "",
+        dni: "",
+        email: "",
+        telefono: "",
+        cp: "",
+        provincia_id: "",
+        municipio_id: "",
+        direccion: "",
+      };
+      this.errores = {};
+      this.municipios = [];
+      this.cargarProvincias();
+      this.mostrarModal();
+    },
+
+    async verDetalleCliente(cliente) {
+      this.modoModal = "ver";
+      await this.cargarDatosCliente(cliente);
+      this.mostrarModal();
+    },
+
+    async prepararEdicion(cliente) {
+      this.modoModal = "editar";
+      await this.cargarDatosCliente(cliente);
+      this.mostrarModal();
     },
 
     validarFormulario() {
@@ -81,44 +138,39 @@ const clientesLogic = {
       }
 
       // Validación de Código Postal
-      if (!this.formCliente.cp.trim()) {
+      if (!f.cp.trim()) {
         this.errores.cp = "El código postal es obligatorio";
-      } else if (!/^[0-9]{5}$/.test(this.formCliente.cp)) {
+      } else if (!/^[0-9]{5}$/.test(f.cp)) {
         this.errores.cp = "El código postal debe tener 5 dígitos";
-      } else if (this.formCliente.provincia_id) {
+      } else if (f.provincia_id) {
         // Validamos coherencia con la provincia elegida
-        if (
-          !validator.validarCPProvincia(
-            this.formCliente.cp,
-            this.formCliente.provincia_id,
-          )
-        ) {
+        if (!validator.validarCPProvincia(f.cp, f.provincia_id)) {
           this.errores.cp = "El CP no corresponde a la provincia seleccionada";
         }
       }
 
       // Provincia
-      if (!f.provincia_id) {
+      if (!f.provincia_id)
         this.errores.provincia_id = "La provincia es obligatoria";
-      }
-
       // Localidad
-      if (!f.municipio_id) {
+      if (!f.municipio_id)
         this.errores.municipio_id = "La localidad es obligatoria";
-      }
-
       // Dirección
-      if (!f.direccion.trim()) {
+      if (!f.direccion.trim())
         this.errores.direccion = "La dirección es obligatoria";
-      }
+
       return Object.keys(this.errores).length === 0;
     },
 
     async guardarCliente() {
       if (!this.validarFormulario()) return;
 
+      const url = this.formCliente.id
+        ? "php/editarcliente.php"
+        : "php/insertarcliente.php";
+
       try {
-        const resp = await fetch("php/insertarcliente.php", {
+        const resp = await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(this.formCliente),
@@ -127,13 +179,11 @@ const clientesLogic = {
 
         if (data.status) {
           // Cerrar el modal
-          const modalElement = document.getElementById("modalCliente");
-          const modal = bootstrap.Modal.getInstance(modalElement);
-          modal.hide();
-
+           bootstrap.Modal.getInstance(
+            document.getElementById("modalCliente")
+          ).hide();
           // Recargar la lista de clientes para ver el nuevo
           this.cargarClientes();
-
           // Mostrar un mensaje de éxito
           alert(data.mensaje);
         } else {
@@ -148,68 +198,14 @@ const clientesLogic = {
         console.error("Error en la petición", e);
       }
     },
-    abrirModalNuevo() {
-      // Limpiar formulario
-      this.formCliente = {
-        id: null,
-        tipo_cliente: "Particular",
-        nombre: "",
-        apellidos: "",
-        dni: "",
-        email: "",
-        telefono: "",
-        cp: "",
-        provincia_id: "",
-        municipio_id: "",
-        direccion: "",
-      };
-      this.errores = {};
-      this.municipios = [];
-      this.cargarProvincias();
-      const modalElement = document.getElementById("modalCliente");
-      let modal = bootstrap.Modal.getInstance(modalElement);
-      if (!modal) {
-        modal = new bootstrap.Modal(modalElement);
-      }
-      modal.show();
-    },
     async cargarClientes() {
       try {
         const resp = await fetch("php/listarclientes.php");
         const data = await resp.json();
-        if (data.status) {
-          this.clientes = data.data;
-        }
+        if (data.status) this.clientes = data.data;
       } catch (e) {
         console.error("Error al obtener clientes");
       }
-    },
-
-    async verDetalleCliente(cliente) {
-      this.errores = {};
-
-      // Cargar provincias si no existen
-      if (this.provincias.length === 0) await this.cargarProvincias();
-
-      // Cargar municipios de la provincia del cliente específico
-      // Usamos await para que la lista de municipios se llene ANTES de asignar el municipio_id
-      if (cliente.provincia_id) {
-        const resp = await fetch(
-          `php/extraermunicipios.php?provincia_id=${cliente.provincia_id}`,
-        );
-        this.municipios = await resp.json();
-      } else {
-        this.municipios = [];
-      }
-
-      // Clonar el objeto para no editar la fila de la tabla directamente
-      this.formCliente = { ...cliente };
-
-      // Abrir el modal
-      const modalElement = document.getElementById("modalCliente");
-      let modal = bootstrap.Modal.getInstance(modalElement);
-      if (!modal) modal = new bootstrap.Modal(modalElement);
-      modal.show();
     },
   },
   computed: {
