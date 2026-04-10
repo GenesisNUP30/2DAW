@@ -241,6 +241,7 @@
                   <thead>
                     <tr>
                       <th>Nº Póliza</th>
+                      <th>Cliente</th>
                       <th>Fecha</th>
                       <th>Importe</th>
                       <th>Estado</th>
@@ -251,8 +252,12 @@
                   <tbody>
                     <tr v-for="poliza in polizasFiltradas" :key="poliza.id">
                       <td class="fw-bold">{{ poliza.numero_poliza }}</td>
+                      <td>
+                        <i class="fas fa-user-circle text-muted me-1"></i>
+                        {{ poliza.nombre_cliente }}
+                      </td>
                       <!-- //TODO Mostrar fecha en formato dd/mm/yyyy -->
-                      <td>{{ formatearFecha(poliza.fecha) }}</td>
+                      <td>{{ poliza.fecha }}</td>
                       <td>{{ poliza.importe_total }}€</td>
                       <td>
                         <span :class="['badge', claseEstado(poliza.estado)]">
@@ -491,8 +496,7 @@
                     type="submit"
                     class="btn btn-primary"
                   >
-                    {{ modoModal === 'crear' ? 'Guardar Cliente' : 'Actualizar
-                    Cambios' }}
+                    {{ modoModal === 'crear' ? 'Guardar Cliente' : 'Actualizar Cambios' }}
                   </button>
                 </div>
               </form>
@@ -575,6 +579,23 @@
                     v-model="formPoliza.importe_total"
                     required
                   />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label text-muted">Cliente asociado</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light"
+                      ><i class="fa fa-user"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control bg-light"
+                      :value="formPoliza.nombre_cliente"
+                      readonly
+                    />
+                  </div>
+                  <small class="text-muted"
+                    >El cliente no puede modificarse desde aquí.</small
+                  >
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Fecha</label>

@@ -90,6 +90,7 @@ const polizasLogic = {
       return this.polizas.filter(
         (p) =>
           p.numero_poliza.toLowerCase().includes(b) ||
+          p.nombre_cliente.toLowerCase().includes(b) ||
           p.observaciones.toLowerCase().includes(b),
       );
     },
