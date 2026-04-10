@@ -613,9 +613,12 @@
                     v-model="formPoliza.estado"
                     required
                   >
-                    <option value="Activa">Activa</option>
-                    <option value="Pendiente">Pendiente</option>
-                    <option value="Cancelada">Cancelada</option>
+                    <option value="">Seleccione estado...</option>
+                    <option value="cobrada">Cobrada</option>
+                    <option value="a cuenta">A cuenta</option>
+                    <option value="liquidada">Liquidada</option>
+                    <option value="anulada">Anulada</option>
+                    <option value="pre-anulada">Pre-anulada</option>
                   </select>
                 </div>
                 <div class="mb-3">
@@ -634,7 +637,7 @@
                   >
                     Cancelar
                   </button>
-                  <button type="submit" class="btn btn-warning">
+                  <button type="submit" class="btn btn-warning" @click="guardarEdicionPoliza">
                     Guardar Cambios
                   </button>
                 </div>

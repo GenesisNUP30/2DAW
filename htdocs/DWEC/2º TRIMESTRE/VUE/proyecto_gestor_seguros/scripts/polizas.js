@@ -27,13 +27,13 @@ const polizasLogic = {
     },
 
     mostrarModal() {
-      const modalElement = document.getElementById("modalCliente");
+      const modalElement = document.getElementById("modalEditarPoliza");
       let modal = bootstrap.Modal.getInstance(modalElement);
       if (!modal) modal = new bootstrap.Modal(modalElement);
       modal.show();
     },
 
-    prepararEdicion(poliza) {
+    prepararEdicionPoliza(poliza) {
       this.formPoliza = { ...poliza };
       this.mostrarModal();
     },
@@ -50,19 +50,14 @@ const polizasLogic = {
         if (data.status) {
           // Cerrar el modal
           bootstrap.Modal.getInstance(
-            document.getElementById("modalPoliza"),
+            document.getElementById("modalEditarPoliza"),
           ).hide();
           // Recargar la lista de pólizas para ver el nuevo
           this.cargarPolizas();
           // Mostrar un mensaje de éxito
           alert(data.mensaje);
         } else {
-          // Si el DNI está duplicado, por ejemplo, lo mostramos como error del campo DNI
-          if (data.mensaje.includes("DNI")) {
-            this.errores.dni = data.mensaje;
-          } else {
-            alert("Error: " + data.mensaje);
-          }
+          alert("Error: " + data.mensaje);
         }
       } catch (e) {
         console.error("Error en la petición", e);
@@ -71,6 +66,7 @@ const polizasLogic = {
 
     // Función para poner color al estado
     claseEstado(estado) {
+      if (!estado) return "bg-secondary";
       switch (estado.toLowerCase()) {
         case "activa":
           return "bg-success";
@@ -90,8 +86,7 @@ const polizasLogic = {
       return this.polizas.filter(
         (p) =>
           p.numero_poliza.toLowerCase().includes(b) ||
-          p.nombre_cliente.toLowerCase().includes(b) ||
-          p.observaciones.toLowerCase().includes(b),
+          p.nombre_cliente.toLowerCase().includes(b),
       );
     },
   },
