@@ -6,7 +6,7 @@ header("Content-Type: application/json; charset=UTF-8");
 include "conexion.php";
 
 // Consulta simple para el listado principal
-$sql = "SELECT id, cliente_id, numero_poliza, importe_total, fecha, estado, observaciones FROM polizas ORDER BY id DESC";
+$sql = "SELECT id, cliente_id, numero_poliza, importe_total, fecha, estado, observaciones FROM polizas ORDER BY fecha DESC";
 $resultado = $conexion->query($sql);
 
 $polizas = [];

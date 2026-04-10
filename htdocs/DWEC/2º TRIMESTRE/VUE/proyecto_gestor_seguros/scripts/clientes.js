@@ -9,7 +9,7 @@ const clientesLogic = {
       mensajeError: "",
       mensajeBorrado: "",
       clienteABorrar: null,
-      // Objeto para el formulario
+      // Objeto para el formulario de creación/edición/ver detalle de cliente
       formCliente: {
         id: null,
         tipo_cliente: "Particular",
