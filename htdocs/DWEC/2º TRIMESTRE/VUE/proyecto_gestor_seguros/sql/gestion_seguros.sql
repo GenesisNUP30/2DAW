@@ -51,9 +51,9 @@ INSERT INTO `clientes` (`id`, `tipo_cliente`, `nombre`, `apellidos`, `dni`, `ema
 (3, 'Empresa', 'SEGUROS ATLAS S.L.', NULL, 'V80146038', 'contacto@atlas.com', '954000111', 'Av. De la Palmera 4', '41012', 41, NULL),
 (4, 'Particular', 'ANTONIO', 'RUIZ GALLARDO', '83688646H', 'antonio.ruiz@hotmail.com', '600112233', 'Plaza Mayor 1', '28001', 28, NULL),
 (5, 'Empresa', 'TECNOLOGIAS SUR', NULL, 'N5296121F', 'info@tecsur.es', '910223344', 'Polígono Industrial 5', '28850', 28, NULL),
-(11, 'Particular', 'Alberto', 'Pérez Santos', '99047056V', 'albertoperez@hotmail.com', '664852001', 'Calle Rafael Alberti, 9', '21710', 21, 3211),
-(12, 'Particular', 'GEMA', 'DOMINGUEZB SOSA', '81917458Z', 'gemadominguez@mail.com', '632748400', 'Calle Avenida Pablo Ruiz Picasso, 4', '23711', 23, 3490),
-(13, 'Empresa', 'SOCIEDAD ANONIMA S.L', '', 'R8702141F', 'aaaaaaa@gmail.com', '659835564', 'Calle Acacias, 1º A', '11401', 11, 1762);
+(6, 'Particular', 'Alberto', 'Pérez Santos', '99047056V', 'albertoperez@hotmail.com', '664852001', 'Calle Rafael Alberti, 9', '21710', 21, 3211),
+(7, 'Particular', 'GEMA', 'DOMINGUEZB SOSA', '81917458Z', 'gemadominguez@mail.com', '632748400', 'Calle Avenida Pablo Ruiz Picasso, 4', '23711', 23, 3490),
+(8, 'Empresa', 'SOCIEDAD ANONIMA S.L', '', 'R8702141F', 'aaaaaaa@gmail.com', '659835564', 'Calle Acacias, 1º A', '11401', 11, 1762);
 
 -- --------------------------------------------------------
 

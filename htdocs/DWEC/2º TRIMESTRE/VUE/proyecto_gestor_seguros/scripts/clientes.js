@@ -6,6 +6,9 @@ const clientesLogic = {
       provincias: [],
       municipios: [],
       modoModal: "crear",
+      mensajeError: "",
+      mensajeBorrado: "",
+      clienteABorrar: null,
       // Objeto para el formulario
       formCliente: {
         id: null,
@@ -179,8 +182,8 @@ const clientesLogic = {
 
         if (data.status) {
           // Cerrar el modal
-           bootstrap.Modal.getInstance(
-            document.getElementById("modalCliente")
+          bootstrap.Modal.getInstance(
+            document.getElementById("modalCliente"),
           ).hide();
           // Recargar la lista de clientes para ver el nuevo
           this.cargarClientes();
@@ -198,6 +201,65 @@ const clientesLogic = {
         console.error("Error en la petición", e);
       }
     },
+    async prepararBorrado(cliente) {
+      this.clienteABorrar = cliente;
+      this.mensajeBorrado = "Cargando información...";
+
+      try {
+        const resp = await fetch("php/borrarcliente.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: cliente.id, consultar: true }),
+        });
+        const data = await resp.json();
+
+        const nombre =
+          cliente.nombre + (cliente.apellidos ? " " + cliente.apellidos : "");
+
+        if (data.totalPolizas > 0 || data.totalPagos > 0) {
+          this.mensajeBorrado = `Este cliente tiene ${data.totalPolizas} póliza(s) y ${data.totalPagos} pago(s) asociado(s). Si lo eliminas, se borrarán también todas sus pólizas y pagos. Esta acción no se puede deshacer. ¿Deseas continuar?`;
+        } else {
+          this.mensajeBorrado = `¿Está seguro de que quieres eliminar a "${nombre}"? Esta acción no se puede deshacer.`;
+        }
+
+        const modalElement = document.getElementById("modalConfirmarBorrado");
+        let modal = bootstrap.Modal.getInstance(modalElement);
+        if (!modal) modal = new bootstrap.Modal(modalElement);
+        modal.show();
+      } catch (e) {
+        console.error("Error al preparar borrado", e);
+        this.mensajeBorrado =
+          "Error al cargar información del cliente. No se puede proceder con el borrado.";
+      }
+    },
+
+    async confirmarBorrado() {
+      if (!this.clienteABorrar) return;
+
+      try {
+        const resp = await fetch("php/borrarcliente.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: this.clienteABorrar.id }),
+        });
+        const data = await resp.json();
+
+        bootstrap.Modal.getInstance(
+          document.getElementById("modalConfirmarBorrado"),
+        ).hide();
+
+        if (data.status) {
+          this.clienteABorrar = null;
+          this.cargarClientes();
+          alert(data.mensaje);
+        } else {
+          alert("Error: " + data.mensaje);
+        }
+      } catch (e) {
+        console.error("Error al borrar cliente", e);
+      }
+    },
+
     async cargarClientes() {
       try {
         const resp = await fetch("php/listarclientes.php");

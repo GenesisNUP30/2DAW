@@ -178,25 +178,26 @@
                             <i class="fa fa-eye"></i>
                           </button>
                           <button
-                          class="btn btn-sm btn-outline-warning"
-                          title="Editar"
-                          @click="prepararEdicion(cliente)"
+                            class="btn btn-sm btn-outline-warning"
+                            title="Editar"
+                            @click="prepararEdicion(cliente)"
                           >
                             <i class="fa fa-edit"></i>
                           </button>
                           <button
-                          class="btn btn-sm btn-outline-danger"
-                          title="Borrar"
+                            class="btn btn-sm btn-outline-danger"
+                            title="Borrar"
+                            @click="prepararBorrado(cliente)"
                           >
-                          <i class="fa fa-trash"></i>
-                        </button>
-                        <button
-                          class="btn btn-sm btn-outline-primary"
-                          title="Ver Pólizas"
-                          @click="vistaActual = 'polizas'"
-                        >
-                          <i class="fa fa-file-invoice"></i>
-                        </button>
+                            <i class="fa fa-trash"></i>
+                          </button>
+                          <button
+                            class="btn btn-sm btn-outline-primary"
+                            title="Ver Pólizas"
+                            @click="vistaActual = 'polizas'"
+                          >
+                            <i class="fa fa-file-invoice"></i>
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -306,7 +307,8 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">
-                {{ modoModal === 'crear' ? 'Nuevo Cliente' : modoModal === 'ver' ? 'Detalles del Cliente' : 'Editar Cliente' }}
+                {{ modoModal === 'crear' ? 'Nuevo Cliente' : modoModal === 'ver'
+                ? 'Detalles del Cliente' : 'Editar Cliente' }}
               </h5>
               <button
                 type="button"
@@ -492,6 +494,49 @@
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de confirmación de borrado -->
+      <div
+        class="modal fade"
+        id="modalConfirmarBorrado"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+              <h5 class="modal-title">
+                <i class="fas fa-exclamation-triangle me-2"></i> Confirmar
+                eliminación
+              </h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p class="mb-0">{{ mensajeBorrado }}</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                @click="confirmarBorrado"
+              >
+                <i class="fas fa-trash me-1"></i> Eliminar
+              </button>
             </div>
           </div>
         </div>
