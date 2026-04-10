@@ -68,14 +68,18 @@ const polizasLogic = {
     claseEstado(estado) {
       if (!estado) return "bg-secondary";
       switch (estado.toLowerCase()) {
-        case "activa":
-          return "bg-success";
-        case "pendiente":
-          return "bg-warning text-dark";
-        case "cancelada":
-          return "bg-danger";
+        case "cobrada":
+          return "bg-success"; //Verde
+        case "a cuenta":
+          return "bg-info text-dark"; // Azul claro
+        case "liquidada":
+          return "bg-primary"; // Azul oscuro
+        case "anulada":
+          return "bg-danger"; //Rojo
+        case "pre-anulada":
+          return "bg-warning text-dark"; // Amarillo
         default:
-          return "bg-secondary";
+          return "bg-secondary"; // Gris
       }
     },
   },

@@ -201,6 +201,7 @@ const clientesLogic = {
         console.error("Error en la petición", e);
       }
     },
+    
     async prepararBorrado(cliente) {
       this.clienteABorrar = cliente;
       this.mensajeBorrado = "Cargando información...";

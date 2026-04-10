@@ -12,7 +12,7 @@ if (!$datos || !isset($datos['id'])) {
 }
 
 $id = intval($datos['id']);
-$id_cliente = intval($datos['id_cliente'] ?? 0);
+$id_cliente = intval($datos['cliente_id'] ?? 0);
 $numero_poliza = intval($datos['numero_poliza'] ?? 0);
 $fecha = intval($datos['fecha'] ?? 0);
 $importe_total = floatval($datos['importe_total'] ?? 0);
