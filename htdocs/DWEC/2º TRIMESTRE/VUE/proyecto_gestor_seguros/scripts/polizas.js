@@ -5,6 +5,8 @@ const polizasLogic = {
       busquedaPoliza: "",
       modoModalPoliza: "crear",
       clientesDisponibles: [],
+      mensajeBorradoPoliza: "",
+      polizaABorrar: null,
       formPoliza: {
         id: null,
         cliente_id: null,
@@ -13,7 +15,7 @@ const polizasLogic = {
         importe_total: 0,
         estado: "",
         observaciones: "",
-        nombre_cliente: "", 
+        nombre_cliente: "",
       },
       erroresPoliza: {},
     };
@@ -145,6 +147,65 @@ const polizasLogic = {
         }
       } catch (e) {
         console.error("Error en la petición", e);
+      }
+    },
+
+    async prepararBorradoPoliza(poliza) {
+      this.polizaABorrar = poliza;
+      this.mensajeBorradoPoliza = "Verificando pagos asociados...";
+
+      try {
+        const resp = await fetch("php/borrarpoliza.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: poliza.id, consultar: true }),
+        });
+
+        const data = await resp.json();
+
+        if (data.totalPagos > 0) {
+          this.mensajeBorradoPoliza = `Esta póliza tiene ${data.totalPagos} pago(s) asociado(s). Si lo eliminas, se borrarán también todos los pagos. Esta acción no se puede deshacer. ¿Deseas continuar?`;
+        } else {
+          this.mensajeBorradoPoliza = `¿Está seguro de que quieres eliminar esta póliza "${poliza.numero_poliza}"? Esta acción no se puede deshacer.`;
+        }
+
+        const modalElement = document.getElementById(
+          "modalConfirmarBorradoPoliza",
+        );
+        let modal = bootstrap.Modal.getInstance(modalElement);
+        if (!modal) modal = new bootstrap.Modal(modalElement);
+        modal.show();
+      } catch (e) {
+        console.error("Error al preparar borrado", e);
+        this.mensajeBorradoPoliza =
+          "Error al cargar información del cliente. No se puede proceder con el borrado.";
+      }
+    },
+
+    async confirmarBorradoPoliza() {
+      if (!this.polizaABorrar) return;
+
+      try {
+        const resp = await fetch("php/borrarpoliza.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: this.polizaABorrar.id }),
+        });
+        const data = await resp.json();
+
+        bootstrap.Modal.getInstance(
+          document.getElementById("modalConfirmarBorradoPoliza"),
+        ).hide();
+
+        if (data.status) {
+          this.polizaABorrar = null;
+          this.cargarPolizas();
+          alert(data.mensaje);
+        } else {
+          alert("Error: " + data.mensaje);
+        }
+      } catch (e) {
+        console.error("Error al borrar poliza", e);
       }
     },
 

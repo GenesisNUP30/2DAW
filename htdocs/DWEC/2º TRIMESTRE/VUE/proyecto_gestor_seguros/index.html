@@ -140,7 +140,7 @@
                 type="text"
                 class="form-control"
                 v-model="busqueda"
-                placeholder="Buscar por nombre, apellidos..."
+                placeholder="Buscar por nombre, apellidos ..."
               />
             </div>
 
@@ -151,6 +151,7 @@
                     <tr>
                       <th>Tipo</th>
                       <th>Nombre Completo</th>
+                      <th>Codigo Postal</th>
                       <th>Email</th>
                       <th>Teléfono</th>
                       <th class="text-center">Acciones</th>
@@ -166,6 +167,7 @@
                         </span>
                       </td>
                       <td>{{ cliente.nombre }} {{ cliente.apellidos }}</td>
+                      <td>{{ cliente.cp }}</td>
                       <td>{{ cliente.email }}</td>
                       <td>{{ cliente.telefono }}</td>
                       <td class="text-center">
@@ -234,7 +236,7 @@
                 type="text"
                 class="form-control"
                 v-model="busquedaPoliza"
-                placeholder="Buscar por número de póliza..."
+                placeholder="Buscar por número de póliza o por cliente..."
               />
             </div>
 
@@ -287,6 +289,7 @@
                           <button
                             class="btn btn-sm btn-outline-danger"
                             title="Borrar"
+                            @click="prepararBorradoPoliza(poliza)"
                           >
                             <i class="fa fa-trash"></i>
                           </button>
@@ -680,6 +683,48 @@
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de confirmación de borrado de póliza -->
+      <div
+        class="modal fade"
+        id="modalConfirmarBorradoPoliza"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-danger text-white">
+              <h5 class="modal-title">
+                <i class="fas fa-exclamation-triangle me-2"></i> Eliminar Póliza
+              </h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body p-4">
+              <p class="mb-0 fw-medium">{{ mensajeBorradoPoliza }}</p>
+            </div>
+            <div class="modal-footer bg-light">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger px-4"
+                @click="confirmarBorradoPoliza"
+              >
+                <i class="fas fa-trash me-1"></i> Confirmar Eliminación
+              </button>
             </div>
           </div>
         </div>
