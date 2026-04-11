@@ -12,23 +12,17 @@ if (!$datos || !isset($datos['id'])) {
 }
 
 $id = intval($datos['id']);
-$id_cliente = intval($datos['cliente_id'] ?? 0);
-$numero_poliza = intval($datos['numero_poliza'] ?? 0);
-$fecha = intval($datos['fecha'] ?? 0);
+$numero_poliza = trim($datos['numero_poliza']);
+$fecha = $datos['fecha'] ?? '';
 $importe_total = floatval($datos['importe_total'] ?? 0);
 $estado = $datos['estado'] ?? '';
 $observaciones = $datos['observaciones'] ?? '';
 
-// Validaciones
-if (!$id || !$id_cliente || !$numero_poliza || !$fecha || !$importe_total || !$estado || !$observaciones) {
-    echo json_encode(["status" => false, "mensaje" => "Datos inválidos"]);
-    exit;
-}
-
+// Validacion de numero de póliza repetido
 $checkNumeroPoliza = $conexion->prepare(
     "SELECT id FROM polizas WHERE numero_poliza = ? AND id != ?"
 );
-$checkNumeroPoliza->bind_param("is", $numero_poliza, $id);
+$checkNumeroPoliza->bind_param("si", $numero_poliza, $id);
 $checkNumeroPoliza->execute();
 $checkNumeroPoliza->store_result();
 
@@ -42,10 +36,8 @@ if ($checkNumeroPoliza->num_rows > 0) {
 $checkNumeroPoliza->close();
 
 // Actualización
-$stmt = $conexion->prepare(
-    "UPDATE polizas SET numero_poliza = ?, fecha = ?, importe_total = ?, estado = ?, observaciones = ? WHERE id = ?"
-);
-$stmt->bind_param("issssi", $numero_poliza, $fecha, $importe_total, $estado, $observaciones, $id);
+$stmt = $conexion->prepare("UPDATE polizas SET numero_poliza = ?, fecha = ?, importe_total = ?, estado = ?, observaciones = ? WHERE id = ?");
+$stmt->bind_param("ssdssi", $numero_poliza, $fecha, $importe_total, $estado, $observaciones, $id);
 
 if ($stmt->execute() && $stmt->affected_rows > 0) {
     echo json_encode([

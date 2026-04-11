@@ -571,14 +571,30 @@
             <div class="modal-body">
               <form @submit.prevent="guardarEdicionPoliza">
                 <div class="mb-3">
+                  <label class="form-label">Número de Póliza</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    :class="{'is-invalid': errores.numero_poliza}"
+                    v-model="formPoliza.numero_poliza"
+                  />
+                  <div class="invalid-feedback">
+                    {{ errores.numero_poliza }}
+                  </div>
+                </div>
+                <div class="mb-3">
                   <label class="form-label">Importe Total (€)</label>
                   <input
                     type="number"
                     step="0.01"
                     class="form-control"
+                    :class="{'is-invalid': errores.importe_total}"
                     v-model="formPoliza.importe_total"
                     required
                   />
+                  <div class="invalid-feedback">
+                    {{ errores.importe_total }}
+                  </div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label text-muted">Cliente asociado</label>
@@ -602,14 +618,17 @@
                   <input
                     type="date"
                     class="form-control"
+                    :class="{'is-invalid': errores.fecha}"
                     v-model="formPoliza.fecha"
                     required
                   />
+                  <div class="invalid-feedback">{{ errores.fecha }}</div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Estado</label>
                   <select
                     class="form-select"
+                    :class="{'is-invalid': errores.estado}"
                     v-model="formPoliza.estado"
                     required
                   >
@@ -620,14 +639,17 @@
                     <option value="anulada">Anulada</option>
                     <option value="pre-anulada">Pre-anulada</option>
                   </select>
+                  <div class="invalid-feedback">{{ errores.estado }}</div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Observaciones</label>
                   <textarea
                     class="form-control"
+                    :class="{'is-invalid': errores.observaciones}"
                     v-model="formPoliza.observaciones"
                     rows="3"
                   ></textarea>
+                  <div class="invalid-feedback">{{ errores.observaciones }}</div>
                 </div>
                 <div class="text-end">
                   <button
@@ -637,7 +659,10 @@
                   >
                     Cancelar
                   </button>
-                  <button type="submit" class="btn btn-warning" @click="guardarEdicionPoliza">
+                  <button
+                    type="submit"
+                    class="btn btn-warning"
+                  >
                     Guardar Cambios
                   </button>
                 </div>
