@@ -549,7 +549,7 @@
         </div>
       </div>
 
-      <!-- Modal de edicion de póliza -->
+      <!-- Modal de creacion/edicion de póliza -->
       <div
         class="modal fade"
         id="modalEditarPoliza"
@@ -560,12 +560,12 @@
           <div class="modal-content">
             <div class="modal-header bg-warning text-dark">
               <h5 class="modal-title">
-                <i class="fas fa-edit me-2"></i> Editar Póliza {{
+                <i class="fas fa-edit"></i> Editar Póliza {{
                 formPoliza.numero_poliza }}
               </h5>
               <button
                 type="button"
-                class="btn-close"
+                class="btn-close btn-close-white"
                 data-bs-dismiss="modal"
               ></button>
             </div>
@@ -644,15 +644,15 @@
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Observaciones</label>
-                  <textarea
+                  <input
                     class="form-control"
                     :class="{'is-invalid': errores.observaciones}"
                     v-model="formPoliza.observaciones"
                     rows="3"
-                  ></textarea>
+                  ></input>
                   <div class="invalid-feedback">{{ errores.observaciones }}</div>
                 </div>
-                <div class="text-end">
+                <div class="text-end mt-4">
                   <button
                     type="button"
                     class="btn btn-secondary"
