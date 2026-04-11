@@ -219,7 +219,7 @@
               </div>
 
               <div class="col-md-6 text-end">
-                <button class="btn btn-success shadow-sm">
+                <button class="btn btn-success shadow-sm" @click="abrirModalNuevaPoliza">
                   <i class="fa fa-plus-circle"></i> Nueva Póliza
                 </button>
               </div>
@@ -552,7 +552,7 @@
       <!-- Modal de creacion/edicion de póliza -->
       <div
         class="modal fade"
-        id="modalEditarPoliza"
+        id="modalPoliza"
         tabindex="-1"
         aria-hidden="true"
       >
@@ -560,8 +560,7 @@
           <div class="modal-content">
             <div class="modal-header bg-warning text-dark">
               <h5 class="modal-title">
-                <i class="fas fa-edit"></i> Editar Póliza {{
-                formPoliza.numero_poliza }}
+                {{ modoModalPoliza === 'crear' ? 'Nueva Póliza' : 'Editar Póliza' }}
               </h5>
               <button
                 type="button"
@@ -570,17 +569,17 @@
               ></button>
             </div>
             <div class="modal-body">
-              <form @submit.prevent="guardarEdicionPoliza">
+              <form @submit.prevent="guardarPoliza">
                 <div class="mb-3">
                   <label class="form-label">Número de Póliza</label>
                   <input
                     type="text"
                     class="form-control"
-                    :class="{'is-invalid': errores.numero_poliza}"
+                    :class="{'is-invalid': erroresPoliza.numero_poliza}"
                     v-model="formPoliza.numero_poliza"
                   />
                   <div class="invalid-feedback">
-                    {{ errores.numero_poliza }}
+                    {{ erroresPoliza.numero_poliza }}
                   </div>
                 </div>
                 <div class="mb-3">
@@ -589,12 +588,11 @@
                     type="number"
                     step="0.01"
                     class="form-control"
-                    :class="{'is-invalid': errores.importe_total}"
+                    :class="{'is-invalid': erroresPoliza.importe_total}"
                     v-model="formPoliza.importe_total"
-                    required
                   />
                   <div class="invalid-feedback">
-                    {{ errores.importe_total }}
+                    {{ erroresPoliza.importe_total }}
                   </div>
                 </div>
                 <div class="mb-3">
@@ -619,19 +617,17 @@
                   <input
                     type="date"
                     class="form-control"
-                    :class="{'is-invalid': errores.fecha}"
+                    :class="{'is-invalid': erroresPoliza.fecha}"
                     v-model="formPoliza.fecha"
-                    required
                   />
-                  <div class="invalid-feedback">{{ errores.fecha }}</div>
+                  <div class="invalid-feedback">{{ erroresPoliza.fecha }}</div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Estado</label>
                   <select
                     class="form-select"
-                    :class="{'is-invalid': errores.estado}"
+                    :class="{'is-invalid': erroresPoliza.estado}"
                     v-model="formPoliza.estado"
-                    required
                   >
                     <option value="">Seleccione estado...</option>
                     <option value="cobrada">Cobrada</option>
@@ -640,17 +636,17 @@
                     <option value="anulada">Anulada</option>
                     <option value="pre-anulada">Pre-anulada</option>
                   </select>
-                  <div class="invalid-feedback">{{ errores.estado }}</div>
+                  <div class="invalid-feedback">{{ erroresPoliza.estado }}</div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Observaciones</label>
                   <input
                     class="form-control"
-                    :class="{'is-invalid': errores.observaciones}"
+                    :class="{'is-invalid': erroresPoliza.observaciones}"
                     v-model="formPoliza.observaciones"
                     rows="3"
-                  ></input>
-                  <div class="invalid-feedback">{{ errores.observaciones }}</div>
+                  >
+                  <div class="invalid-feedback">{{ erroresPoliza.observaciones }}</div>
                 </div>
                 <div class="text-end mt-4">
                   <button
@@ -664,7 +660,7 @@
                     type="submit"
                     class="btn btn-warning"
                   >
-                    Guardar Cambios
+                    {{ modoModalPoliza === 'crear' ? 'Guardar Póliza' : 'Actualizar Cambios' }}
                   </button>
                 </div>
               </form>

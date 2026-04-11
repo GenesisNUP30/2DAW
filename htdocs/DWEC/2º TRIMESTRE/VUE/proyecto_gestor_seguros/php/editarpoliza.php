@@ -13,10 +13,10 @@ if (!$datos || !isset($datos['id'])) {
 
 $id = intval($datos['id']);
 $numero_poliza = trim($datos['numero_poliza']);
-$fecha = $datos['fecha'] ?? '';
+$fecha = trim($datos['fecha']);
 $importe_total = floatval($datos['importe_total'] ?? 0);
-$estado = $datos['estado'] ?? '';
-$observaciones = $datos['observaciones'] ?? '';
+$estado = trim($datos['estado'] ?? '');
+$observaciones = trim($datos['observaciones'] ?? '');
 
 // Validacion de numero de póliza repetido
 $checkNumeroPoliza = $conexion->prepare(
