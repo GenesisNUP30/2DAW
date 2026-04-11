@@ -100,6 +100,24 @@ const polizasLogic = {
       }
     },
 
+    async verClienteDesdePoliza(poliza) {
+      try {
+        const resp = await fetch(`php/obtenercliente.php?=id=${poliza.cliente_id}`);
+        const data = await resp.json();
+        if (data.status) {
+          if (typeof this.verDetalleCliente === "function") {
+            this.verDetalleCliente(data.data);
+          } else {
+            console.log("El método verDetalleCliente no está accesible desde aquí");
+          }
+        } else {
+          alert("Error: " + data.mensaje);
+        }
+      } catch (e) {
+        console.error("Error al obtener cliente", e);
+      }
+    },
+
     // Función para poner color al estado
     claseEstado(estado) {
       if (!estado) return "bg-secondary";
