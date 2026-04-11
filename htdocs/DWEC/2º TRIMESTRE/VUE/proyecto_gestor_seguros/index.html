@@ -219,7 +219,10 @@
               </div>
 
               <div class="col-md-6 text-end">
-                <button class="btn btn-success shadow-sm" @click="abrirModalNuevaPoliza">
+                <button
+                  class="btn btn-success shadow-sm"
+                  @click="abrirModalNuevaPoliza"
+                >
                   <i class="fa fa-plus-circle"></i> Nueva Póliza
                 </button>
               </div>
@@ -550,12 +553,7 @@
       </div>
 
       <!-- Modal de creacion/edicion de póliza -->
-      <div
-        class="modal fade"
-        id="modalPoliza"
-        tabindex="-1"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="modalPoliza" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header bg-warning text-dark">
@@ -570,6 +568,46 @@
             </div>
             <div class="modal-body">
               <form @submit.prevent="guardarPoliza">
+                <!-- SELECT visible solo en modo crear -->
+                <div class="mb-3" v-if="modoModalPoliza === 'crear'">
+                  <label class="form-label">Cliente</label>
+                  <select
+                    class="form-select"
+                    :class="{'is-invalid': erroresPoliza.cliente_id}"
+                    v-model="formPoliza.cliente_id"
+                  >
+                    <option value="">Seleccione un cliente...</option>
+                    <option
+                      v-for="c in clientesDisponibles"
+                      :key="c.id"
+                      :value="c.id"
+                    >
+                      {{ c.nombre }} {{ c.apellidos }} — {{ c.dni }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">
+                    {{ erroresPoliza.cliente_id }}
+                  </div>
+                </div>
+
+                <!-- INPUT readonly visible solo en modo editar -->
+                <div class="mb-3" v-if="modoModalPoliza === 'editar'">
+                  <label class="form-label text-muted">Cliente asociado</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light"
+                      ><i class="fa fa-user"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control bg-light"
+                      :value="formPoliza.nombre_cliente"
+                      readonly
+                    />
+                  </div>
+                  <small class="text-muted"
+                    >El cliente no puede modificarse desde aquí.</small
+                  >
+                </div>
                 <div class="mb-3">
                   <label class="form-label">Número de Póliza</label>
                   <input
@@ -594,23 +632,6 @@
                   <div class="invalid-feedback">
                     {{ erroresPoliza.importe_total }}
                   </div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label text-muted">Cliente asociado</label>
-                  <div class="input-group">
-                    <span class="input-group-text bg-light"
-                      ><i class="fa fa-user"></i
-                    ></span>
-                    <input
-                      type="text"
-                      class="form-control bg-light"
-                      :value="formPoliza.nombre_cliente"
-                      readonly
-                    />
-                  </div>
-                  <small class="text-muted"
-                    >El cliente no puede modificarse desde aquí.</small
-                  >
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Fecha</label>
@@ -642,11 +663,9 @@
                   <label class="form-label">Observaciones</label>
                   <input
                     class="form-control"
-                    :class="{'is-invalid': erroresPoliza.observaciones}"
                     v-model="formPoliza.observaciones"
                     rows="3"
-                  >
-                  <div class="invalid-feedback">{{ erroresPoliza.observaciones }}</div>
+                  />
                 </div>
                 <div class="text-end mt-4">
                   <button
@@ -656,10 +675,7 @@
                   >
                     Cancelar
                   </button>
-                  <button
-                    type="submit"
-                    class="btn btn-warning"
-                  >
+                  <button type="submit" class="btn btn-warning">
                     {{ modoModalPoliza === 'crear' ? 'Guardar Póliza' : 'Actualizar Cambios' }}
                   </button>
                 </div>

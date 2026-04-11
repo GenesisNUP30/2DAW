@@ -4,6 +4,7 @@ const polizasLogic = {
       polizas: [],
       busquedaPoliza: "",
       modoModalPoliza: "crear",
+      clientesDisponibles: [],
       formPoliza: {
         id: null,
         cliente_id: null,
@@ -25,7 +26,7 @@ const polizasLogic = {
       modal.show();
     },
 
-    abrirModalNuevaPoliza() {
+    async abrirModalNuevaPoliza() {
       // Limpiar formulario
       this.modoModalPoliza = "crear";
       this.formPoliza = {
@@ -38,6 +39,16 @@ const polizasLogic = {
         observaciones: "",
       };
       this.erroresPoliza = {};
+
+      try {
+        const resp = await fetch("php/listarclientes.php");
+        const data = await resp.json();
+        if (data.status) {
+          this.clientesDisponibles = data.data;
+        }
+      } catch (e) {
+        console.error("Error al obtener clientes disponibles");
+      }
       this.mostrarModalPoliza();
     },
 
@@ -93,10 +104,6 @@ const polizasLogic = {
 
       if (!f.estado) {
         this.erroresPoliza.estado = "Debe seleccionar un estado";
-      }
-
-      if (!f.observaciones || !f.observaciones.toString().trim()) {
-        this.erroresPoliza.observaciones = "Las observaciones son obligatorias";
       }
 
       // Devolvemos true si no hay errores
