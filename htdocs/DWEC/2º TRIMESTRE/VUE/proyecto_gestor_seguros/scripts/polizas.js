@@ -55,7 +55,7 @@ const polizasLogic = {
       }
     },
 
-    mostrarModal() {
+    mostrarModalPoliza() {
       const modalElement = document.getElementById("modalEditarPoliza");
       let modal = bootstrap.Modal.getInstance(modalElement);
       if (!modal) modal = new bootstrap.Modal(modalElement);
@@ -64,7 +64,7 @@ const polizasLogic = {
 
     prepararEdicionPoliza(poliza) {
       this.formPoliza = { ...poliza };
-      this.mostrarModal();
+      this.mostrarModalPoliza();
     },
 
     async guardarEdicionPoliza() {
@@ -102,8 +102,9 @@ const polizasLogic = {
 
     async verClienteDesdePoliza(poliza) {
       try {
-        const resp = await fetch(`php/obtenercliente.php?=id=${poliza.cliente_id}`);
+        const resp = await fetch(`php/listarclientes.php?id=${poliza.cliente_id}`);
         const data = await resp.json();
+
         if (data.status) {
           if (typeof this.verDetalleCliente === "function") {
             this.verDetalleCliente(data.data);
