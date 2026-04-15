@@ -77,6 +77,13 @@ label { font-weight: 600; margin-bottom: 8px; display: block; }
     display: inline-block;
 }
 
+/* Clase especial para estados con fondo blanco y texto negro */
+.badge-estado-oscuro {
+    background-color: #ffffff !important;
+    color: #000000 !important; /* Esto anula el blanco global */
+    border: 1px solid #ddd !important;
+}
+
 .bg-info-custom { background-color: var(--accent-color) !important; }
 .bg-success-custom { background-color: var(--success-color) !important; }
 

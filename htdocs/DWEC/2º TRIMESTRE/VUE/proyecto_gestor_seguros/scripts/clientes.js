@@ -9,6 +9,8 @@ const clientesLogic = {
       mensajeError: "",
       mensajeBorrado: "",
       clienteABorrar: null,
+      clienteSeleccionadoId: null,
+      polizasCliente: [],
       // Objeto para el formulario de creación/edición/ver detalle de cliente
       formCliente: {
         id: null,
@@ -89,6 +91,49 @@ const clientesLogic = {
       this.municipios = [];
       this.cargarProvincias();
       this.mostrarModal();
+    },
+
+    async togglePolizas(cliente) {
+      // Si volvemos a pulsar el mismo, lo cerramos
+      if (this.clienteSeleccionadoId === cliente.id) {
+        this.clienteSeleccionadoId = null;
+        return;
+      }
+
+      this.clienteSeleccionadoId = cliente.id;
+      this.polizasCliente = [];
+
+      try {
+        const resp = await fetch(
+          `php/listarpolizas.php?cliente_id=${cliente.id}`,
+        );
+        const data = await resp.json();
+
+        if (data.status) {
+          this.polizasCliente = data.data;
+        } else {
+          this.polizasCliente = [];
+        }
+      } catch (e) {
+        console.error("Error al obtener pólizas", e);
+      }
+    },
+
+    colorFilaEstado(estado) {
+      switch (estado) {
+        case "cobrada":
+          return "table-success"; // Verde
+        case "a cuenta":
+          return "table-warning"; // Naranja/Amarillo
+        case "liquidada":
+          return "table-info"; // Azul
+        case "anulada":
+          return "table-danger"; // Rojo
+        case "pre-anulada":
+          return "table-secondary"; // Gris
+        default:
+          return "";
+      }
     },
 
     async verDetalleCliente(cliente) {
@@ -201,7 +246,7 @@ const clientesLogic = {
         console.error("Error en la petición", e);
       }
     },
-    
+
     async prepararBorrado(cliente) {
       this.clienteABorrar = cliente;
       this.mensajeBorrado = "Cargando información...";
