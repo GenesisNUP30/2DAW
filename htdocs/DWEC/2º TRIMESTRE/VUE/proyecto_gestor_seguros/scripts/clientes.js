@@ -122,17 +122,17 @@ const clientesLogic = {
     colorFilaEstado(estado) {
       switch (estado) {
         case "cobrada":
-          return "table-success"; // Verde
+          return "bg-white text-success border-success";
         case "a cuenta":
-          return "table-warning"; // Naranja/Amarillo
+          return "bg-white text-warning border-warning";
         case "liquidada":
-          return "table-info"; // Azul
+          return "bg-white text-info border-info";
         case "anulada":
-          return "table-danger"; // Rojo
+          return "bg-white text-danger border-danger";
         case "pre-anulada":
-          return "table-secondary"; // Gris
+          return "bg-white text-secondary border-secondary";
         default:
-          return "";
+          return "bg-white text-dark border-dark";
       }
     },
 

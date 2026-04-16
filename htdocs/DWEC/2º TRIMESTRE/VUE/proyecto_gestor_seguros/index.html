@@ -213,20 +213,25 @@
                         class="bg-light"
                       >
                         <td colspan="6" class="p-4">
-                          <div
-                            class="d-flex justify-content-between align-items-center mb-3"
-                          >
-                            <h5 class="mb-0 text-primary">
-                              <i class="fas fa-file-contract"></i> Pólizas de {{
-                              cliente.nombre }}
-                            </h5>
-                            <button
-                              class="btn btn-sm btn-close"
-                              @click="clienteSeleccionadoId = null"
-                            ></button>
-                          </div>
-
                           <div class="table-responsive shadow-sm rounded">
+                            <div
+                              class="d-flex justify-content-between align-items-center mb-3"
+                            >
+                              <h5 class="mb-0 text-primary">
+                                <i class="fas fa-file-contract"></i> Pólizas de
+                                {{ cliente.nombre }}
+                                <button
+                                  class="btn btn-sm btn-success ms-3"
+                                  @click="nuevaPolizaParaCliente(cliente)"
+                                >
+                                  <i class="fa fa-plus"></i> Añadir Póliza
+                                </button>
+                              </h5>
+                              <button
+                                class="btn btn-sm btn-close"
+                                @click="clienteSeleccionadoId = null"
+                              ></button>
+                            </div>
                             <table
                               class="table table-sm table-bordered align-middle mb-0"
                             >
@@ -237,6 +242,7 @@
                                   <th>Fecha</th>
                                   <th>Estado</th>
                                   <th>Observaciones</th>
+                                  <th>Acciones</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -261,6 +267,24 @@
                                   </td>
                                   <td>
                                     <small>{{ p.observaciones }}</small>
+                                  </td>
+                                  <td class="text-center">
+                                    <div class="btn-group">
+                                      <button
+                                        class="btn btn-sm btn-outline-warning mx-1"
+                                        title="Editar"
+                                        @click="prepararEdicionPoliza(poliza)"
+                                      >
+                                        <i class="fa fa-edit"></i>
+                                      </button>
+                                      <button
+                                        class="btn btn-sm btn-outline-danger"
+                                        title="Borrar"
+                                        @click="prepararBorradoPoliza(poliza)"
+                                      >
+                                        <i class="fa fa-trash"></i>
+                                      </button>
+                                    </div>
                                   </td>
                                 </tr>
                                 <tr v-if="polizasCliente.length === 0">
@@ -560,8 +584,8 @@
                       placeholder="Calle, número, piso..."
                       :disabled="modoModal === 'ver'"
                     />
+                    <div class="invalid-feedback">{{ errores.direccion }}</div>
                   </div>
-                  <div class="invalid-feedback">{{ errores.direccion }}</div>
                 </div>
 
                 <div class="text-end mt-4">
@@ -812,10 +836,6 @@
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
-    <script src="scripts/validations.js"></script>
-    <script src="scripts/auth.js"></script>
-    <script src="scripts/clientes.js"></script>
-    <script src="scripts/polizas.js"></script>
-    <script src="scripts/main.js"></script>
+    <script src="scripts/app.js"></script>
   </body>
 </html>
