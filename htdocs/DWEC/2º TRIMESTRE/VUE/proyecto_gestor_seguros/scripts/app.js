@@ -435,24 +435,36 @@ createApp({
 
     async guardarPoliza() {
       if (!this.validarFormularioPoliza()) return;
+
       const url = this.formPoliza.id
         ? "php/editarpoliza.php"
         : "php/insertarpoliza.php";
       try {
+        console.log("Enviando datos:", this.formPoliza);
+
         const resp = await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(this.formPoliza),
         });
         const data = await resp.json();
+        console.log("Respuesta backend:", data);
+
         if (data.status) {
           this.cerrarModal("modalPoliza");
           this.cargarPolizas();
+          // 2. Si estamos en la pestaña Clientes y hay uno expandido, refrescar sus pólizas
           if (this.clienteSeleccionadoId) {
-            const cli = this.clientes.find(
+            // Buscamos el objeto cliente completo para pasárselo a togglePolizas
+            const clienteActivo = this.clientes.find(
               (c) => c.id === this.clienteSeleccionadoId,
             );
-            this.togglePolizas(cli);
+            if (clienteActivo) {
+              // Llamamos dos veces a toggle para cerrar y reabrir (limpiar estado)
+              // o mejor, crea un método "refrescarPolizasCliente()"
+              this.clienteSeleccionadoId = null;
+              this.togglePolizas(clienteActivo);
+            }
           }
           alert(data.mensaje);
         } else {
@@ -519,9 +531,19 @@ createApp({
       }
     },
 
-    prepararEdicionPoliza(poliza) {
+    async prepararEdicionPoliza(poliza) {
       this.modoModalPoliza = "editar";
       this.erroresPoliza = {};
+
+      // Cargamos los clientes para que el select tenga opciones
+      try {
+        const resp = await fetch("php/listarclientes.php");
+        const data = await resp.json();
+        if (data.status) this.clientesDisponibles = data.data;
+      } catch (e) {
+        console.error("Error al cargar clientes para edición", e);
+      }
+
       this.formPoliza = { ...poliza };
       this.mostrarModal("modalPoliza");
     },

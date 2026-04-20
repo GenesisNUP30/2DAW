@@ -273,14 +273,14 @@
                                       <button
                                         class="btn btn-sm btn-outline-warning mx-1"
                                         title="Editar"
-                                        @click="prepararEdicionPoliza(poliza)"
+                                        @click="prepararEdicionPoliza(p)"
                                       >
                                         <i class="fa fa-edit"></i>
                                       </button>
                                       <button
                                         class="btn btn-sm btn-outline-danger"
                                         title="Borrar"
-                                        @click="prepararBorradoPoliza(poliza)"
+                                        @click="prepararBorradoPoliza(p)"
                                       >
                                         <i class="fa fa-trash"></i>
                                       </button>
@@ -669,8 +669,7 @@
             </div>
             <div class="modal-body">
               <form @submit.prevent="guardarPoliza">
-                <!-- SELECT visible solo en modo crear -->
-                <div class="mb-3" v-if="modoModalPoliza === 'crear'">
+                <div class="mb-3">
                   <label class="form-label">Cliente</label>
                   <select
                     class="form-select"
@@ -691,24 +690,7 @@
                   </div>
                 </div>
 
-                <!-- INPUT readonly visible solo en modo editar -->
-                <div class="mb-3" v-if="modoModalPoliza === 'editar'">
-                  <label class="form-label text-muted">Cliente asociado</label>
-                  <div class="input-group">
-                    <span class="input-group-text bg-light"
-                      ><i class="fa fa-user"></i
-                    ></span>
-                    <input
-                      type="text"
-                      class="form-control bg-light"
-                      :value="formPoliza.nombre_cliente"
-                      readonly
-                    />
-                  </div>
-                  <small class="text-muted"
-                    >El cliente no puede modificarse desde aquí.</small
-                  >
-                </div>
+            
                 <div class="mb-3">
                   <label class="form-label">Número de Póliza</label>
                   <input

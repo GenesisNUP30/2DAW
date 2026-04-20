@@ -12,9 +12,10 @@ if (!$datos || !isset($datos['id'])) {
 }
 
 $id = intval($datos['id']);
+$cliente_id = intval($datos['cliente_id']);
 $numero_poliza = trim($datos['numero_poliza']);
 $fecha = trim($datos['fecha']);
-$importe_total = floatval($datos['importe_total'] ?? 0);
+$importe_total = $conexion->real_escape_string($datos['importe_total'] ?? '0');
 $estado = trim($datos['estado'] ?? '');
 $observaciones = trim($datos['observaciones'] ?? '');
 
@@ -31,15 +32,16 @@ if ($checkNumeroPoliza->num_rows > 0) {
         "status" => false,
         "mensaje" => "El número de póliza ya está registrado en otra póliza"
     ]);
+    $checkNum->close();
     exit;
 }
 $checkNumeroPoliza->close();
 
 // Actualización
-$stmt = $conexion->prepare("UPDATE polizas SET numero_poliza = ?, fecha = ?, importe_total = ?, estado = ?, observaciones = ? WHERE id = ?");
-$stmt->bind_param("ssdssi", $numero_poliza, $fecha, $importe_total, $estado, $observaciones, $id);
+$stmt = $conexion->prepare("UPDATE polizas SET cliente_id = ?, numero_poliza = ?, fecha = ?, importe_total = ?, estado = ?, observaciones = ? WHERE id = ?");
+$stmt->bind_param("isssssi", $cliente_id, $numero_poliza, $fecha, $importe_total, $estado, $observaciones, $id);
 
-if ($stmt->execute() && $stmt->affected_rows > 0) {
+if ($stmt->execute()) {
     echo json_encode([
         "status" => true,
         "mensaje" => "Póliza editada correctamente"
