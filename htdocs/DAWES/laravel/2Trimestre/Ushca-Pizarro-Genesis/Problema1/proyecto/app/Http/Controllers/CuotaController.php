@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
-use App\Models\ConfigAvanzada;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +31,6 @@ class CuotaController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
 
         if (!$user->isAdmin()) {
             abort(403);
@@ -276,7 +274,6 @@ class CuotaController extends Controller
 
         if (!auth()->user()->isAdmin()) abort(403);
 
-        $itemsPorPagina = ConfigAvanzada::actual()->items_por_pagina ?? 5;
 
         // onlyTrashed() filtra solo las que tienen deleted_at NOT NULL
         $cuotasEliminadas = Cuota::onlyTrashed()

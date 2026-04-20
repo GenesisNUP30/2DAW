@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['scopeactivos_0',['scopeActivos',['../class_app_1_1_models_1_1_cliente.html#abd522092dab15956edd4d33c4382cab3',1,'App\\Models\\Cliente\\scopeActivos()'],['../class_app_1_1_models_1_1_user.html#ad2fc2cc323ce2884771f36906340144c',1,'App\\Models\\User\\scopeActivos($query)']]],
+  ['scopeadministradores_1',['scopeAdministradores',['../class_app_1_1_models_1_1_user.html#a9f8b2e26f569c27d8cd3693181e56bd0',1,'App::Models::User']]],
+  ['scopeconpais_2',['scopeConPais',['../class_app_1_1_models_1_1_cliente.html#ada9795a1eee0f44d34bf05462211f2c9',1,'App::Models::Cliente']]],
+  ['scopeconrelaciones_3',['scopeConRelaciones',['../class_app_1_1_models_1_1_cuota.html#abb8d910da0514a6d095a9fba94e2bb35',1,'App\\Models\\Cuota\\scopeConRelaciones()'],['../class_app_1_1_models_1_1_tarea.html#a94a00133e6b080ea30e744783711b9e0',1,'App\\Models\\Tarea\\scopeConRelaciones()']]],
+  ['scopedebaja_4',['scopeDeBaja',['../class_app_1_1_models_1_1_user.html#a200f19c4ccc7b092f0a3f0904d884d13',1,'App::Models::User']]],
+  ['scopedecontinente_5',['scopeDeContinente',['../class_app_1_1_models_1_1_pais.html#a423c9e8c0ac57cbb7ccd25fc8660a7c2',1,'App::Models::Pais']]],
+  ['scopeexcepcionales_6',['scopeExcepcionales',['../class_app_1_1_models_1_1_cuota.html#af1d7aa8a2031a6a34a9d29e0591b9cb4',1,'App::Models::Cuota']]],
+  ['scopeexcluyendo_7',['scopeExcluyendo',['../class_app_1_1_models_1_1_user.html#a7e9a32e33e523043c1f80c94dd442262',1,'App::Models::User']]],
+  ['scopeincidenciassinasignar_8',['scopeIncidenciasSinAsignar',['../class_app_1_1_models_1_1_tarea.html#a1c471b75a46fc0288b99697bd0f08217',1,'App::Models::Tarea']]],
+  ['scopemensuales_9',['scopeMensuales',['../class_app_1_1_models_1_1_cuota.html#a670fc1347927f65dd80ea46910f21e16',1,'App::Models::Cuota']]],
+  ['scopeoperarios_10',['scopeOperarios',['../class_app_1_1_models_1_1_user.html#ad82945d8637e527a38455a4be9f2f43c',1,'App::Models::User']]],
+  ['scopeordenadasporfecha_11',['scopeOrdenadasPorFecha',['../class_app_1_1_models_1_1_cuota.html#a5c16a530ebfa7ac7356167dcc770e9ce',1,'App\\Models\\Cuota\\scopeOrdenadasPorFecha()'],['../class_app_1_1_models_1_1_tarea.html#a30b198d0b6682325f100df8c2320b3e4',1,'App\\Models\\Tarea\\scopeOrdenadasPorFecha()']]],
+  ['scopeordenadospornombre_12',['scopeOrdenadosPorNombre',['../class_app_1_1_models_1_1_cliente.html#a3b4d8cef7d0403c90d7b184f3f581f31',1,'App\\Models\\Cliente\\scopeOrdenadosPorNombre()'],['../class_app_1_1_models_1_1_pais.html#a29ba7af608259e6259d5fb3432abe300',1,'App\\Models\\Pais\\scopeOrdenadosPorNombre()'],['../class_app_1_1_models_1_1_user.html#a63bdab653adf2df3b95c718630d09ea8',1,'App\\Models\\User\\scopeOrdenadosPorNombre()']]],
+  ['scopepagadas_13',['scopePagadas',['../class_app_1_1_models_1_1_cuota.html#a04655c07942cbe7029b1cb6e98f31e39',1,'App::Models::Cuota']]],
+  ['scopeparaoperario_14',['scopeParaOperario',['../class_app_1_1_models_1_1_tarea.html#a8184252e5604ad5a8a9c03ea0a5ee3bf',1,'App::Models::Tarea']]],
+  ['scopependientes_15',['scopePendientes',['../class_app_1_1_models_1_1_cuota.html#ae33bc0b714e300f2f76c55dd2d6062bb',1,'App\\Models\\Cuota\\scopePendientes()'],['../class_app_1_1_models_1_1_tarea.html#aab6d5476e6acf39328cf1a3e2cc9853d',1,'App\\Models\\Tarea\\scopePendientes($query)']]],
+  ['scopetareasproximas_16',['scopeTareasProximas',['../class_app_1_1_models_1_1_tarea.html#a8734140c962874fca8c2cbf7f6696bc6',1,'App::Models::Tarea']]],
+  ['security_20vulnerabilities_17',['Security Vulnerabilities',['../md__r_e_a_d_m_e.html#autotoc_md6',1,'']]],
+  ['show_18',['show',['../class_app_1_1_http_1_1_controllers_1_1_cliente_controller.html#af9689093ad2b3d8f6d00942255bc0b48',1,'App\\Http\\Controllers\\ClienteController\\show()'],['../class_app_1_1_http_1_1_controllers_1_1_cuota_controller.html#a45f6ecf5d09a990c7650507f660203a2',1,'App\\Http\\Controllers\\CuotaController\\show()'],['../class_app_1_1_http_1_1_controllers_1_1_tarea_controller.html#a43e65197fb28a5d9d01bf014faed18d2',1,'App\\Http\\Controllers\\TareaController\\show()'],['../class_app_1_1_http_1_1_controllers_1_1_user_controller.html#abcb458865f2ee40f16dbfb6ce2e126e5',1,'App\\Http\\Controllers\\UserController\\show()']]],
+  ['sponsors_19',['Laravel Sponsors',['../md__r_e_a_d_m_e.html#autotoc_md2',1,'']]],
+  ['store_20',['store',['../class_app_1_1_http_1_1_controllers_1_1_cliente_controller.html#aefee600564d3ca67a47b593bce9188e1',1,'App\\Http\\Controllers\\ClienteController\\store()'],['../class_app_1_1_http_1_1_controllers_1_1_cuota_controller.html#a77a4e6de1b988fb88003771a89a783ed',1,'App\\Http\\Controllers\\CuotaController\\store()'],['../class_app_1_1_http_1_1_controllers_1_1_tarea_controller.html#adb1e8107c3a0f6ab1e09ecb79c7fa9e2',1,'App\\Http\\Controllers\\TareaController\\store()'],['../class_app_1_1_http_1_1_controllers_1_1_user_controller.html#a25d8745c27f95ad4ff14955be6bc12d3',1,'App\\Http\\Controllers\\UserController\\store()']]],
+  ['storefromcliente_21',['storeFromCliente',['../class_app_1_1_http_1_1_controllers_1_1_tarea_controller.html#acee1f4ae6ff23392ab429637e17220aa',1,'App::Http::Controllers::TareaController']]]
+];

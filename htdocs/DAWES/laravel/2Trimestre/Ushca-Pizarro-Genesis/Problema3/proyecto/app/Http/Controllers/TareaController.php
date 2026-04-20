@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
-use App\Models\ConfigAvanzada;
 use App\Models\Tarea;
 use App\Models\User;
 use App\Rules\ValidarTelefono;
