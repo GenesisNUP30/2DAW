@@ -6,15 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @class Cuota
+ * @brief Modelo que representa las obligaciones de pago de los clientes.
+ * * Gestiona tanto las cuotas mensuales recurrentes como las excepcionales.
+ * Incorpora el uso de **Soft Deletes** para permitir una "papelera de reciclaje"
+ * y mantener la trazabilidad contable.
+ * * @property int $id ID único de la cuota.
+ * @property int $cliente_id Relación con el cliente deudor.
+ * @property float $importe Cuantía económica de la cuota.
+ * @property string $tipo Tipo de cuota ('mensual' o 'excepcional').
+ * @property \Carbon\Carbon|null $fecha_pago Fecha en la que el cliente abonó la cuota.
+ * @property \Carbon\Carbon|null $deleted_at Fecha de eliminación lógica del registro.
+ */
 class Cuota extends Model
 {
+     /** @use SoftDeletes<\Database\Eloquent\SoftDeletes> */
     use HasFactory, SoftDeletes;
 
     /**
-     * Campos que se guardarán en la base de datos cuando se
-     * haga un create o update.
-     *
-     * @var array<string, string>
+     * @brief Atributos asignables de forma masiva.
+     * @var array<int, string>
      */
     protected $fillable = [
         'cliente_id',
@@ -27,15 +39,14 @@ class Cuota extends Model
     ];
 
     /**
-     * Evitamos que se actualicen automáticamente las fechas
-     *
+     * @brief Desactiva el control automático de timestamps (created_at/updated_at).
      * @var boolean
      */
     public $timestamps = false;
 
     /**
-     * Convertir automáticamente los atributos a tipos de datos específicos
-     *
+     * @brief Conversión de atributos a tipos nativos de PHP.
+     * * Incluye 'deleted_at' para el correcto funcionamiento de SoftDeletes.
      * @return array<string, string>
      */
     protected $casts = [
@@ -45,10 +56,11 @@ class Cuota extends Model
         'deleted_at' => 'datetime',
     ];
 
+    // ======================== RELACIONES ========================
+
     /**
-     * Relación: Una cuota pertenece a un cliente
-     *
-     * @return void
+     * @brief Relación Many-to-One con Cliente.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function cliente()
     {
@@ -56,16 +68,18 @@ class Cuota extends Model
     }
 
     /**
-     * Relación: Una cuota tiene una factura (o ninguna)
+     * @brief Relación One-to-One con Factura.
+     * Una cuota puede dar lugar a una única factura física/legal.
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function factura()
     {
         return $this->hasOne(Factura::class);
     }
 
-    // ==================== MÉTODOS DE ACCESO ====================
     /**
-     * Saber si una cuota está pagada o no
+     * @brief Comprueba si la cuota ha sido abonada.
+     * @return bool
      */
     public function isPagada(): bool
     {
@@ -73,9 +87,8 @@ class Cuota extends Model
     }
 
     /**
-     * Saber si una cuota está pendiente
-     *
-     * @return boolean
+     * @brief Comprueba si la cuota está aún pendiente de cobro.
+     * @return bool
      */
     public function isPendiente(): bool
     {
@@ -83,11 +96,10 @@ class Cuota extends Model
     }
 
     // ==================== SCOPES ====================
+    
     /**
-     * Scope: Ordenar cuotas por fecha de emisión descendente
-     *
-     * @param [type] $query
-     * @return void
+     * @brief Ordena las cuotas por fecha de emisión (de la más reciente a la más antigua).
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeOrdenadasPorFecha($query)
     {
@@ -95,10 +107,8 @@ class Cuota extends Model
     }
 
     /**
-     * Scope: Cargar las relaciones cliente en la consulta
-     * Beneficio: Evita el problema N+1 al mostrar cuotas con sus relaciones
-     * @param [type] $query
-     * @return void
+     * @brief Carga la relación con el cliente para optimizar las consultas (Eager Loading).
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeConRelaciones($query)
     {
@@ -106,10 +116,8 @@ class Cuota extends Model
     }
 
     /**
-     * Scope: Filtrar cuotas pendientes de pagar
-     *
-     * @param [type] $query
-     * @return void
+     * @brief Filtra la consulta para mostrar solo cuotas impagadas.
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopePendientes($query)
     {
@@ -117,10 +125,8 @@ class Cuota extends Model
     }
 
     /**
-     * Scope: Filtrar cuotas ya pagadas
-     *
-     * @param [type] $query
-     * @return void
+     * @brief Filtra la consulta para mostrar solo cuotas ya cobradas.
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopePagadas($query)
     {
@@ -128,7 +134,8 @@ class Cuota extends Model
     }
 
     /**
-     * Scope: cuotas mensuales
+     * @brief Filtra solo las cuotas de tipo ordinario/mensual.
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeMensuales($query)
     {
@@ -136,7 +143,8 @@ class Cuota extends Model
     }
 
     /**
-     * Scope: cuotas excepcionales
+     * @brief Filtra solo las cuotas de tipo extra u ocasional.
+     * @param \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeExcepcionales($query)
     {

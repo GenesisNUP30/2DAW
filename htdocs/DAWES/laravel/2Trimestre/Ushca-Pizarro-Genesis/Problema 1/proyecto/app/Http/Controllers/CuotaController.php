@@ -9,10 +9,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cuota;
 
+/**
+ * @class CuotaController
+ * * @brief Controlador para la gestión financiera de cuotas y remesas.
+ * * Esta clase se encarga de:
+ * - Listar cuotas diferenciando entre mensuales (ordinarias) y excepcionales.
+ * - Generar remesas automáticas para todos los clientes activos a principio de mes.
+ * - Gestionar el ciclo de vida de los pagos (emisión, pago, edición).
+ * - Administrar la papelera de cuotas mediante el uso de Soft Deletes.
+ * * @note Todas las operaciones financieras están restringidas exclusivamente a usuarios Administradores.
+ * * @package App\Http\Controllers
+ */
 class CuotaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @brief Muestra el listado de cuotas organizado por tipo.
+     * * Implementa una paginación doble en la misma vista:
+     * - **Cuotas Mensuales**: Generadas por el sistema.
+     * - **Cuotas Excepcionales**: Creadas manualmente por servicios extra.
+     * * @return \Illuminate\View\View Vista con las colecciones de cuotas paginadas independientemente.
      */
     public function index()
     {
@@ -37,7 +52,8 @@ class CuotaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @brief Muestra el formulario para crear una cuota excepcional.
+     * * @return \Illuminate\View\View Formulario con la lista de clientes disponibles.
      */
     public function create()
     {
@@ -53,7 +69,11 @@ class CuotaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @brief Almacena una nueva cuota manual en el sistema.
+     * * Valida que el importe sea positivo y que la fecha de pago (si existe) no sea
+     * anterior a la fecha de emisión. Por defecto, estas cuotas se marcan como 'excepcional'.
+     * * @param Request $request Datos de la cuota (cliente, concepto, importe, etc.).
+     * @return \Illuminate\Http\RedirectResponse Redirección al índice con éxito.
      */
     public function store(Request $request)
     {
@@ -100,6 +120,14 @@ class CuotaController extends Controller
         //
     }
 
+    /**
+     * @brief Genera automáticamente la remesa mensual para todos los clientes activos.
+     * * **Lógica de negocio**:
+     * - Itera sobre todos los clientes activos.
+     * - Comprueba si ya existe una cuota mensual para el mes y año actuales para evitar duplicados.
+     * - Crea la cuota usando el `importe_cuota_mensual` definido en la ficha del cliente.
+     * * @return \Illuminate\Http\RedirectResponse Notificación con el número de cuotas creadas.
+     */
     public function generarRemesa()
     {
         $user = Auth::user();
@@ -137,7 +165,9 @@ class CuotaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @brief Muestra el formulario para editar una cuota existente.
+     * * @param Cuota $cuota Instancia de la cuota a editar.
+     * @return \Illuminate\View\View
      */
     public function edit(Cuota $cuota)
     {
@@ -153,7 +183,11 @@ class CuotaController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @brief Actualiza la información de una cuota.
+     * * Permite marcar una cuota como pagada asignándole una `fecha_pago`.
+     * * @param Request $request
+     * @param Cuota $cuota
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Cuota $cuota)
     {
@@ -189,10 +223,9 @@ class CuotaController extends Controller
     }
 
     /**
-     * Confirmar la eliminación de una cuota
-     *
-     * @param Cuota $cuota
-     * @return void
+     * @brief Muestra la vista de confirmación para eliminar una cuota.
+     * * @param Cuota $cuota
+     * @return \Illuminate\View\View
      */
     public function confirmDelete(Cuota $cuota)
     {
@@ -204,10 +237,15 @@ class CuotaController extends Controller
 
         return view('cuotas.confirmDelete', compact('cuota'));
     }
-    /**
-     * Remove the specified resource from storage.
-     */
 
+    /**
+     * @brief Elimina (Soft Delete) una cuota del sistema.
+     * * **Nota importante**: Si la cuota ya tiene una factura asociada, se permite el borrado
+     * lógico (Soft Delete) pero se advierte que la factura permanecerá en el sistema para
+     * mantener la integridad contable.
+     * * @param Cuota $cuota
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Cuota $cuota)
     {
         $user = Auth::user();
@@ -228,7 +266,10 @@ class CuotaController extends Controller
     }
 
     /**
-     * Muestra la papelera de cuotas (solo las eliminadas)
+     * @brief Muestra la papelera de reciclaje de cuotas.
+     * * Recupera únicamente los registros que han sido eliminados mediante Soft Deletes
+     * (`deleted_at` no es nulo).
+     * * @return \Illuminate\View\View Vista con la lista de cuotas eliminadas.
      */
     public function papelera()
     {
@@ -247,7 +288,9 @@ class CuotaController extends Controller
     }
 
     /**
-     * Restaura una cuota eliminada
+     * @brief Restaura una cuota previamente eliminada de la papelera.
+     * * @param int|string $id ID de la cuota a restaurar.
+     * @return \Illuminate\Http\RedirectResponse Redirección a la papelera.
      */
     public function restore($id)
     {
