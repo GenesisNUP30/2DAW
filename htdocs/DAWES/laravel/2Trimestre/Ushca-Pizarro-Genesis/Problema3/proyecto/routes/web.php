@@ -8,7 +8,7 @@ use App\Http\Controllers\CuotaController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\Api\ClienteApiController;
 /* Rutas públicas */
 
 Auth::routes();
@@ -18,6 +18,11 @@ Auth::routes();
 | Rutas protegidas (usuarios autenticados)
 |--------------------------------------------------------------------------
 */
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/api-test/clientes', [ClienteApiController::class, 'index']);
+    Route::post('/api-test/clientes', [ClienteApiController::class, 'store']);
+});
 
 Route::middleware('auth')->group(function () {
 
