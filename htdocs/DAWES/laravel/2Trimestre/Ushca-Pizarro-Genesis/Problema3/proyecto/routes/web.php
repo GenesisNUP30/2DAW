@@ -8,7 +8,7 @@ use App\Http\Controllers\CuotaController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Api\ClienteApiController;
+use App\Http\Controllers\ClienteJsController;
 /* Rutas públicas */
 
 Auth::routes();
@@ -19,9 +19,10 @@ Auth::routes();
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/api-test/clientes', [ClienteApiController::class, 'index']);
-    Route::post('/api-test/clientes', [ClienteApiController::class, 'store']);
+Route::middleware(['auth'])->prefix('v2')->group(function () {
+    Route::get('clientes', [ClienteJsController::class, 'index'])->name('v2.clientes.index');
+    Route::get('api/clientes', [ClienteJsController::class, 'listado'])->name('v2.clientes.listado');
+    Route::post('api/clientes', [ClienteJsController::class, 'store'])->name('v2.clientes.store');
 });
 
 Route::middleware('auth')->group(function () {
