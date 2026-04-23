@@ -84,4 +84,88 @@ class ClienteJsController extends Controller
             'cliente' => $cliente
         ]);
     }
+
+    public function show($id)
+    {
+        if (!auth()->user()->isAdmin()) {
+            return response()->json(['error' => 'No autorizado'], 403);
+        }
+
+        $cliente = Cliente::findOrFail($id);
+        return response()->json($cliente);
+    }
+
+    /**
+     * Actualiza el cliente.
+     */
+    public function update(Request $request, $id)
+    {
+        if (!auth()->user()->isAdmin()) {
+            return response()->json(['error' => 'No autorizado'], 403);
+        }
+
+        $cliente = Cliente::findOrFail($id);
+
+        // Reutilizamos la misma lógica de validación que en el Store
+        // Pero ojo: en el CIF permitimos el del propio cliente (ignore)
+        $validator = Validator::make($request->all(), [
+            'cif' => ['required', 'string', 'unique:clientes,cif,' . $id, new ValidarCif],
+            'nombre' => 'required|string|max:100',
+            'telefono' => ['required', 'string', 'max:20', new ValidarTelefono],
+            'correo' => 'required|email|max:100',
+            'cuenta_corriente' => 'required|string|max:50',
+            'pais' => 'required|string|exists:paises,iso2',
+            'fecha_alta' => 'required|date',
+            'importe_cuota_mensual' => 'required|numeric|min:1',
+        ], [
+            'cif.unique' => 'Ya existe un cliente con ese CIF',
+            'nombre.required' => 'El nombre es obligatorio',
+            'nombre.max' => 'El nombre no puede tener más de 100 caracteres',
+            'telefono.required' => 'El teléfono es obligatorio',
+            'telefono.max' => 'El teléfono no puede tener más de 20 caracteres',
+            'correo.required' => 'El correo electrónico es obligatorio',
+            'correo.email' => 'El correo electrónico no es válido',
+            'correo.max' => 'El correo electrónico no puede tener más de 100 caracteres',
+            'cuenta_corriente.required' => 'La cuenta corriente es obligatoria',
+            'cuenta_corriente.max' => 'La cuenta corriente no puede tener más de 50 caracteres',
+            'pais.required' => 'El país es obligatorio',
+            'pais.exists' => 'El país seleccionado no es válido',
+            'fecha_alta.required' => 'La fecha de alta es obligatoria',
+            'fecha_alta.date' => 'La fecha de alta debe ser una fecha válida',
+            'importe_cuota_mensual.required' => 'El importe de la cuota es obligatorio',
+            'importe_cuota_mensual.numeric' => 'El importe de la cuota debe ser numérico',
+            'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 0',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = $validator->validated();
+
+        // Ajustar moneda según el país por si ha cambiado
+        $pais = Pais::where('iso2', $data['pais'])->first();
+        $data['moneda'] = $pais->iso_moneda;
+
+        $cliente->update($data);
+
+        return response()->json(['message' => 'Cliente actualizado con éxito']);
+    }
+
+    /**
+     * Eliminación lógica 
+     */
+    public function destroy($id)
+    {
+        if (!auth()->user()->isAdmin()) {
+            return response()->json(['error' => 'No autorizado'], 403);
+        }
+
+        $cliente = Cliente::findOrFail($id);
+
+        // Si tu modelo Cliente usa "use SoftDeletes", esto pondrá la fecha en deleted_at
+        $cliente->delete();
+
+        return response()->json(['message' => 'Cliente eliminado correctamente']);
+    }
 }
