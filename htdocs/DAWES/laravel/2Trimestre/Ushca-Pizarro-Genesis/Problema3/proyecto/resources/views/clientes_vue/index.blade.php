@@ -165,6 +165,10 @@
                     const url = editando.value ? `api/clientes/${form.value.id}` : `api/clientes`;
                     const metodo = editando.value ? 'put' : 'post';
 
+                    const mensajeExito = editando.value ?
+                        'Cliente actualizado correctamente' :
+                        'Cliente creado correctamente';
+
                     try {
                         await axios({
                             method: metodo,
@@ -175,8 +179,9 @@
                             }
                         });
                         Quasar.Notify.create({
-                            message: 'Operación exitosa',
-                            color: 'positive'
+                            message: mensajeExito,
+                            color: 'positive',
+                            icon: 'check_circle'
                         });
                         modalAbierto.value = false;
                         obtenerClientes();
@@ -185,6 +190,11 @@
                             const laravelErrors = e.response.data.errors;
                             Object.keys(laravelErrors).forEach(key => {
                                 errors.value[key] = laravelErrors[key][0];
+                            });
+                        } else {
+                            Quasar.Notify.create({
+                                message: 'Error al realizar la operación',
+                                color: 'negative'
                             });
                         }
                     } finally {
