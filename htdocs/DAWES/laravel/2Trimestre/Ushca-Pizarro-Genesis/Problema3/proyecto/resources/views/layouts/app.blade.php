@@ -79,12 +79,6 @@
         [aria-expanded="false"] .fa-chevron-down {
             transition: transform 0.2s;
         }
-
-        /* Color suave para los ítems deshabilitados */
-        .text-muted {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
     </style>
 </head>
 
@@ -187,8 +181,8 @@
                                 <a class="nav-link small {{ request()->routeIs('v2.clientes.index') ? 'active' : '' }}" href="{{ route('v2.clientes.index') }}">
                                     <i class="fas fa-code me-2"></i>CRUD JavaScript
                                 </a>
-                                <a class="nav-link small text-muted" href="#">
-                                    <i class="fas fa-bolt me-2"></i>CRUD Livewire
+                                <a class="nav-link small text-muted" href="{{ route('v2.clientes.vue') }}">
+                                    <i class="fas fa-bolt me-2"></i>CRUD Quasar
                                 </a>
                                 <a class="nav-link small text-muted" href="#">
                                     <i class="fas fa-layer-group me-2"></i>CRUD Vue

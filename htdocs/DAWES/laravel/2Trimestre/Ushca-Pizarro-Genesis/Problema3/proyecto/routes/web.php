@@ -26,6 +26,8 @@ Route::middleware(['auth'])->prefix('v2')->group(function () {
     Route::get('api/clientes/{id}', [ClienteJsController::class, 'show'])->name('v2.clientes.show');
     Route::put('api/clientes/{id}', [ClienteJsController::class, 'update'])->name('v2.clientes.update');
     Route::delete('api/clientes/{id}', [ClienteJsController::class, 'destroy'])->name('v2.clientes.destroy');
+
+    Route::get('clientes-vue', [ClienteJsController::class, 'indexVue'])->name('v2.clientes.vue');
 });
 
 Route::middleware('auth')->group(function () {

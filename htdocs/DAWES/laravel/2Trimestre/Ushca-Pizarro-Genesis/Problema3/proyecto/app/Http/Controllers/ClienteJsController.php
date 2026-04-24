@@ -168,4 +168,11 @@ class ClienteJsController extends Controller
 
         return response()->json(['message' => 'Cliente eliminado correctamente']);
     }
+
+    // Problema 3: Vue/Quasar
+    public function indexVue()
+    {
+        $paises = Pais::all();
+        return view('clientes_vue.index', compact('paises'));
+    }
 }
