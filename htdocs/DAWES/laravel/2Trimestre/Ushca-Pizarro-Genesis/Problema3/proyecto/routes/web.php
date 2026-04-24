@@ -8,7 +8,7 @@ use App\Http\Controllers\CuotaController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\ClienteJsController;
 /* Rutas públicas */
 
 Auth::routes();
@@ -18,6 +18,15 @@ Auth::routes();
 | Rutas protegidas (usuarios autenticados)
 |--------------------------------------------------------------------------
 */
+
+Route::middleware(['auth'])->prefix('v2')->group(function () {
+    Route::get('clientes', [ClienteJsController::class, 'index'])->name('v2.clientes.index');
+    Route::get('api/clientes', [ClienteJsController::class, 'listado'])->name('v2.clientes.listado');
+    Route::post('api/clientes', [ClienteJsController::class, 'store'])->name('v2.clientes.store');
+    Route::get('api/clientes/{id}', [ClienteJsController::class, 'show'])->name('v2.clientes.show');
+    Route::put('api/clientes/{id}', [ClienteJsController::class, 'update'])->name('v2.clientes.update');
+    Route::delete('api/clientes/{id}', [ClienteJsController::class, 'destroy'])->name('v2.clientes.destroy');
+});
 
 Route::middleware('auth')->group(function () {
 
@@ -58,7 +67,7 @@ Route::middleware('auth')->group(function () {
     /*
     ====== EMPLEADOS ======
     */
-    Route::middleware('role:administrador')->group(function () { 
+    Route::middleware('role:administrador')->group(function () {
         Route::get('/empleados', [UserController::class, 'index'])->name('empleados.index');
 
         Route::get('/empleados/crear', [UserController::class, 'create'])->name('empleados.create');

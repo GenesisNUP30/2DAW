@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cliente;
 use App\Models\Pais;
-use App\Models\User;
 use App\Rules\ValidarCif;
+use App\Rules\ValidarTelefono;
 
 /**
  * @class ClienteController
@@ -104,7 +104,7 @@ class ClienteController extends Controller
         $validated = $request->validate([
             'cif' => ['required', 'string', 'unique:clientes,cif', new ValidarCif],
             'nombre' => 'required|string|max:100',
-            'telefono' => 'required|string|max:20',
+            'telefono' => ['required', 'string', 'max:20', new ValidarTelefono],
             'correo' => 'required|email|max:100',
             'cuenta_corriente' => 'required|string|max:50',
             'pais' => 'required|string|exists:paises,iso2',
