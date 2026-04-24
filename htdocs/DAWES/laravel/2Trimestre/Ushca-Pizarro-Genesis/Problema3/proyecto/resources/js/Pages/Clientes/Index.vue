@@ -108,16 +108,34 @@ const cerrarModal = () => {
                 <h2 class="text-xl font-bold mb-4">{{ editando ? 'Editar Cliente' : 'Nuevo Cliente' }}</h2>
                 
                 <form @submit.prevent="submit" class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">CIF</label>
+                        <input v-model="form.cif" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.cif" class="text-red-500 text-xs mt-1">{{ form.errors.cif }}</p>
+                    </div>
+
                     <div class="col-span-2">
                         <label class="block text-sm font-medium text-gray-700">Nombre</label>
                         <input v-model="form.nombre" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
                         <p v-if="form.errors.nombre" class="text-red-500 text-xs mt-1">{{ form.errors.nombre }}</p>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">CIF</label>
-                        <input v-model="form.cif" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.cif" class="text-red-500 text-xs mt-1">{{ form.errors.cif }}</p>
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                        <input v-model="form.telefono" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.telefono" class="text-red-500 text-xs mt-1">{{ form.errors.telefono }}</p>
+                    </div>
+                    
+                    <div class="col-span-2">                        
+                        <label class="block text-sm font-medium text-gray-700">Correo</label>
+                        <input v-model="form.correo" type="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.correo" class="text-red-500 text-xs mt-1">{{ form.errors.correo }}</p>
+                    </div>
+                    
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-gray-700">Cuenta Corriente</label>
+                        <input v-model="form.cuenta_corriente" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.cuenta_corriente" class="text-red-500 text-xs mt-1">{{ form.errors.cuenta_corriente }}</p>
                     </div>
 
                     <div>
@@ -126,6 +144,18 @@ const cerrarModal = () => {
                             <option v-for="p in paises" :key="p.iso2" :value="p.iso2">{{ p.nombre }}</option>
                         </select>
                         <p v-if="form.errors.pais" class="text-red-500 text-xs mt-1">{{ form.errors.pais }}</p>
+                    </div>
+
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-gray-700">Cuota Mensual</label>
+                        <input v-model="form.importe_cuota_mensual" type="number" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.importe_cuota_mensual" class="text-red-500 text-xs mt-1">{{ form.errors.importe_cuota_mensual }}</p>
+                    </div>
+
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-gray-700">Fecha Alta</label>
+                        <input v-model="form.fecha_alta" type="date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.fecha_alta" class="text-red-500 text-xs mt-1">{{ form.errors.fecha_alta }}</p>
                     </div>
 
                     <div class="col-span-2 flex justify-end space-x-3 mt-4">
