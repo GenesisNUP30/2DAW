@@ -125,7 +125,7 @@
                 const editando = ref(false);
                 const soloLectura = ref(false);
                 const errors = ref({});
-                const paisesOpciones = @json($paises);
+                const paisesOpciones = JSON.parse('@json($paises)');
 
                 // Definir el estado inicial limpio
                 const formInicial = {
