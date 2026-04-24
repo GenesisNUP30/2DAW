@@ -219,8 +219,17 @@
                 const confirmarEliminar = (id) => {
                     Quasar.Dialog.create({
                         title: 'Confirmar',
-                        message: '¿Deseas eliminar este cliente?',
-                        cancel: true,
+                        message: '¿Deseas eliminar este cliente? Esta acción no se puede deshacer.',
+                        ok: {
+                            label: 'Sí, eliminar',
+                            color: 'negative',
+                            unelevated: true
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            color: 'grey-7',
+                            flat: true
+                        },
                         persistent: true
                     }).onOk(async () => {
                         try {
@@ -231,13 +240,14 @@
                             });
                             obtenerClientes();
                             Quasar.Notify.create({
-                                message: 'Eliminado',
-                                color: 'negative'
+                                message: 'Cliente eliminado correctamente',
+                                color: 'negative',
+                                icon: 'delete',
                             });
                         } catch (e) {
                             Quasar.Notify.create({
-                                message: 'Error al eliminar',
-                                color: 'negative'
+                                message: 'Error al intentar eliminar el cliente',
+                                color: 'warning'
                             });
                         }
                     });
