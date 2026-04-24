@@ -7,37 +7,24 @@ use App\Models\Pais;
 use Illuminate\Http\Request;
 use App\Rules\ValidarCif;
 use App\Rules\ValidarTelefono;
-use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
 
-class ClienteJsController extends Controller
+class ClienteInertiaController extends Controller
 {
-    // Carga la página principal (la carcasa vacía)
+    // Carga el componente Vue usando Inertia
     public function index()
     {
-        $paises = Pais::all(); // Los necesitaremos para el modal de creación
-        return view('clientes_js.index', compact('paises'));
+        return Inertia::render('Clientes/Index', [
+            'clientes' => Cliente::with('paisRelacion')->get(),
+            'paises' => Pais::all(),
+        ]);
     }
 
-    // Devuelve todos los clientes en formato JSON para DataTable
-    public function listado()
-    {
-        if (!auth()->user()->isAdmin()) {
-            return response()->json(['error' => 'No autorizado'], 403);
-        }
-
-        $clientes = Cliente::with('paisRelacion')->get();
-        return response()->json($clientes);
-    }
-
-    // Guarda un cliente vía AJAX
     public function store(Request $request)
     {
-        if (!auth()->user()->isAdmin()) {
-            return response()->json(['error' => 'No autorizado'], 403);
-        }
-
-        // Usamos Validator manualmente para poder devolver JSON en caso de error
-        $validator = Validator::make($request->all(), [
+        // En Inertia, usamos validate() directamente. 
+        // Si falla, Laravel redirige atrás automáticamente con los errores.
+        $data = $request->validate([
             'cif' => ['required', 'string', 'unique:clientes,cif', new ValidarCif],
             'nombre' => 'required|string|max:100',
             'telefono' => ['required', 'string', 'max:20', new ValidarTelefono],
@@ -67,49 +54,19 @@ class ClienteJsController extends Controller
             'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 0',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422); // 422 es el código estándar para errores de validación
-        }
-
-        $data = $validator->validated();
         $pais = Pais::where('iso2', $data['pais'])->first();
         $data['moneda'] = $pais->iso_moneda;
 
-        $cliente = Cliente::create($data);
+        Cliente::create($data);
 
-        return response()->json([
-            'message' => 'Cliente creado con éxito',
-            'cliente' => $cliente
-        ]);
+        // Volvemos a la lista. Inertia refresca los datos sin recargar la web.
+        return redirect()->route('clientes.v3.index')->with('message', 'Cliente creado');
     }
 
-    public function show($id)
+    public function update(Request $request, Cliente $cliente)
     {
-        if (!auth()->user()->isAdmin()) {
-            return response()->json(['error' => 'No autorizado'], 403);
-        }
-
-        $cliente = Cliente::findOrFail($id);
-        return response()->json($cliente);
-    }
-
-    /**
-     * Actualiza el cliente.
-     */
-    public function update(Request $request, $id)
-    {
-        if (!auth()->user()->isAdmin()) {
-            return response()->json(['error' => 'No autorizado'], 403);
-        }
-
-        $cliente = Cliente::findOrFail($id);
-
-        // Reutilizamos la misma lógica de validación que en el Store
-        // Pero ojo: en el CIF permitimos el del propio cliente (ignore)
-        $validator = Validator::make($request->all(), [
-            'cif' => ['required', 'string', 'unique:clientes,cif,' . $id, new ValidarCif],
+        $data = $request->validate([
+            'cif' => ['required', 'string', 'unique:clientes,cif,' . $cliente->id, new ValidarCif],
             'nombre' => 'required|string|max:100',
             'telefono' => ['required', 'string', 'max:20', new ValidarTelefono],
             'correo' => 'required|email|max:100',
@@ -118,6 +75,7 @@ class ClienteJsController extends Controller
             'fecha_alta' => 'required|date',
             'importe_cuota_mensual' => 'required|numeric|min:1',
         ], [
+            'cif.required' => 'El CIF es obligatorio',
             'cif.unique' => 'Ya existe un cliente con ese CIF',
             'nombre.required' => 'El nombre es obligatorio',
             'nombre.max' => 'El nombre no puede tener más de 100 caracteres',
@@ -137,42 +95,17 @@ class ClienteJsController extends Controller
             'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 0',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $data = $validator->validated();
-
-        // Ajustar moneda según el país por si ha cambiado
         $pais = Pais::where('iso2', $data['pais'])->first();
         $data['moneda'] = $pais->iso_moneda;
 
         $cliente->update($data);
 
-        return response()->json(['message' => 'Cliente actualizado con éxito']);
+        return redirect()->route('clientes.v3.index');
     }
 
-    /**
-     * Eliminación lógica 
-     */
-    public function destroy($id)
+    public function destroy(Cliente $cliente)
     {
-        if (!auth()->user()->isAdmin()) {
-            return response()->json(['error' => 'No autorizado'], 403);
-        }
-
-        $cliente = Cliente::findOrFail($id);
-
-        // Si tu modelo Cliente usa "use SoftDeletes", esto pondrá la fecha en deleted_at
         $cliente->delete();
-
-        return response()->json(['message' => 'Cliente eliminado correctamente']);
-    }
-
-    // Problema 3.2: Vue/Quasar
-    public function indexVue()
-    {
-        $paises = Pais::all();
-        return view('clientes_vue.index', compact('paises'));
+        return redirect()->route('clientes.v3.index');
     }
 }

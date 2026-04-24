@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TareaController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ClienteInertiaController;
 use App\Http\Controllers\CuotaController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
@@ -28,6 +29,27 @@ Route::middleware(['auth'])->prefix('v2')->group(function () {
     Route::delete('api/clientes/{id}', [ClienteJsController::class, 'destroy'])->name('v2.clientes.destroy');
 
     Route::get('clientes-vue', [ClienteJsController::class, 'indexVue'])->name('v2.clientes.vue');
+});
+
+// Rutas para el Problema 3.3 - Stack Inertia + Vite + Tailwind
+Route::middleware(['auth'])->prefix('v3')->group(function () {
+    
+    // Listado principal y renderizado de la página (Inertia)
+    Route::get('/clientes', [ClienteInertiaController::class, 'index'])
+        ->name('clientes.v3.index');
+
+    // Guardar nuevo cliente
+    Route::post('/clientes', [ClienteInertiaController::class, 'store'])
+        ->name('clientes.v3.store');
+
+    // Actualizar cliente existente
+    // Usamos PUT o PATCH para ediciones
+    Route::put('/clientes/{cliente}', [ClienteInertiaController::class, 'update'])
+        ->name('clientes.v3.update');
+
+    // Eliminar cliente (Borrado lógico o físico según tu modelo)
+    Route::delete('/clientes/{cliente}', [ClienteInertiaController::class, 'destroy'])
+        ->name('clientes.v3.destroy');
 });
 
 Route::middleware('auth')->group(function () {
