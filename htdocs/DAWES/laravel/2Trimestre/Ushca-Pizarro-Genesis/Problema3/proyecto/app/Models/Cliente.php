@@ -39,7 +39,6 @@ class Cliente extends Model
         'pais',
         'moneda',
         'importe_cuota_mensual',
-        'tipo',
         'fecha_alta',
         'fecha_baja',
     ];
