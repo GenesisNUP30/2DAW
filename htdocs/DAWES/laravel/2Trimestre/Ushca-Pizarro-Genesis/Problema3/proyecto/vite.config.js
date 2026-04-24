@@ -6,10 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ["resources/sass/app.scss", "resources/js/app.js"],
+            input: ["resources/css/app.scss", "resources/js/app.js"],
             refresh: true,
         }),
-        tailwindcss(),
         vue({
             template: {
                 transformAssetUrls: {
@@ -18,5 +17,6 @@ export default defineConfig({
                 },
             },
         }),
+        tailwindcss(),
     ],
 });
