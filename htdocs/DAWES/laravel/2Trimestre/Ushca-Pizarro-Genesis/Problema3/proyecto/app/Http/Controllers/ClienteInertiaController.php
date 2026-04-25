@@ -119,6 +119,7 @@ class ClienteInertiaController extends Controller
         if (!Auth::user() || !Auth::user()->isAdmin()) {
             abort(403, 'No tienes permisos para acceder a esta sección.');
         }
+        $cliente->cuotas()->delete();
         
         $cliente->delete();
         return redirect()->route('clientes.v3.index');

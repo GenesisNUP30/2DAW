@@ -163,7 +163,6 @@ class ClienteJsController extends Controller
 
         $cliente = Cliente::findOrFail($id);
 
-        // Si tu modelo Cliente usa "use SoftDeletes", esto pondrá la fecha en deleted_at
         $cliente->delete();
 
         return response()->json(['message' => 'Cliente eliminado correctamente']);
