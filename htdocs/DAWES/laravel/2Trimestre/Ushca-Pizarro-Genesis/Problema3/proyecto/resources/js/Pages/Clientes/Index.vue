@@ -149,9 +149,14 @@ const ejecutarBorrado = () => {
     <div class="p-8 bg-gray-100 min-h-screen">
         <div class="max-w-6xl mx-auto">
             <div class="flex justify-between items-center mb-6">
+                <a href="/clientes" 
+           class="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-bold transition-colors px-3 py-2 rounded-lg hover:bg-blue-50">
+            <i class="fas fa-arrow-left"></i>
+            <span>Volver a la App</span>
+        </a>
                 <h1 class="text-3xl font-bold text-gray-800">Clientes con Inertia + Tailwind</h1>
-                <button @click="abrirCrear" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">
-                    Nuevo Cliente
+                <button @click="abrirCrear" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow-md transition-all">
+                    <i class="fas fa-plus mr-2"></i>Nuevo Cliente
                 </button>
             </div>
 
@@ -177,11 +182,9 @@ const ejecutarBorrado = () => {
                                 {{ Number(cliente.importe_cuota_mensual).toFixed(2) }} {{ cliente.moneda }}
                             </td>
                             <td class="px-5 py-4 text-sm text-center font-medium">
-                                <button @click="abrirVer(cliente)" class="text-blue-600 hover:text-blue-900 mx-2"><i class="fas fa-eye mr-1"></i>Ver</button>
+                                <button @click="abrirVer(cliente)" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-eye mr-1"></i>Ver</button>
                                 <button @click="abrirEditar(cliente)" class="text-orange-600 hover:text-orange-900 mr-3"><i class="fas fa-edit mr-1"></i>Editar</button>
-                                <button @click="abrirConfirmacion(cliente)" class="text-red-600 hover:text-red-900">
-                                    <i class="fas fa-trash mr-1"></i>Borrar
-                                </button>
+                                <button @click="abrirConfirmacion(cliente)" class="text-red-600 hover:text-red-900"><i class="fas fa-trash mr-1"></i>Borrar</button>
                             </td>
                         </tr>
                     </tbody>
