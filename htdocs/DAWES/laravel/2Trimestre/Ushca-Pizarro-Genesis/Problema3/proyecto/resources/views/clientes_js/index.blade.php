@@ -259,7 +259,7 @@
     async function eliminar(id) {
         const result = await Swal.fire({
             title: '¿Estás seguro?',
-            text: "Esta acción no se puede deshacer",
+            text: "Esta acción eliminará también todas las cuotas del cliente y no se puede deshacer",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',

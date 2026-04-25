@@ -162,7 +162,10 @@ class ClienteJsController extends Controller
         }
 
         $cliente = Cliente::findOrFail($id);
+        // Borrado en cascada manual de las cuotas 
+        $cliente->cuotas()->delete();
 
+        // Borrado del cliente
         $cliente->delete();
 
         return response()->json(['message' => 'Cliente eliminado correctamente']);

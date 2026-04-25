@@ -186,7 +186,7 @@
                                 </a>
                                 <a class="nav-link small {{ request()->routeIs('clientes.v3.index') ? 'active' : '' }}"
                                     href="{{ route('clientes.v3.index') }}">
-                                    <i class="fas fa-layer-group me-2"></i>CRUD Vue (Inertia)
+                                    <i class="fas fa-layer-group me-2"></i>CRUD Vue + Inertia
                                 </a>
                             </div>
                         </div>

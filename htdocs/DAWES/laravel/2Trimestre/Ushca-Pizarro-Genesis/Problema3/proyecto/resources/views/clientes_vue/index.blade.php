@@ -228,7 +228,7 @@
                 const confirmarEliminar = (id) => {
                     Quasar.Dialog.create({
                         title: 'Confirmar',
-                        message: '¿Deseas eliminar este cliente? Esta acción no se puede deshacer.',
+                        message: '¿Estás seguro? Se borrarán todas las cuotas asociadas al cliente y esta acción no se puede deshacer.',
                         ok: {
                             label: 'Sí, eliminar',
                             color: 'negative',
