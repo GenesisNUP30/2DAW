@@ -31,7 +31,7 @@ Route::middleware(['auth'])->prefix('v2')->group(function () {
     Route::get('clientes-vue', [ClienteJsController::class, 'indexVue'])->name('v2.clientes.vue');
 });
 
-// Rutas para el Problema 3.3 - Stack Inertia + Vite + Tailwind
+// Problema 3.3  Inertia + Vite + Tailwind
 Route::middleware(['auth'])->prefix('v3')->group(function () {
     
     // Listado principal y renderizado de la página (Inertia)
