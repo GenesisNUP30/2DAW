@@ -64,7 +64,7 @@ class ClienteJsController extends Controller
             'fecha_alta.date' => 'La fecha de alta debe ser una fecha válida',
             'importe_cuota_mensual.required' => 'El importe de la cuota es obligatorio',
             'importe_cuota_mensual.numeric' => 'El importe de la cuota debe ser numérico',
-            'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 0',
+            'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 1',
         ]);
 
         if ($validator->fails()) {
@@ -134,7 +134,7 @@ class ClienteJsController extends Controller
             'fecha_alta.date' => 'La fecha de alta debe ser una fecha válida',
             'importe_cuota_mensual.required' => 'El importe de la cuota es obligatorio',
             'importe_cuota_mensual.numeric' => 'El importe de la cuota debe ser numérico',
-            'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 0',
+            'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 1',
         ]);
 
         if ($validator->fails()) {

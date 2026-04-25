@@ -41,7 +41,7 @@ const form = useForm({
     correo: "",
     cuenta_corriente: "",
     pais: "",
-    fecha_alta: "",
+    fecha_alta: new Date().toISOString().split('T')[0],
     importe_cuota_mensual: 0,
 });
 
