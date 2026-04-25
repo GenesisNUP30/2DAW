@@ -45,6 +45,7 @@ const emit = defineEmits(['close', 'submit']);
                         <input v-model="form.telefono" :disabled="soloLectura" type="text"
                             :class="{'border-red-500 ring-1 ring-red-500': form.errors.telefono, 'bg-gray-50 cursor-not-allowed': soloLectura}"
                             class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border">
+                        <p v-if="form.errors.telefono" class="text-red-500 text-[11px] mt-1">{{ form.errors.telefono }}</p>
                     </div>
 
                     <div class="md:col-span-2">
@@ -52,6 +53,7 @@ const emit = defineEmits(['close', 'submit']);
                         <input v-model="form.correo" :disabled="soloLectura" type="email"
                             :class="{'border-red-500 ring-1 ring-red-500': form.errors.correo, 'bg-gray-50 cursor-not-allowed': soloLectura}"
                             class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border">
+                        <p v-if="form.errors.correo" class="text-red-500 text-[11px] mt-1">{{ form.errors.correo }}</p>
                     </div>
 
                     <div class="md:col-span-2">
@@ -59,6 +61,7 @@ const emit = defineEmits(['close', 'submit']);
                         <input v-model="form.cuenta_corriente" :disabled="soloLectura" type="text"
                             :class="{'border-red-500 ring-1 ring-red-500': form.errors.cuenta_corriente, 'bg-gray-50 cursor-not-allowed': soloLectura}"
                             class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border text-sm">
+                        <p v-if="form.errors.cuenta_corriente" class="text-red-500 text-[11px] mt-1">{{ form.errors.cuenta_corriente }}</p>
                     </div>
 
                     <div>
@@ -69,6 +72,7 @@ const emit = defineEmits(['close', 'submit']);
                             <option value="">Seleccionar...</option>
                             <option v-for="p in paises" :key="p.iso2" :value="p.iso2">{{ p.nombre }}</option>
                         </select>
+                        <p v-if="form.errors.pais" class="text-red-500 text-[11px] mt-1">{{ form.errors.pais }}</p>
                     </div>
 
                     <div>
@@ -76,14 +80,18 @@ const emit = defineEmits(['close', 'submit']);
                         <div class="relative">
                             <span class="absolute left-3 top-2.5 text-gray-400">€</span>
                             <input v-model.number="form.importe_cuota_mensual" :disabled="soloLectura" type="number" step="0.01"
-                                class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 pl-7 border">
+                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.importe_cuota_mensual, 'bg-gray-50 cursor-not-allowed': soloLectura}"
+                            class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 pl-7 border">
+                            <p v-if="form.errors.importe_cuota_mensual" class="text-red-500 text-[11px] mt-1">{{ form.errors.importe_cuota_mensual }}</p>
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Fecha de Alta</label>
                         <input v-model="form.fecha_alta" :disabled="soloLectura" type="date"
+                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.fecha_alta, 'bg-gray-50 cursor-not-allowed': soloLectura}"
                             class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border text-sm">
+                        <p v-if="form.errors.fecha_alta" class="text-red-500 text-[11px] mt-1">{{ form.errors.fecha_alta }}</p>
                     </div>
                 </form>
             </div>

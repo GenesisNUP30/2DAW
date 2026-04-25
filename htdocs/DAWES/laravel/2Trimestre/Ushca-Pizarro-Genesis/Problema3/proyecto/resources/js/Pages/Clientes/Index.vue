@@ -78,6 +78,7 @@ const validarFormulario = () => {
 };
 
 const submit = () => {
+
     if (editando.value) {
         form.put(`/v3/clientes/${form.id}`, {
             onSuccess: () => {
@@ -86,11 +87,11 @@ const submit = () => {
                     "El cliente se ha actualizado correctamente",
                 );
             },
-            onError: () =>
-                mostrarNotificacion(
-                    "Error al intentar realizar la operación",
-                    "error",
-                ),
+            onError: (errors) => {
+                if (Object.keys(errors).length === 0) {
+                    mostrarNotificacion("Error interno del servidor", "error");
+                }
+            },
         });
     } else {
         form.post("/v3/clientes", {
@@ -98,11 +99,11 @@ const submit = () => {
                 cerrarModal();
                 mostrarNotificacion("El cliente se ha creado correctamente");
             },
-            onError: () =>
-                mostrarNotificacion(
-                    "Error al intentar realizar la operación",
-                    "error",
-                ),
+            onError: (errors) => {
+                if (Object.keys(errors).length === 0) {
+                    mostrarNotificacion("No se pudo crear el cliente", "error");
+                }
+            },
         });
     }
 };
