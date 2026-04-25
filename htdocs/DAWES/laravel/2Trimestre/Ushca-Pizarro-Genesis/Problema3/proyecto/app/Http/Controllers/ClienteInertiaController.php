@@ -8,12 +8,17 @@ use Illuminate\Http\Request;
 use App\Rules\ValidarCif;
 use App\Rules\ValidarTelefono;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class ClienteInertiaController extends Controller
 {
     // Carga el componente Vue usando Inertia
     public function index()
     {
+        if (!Auth::user() || !Auth::user()->isAdmin()) {
+            abort(403, 'No tienes permisos para acceder a esta sección.');
+        }
+
         return Inertia::render('Clientes/Index', [
             'clientes' => Cliente::with('paisRelacion')->paginate(5),
             'paises' => Pais::all(),
@@ -22,6 +27,10 @@ class ClienteInertiaController extends Controller
 
     public function store(Request $request)
     {
+        if (!Auth::user() || !Auth::user()->isAdmin()) {
+            abort(403, 'No tienes permisos para acceder a esta sección.');
+        }
+
         $data = $request->validate([
             'cif' => ['required', 'string', 'unique:clientes,cif', new ValidarCif],
             'nombre' => 'required|string|max:100',
@@ -63,6 +72,10 @@ class ClienteInertiaController extends Controller
 
     public function update(Request $request, Cliente $cliente)
     {
+        if (!Auth::user() || !Auth::user()->isAdmin()) {
+            abort(403, 'No tienes permisos para acceder a esta sección.');
+        }
+
         $data = $request->validate([
             'cif' => ['required', 'string', 'unique:clientes,cif,' . $cliente->id, new ValidarCif],
             'nombre' => 'required|string|max:100',
@@ -103,6 +116,10 @@ class ClienteInertiaController extends Controller
 
     public function destroy(Cliente $cliente)
     {
+        if (!Auth::user() || !Auth::user()->isAdmin()) {
+            abort(403, 'No tienes permisos para acceder a esta sección.');
+        }
+        
         $cliente->delete();
         return redirect()->route('clientes.v3.index');
     }

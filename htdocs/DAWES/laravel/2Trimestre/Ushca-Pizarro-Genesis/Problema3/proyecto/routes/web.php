@@ -20,7 +20,8 @@ Auth::routes();
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth'])->prefix('v2')->group(function () {
+Route::middleware(['auth', 'role:administrador'])->prefix('v2')->group(function () {
+    // Problema 3.1: Js
     Route::get('clientes', [ClienteJsController::class, 'index'])->name('v2.clientes.index');
     Route::get('api/clientes', [ClienteJsController::class, 'listado'])->name('v2.clientes.listado');
     Route::post('api/clientes', [ClienteJsController::class, 'store'])->name('v2.clientes.store');
@@ -28,28 +29,16 @@ Route::middleware(['auth'])->prefix('v2')->group(function () {
     Route::put('api/clientes/{id}', [ClienteJsController::class, 'update'])->name('v2.clientes.update');
     Route::delete('api/clientes/{id}', [ClienteJsController::class, 'destroy'])->name('v2.clientes.destroy');
 
+    // Problema 3.2: Vue/Quasar
     Route::get('clientes-vue', [ClienteJsController::class, 'indexVue'])->name('v2.clientes.vue');
 });
 
 // Problema 3.3  Inertia + Vite + Tailwind
-Route::middleware(['auth'])->prefix('v3')->group(function () {
-    
-    // Listado principal y renderizado de la página (Inertia)
-    Route::get('/clientes', [ClienteInertiaController::class, 'index'])
-        ->name('clientes.v3.index');
-
-    // Guardar nuevo cliente
-    Route::post('/clientes', [ClienteInertiaController::class, 'store'])
-        ->name('clientes.v3.store');
-
-    // Actualizar cliente existente
-    // Usamos PUT o PATCH para ediciones
-    Route::put('/clientes/{cliente}', [ClienteInertiaController::class, 'update'])
-        ->name('clientes.v3.update');
-
-    // Eliminar cliente (Borrado lógico o físico según tu modelo)
-    Route::delete('/clientes/{cliente}', [ClienteInertiaController::class, 'destroy'])
-        ->name('clientes.v3.destroy');
+Route::middleware(['auth', 'role:administrador'])->prefix('v3')->group(function () {
+    Route::get('/clientes', [ClienteInertiaController::class, 'index'])->name('clientes.v3.index');
+    Route::post('/clientes', [ClienteInertiaController::class, 'store'])->name('clientes.v3.store');
+    Route::put('/clientes/{cliente}', [ClienteInertiaController::class, 'update'])->name('clientes.v3.update');
+    Route::delete('/clientes/{cliente}', [ClienteInertiaController::class, 'destroy'])->name('clientes.v3.destroy');
 });
 
 Route::middleware('auth')->group(function () {

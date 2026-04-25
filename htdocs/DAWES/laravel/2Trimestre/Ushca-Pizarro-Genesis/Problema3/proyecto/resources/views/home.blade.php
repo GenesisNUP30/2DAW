@@ -154,7 +154,7 @@
                         @forelse($cuotas as $cuota)
                         <li class="list-group-item d-flex justify-content-between align-items-center py-3">
                             <div>
-                                <div class="fw-bold text-dark small">{{ $cuota->cliente->nombre }}</div>
+                                <div class="fw-bold text-dark small">{{ $cuota->cliente?->nombre }}</div>
                                 <div class="text-muted x-small">Pendiente de cobro</div>
                             </div>
                             <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill">
