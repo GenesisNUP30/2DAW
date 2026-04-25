@@ -5,11 +5,14 @@ import Pagination from "@/Components/Pagination.vue";
 import Notification from "@/Components/Notification.vue";
 import ConfirmDialog from "@/Components/ConfirmDialog.vue";
 import ClienteModal from "@/Components/ClienteModal.vue";
+import DataTable from "@/Components/DataTable.vue";
 
 const props = defineProps({
     clientes: Object,
     paises: Array,
 });
+
+const cabeceras = ["Nombre", "CIF", "Teléfono", "País", "Cuota", "Acciones"];
 
 const editando = ref(false);
 const modalAbierto = ref(false);
@@ -197,76 +200,44 @@ const ejecutarBorrado = () => {
                 </button>
             </div>
 
-            <div class="bg-white rounded-lg shadow overflow-hidden">
-                <table class="min-w-full leading-normal">
-                    <thead>
-                        <tr
-                            class="bg-gray-50 border-b border-gray-200 text-gray-600 text-left text-sm uppercase font-semibold"
+            <DataTable :headers="cabeceras" :items="clientes.data">
+                <template #row="{ item: cliente }">
+                    <td class="px-5 py-4 text-sm">{{ cliente.nombre }}</td>
+                    <td class="px-5 py-4 text-sm">{{ cliente.cif }}</td>
+                    <td class="px-5 py-4 text-sm">{{ cliente.telefono }}</td>
+                    <td class="px-5 py-4 text-sm">
+                        {{ cliente.pais_relacion?.nombre }}
+                    </td>
+                    <td class="px-5 py-4 text-sm">
+                        {{ Number(cliente.importe_cuota_mensual).toFixed(2) }}
+                        {{ cliente.moneda }}
+                    </td>
+                    <td class="px-5 py-4 text-sm text-center font-medium">
+                        <button
+                            @click="abrirVer(cliente)"
+                            class="text-blue-600 hover:text-blue-900 mr-3"
                         >
-                            <th class="px-5 py-3">Nombre</th>
-                            <th class="px-5 py-3">CIF</th>
-                            <th class="px-5 py-3">Teléfono</th>
-                            <th class="px-5 py-3">País</th>
-                            <th class="px-5 py-3">Cuota Mensual</th>
-                            <th class="px-5 py-3 text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            v-for="cliente in clientes.data"
-                            :key="cliente.id"
-                            class="border-b border-gray-200 hover:bg-gray-50"
+                            <i class="fas fa-eye"></i> Ver
+                        </button>
+                        <button
+                            @click="abrirEditar(cliente)"
+                            class="text-orange-600 hover:text-orange-900 mr-3"
                         >
-                            <td class="px-5 py-4 text-sm">
-                                {{ cliente.nombre }}
-                            </td>
-                            <td class="px-5 py-4 text-sm">{{ cliente.cif }}</td>
-                            <td class="px-5 py-4 text-sm">
-                                {{ cliente.telefono }}
-                            </td>
-                            <td class="px-5 py-4 text-sm">
-                                {{ cliente.pais_relacion?.nombre }}
-                            </td>
-                            <td class="px-5 py-4 text-sm">
-                                {{
-                                    Number(
-                                        cliente.importe_cuota_mensual,
-                                    ).toFixed(2)
-                                }}
-                                {{ cliente.moneda }}
-                            </td>
-                            <td
-                                class="px-5 py-4 text-sm text-center font-medium"
-                            >
-                                <button
-                                    @click="abrirVer(cliente)"
-                                    class="text-blue-600 hover:text-blue-900 mr-3"
-                                >
-                                    <i class="fas fa-eye mr-1"></i>Ver
-                                </button>
-                                <button
-                                    @click="abrirEditar(cliente)"
-                                    class="text-orange-600 hover:text-orange-900 mr-3"
-                                >
-                                    <i class="fas fa-edit mr-1"></i>Editar
-                                </button>
-                                <button
-                                    @click="abrirConfirmacion(cliente)"
-                                    class="text-red-600 hover:text-red-900"
-                                >
-                                    <i class="fas fa-trash mr-1"></i>Borrar
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button
+                            @click="abrirConfirmacion(cliente)"
+                            class="text-red-600 hover:text-red-900"
+                        >
+                            <i class="fas fa-trash"></i> Borrar
+                        </button>
+                    </td>
+                </template>
 
-                <div class="bg-white rounded-lg shadow overflow-hidden">
-                    <table class="min-w-full leading-normal"></table>
-
+                <template #pagination>
                     <Pagination :links="clientes.links" :meta="clientes" />
-                </div>
-            </div>
+                </template>
+            </DataTable>
         </div>
 
         <Notification
@@ -284,7 +255,7 @@ const ejecutarBorrado = () => {
             @close="cerrarModal"
             @submit="submit"
         />
-        
+
         <ConfirmDialog
             :show="confirmandoBorrado"
             title="¿Eliminar Cliente?"
