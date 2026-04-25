@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useForm, router, Link } from "@inertiajs/vue3";
 import Pagination from "@/Components/Pagination.vue";
+import Notification from "@/Components/Notification.vue";
 
 const props = defineProps({
     clientes: Object,
@@ -266,50 +267,11 @@ const ejecutarBorrado = () => {
             </div>
         </div>
 
-        <Transition
-            enter-active-class="transform ease-out duration-300 transition"
-            enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
-            enter-to-class="translate-y-0 opacity-100 sm:translate-x-0"
-            leave-active-class="transition ease-in duration-100"
-            leave-from-class="opacity-100"
-            leave-to-class="opacity-0"
-        >
-            <div
-                v-if="mensajeFlash"
-                class="fixed top-5 right-5 z-[2000] max-w-sm w-full shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
-                :class="
-                    tipoFlash === 'success' ? 'bg-emerald-500' : 'bg-rose-500'
-                "
-            >
-                <div class="p-4">
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0">
-                            <i
-                                v-if="tipoFlash === 'success'"
-                                class="fas fa-check-circle text-white text-xl"
-                            ></i>
-                            <i
-                                v-else
-                                class="fas fa-exclamation-circle text-white text-xl"
-                            ></i>
-                        </div>
-                        <div class="ml-3 w-0 flex-1 pt-0.5">
-                            <p class="text-sm font-bold text-white">
-                                {{ mensajeFlash }}
-                            </p>
-                        </div>
-                        <div class="ml-4 flex-shrink-0 flex">
-                            <button
-                                @click="mensajeFlash = null"
-                                class="inline-flex text-white hover:text-gray-200"
-                            >
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </Transition>
+        <Notification
+            :mensaje="mensajeFlash"
+            :tipo="tipoFlash"
+            @close="mensajeFlash = null"
+        />
 
         <div
             v-if="modalAbierto"
