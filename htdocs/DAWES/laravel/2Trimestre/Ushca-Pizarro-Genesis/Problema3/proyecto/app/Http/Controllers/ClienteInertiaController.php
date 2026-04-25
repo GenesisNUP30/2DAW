@@ -22,8 +22,6 @@ class ClienteInertiaController extends Controller
 
     public function store(Request $request)
     {
-        // En Inertia, usamos validate() directamente. 
-        // Si falla, Laravel redirige atrás automáticamente con los errores.
         $data = $request->validate([
             'cif' => ['required', 'string', 'unique:clientes,cif', new ValidarCif],
             'nombre' => 'required|string|max:100',

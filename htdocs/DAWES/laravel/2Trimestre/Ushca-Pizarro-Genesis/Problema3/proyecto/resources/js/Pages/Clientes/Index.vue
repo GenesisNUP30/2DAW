@@ -45,16 +45,17 @@ const validarFormulario = () => {
 };
 
 const submit = () => {
-    if (!validarFormulario()) return;
 
     // 2. Envío mediante Inertia 
     if (editando.value) {
         form.put(`/v3/clientes/${form.id}`, {
-            onSuccess: () => cerrarModal()
+            onSuccess: () => cerrarModal(),
+            preserveScroll: true
         });
     } else {
         form.post('/v3/clientes', {
-            onSuccess: () => cerrarModal()
+            onSuccess: () => cerrarModal(),
+            preserveScroll: true
         });
     }
 };
@@ -141,88 +142,108 @@ const cerrarModal = () => {
             </div>
         </div>
 
-        <div v-if="modalAbierto" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-            <div class="bg-white rounded-lg max-w-2xl w-full p-6 shadow-xl">
-                <h2 class="text-xl font-bold mb-4">{{ editando ? 'Editar Cliente' : 'Nuevo Cliente' }}</h2>
-                
-                <form @submit.prevent="submit" class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">CIF</label>
-                        <input v-model="form.cif" :disabled="soloLectura" type="text" 
-                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.cif, 'bg-gray-100': soloLectura}"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2 focus:ring-blue-500 focus:border-blue-500">
-                        <p v-if="form.errors.cif" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.cif }}</p>
-                    </div>
-
-                    <div class="col-span-2">
-                        <label class="block text-sm font-medium text-gray-700">Nombre</label>
-                        <input v-model="form.nombre" :disabled="soloLectura" type="text"
-                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.nombre, 'bg-gray-100': soloLectura}"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.nombre" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.nombre }}</p>
-                    </div>
-
-                    <div class="col-span-2">
-                        <label class="block text-sm font-medium text-gray-700">Teléfono</label>
-                        <input v-model="form.telefono" :disabled="soloLectura" type="text"
-                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.telefono, 'bg-gray-100': soloLectura}"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.telefono" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.telefono }}</p>
-                    </div>
-                    
-                    <div class="col-span-2">                        
-                        <label class="block text-sm font-medium text-gray-700">Correo</label>
-                        <input v-model="form.correo" :disabled="soloLectura" type="email"
-                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.correo, 'bg-gray-100': soloLectura}"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.correo" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.correo }}</p>
-                    </div>
-                    
-                    <div class="col-span-2">
-                        <label class="block text-sm font-medium text-gray-700">Cuenta Corriente</label>
-                        <input v-model="form.cuenta_corriente" :disabled="soloLectura" type="text"
-                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.cuenta_corriente, 'bg-gray-100': soloLectura}"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.cuenta_corriente" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.cuenta_corriente }}</p>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">País</label>
-                        <select v-model="form.pais" :disabled="soloLectura"
-                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.pais, 'bg-gray-100': soloLectura}"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                            <option value="">Seleccione un país</option>
-                            <option v-for="p in paises" :key="p.iso2" :value="p.iso2">{{ p.nombre }}</option>
-                        </select>
-                        <p v-if="form.errors.pais" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.pais }}</p>
-                    </div>
-
-                    <div class="col-span-2">
-                        <label class="block text-sm font-medium text-gray-700">Cuota Mensual</label>
-                        <input v-model.number="form.importe_cuota_mensual" :disabled="soloLectura" type="number" step="0.01"
-                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.importe_cuota_mensual, 'bg-gray-100': soloLectura}"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.importe_cuota_mensual" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.importe_cuota_mensual }}</p>
-                    </div>
-
-                    <div class="col-span-2">
-                        <label class="block text-sm font-medium text-gray-700">Fecha Alta</label>
-                        <input v-model="form.fecha_alta" :disabled="soloLectura" type="date"
-                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.fecha_alta, 'bg-gray-100': soloLectura}"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.fecha_alta" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.fecha_alta }}</p>
-                    </div>
-
-                    <div class="col-span-2 flex justify-end space-x-3 mt-4">
-                        <button type="button" @click="cerrarModal" class="bg-gray-200 px-4 py-2 rounded">
-                            {{ soloLectura ? 'Cerrar' : 'Cancelar' }}
-                        </button>
-                        <button v-if="!soloLectura" type="submit" class="bg-blue-600 text-white px-4 py-2 rounded" :disabled="form.processing">
-                            {{ editando ? 'Actualizar' : 'Guardar' }}
-                        </button>
-                    </div>
-                </form>
-            </div>
+        <div v-if="modalAbierto" 
+    class="fixed inset-0 z-[1050] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
+    
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[95vh] flex flex-col overflow-hidden">
+        
+        <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50">
+            <h2 class="text-xl font-bold text-gray-800">
+                <i class="fas" :class="soloLectura ? 'fa-eye text-blue-600' : (editando ? 'fa-edit text-orange-600' : 'fa-plus text-green-600')"></i>
+                {{ soloLectura ? ' Detalles del Cliente' : (editando ? ' Editar Cliente' : ' Nuevo Cliente') }}
+            </h2>
+            <button @click="cerrarModal" class="text-gray-400 hover:text-gray-600 text-2xl transition-colors">&times;</button>
         </div>
+
+        <div class="p-6 overflow-y-auto">
+            <form @submit.prevent="submit" id="formCliente" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">CIF / DNI</label>
+                    <input v-model="form.cif" :disabled="soloLectura" type="text"
+                        :class="{'border-red-500 ring-1 ring-red-500': form.errors.cif, 'bg-gray-50 cursor-not-allowed': soloLectura}"
+                        class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border">
+                    <p v-if="form.errors.cif" class="text-red-500 text-[11px] mt-1">{{ form.errors.cif }}</p>
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nombre Completo</label>
+                    <input v-model="form.nombre" :disabled="soloLectura" type="text"
+                        :class="{'border-red-500 ring-1 ring-red-500': form.errors.nombre, 'bg-gray-50 cursor-not-allowed': soloLectura}"
+                        class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 focus:ring-2 focus:ring-blue-500 outline-none border">
+                    <p v-if="form.errors.nombre" class="text-red-500 text-[11px] mt-1">{{ form.errors.nombre }}</p>
+                </div>
+
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Teléfono</label>
+                    <input v-model="form.telefono" :disabled="soloLectura" type="text"
+                        :class="{'border-red-500 ring-1 ring-red-500': form.errors.telefono, 'bg-gray-50 cursor-not-allowed': soloLectura}"
+                        class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border text-sm">
+                    <p v-if="form.errors.telefono" class="text-red-500 text-[11px] mt-1">{{ form.errors.telefono }}</p>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Correo Electrónico</label>
+                    <input v-model="form.correo" :disabled="soloLectura" type="email"
+                        :class="{'border-red-500 ring-1 ring-red-500': form.errors.correo, 'bg-gray-50 cursor-not-allowed': soloLectura}"
+                        class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border text-sm">
+                    <p v-if="form.errors.correo" class="text-red-500 text-[11px] mt-1">{{ form.errors.correo }}</p>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Cuenta Corriente (IBAN)</label>
+                    <input v-model="form.cuenta_corriente" :disabled="soloLectura" type="text"
+                        :class="{'border-red-500 ring-1 ring-red-500': form.errors.cuenta_corriente, 'bg-gray-50 cursor-not-allowed': soloLectura}"
+                        class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border text-sm font-mono">
+                    <p v-if="form.errors.cuenta_corriente" class="text-red-500 text-[11px] mt-1">{{ form.errors.cuenta_corriente }}</p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">País</label>
+                    <select v-model="form.pais" :disabled="soloLectura"
+                        :class="{'border-red-500 ring-1 ring-red-500': form.errors.pais, 'bg-gray-50 cursor-not-allowed': soloLectura}"
+                        class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border text-sm">
+                        <option value="">Seleccionar...</option>
+                        <option v-for="p in paises" :key="p.iso2" :value="p.iso2">{{ p.nombre }}</option>
+                    </select>
+                    <p v-if="form.errors.pais" class="text-red-500 text-[11px] mt-1">{{ form.errors.pais }}</p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Cuota Mensual</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-2.5 text-gray-400">€</span>
+                        <input v-model.number="form.importe_cuota_mensual" :disabled="soloLectura" type="number" step="0.01"
+                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.importe_cuota_mensual, 'bg-gray-50 cursor-not-allowed': soloLectura}"
+                            class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 pl-7 border text-sm font-bold">
+                    </div>
+                    <p v-if="form.errors.importe_cuota_mensual" class="text-red-500 text-[11px] mt-1 ">{{ form.errors.importe_cuota_mensual }}</p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Fecha de Alta</label>
+                    <input v-model="form.fecha_alta" :disabled="soloLectura" type="date"
+                        :class="{'border-red-500 ring-1 ring-red-500': form.errors.fecha_alta, 'bg-gray-50 cursor-not-allowed': soloLectura}"
+                        class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border text-sm">
+                    <p v-if="form.errors.fecha_alta" class="text-red-500 text-[11px] mt-1">{{ form.errors.fecha_alta }}</p>
+                </div>
+            </form>
+        </div>
+
+        <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3">
+            <button type="button" @click="cerrarModal" 
+                class="px-5 py-2.5 rounded-lg text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 transition-all font-semibold shadow-sm">
+                {{ soloLectura ? 'Cerrar' : 'Cancelar' }}
+            </button>
+            <button v-if="!soloLectura" type="submit" form="formCliente"
+                class="px-5 py-2.5 rounded-lg text-white font-bold transition-all shadow-md flex items-center gap-2"
+                :class="editando ? 'bg-orange-500 hover:bg-orange-600' : 'bg-blue-600 hover:bg-blue-700'"
+                :disabled="form.processing">
+                <i v-if="form.processing" class="fas fa-circle-notch animate-spin"></i>
+                {{ editando ? 'Actualizar Cliente' : 'Guardar Cliente' }}
+            </button>
+        </div>
+    </div>
+</div>
     </div>
 </template>
