@@ -1,10 +1,9 @@
 <script setup>
 import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
-import { router } from '@inertiajs/vue3';
+import { useForm, router, Link } from '@inertiajs/vue3';
 
 const props = defineProps({
-    clientes: Array,
+    clientes: Object,
     paises: Array
 });
 
@@ -61,8 +60,6 @@ const validarFormulario = () => {
 };
 
 const submit = () => {
-
-    // Envío mediante Inertia 
     if (editando.value) {
         form.put(`/v3/clientes/${form.id}`, {
             onSuccess: () => {
@@ -83,8 +80,9 @@ const submit = () => {
 };
 
 const abrirVer = (cliente) => {
-    abrirEditar(cliente); 
+    cargarDatos(cliente);
     soloLectura.value = true;
+    modalAbierto.value = true;
 };
 
 const abrirCrear = () => {
@@ -170,29 +168,78 @@ const ejecutarBorrado = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="cliente in clientes" :key="cliente.id" class="border-b border-gray-200 hover:bg-gray-50">
+                        <tr v-for="cliente in clientes.data" :key="cliente.id" class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="px-5 py-4 text-sm">{{ cliente.nombre }}</td>
                             <td class="px-5 py-4 text-sm">{{ cliente.cif }}</td>
                             <td class="px-5 py-4 text-sm">{{ cliente.telefono }}</td>
                             <td class="px-5 py-4 text-sm">{{ cliente.pais_relacion?.nombre }}</td>
                             <td class="px-5 py-4 text-sm">
-                                {{ cliente.importe_cuota_mensual }} {{ cliente.moneda }}
+                                {{ Number(cliente.importe_cuota_mensual).toFixed(2) }} {{ cliente.moneda }}
                             </td>
                             <td class="px-5 py-4 text-sm text-center font-medium">
-                                <button @click="abrirVer(cliente)" class="text-blue-600 hover:text-blue-900 mx-2">Ver</button>
-                                <button @click="abrirEditar(cliente)" class="text-orange-600 hover:text-orange-900 mr-3">Editar</button>
+                                <button @click="abrirVer(cliente)" class="text-blue-600 hover:text-blue-900 mx-2"><i class="fas fa-eye mr-1"></i>Ver</button>
+                                <button @click="abrirEditar(cliente)" class="text-orange-600 hover:text-orange-900 mr-3"><i class="fas fa-edit mr-1"></i>Editar</button>
                                 <button @click="abrirConfirmacion(cliente)" class="text-red-600 hover:text-red-900">
-                                    Borrar
+                                    <i class="fas fa-trash mr-1"></i>Borrar
                                 </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+
+                <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                    <p class="text-sm text-gray-600 italic">
+                        Mostrando {{ clientes.from }} a {{ clientes.to }} de {{ clientes.total }} clientes
+                    </p>
+                    <nav class="inline-flex shadow-sm rounded-md overflow-hidden border border-gray-300">
+                        <template v-for="(link, k) in clientes.links" :key="k">
+                            <Link 
+                                v-if="link.url" 
+                                :href="link.url" 
+                                v-html="link.label"
+                                class="px-3 py-2 text-sm font-semibold transition-colors border-r last:border-r-0"
+                                :class="link.active ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                            />
+                            <span v-else v-html="link.label" class="px-3 py-2 text-sm text-gray-400 bg-white border-r last:border-r-0"></span>
+                        </template>
+                    </nav>
+                </div>
             </div>
         </div>
 
-        <div v-if="modalAbierto" 
-    class="fixed inset-0 z-[1050] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
+        <Transition
+    enter-active-class="transform ease-out duration-300 transition"
+    enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+    enter-to-class="translate-y-0 opacity-100 sm:translate-x-0"
+    leave-active-class="transition ease-in duration-100"
+    leave-from-class="opacity-100"
+    leave-to-class="opacity-0"
+>
+    <div v-if="mensajeFlash" 
+         class="fixed top-5 right-5 z-[2000] max-w-sm w-full shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
+         :class="tipoFlash === 'success' ? 'bg-emerald-500' : 'bg-rose-500'">
+        <div class="p-4">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <i v-if="tipoFlash === 'success'" class="fas fa-check-circle text-white text-xl"></i>
+                    <i v-else class="fas fa-exclamation-circle text-white text-xl"></i>
+                </div>
+                <div class="ml-3 w-0 flex-1 pt-0.5">
+                    <p class="text-sm font-bold text-white">
+                        {{ mensajeFlash }}
+                    </p>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex">
+                    <button @click="mensajeFlash = null" class="inline-flex text-white hover:text-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</Transition>
+
+        <div v-if="modalAbierto" class="fixed inset-0 z-[1050] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
     
     <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[95vh] flex flex-col overflow-hidden">
         
@@ -323,35 +370,4 @@ const ejecutarBorrado = () => {
     </div>
 </div>
     </div>
-    <Transition
-    enter-active-class="transform ease-out duration-300 transition"
-    enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
-    enter-to-class="translate-y-0 opacity-100 sm:translate-x-0"
-    leave-active-class="transition ease-in duration-100"
-    leave-from-class="opacity-100"
-    leave-to-class="opacity-0"
->
-    <div v-if="mensajeFlash" 
-         class="fixed top-5 right-5 z-[2000] max-w-sm w-full shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
-         :class="tipoFlash === 'success' ? 'bg-emerald-500' : 'bg-rose-500'">
-        <div class="p-4">
-            <div class="flex items-start">
-                <div class="flex-shrink-0">
-                    <i v-if="tipoFlash === 'success'" class="fas fa-check-circle text-white text-xl"></i>
-                    <i v-else class="fas fa-exclamation-circle text-white text-xl"></i>
-                </div>
-                <div class="ml-3 w-0 flex-1 pt-0.5">
-                    <p class="text-sm font-bold text-white">
-                        {{ mensajeFlash }}
-                    </p>
-                </div>
-                <div class="ml-4 flex-shrink-0 flex">
-                    <button @click="mensajeFlash = null" class="inline-flex text-white hover:text-gray-200">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</Transition>
 </template>

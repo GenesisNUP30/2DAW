@@ -15,7 +15,7 @@ class ClienteInertiaController extends Controller
     public function index()
     {
         return Inertia::render('Clientes/Index', [
-            'clientes' => Cliente::with('paisRelacion')->get(),
+            'clientes' => Cliente::with('paisRelacion')->paginate(5),
             'paises' => Pais::all(),
         ]);
     }
