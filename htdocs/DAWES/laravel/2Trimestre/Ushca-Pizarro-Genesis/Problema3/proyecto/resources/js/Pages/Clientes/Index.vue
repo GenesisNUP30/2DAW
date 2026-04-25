@@ -41,6 +41,7 @@ const form = useForm({
     correo: "",
     cuenta_corriente: "",
     pais: "",
+    //TODO: En creacion y en edicion, la fecha se guarda con un dia menos
     fecha_alta: new Date().toISOString().split("T")[0],
     importe_cuota_mensual: 0,
 });
@@ -182,6 +183,7 @@ const ejecutarBorrado = () => {
     <div class="p-8 bg-gray-100 min-h-screen">
         <div class="max-w-6xl mx-auto">
             <div class="flex justify-between items-center mb-6">
+                <!-- //TODO: Usar ziggy para poner rutas relativas -->
                 <Link
                     :href="route('clientes.index')"
                     class="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-bold transition-colors px-3 py-2 rounded-lg hover:bg-blue-50"
