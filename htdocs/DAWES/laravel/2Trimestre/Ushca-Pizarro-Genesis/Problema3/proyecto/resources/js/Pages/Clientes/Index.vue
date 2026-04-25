@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 
 const props = defineProps({
     clientes: Array,
@@ -10,6 +11,8 @@ const props = defineProps({
 const editando = ref(false);
 const modalAbierto = ref(false);
 const soloLectura = ref(false);
+const confirmandoBorrado = ref(false);
+const clienteAEliminar = ref(null);
 
 const form = useForm({
     id: null,
@@ -98,6 +101,24 @@ const cerrarModal = () => {
     soloLectura.value = false;
     form.reset();
 };
+
+const abrirConfirmacion = (cliente) => {
+    clienteAEliminar.value = cliente;
+    confirmandoBorrado.value = true;
+};
+
+const cerrarConfirmacion = () => {
+    confirmandoBorrado.value = false;
+    clienteAEliminar.value = null;
+};
+
+const ejecutarBorrado = () => {
+    if (!clienteAEliminar.value) return;
+
+    router.delete(`/v3/clientes/${clienteAEliminar.value.id}`, {
+        onSuccess: () => cerrarConfirmacion(),
+    });
+};
 </script>
 
 <template>
@@ -134,7 +155,9 @@ const cerrarModal = () => {
                             <td class="px-5 py-4 text-sm text-center font-medium">
                                 <button @click="abrirVer(cliente)" class="text-blue-600 hover:text-blue-900 mx-2">Ver</button>
                                 <button @click="abrirEditar(cliente)" class="text-orange-600 hover:text-orange-900 mr-3">Editar</button>
-                                <button @click="$inertia.delete(`/v3/clientes/${cliente.id}`)" class="text-red-600 hover:text-red-900">Borrar</button>
+                                <button @click="abrirConfirmacion(cliente)" class="text-red-600 hover:text-red-900">
+                                    Borrar
+                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -194,7 +217,7 @@ const cerrarModal = () => {
                     <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Cuenta Corriente (IBAN)</label>
                     <input v-model="form.cuenta_corriente" :disabled="soloLectura" type="text"
                         :class="{'border-red-500 ring-1 ring-red-500': form.errors.cuenta_corriente, 'bg-gray-50 cursor-not-allowed': soloLectura}"
-                        class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border text-sm font-mono">
+                        class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 border text-sm">
                     <p v-if="form.errors.cuenta_corriente" class="text-red-500 text-[11px] mt-1">{{ form.errors.cuenta_corriente }}</p>
                 </div>
 
@@ -215,7 +238,7 @@ const cerrarModal = () => {
                         <span class="absolute left-3 top-2.5 text-gray-400">€</span>
                         <input v-model.number="form.importe_cuota_mensual" :disabled="soloLectura" type="number" step="0.01"
                             :class="{'border-red-500 ring-1 ring-red-500': form.errors.importe_cuota_mensual, 'bg-gray-50 cursor-not-allowed': soloLectura}"
-                            class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 pl-7 border text-sm font-bold">
+                            class="w-full border-gray-300 rounded-lg shadow-sm p-2.5 pl-7 border text-sm">
                     </div>
                     <p v-if="form.errors.importe_cuota_mensual" class="text-red-500 text-[11px] mt-1 ">{{ form.errors.importe_cuota_mensual }}</p>
                 </div>
@@ -241,6 +264,34 @@ const cerrarModal = () => {
                 :disabled="form.processing">
                 <i v-if="form.processing" class="fas fa-circle-notch animate-spin"></i>
                 {{ editando ? 'Actualizar Cliente' : 'Guardar Cliente' }}
+            </button>
+        </div>
+    </div>
+</div>
+<div v-if="confirmandoBorrado" 
+     class="fixed inset-0 z-[1100] flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-sm">
+    
+    <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 border border-gray-200">
+        <div class="flex items-center gap-4 mb-4">
+            <div class="bg-red-100 p-3 rounded-full">
+                <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900">Confirmar eliminación</h3>
+        </div>
+
+        <p class="text-gray-600 mb-6">
+            ¿Estás seguro de eliminar al cliente <strong>{{ clienteAEliminar?.nombre }}</strong>? 
+            Esta acción no se puede deshacer.
+        </p>
+
+        <div class="flex justify-end gap-3">
+            <button @click="cerrarConfirmacion" 
+                class="px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition">
+                Cancelar
+            </button>
+            <button @click="ejecutarBorrado" 
+                class="px-4 py-2 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-md shadow-sm transition">
+                Sí, eliminar
             </button>
         </div>
     </div>
