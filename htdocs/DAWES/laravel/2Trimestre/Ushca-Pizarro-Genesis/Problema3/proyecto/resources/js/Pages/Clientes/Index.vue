@@ -41,7 +41,7 @@ const form = useForm({
     correo: "",
     cuenta_corriente: "",
     pais: "",
-    fecha_alta: new Date().toISOString().split('T')[0],
+    fecha_alta: new Date().toISOString().split("T")[0],
     importe_cuota_mensual: 0,
 });
 
@@ -78,9 +78,8 @@ const validarFormulario = () => {
 };
 
 const submit = () => {
-
     if (editando.value) {
-        form.put(`/v3/clientes/${form.id}`, {
+        form.put(`clientes/${form.id}`, {
             onSuccess: () => {
                 cerrarModal();
                 mostrarNotificacion(
@@ -94,7 +93,7 @@ const submit = () => {
             },
         });
     } else {
-        form.post("/v3/clientes", {
+        form.post("clientes", {
             onSuccess: () => {
                 cerrarModal();
                 mostrarNotificacion("El cliente se ha creado correctamente");
@@ -163,7 +162,7 @@ const cerrarConfirmacion = () => {
 const ejecutarBorrado = () => {
     if (!clienteAEliminar.value) return;
 
-    router.delete(`/v3/clientes/${clienteAEliminar.value.id}`, {
+    router.delete(`clientes/${clienteAEliminar.value.id}`, {
         onSuccess: () => {
             cerrarConfirmacion();
             mostrarNotificacion("El cliente se ha eliminado correctamente");
@@ -183,13 +182,13 @@ const ejecutarBorrado = () => {
     <div class="p-8 bg-gray-100 min-h-screen">
         <div class="max-w-6xl mx-auto">
             <div class="flex justify-between items-center mb-6">
-                <a
-                    href="/clientes"
+                <Link
+                    :href="route('clientes.index')"
                     class="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-bold transition-colors px-3 py-2 rounded-lg hover:bg-blue-50"
                 >
                     <i class="fas fa-arrow-left"></i>
                     <span>Volver a la App</span>
-                </a>
+                </Link>
                 <h1 class="text-3xl font-bold text-gray-800">
                     Clientes con Inertia + Tailwind
                 </h1>
