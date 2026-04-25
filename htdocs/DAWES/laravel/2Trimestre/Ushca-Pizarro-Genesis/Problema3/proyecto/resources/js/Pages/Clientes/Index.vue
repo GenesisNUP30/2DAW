@@ -23,14 +23,31 @@ const form = useForm({
     importe_cuota_mensual: 0
 });
 
-const submit = () => {
-    // 1. Validación JS simple antes de enviar
-    if (form.nombre === '') {
-        alert("El nombre es obligatorio");
-        return;
+const validarFormulario = () => {
+    form.clearErrors(); // Limpiamos errores previos
+    let valido = true;
+
+    // Validación manual lado cliente
+    const campos = ['nombre', 'cif', 'telefono', 'correo', 'cuenta_corriente', 'pais', 'fecha_alta'];
+    campos.forEach(campo => {
+        if (!form[campo]) {
+            form.setError(campo, `El campo ${campo.replace('_', ' ')} es obligatorio`);
+            valido = false;
+        }
+    });
+
+    if (form.importe_cuota_mensual <= 0) {
+        form.setError('importe_cuota_mensual', 'La cuota debe ser mayor a 0');
+        valido = false;
     }
 
-    // 2. Envío mediante Inertia (Integra automáticamente errores de Laravel)
+    return valido;
+};
+
+const submit = () => {
+    if (!validarFormulario()) return;
+
+    // 2. Envío mediante Inertia 
     if (editando.value) {
         form.put(`/v3/clientes/${form.id}`, {
             onSuccess: () => cerrarModal()
@@ -51,11 +68,18 @@ const abrirCrear = () => {
     editando.value = false;
     soloLectura.value = false;
     form.reset();
+    form.clearErrors();
     modalAbierto.value = true;
 };
 
 const abrirEditar = (cliente) => {
     editando.value = true;
+    soloLectura.value = false;
+    cargarDatos(cliente);
+    modalAbierto.value = true;
+};
+
+const cargarDatos = (cliente) => {
     form.clearErrors();
     form.id = cliente.id;
     form.nombre = cliente.nombre;
@@ -64,9 +88,8 @@ const abrirEditar = (cliente) => {
     form.correo = cliente.correo;
     form.cuenta_corriente = cliente.cuenta_corriente;
     form.pais = cliente.pais;
-    form.fecha_alta = cliente.fecha_alta.split('T')[0];
+    form.fecha_alta = cliente.fecha_alta ? cliente.fecha_alta.split('T')[0] : '';
     form.importe_cuota_mensual = cliente.importe_cuota_mensual;
-    modalAbierto.value = true;
 };
 
 const cerrarModal = () => {
@@ -125,52 +148,69 @@ const cerrarModal = () => {
                 <form @submit.prevent="submit" class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">CIF</label>
-                        <input v-model="form.cif" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.cif" class="text-red-500 text-xs mt-1">{{ form.errors.cif }}</p>
+                        <input v-model="form.cif" :disabled="soloLectura" type="text" 
+                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.cif, 'bg-gray-100': soloLectura}"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2 focus:ring-blue-500 focus:border-blue-500">
+                        <p v-if="form.errors.cif" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.cif }}</p>
                     </div>
 
                     <div class="col-span-2">
                         <label class="block text-sm font-medium text-gray-700">Nombre</label>
-                        <input v-model="form.nombre" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.nombre" class="text-red-500 text-xs mt-1">{{ form.errors.nombre }}</p>
+                        <input v-model="form.nombre" :disabled="soloLectura" type="text"
+                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.nombre, 'bg-gray-100': soloLectura}"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.nombre" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.nombre }}</p>
                     </div>
 
                     <div class="col-span-2">
                         <label class="block text-sm font-medium text-gray-700">Teléfono</label>
-                        <input v-model="form.telefono" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.telefono" class="text-red-500 text-xs mt-1">{{ form.errors.telefono }}</p>
+                        <input v-model="form.telefono" :disabled="soloLectura" type="text"
+                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.telefono, 'bg-gray-100': soloLectura}"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.telefono" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.telefono }}</p>
                     </div>
                     
                     <div class="col-span-2">                        
                         <label class="block text-sm font-medium text-gray-700">Correo</label>
-                        <input v-model="form.correo" type="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.correo" class="text-red-500 text-xs mt-1">{{ form.errors.correo }}</p>
+                        <input v-model="form.correo" :disabled="soloLectura" type="email"
+                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.correo, 'bg-gray-100': soloLectura}"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.correo" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.correo }}</p>
                     </div>
                     
                     <div class="col-span-2">
                         <label class="block text-sm font-medium text-gray-700">Cuenta Corriente</label>
-                        <input v-model="form.cuenta_corriente" type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.cuenta_corriente" class="text-red-500 text-xs mt-1">{{ form.errors.cuenta_corriente }}</p>
+                        <input v-model="form.cuenta_corriente" :disabled="soloLectura" type="text"
+                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.cuenta_corriente, 'bg-gray-100': soloLectura}"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.cuenta_corriente" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.cuenta_corriente }}</p>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">País</label>
-                        <select v-model="form.pais" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <select v-model="form.pais" :disabled="soloLectura"
+                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.pais, 'bg-gray-100': soloLectura}"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                            <option value="">Seleccione un país</option>
                             <option v-for="p in paises" :key="p.iso2" :value="p.iso2">{{ p.nombre }}</option>
                         </select>
-                        <p v-if="form.errors.pais" class="text-red-500 text-xs mt-1">{{ form.errors.pais }}</p>
+                        <p v-if="form.errors.pais" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.pais }}</p>
                     </div>
 
                     <div class="col-span-2">
                         <label class="block text-sm font-medium text-gray-700">Cuota Mensual</label>
-                        <input v-model="form.importe_cuota_mensual" type="number" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.importe_cuota_mensual" class="text-red-500 text-xs mt-1">{{ form.errors.importe_cuota_mensual }}</p>
+                        <input v-model.number="form.importe_cuota_mensual" :disabled="soloLectura" type="number" step="0.01"
+                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.importe_cuota_mensual, 'bg-gray-100': soloLectura}"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.importe_cuota_mensual" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.importe_cuota_mensual }}</p>
                     </div>
 
                     <div class="col-span-2">
                         <label class="block text-sm font-medium text-gray-700">Fecha Alta</label>
-                        <input v-model="form.fecha_alta" type="date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
-                        <p v-if="form.errors.fecha_alta" class="text-red-500 text-xs mt-1">{{ form.errors.fecha_alta }}</p>
+                        <input v-model="form.fecha_alta" :disabled="soloLectura" type="date"
+                            :class="{'border-red-500 ring-1 ring-red-500': form.errors.fecha_alta, 'bg-gray-100': soloLectura}"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2">
+                        <p v-if="form.errors.fecha_alta" class="text-red-600 text-xs mt-1 font-medium">{{ form.errors.fecha_alta }}</p>
                     </div>
 
                     <div class="col-span-2 flex justify-end space-x-3 mt-4">
