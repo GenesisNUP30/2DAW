@@ -21,6 +21,12 @@ class ClienteFactory extends Factory
             'cif' => fake()->unique()->bothify('########?'),
             'nombre' => fake()->name(),
             'telefono' => fake()->phoneNumber(),
+            'correo' => $this->faker->email(),
+            'cuenta_corriente' => $this->faker->iban(),
+            'pais' => 'ES',
+            'moneda' => 'EUR',
+            'importe_cuota_mensual' => 100,
+            'fecha_alta' => now(),
         ];
     }
 }
