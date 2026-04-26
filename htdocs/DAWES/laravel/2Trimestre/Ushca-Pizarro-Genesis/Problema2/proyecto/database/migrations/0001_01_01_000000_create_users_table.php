@@ -18,6 +18,15 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+
+            $table->string('dni')->unique();
+            $table->string('telefono')->nullable();
+            $table->string('direccion')->nullable();
+            $table->date('fecha_alta')->nullable();
+            $table->date('fecha_baja')->nullable();
+
+            $table->enum('tipo', ['administrador', 'operario'])->default('operario');
+
             $table->timestamps();
         });
 
