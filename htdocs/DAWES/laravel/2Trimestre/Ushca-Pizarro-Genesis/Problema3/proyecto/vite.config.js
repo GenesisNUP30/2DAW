@@ -3,8 +3,11 @@ import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
 
-export default defineConfig({
-    base: '/proyectos/2026/genesisnatalya/ProyectoSantiago/Problema3/proyecto/public/build/',
+export default defineConfig(({ command }) => ({
+    base:
+        command === "build"
+            ? "/proyectos/2026/genesisnatalya/ProyectoSantiago/Problema3/proyecto/public/build/"
+            : "/",
     plugins: [
         tailwindcss(),
         laravel({
@@ -25,4 +28,4 @@ export default defineConfig({
             },
         }),
     ],
-});
+}));

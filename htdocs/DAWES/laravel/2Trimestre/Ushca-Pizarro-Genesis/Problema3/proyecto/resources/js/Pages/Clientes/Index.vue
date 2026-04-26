@@ -80,7 +80,7 @@ const validarFormulario = () => {
 
 const submit = () => {
     if (editando.value) {
-        form.put(`clientes/${form.id}`, {
+        form.put(route('clientes.v3.update', form.id), {
             onSuccess: () => {
                 cerrarModal();
                 mostrarNotificacion(
@@ -94,7 +94,7 @@ const submit = () => {
             },
         });
     } else {
-        form.post("clientes", {
+        form.post(route('clientes.v3.store'), {
             onSuccess: () => {
                 cerrarModal();
                 mostrarNotificacion("El cliente se ha creado correctamente");
@@ -163,7 +163,7 @@ const cerrarConfirmacion = () => {
 const ejecutarBorrado = () => {
     if (!clienteAEliminar.value) return;
 
-    router.delete(`clientes/${clienteAEliminar.value.id}`, {
+    router.delete(route('clientes.v3.destroy', clienteAEliminar.value.id), {
         onSuccess: () => {
             cerrarConfirmacion();
             mostrarNotificacion("El cliente se ha eliminado correctamente");
@@ -184,13 +184,13 @@ const ejecutarBorrado = () => {
         <div class="max-w-6xl mx-auto">
             <div class="flex justify-between items-center mb-6">
                 <!-- //TODO: Usar ziggy para poner rutas relativas -->
-                <Link
+                <a
                     :href="route('clientes.index')"
                     class="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-bold transition-colors px-3 py-2 rounded-lg hover:bg-blue-50"
                 >
                     <i class="fas fa-arrow-left"></i>
                     <span>Volver a la App</span>
-                </Link>
+                </a>
                 <h1 class="text-3xl font-bold text-gray-800">
                     Clientes con Inertia + Tailwind
                 </h1>
