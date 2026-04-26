@@ -32,7 +32,6 @@ it('todas las rutas de admin responden', function ($method, $url, $expectedStatu
         ->$method($url);
 
     expect($response->status())->toBe($expectedStatus);
-
 })->with([
     ['get', '/dashboard', 200],
     ['get', '/perfil', 200],
@@ -48,7 +47,7 @@ it('todas las rutas de admin responden', function ($method, $url, $expectedStatu
 
     ['get', '/cuotas', 200],
     ['get', '/cuotas/papelera', 200],
-    ['get', '/cuotas/remesa', 200],
+    ['get', '/cuotas/remesa', 302],
 
     ['get', '/empleados', 200],
     ['get', '/empleados/crear', 200],
