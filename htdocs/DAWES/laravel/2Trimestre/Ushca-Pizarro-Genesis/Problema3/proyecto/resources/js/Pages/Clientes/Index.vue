@@ -185,7 +185,7 @@ const ejecutarBorrado = () => {
             <div class="flex justify-between items-center mb-6">
                 <!-- //TODO: Usar ziggy para poner rutas relativas -->
                 <a
-                    :href="route('clientes.index')"
+                    href="../clientes"
                     class="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-bold transition-colors px-3 py-2 rounded-lg hover:bg-blue-50"
                 >
                     <i class="fas fa-arrow-left"></i>
