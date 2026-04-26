@@ -136,7 +136,7 @@
                     cuenta_corriente: '',
                     pais: '',
                     importe_cuota_mensual: 0,
-                    fecha_alta: new Date().toISOString().split('T')[0]
+                    fecha_alta: new Date().toLocaleDateString('en-CA'),
                 };
 
                 const form = ref({

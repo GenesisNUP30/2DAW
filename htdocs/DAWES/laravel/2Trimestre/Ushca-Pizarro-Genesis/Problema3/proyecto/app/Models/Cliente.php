@@ -56,8 +56,8 @@ class Cliente extends Model
      */
     protected $casts = [
         'importe_cuota_mensual' => 'float',
-        'fecha_alta' => 'date',
-        'fecha_baja' => 'date',
+        'fecha_alta' => 'date:Y-m-d',
+        'fecha_baja' => 'date:Y-m-d',
     ];
 
     /**
