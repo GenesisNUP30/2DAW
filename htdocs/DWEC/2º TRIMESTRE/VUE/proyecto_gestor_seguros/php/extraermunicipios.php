@@ -11,7 +11,7 @@ $municipios = [];
 
 if ($provincia_id > 0) {
     // Consulta preparada para evitar inyecciones SQL
-    $stmt = $conexion->prepare("SELECT id, nombre FROM municipios WHERE provincia_id = ? ORDER BY nombre ASC");
+    $stmt = $conexion->prepare("SELECT id, nombre FROM gestor_municipios WHERE provincia_id = ? ORDER BY nombre ASC");
     $stmt->bind_param("i", $provincia_id);
     $stmt->execute();
     $resultado = $stmt->get_result();

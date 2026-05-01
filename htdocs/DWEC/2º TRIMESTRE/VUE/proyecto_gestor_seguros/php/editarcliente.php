@@ -26,7 +26,7 @@ $municipio   = intval($datos['municipio_id'] ?? 0);
 
 // Comprobar que el DNI no esté en uso por OTRO cliente
 $checkDni = $conexion->prepare(
-    "SELECT id FROM clientes WHERE dni = ? AND id != ?"
+    "SELECT id FROM gestor_clientes WHERE dni = ? AND id != ?"
 );
 $checkDni->bind_param("si", $dni, $id);
 $checkDni->execute();
@@ -42,7 +42,7 @@ if ($checkDni->num_rows > 0) {
 $checkDni->close();
 
 // UPDATE
-$sql = "UPDATE clientes SET
+$sql = "UPDATE gestor_clientes SET
             tipo_cliente = ?,
             nombre       = ?,
             apellidos    = ?,

@@ -17,7 +17,7 @@ $id = intval($datos['id']);
 if (isset($datos['consultar']) && $datos['consultar'] === true) {
 
     $stmtPolizas = $conexion->prepare(
-        "SELECT COUNT(*) as total FROM polizas WHERE cliente_id = ?"
+        "SELECT COUNT(*) as total FROM gestor_polizas WHERE cliente_id = ?"
     );
     $stmtPolizas->bind_param("i", $id);
     $stmtPolizas->execute();
@@ -25,8 +25,8 @@ if (isset($datos['consultar']) && $datos['consultar'] === true) {
     $stmtPolizas->close();
 
     $stmtPagos = $conexion->prepare(
-        "SELECT COUNT(*) as total FROM pagos p
-         INNER JOIN polizas pol ON p.poliza_id = pol.id
+        "SELECT COUNT(*) as total FROM gestor_pagos p
+         INNER JOIN gestor_polizas pol ON p.poliza_id = pol.id
          WHERE pol.cliente_id = ?"
     );
     $stmtPagos->bind_param("i", $id);
@@ -43,7 +43,7 @@ if (isset($datos['consultar']) && $datos['consultar'] === true) {
 }
 
 // Modo borrado: elimina el cliente (pólizas y pagos caen por CASCADE)
-$stmt = $conexion->prepare("DELETE FROM clientes WHERE id = ?");
+$stmt = $conexion->prepare("DELETE FROM gestor_clientes WHERE id = ?");
 $stmt->bind_param("i", $id);
 
 if ($stmt->execute() && $stmt->affected_rows > 0) {

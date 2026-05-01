@@ -26,14 +26,14 @@ $municipio_id = intval($data['municipio_id']);
 $direccion    = $conexion->real_escape_string($data['direccion']);
 
 // 1. Verificar si el DNI ya existe
-$checkDni = $conexion->query("SELECT id FROM clientes WHERE dni = '$dni'");
+$checkDni = $conexion->query("SELECT id FROM gestor_clientes WHERE dni = '$dni'");
 if ($checkDni->num_rows > 0) {
     echo json_encode(["status" => false, "mensaje" => "Ya existe un cliente con ese DNI/NIF/CIF"]);
     exit;
 }
 
 // 2. Insertar
-$sql = "INSERT INTO clientes (tipo_cliente, nombre, apellidos, dni, email, telefono, cp, provincia_id, localidad_id, direccion) 
+$sql = "INSERT INTO gestor_clientes (tipo_cliente, nombre, apellidos, dni, email, telefono, cp, provincia_id, localidad_id, direccion) 
         VALUES ('$tipo', '$nombre', '$apellidos', '$dni', '$email', '$telefono', '$cp', $provincia_id, $municipio_id, '$direccion')";
 
 if ($conexion->query($sql)) {

@@ -3,7 +3,7 @@
 $servidor = "localhost";
 $usuario  = "root";
 $password = ""; 
-$basedatos = "gestion_seguros";
+$basedatos = "gestor_seguros";
 
 // Crear la conexión usando la extensión mysqli
 $conexion = new mysqli($servidor, $usuario, $password, $basedatos);

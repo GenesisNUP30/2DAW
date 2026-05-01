@@ -6,7 +6,7 @@ header("Content-Type: application/json; charset=UTF-8");
 include "conexion.php";
 
 // Consulta simple para el listado principal
-$sql = "SELECT id, nombre FROM provincias ORDER BY nombre ASC";
+$sql = "SELECT id, nombre FROM gestor_provincias ORDER BY nombre ASC";
 $resultado = $conexion->query($sql);
 
 $provincias = [];

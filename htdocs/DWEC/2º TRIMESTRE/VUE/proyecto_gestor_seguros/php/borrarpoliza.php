@@ -15,7 +15,7 @@ $id = intval($datos['id']);
 
 // CASO 1: Solo consultar dependencias (Pagos)
 if (isset($data['consultar']) && $data['consultar'] === true) {
-    $sql = "SELECT COUNT(*) as total FROM pagos WHERE poliza_id = $id";
+    $sql = "SELECT COUNT(*) as total FROM gestor_pagos WHERE poliza_id = $id";
     $res = $conexion->query($sql);
     $fila = $res->fetch_assoc();
 
@@ -28,7 +28,7 @@ if (isset($data['consultar']) && $data['consultar'] === true) {
 
 // CASO 2: Borrar definitivamente
 // Nota: Tu DB tiene ON DELETE CASCADE, por lo que borrar la póliza borrará los pagos automáticamente.
-$sql = "DELETE FROM polizas WHERE id = $id";
+$sql = "DELETE FROM gestor_polizas WHERE id = $id";
 
 if ($conexion->query($sql)) {
     echo json_encode(["status" => true, "mensaje" => "Póliza eliminada correctamente"]);

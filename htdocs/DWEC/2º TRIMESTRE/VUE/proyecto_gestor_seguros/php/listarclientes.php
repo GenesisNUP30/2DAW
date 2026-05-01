@@ -10,7 +10,7 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
 // Consulta simple para el listado principal
 $sql = "SELECT id, tipo_cliente, nombre, apellidos, dni, email, telefono, 
-               direccion, cp, provincia_id, localidad_id AS municipio_id FROM clientes";
+               direccion, cp, provincia_id, localidad_id AS municipio_id FROM gestor_clientes";
 
 // Si hay ID, se añade a la consulta; si no, mantenemos el orden habitual
 if ($id) {

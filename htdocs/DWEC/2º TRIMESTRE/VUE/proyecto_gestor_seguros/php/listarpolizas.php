@@ -12,8 +12,8 @@ $cliente_id = isset($_GET['cliente_id']) ? intval($_GET['cliente_id']) : null;
 $sql = "SELECT 
     p.*,
     CONCAT_WS(' ', c.nombre, c.apellidos) AS nombre_cliente
-FROM polizas p
-INNER JOIN clientes c ON p.cliente_id = c.id";
+FROM gestor_polizas p
+INNER JOIN gestor_clientes c ON p.cliente_id = c.id";
 
 // Si hay cliente_id, filtramos; si no, ordenamos por fecha general
 if ($cliente_id) {

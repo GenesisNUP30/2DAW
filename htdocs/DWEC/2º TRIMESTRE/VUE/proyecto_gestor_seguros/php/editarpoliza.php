@@ -21,7 +21,7 @@ $observaciones = trim($datos['observaciones'] ?? '');
 
 // Validacion de numero de póliza repetido
 $checkNumeroPoliza = $conexion->prepare(
-    "SELECT id FROM polizas WHERE numero_poliza = ? AND id != ?"
+    "SELECT id FROM gestor_polizas WHERE numero_poliza = ? AND id != ?"
 );
 $checkNumeroPoliza->bind_param("si", $numero_poliza, $id);
 $checkNumeroPoliza->execute();
@@ -32,13 +32,13 @@ if ($checkNumeroPoliza->num_rows > 0) {
         "status" => false,
         "mensaje" => "El número de póliza ya está registrado en otra póliza"
     ]);
-    $checkNum->close();
+    $checkNumeroPoliza->close();
     exit;
 }
 $checkNumeroPoliza->close();
 
 // Actualización
-$stmt = $conexion->prepare("UPDATE polizas SET cliente_id = ?, numero_poliza = ?, fecha = ?, importe_total = ?, estado = ?, observaciones = ? WHERE id = ?");
+$stmt = $conexion->prepare("UPDATE gestor_polizas SET cliente_id = ?, numero_poliza = ?, fecha = ?, importe_total = ?, estado = ?, observaciones = ? WHERE id = ?");
 $stmt->bind_param("isssssi", $cliente_id, $numero_poliza, $fecha, $importe_total, $estado, $observaciones, $id);
 
 if ($stmt->execute()) {

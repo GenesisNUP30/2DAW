@@ -22,14 +22,14 @@ $estado        = $conexion->real_escape_string($data['estado']);
 $observaciones = $conexion->real_escape_string($data['observaciones']);
 
 // 1. Verificar si el número de póliza ya existe
-$checkNumero = $conexion->query("SELECT id FROM polizas WHERE numero_poliza = '$numero_poliza'");
+$checkNumero = $conexion->query("SELECT id FROM gestor_polizas WHERE numero_poliza = '$numero_poliza'");
 if ($checkNumero->num_rows > 0) {
     echo json_encode(["status" => false, "mensaje" => "Ya existe una póliza con ese número"]);
     exit;
 }
 
 // 2. Insertar
-$sql = "INSERT INTO polizas (cliente_id, numero_poliza, importe_total, fecha, estado, observaciones) 
+$sql = "INSERT INTO gestor_polizas (cliente_id, numero_poliza, importe_total, fecha, estado, observaciones) 
         VALUES ($cliente_id, '$numero_poliza', '$importe_total', '$fecha', '$estado', '$observaciones')";
 
 if ($conexion->query($sql)) {
