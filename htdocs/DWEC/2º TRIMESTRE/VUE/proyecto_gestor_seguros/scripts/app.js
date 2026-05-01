@@ -634,16 +634,22 @@ createApp({
       }
     },
 
-    async validarPago() {
+    validarPago() {
       this.erroresPago = {};
       const f = this.formPago;
+      const restante =
+        parseFloat(this.polizaSeleccionada.importe_total) -
+        this.totalPagadoPoliza;
 
       if (!f.fecha) {
         this.erroresPago.fecha = "La fecha es obligatoria";
       }
 
-      if (f.importe <= 0) {
+      if (!f.importe || f.importe <= 0) {
         this.erroresPago.importe = "El importe debe ser mayor a 0";
+      } else if (f.importe > restante + 0.01) {
+        // Añadimos aquí la validación del importe máximo para que salga en el campo
+        this.erroresPago.importe = `Máximo permitido: ${restante.toFixed(2)}€`;
       }
 
       // Devolvemos true si no hay errores
@@ -662,6 +668,10 @@ createApp({
         const data = await resp.json();
 
         if (data.status) {
+          // Limpiamos errores y formulario tras éxito
+          this.erroresPago = {};
+          this.formPago.importe = 0;
+
           alert(data.mensaje);
           this.cargarPagos(this.polizaSeleccionada.id); // Recargar lista y totales
           this.cargarPolizas(); // Recargar la lista principal por si cambió el estado
@@ -677,7 +687,7 @@ createApp({
       this.pagoABorrar = pago;
       this.mensajeBorradoPago = "Verificando datos del pago...";
       this.mostrarModal("modalConfirmarBorradoPago");
-      this.mensajeBorradoPago = `¿Eliminar pago de ${pago.importe}€ realizado el ${pago.fecha}?`;
+      this.mensajeBorradoPago = `¿Eliminar pago de ${pago.importe}€ realizado el ${this.formatearFecha(pago.fecha)}?`;
     },
 
     async confirmarBorradoPago() {
@@ -741,6 +751,16 @@ createApp({
         "pre-anulada": "bg-warning text-dark",
       };
       return clases[estado.toLowerCase()] || "bg-secondary";
+    },
+
+    formatearFecha(fecha) {
+      if (!fecha) return "";
+      // Separamos el año, mes y día (asumiendo que viene YYYY-MM-DD o YYYY-MM-DD HH:mm:ss)
+      const partes = fecha.split(" ")[0].split("-");
+      if (partes.length !== 3) return fecha; // Por si acaso el formato es raro
+
+      const [anio, mes, dia] = partes;
+      return `${dia}-${mes}-${anio}`;
     },
   },
   computed: {
