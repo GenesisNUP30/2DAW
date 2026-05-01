@@ -123,6 +123,9 @@ createApp({
       clientesDisponibles: [],
       mensajeBorradoPoliza: "",
       polizaABorrar: null,
+      polizaSeleccionada: null,
+      pagos: [],
+      totalPagadoPoliza: 0,
       formPoliza: {
         id: null,
         cliente_id: "",
@@ -132,6 +135,11 @@ createApp({
         estado: "",
         observaciones: "",
         nombre_cliente: "",
+      },
+      formPago: {
+        poliza_id: null,
+        fecha: new Date().toISOString().split("T")[0],
+        importe: 0,
       },
       erroresPoliza: {},
     };
@@ -590,6 +598,72 @@ createApp({
         alert(data.mensaje);
       } catch (e) {
         console.error("Error borrado poliza", e);
+      }
+    },
+
+    // --- MÉTODOS DE PAGOS ---
+    async abrirModalPagos(poliza) {
+      this.polizaSeleccionada = poliza;
+      this.formPago.poliza_id = poliza.id;
+      this.formPago.importe = 0;
+      this.formPago.fecha = new Date().toISOString().split("T")[0];
+
+      await this.cargarPagos(poliza.id); // Este es el método que llama a listarpagos.php
+      this.mostrarModal("modalPagos");
+    },
+
+    async cargarPagos(poliza_id) {
+      try {
+        const resp = await fetch(`php/listarpagos.php?poliza_id=${poliza_id}`);
+        const data = await resp.json();
+        if (data.status) {
+          this.pagos = data.data;
+          // Calculamos el total sumando los importes
+          this.totalPagadoPoliza = this.pagos.reduce(
+            (acc, p) => acc + parseFloat(p.importe),
+            0,
+          );
+        }
+      } catch (e) {
+        console.error("Error al cargar pagos", e);
+      }
+    },
+
+    async guardarPago() {
+      // Validación rápida en JS antes de enviar al PHP
+      const restante =
+        parseFloat(this.polizaSeleccionada.importe_total) -
+        this.totalPagadoPoliza;
+
+      if (this.formPago.importe <= 0) {
+        alert("El importe debe ser mayor a 0");
+        return;
+      }
+
+      if (this.formPago.importe > restante + 0.01) {
+        alert(
+          `No puedes superar el total de la póliza. Máximo permitido: ${restante.toFixed(2)}€`,
+        );
+        return;
+      }
+
+      try {
+        const resp = await fetch("php/insertarpago.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(this.formPago),
+        });
+        const data = await resp.json();
+
+        if (data.status) {
+          alert(data.mensaje);
+          this.cargarPagos(this.polizaSeleccionada.id); // Recargar lista y totales
+          this.cargarPolizas(); // Recargar la lista principal por si cambió el estado
+        } else {
+          alert(data.mensaje);
+        }
+      } catch (e) {
+        console.error("Error al guardar pago", e);
       }
     },
 
