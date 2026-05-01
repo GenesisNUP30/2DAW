@@ -53,7 +53,7 @@
                             {{-- Concepto --}}
                             <div class="col-md-12">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Concepto del cargo</label>
-                                <input type="text" name="concept" class="form-control @error('concepto') is-invalid @enderror"
+                                <input type="text" name="concepto" class="form-control @error('concepto') is-invalid @enderror"
                                     value="{{ old('concepto') }}" placeholder="Ej: Venta de material informático / Configuración servidor">
                                 @error('concepto') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
