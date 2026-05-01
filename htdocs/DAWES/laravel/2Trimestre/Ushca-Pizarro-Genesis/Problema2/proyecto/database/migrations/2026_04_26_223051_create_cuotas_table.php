@@ -17,10 +17,13 @@ return new class extends Migration
                 ->constrained('clientes')
                 ->onDelete('cascade');
 
-            $table->decimal('importe', 10, 2);
-
-            $table->date('fecha_emision');
+            $table->string('concepto')->nullable();
+            $table->date('fecha_emision')->nullable();
+            $table->decimal('importe', 10, 2)->nullable();
+            $table->boolean('pagada')->default(false);
             $table->date('fecha_pago')->nullable();
+            $table->enum('tipo', ['mensual', 'excepcional']);
+            $table->text('notas')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
