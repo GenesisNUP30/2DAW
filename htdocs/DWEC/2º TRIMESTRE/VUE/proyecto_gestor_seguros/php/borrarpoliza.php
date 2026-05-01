@@ -27,7 +27,7 @@ if (isset($data['consultar']) && $data['consultar'] === true) {
 }
 
 // CASO 2: Borrar definitivamente
-// Nota: Tu DB tiene ON DELETE CASCADE, por lo que borrar la póliza borrará los pagos automáticamente.
+// Borrar la póliza borrará los pagos automáticamente.
 $sql = "DELETE FROM gestor_polizas WHERE id = $id";
 
 if ($conexion->query($sql)) {

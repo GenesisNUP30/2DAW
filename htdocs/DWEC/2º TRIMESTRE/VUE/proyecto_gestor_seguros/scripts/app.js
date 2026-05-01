@@ -123,9 +123,6 @@ createApp({
       clientesDisponibles: [],
       mensajeBorradoPoliza: "",
       polizaABorrar: null,
-      polizaSeleccionada: null,
-      pagos: [],
-      totalPagadoPoliza: 0,
       formPoliza: {
         id: null,
         cliente_id: "",
@@ -136,12 +133,20 @@ createApp({
         observaciones: "",
         nombre_cliente: "",
       },
+      erroresPoliza: {},
+
+      // --- PAGOS ---
+      polizaSeleccionada: null,
+      pagos: [],
+      totalPagadoPoliza: 0,
+      pagoABorrar: null,
+      mensajeBorradoPago: "",
       formPago: {
         poliza_id: null,
         fecha: new Date().toISOString().split("T")[0],
         importe: 0,
       },
-      erroresPoliza: {},
+      erroresPago: {},
     };
   },
 
@@ -629,23 +634,24 @@ createApp({
       }
     },
 
+    async validarPago() {
+      this.erroresPago = {};
+      const f = this.formPago;
+
+      if (!f.fecha) {
+        this.erroresPago.fecha = "La fecha es obligatoria";
+      }
+
+      if (f.importe <= 0) {
+        this.erroresPago.importe = "El importe debe ser mayor a 0";
+      }
+
+      // Devolvemos true si no hay errores
+      return Object.keys(this.erroresPago).length === 0;
+    },
+
     async guardarPago() {
-      // Validación rápida en JS antes de enviar al PHP
-      const restante =
-        parseFloat(this.polizaSeleccionada.importe_total) -
-        this.totalPagadoPoliza;
-
-      if (this.formPago.importe <= 0) {
-        alert("El importe debe ser mayor a 0");
-        return;
-      }
-
-      if (this.formPago.importe > restante + 0.01) {
-        alert(
-          `No puedes superar el total de la póliza. Máximo permitido: ${restante.toFixed(2)}€`,
-        );
-        return;
-      }
+      if (!this.validarPago()) return;
 
       try {
         const resp = await fetch("php/insertarpago.php", {
@@ -664,6 +670,41 @@ createApp({
         }
       } catch (e) {
         console.error("Error al guardar pago", e);
+      }
+    },
+
+    async prepararBorradoPago(pago) {
+      this.pagoABorrar = pago;
+      this.mensajeBorradoPago = "Verificando datos del pago...";
+      this.mostrarModal("modalConfirmarBorradoPago");
+      this.mensajeBorradoPago = `¿Eliminar pago de ${pago.importe}€ realizado el ${pago.fecha}?`;
+    },
+
+    async confirmarBorradoPago() {
+      if (!this.pagoABorrar) return;
+
+      try {
+        const resp = await fetch("php/borrarpago.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: this.pagoABorrar.id }),
+        });
+        const data = await resp.json();
+
+        // Cerrar el modal
+        this.cerrarModal("modalConfirmarBorradoPago");
+        if (data.status) {
+          // Recargar los pagos y los totales de la póliza
+          await this.cargarPagos(this.polizaSeleccionada.id);
+          // Recargar la lista principal por si cambió el estado
+          this.cargarPolizas();
+        } else {
+          alert(data.mensaje);
+        }
+      } catch (e) {
+        console.error("Error borrado", e);
+      } finally {
+        this.pagoABorrar = null;
       }
     },
 
