@@ -732,6 +732,16 @@ createApp({
     },
 
     // --- GENERAR LISTADO ---
+    validarRangoId() {
+      if (
+        this.vistaListados.codFin &&
+        parseInt(this.vistaListados.codFin) <
+          parseInt(this.vistaListados.codInicio)
+      ) {
+        this.vistaListados.codFin = "";
+      }
+    },
+
     async generarListado() {
       try {
         const resp = await fetch("php/generarlistado.php", {
@@ -808,6 +818,14 @@ createApp({
         (p) =>
           (p.numero_poliza && p.numero_poliza.toLowerCase().includes(b)) ||
           (p.nombre_cliente && p.nombre_cliente.toLowerCase().includes(b)),
+      );
+    },
+    clientesFinFiltrados() {
+      if (!this.vistaListados.codInicio) {
+        return this.clientes;
+      }
+      return this.clientes.filter(
+        (c) => parseInt(c.id) >= parseInt(this.vistaListados.codInicio),
       );
     },
   },

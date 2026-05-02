@@ -432,18 +432,34 @@
                       >IDs de los clientes</label
                     >
                     <div class="input-group">
-                      <input
-                        type="number"
-                        class="form-control"
+                      <select
+                        class="form-select"
                         v-model="vistaListados.codInicio"
-                        placeholder="Desde ID"
-                      />
-                      <input
-                        type="number"
-                        class="form-control"
+                        @change="validarRangoId"
+                      >
+                        <option value="">Desde...</option>
+                        <option
+                          v-for="c in clientes"
+                          :key="'ini'+c.id"
+                          :value="c.id"
+                        >
+                          {{ c.id }} ({{ c.nombre }})
+                        </option>
+                      </select>
+
+                      <select
+                        class="form-select"
                         v-model="vistaListados.codFin"
-                        placeholder="Hasta ID"
-                      />
+                      >
+                        <option value="">Hasta...</option>
+                        <option
+                          v-for="c in clientesFinFiltrados"
+                          :key="'fin'+c.id"
+                          :value="c.id"
+                        >
+                          {{ c.id }} ({{ c.nombre }})
+                        </option>
+                      </select>
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -464,7 +480,9 @@
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <label class="form-label fw-bold">Estado de la Póliza</label>
+                    <label class="form-label fw-bold"
+                      >Estado de la Póliza</label
+                    >
                     <select
                       class="form-select"
                       v-model="vistaListados.estadoFiltro"
@@ -497,7 +515,7 @@
                 <table class="table table-hover align-middle mb-0">
                   <thead class="table-dark">
                     <tr>
-                      <th>Cliente (ID)</th>
+                      <th>ID Cliente</th>
                       <th>Nombre Completo</th>
                       <th>Nº Póliza</th>
                       <th>Fecha</th>
