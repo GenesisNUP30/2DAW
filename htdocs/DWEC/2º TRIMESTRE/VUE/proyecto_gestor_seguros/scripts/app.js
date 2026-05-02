@@ -491,6 +491,8 @@ createApp({
     nuevaPolizaParaCliente(cliente) {
       this.modoModalPoliza = "crear";
       this.erroresPoliza = {};
+
+      this.clientesDisponibles = this.clientes;
       this.formPoliza = {
         id: null,
         cliente_id: cliente.id,
@@ -503,6 +505,7 @@ createApp({
       };
       this.mostrarModal("modalPoliza");
     },
+
     async abrirModalNuevaPoliza() {
       this.modoModalPoliza = "crear";
       this.erroresPoliza = {};

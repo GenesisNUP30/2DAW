@@ -17,7 +17,7 @@ if ($datos && !empty($datos->usuario) && !empty($datos->password)) {
     $user = $conexion->real_escape_string($datos->usuario);
 
     // Consulta para buscar al usuario
-    $sql = "SELECT * FROM usuarios WHERE usuario = '$user' LIMIT 1";
+    $sql = "SELECT * FROM gestor_usuarios WHERE usuario = '$user' LIMIT 1";
     $result = $conexion->query($sql);
 
     if ($result && $result->num_rows > 0) {
