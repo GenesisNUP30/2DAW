@@ -147,6 +147,16 @@ createApp({
         importe: 0,
       },
       erroresPago: {},
+
+      // --- LISTADO DE CLIENTES Y POLIZAS ---
+      vistaListados: {
+        codInicio: "",
+        codFin: "",
+        fechaInicio: "",
+        fechaFin: "",
+        estadoFiltro: "Todas", // "Todas", "cobrada", "anulada", etc.
+      },
+      resultadosListados: [],
     };
   },
 
@@ -718,6 +728,23 @@ createApp({
         console.error("Error borrado", e);
       } finally {
         this.pagoABorrar = null;
+      }
+    },
+
+    // --- GENERAR LISTADO ---
+    async generarListado() {
+      try {
+        const resp = await fetch("php/generarlistado.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(this.vistaListados),
+        });
+        const data = await resp.json();
+        if (data.status) {
+          this.resultadosListados = data.data;
+        }
+      } catch (e) {
+        console.error("Error al generar el listado", e);
       }
     },
 
