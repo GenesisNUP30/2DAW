@@ -774,10 +774,10 @@ createApp({
     colorFilaEstado(estado) {
       const colores = {
         cobrada: "table-success",
-        "a cuenta": "table-warning",
-        liquidada: "table-info",
+        "a cuenta": "table-info",
+        liquidada: "table-primary",
         anulada: "table-danger",
-        "pre-anulada": "table-secondary",
+        "pre-anulada": "table-warning",
       };
       return colores[estado] || "";
     },

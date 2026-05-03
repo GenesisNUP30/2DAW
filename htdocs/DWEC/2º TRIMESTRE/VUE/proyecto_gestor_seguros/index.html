@@ -275,11 +275,8 @@
                                   <td>{{ formatearFecha(p.fecha) }}</td>
                                   <td>
                                     <span
-                                      class="badge shadow-sm badge-estado-oscuro"
-                                      style="
-                                        min-width: 80px;
-                                        font-size: 0.85rem;
-                                      "
+                                      :class="['badge', claseEstado(p.estado)]"
+                                      style="min-width: 80px; font-size: 0.85rem;"
                                     >
                                       {{ p.estado }}
                                     </span>
