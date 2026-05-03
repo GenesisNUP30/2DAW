@@ -207,6 +207,16 @@ createApp({
       this.cargarProvincias();
     },
 
+    mostrarToast(mensaje) {
+      $("#toast-msg").text(mensaje);
+      $("#toast-notif")
+        .removeClass("alert-success alert-danger")
+        .addClass("alert-success")
+        .fadeIn(300)
+        .delay(2500)
+        .fadeOut(400);
+    },
+
     // --- CLIENTES ---
     cambiarTipoCliente() {
       // Limpiamos todos los errores al cambiar de Particular a Empresa o viceversa
@@ -355,7 +365,7 @@ createApp({
         if (data.status) {
           this.cerrarModal("modalCliente");
           this.cargarClientes();
-          alert(data.mensaje);
+          this.mostrarToast(data.mensaje);
         } else {
           // Si el DNI está duplicado, por ejemplo, lo mostramos como error del campo DNI
           if (data.mensaje.includes("DNI")) {
@@ -402,7 +412,7 @@ createApp({
         const data = await resp.json();
         this.cerrarModal("modalConfirmarBorrado");
         if (data.status) this.cargarClientes();
-        alert(data.mensaje);
+        this.mostrarToast(data.mensaje);
       } catch (e) {
         console.error("Error borrado", e);
       }
@@ -489,9 +499,9 @@ createApp({
               this.togglePolizas(clienteActivo);
             }
           }
-          alert(data.mensaje);
+          this.mostrarToast(data.mensaje);
         } else {
-          alert(data.mensaje);
+          this.mostrarToast(data.mensaje);
         }
       } catch (e) {
         console.error("Error al guardar póliza", e);
@@ -613,7 +623,7 @@ createApp({
             this.togglePolizas(cli);
           }
         }
-        alert(data.mensaje);
+        this.mostrarToast(data.mensaje);
       } catch (e) {
         console.error("Error borrado poliza", e);
       }
@@ -685,11 +695,11 @@ createApp({
           this.erroresPago = {};
           this.formPago.importe = 0;
 
-          alert(data.mensaje);
+          this.mostrarToast(data.mensaje);
           this.cargarPagos(this.polizaSeleccionada.id); // Recargar lista y totales
           this.cargarPolizas(); // Recargar la lista principal por si cambió el estado
         } else {
-          alert(data.mensaje);
+          this.mostrarToast(data.mensaje);
         }
       } catch (e) {
         console.error("Error al guardar pago", e);
@@ -722,7 +732,7 @@ createApp({
           // Recargar la lista principal por si cambió el estado
           this.cargarPolizas();
         } else {
-          alert(data.mensaje);
+          this.mostrarToast(data.mensaje);
         }
       } catch (e) {
         console.error("Error borrado", e);
