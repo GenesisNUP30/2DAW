@@ -19,43 +19,52 @@
   <body>
     <div id="app">
       <div v-if="!logueado" class="login-container">
-        <div class="card shadow-lg">
-          <div class="card-header text-white text-center">
-            <i class="fas fa-shield-alt fa-3x mb-3"></i>
-            <h4 class="mb-0">Agencia Seguros</h4>
+        <div class="login-card">
+          <div class="login-header">
+            <div class="login-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h1>Agencia de Seguros</h1>
+            <p>Acceso al panel de gestión</p>
           </div>
-          <div class="card-body p-4">
+
+          <div class="login-body">
             <form @submit.prevent="hacerLogin">
-              <div class="mb-3">
-                <label><i class="fa fa-user"></i> Usuario</label>
+              <div class="field-group">
+                <label class="field-label">
+                  <i class="fa fa-user"></i> Usuario
+                </label>
                 <input
                   type="text"
                   v-model="formLogin.usuario"
-                  class="form-control"
+                  class="field-input"
                   placeholder="Ej: admin"
                   required
                 />
               </div>
-              <div class="mb-3">
-                <label><i class="fa fa-lock"></i> Contraseña</label>
+              <div class="field-group">
+                <label class="field-label">
+                  <i class="fa fa-lock"></i> Contraseña
+                </label>
                 <input
                   type="password"
                   v-model="formLogin.password"
-                  class="form-control"
+                  class="field-input"
                   placeholder="••••••••"
                   required
                 />
               </div>
-              <button type="submit" class="btn btn-primary w-100 btn-lg mt-4">
-                Iniciar Sesión
+              <button type="submit" class="btn-login">
+                <i class="fas fa-sign-in-alt"></i> Iniciar sesión
               </button>
             </form>
-            <div
-              v-if="errorLogin"
-              class="alert alert-danger mt-3 small text-center"
-            >
-              {{ errorLogin }}
+            <div v-if="errorLogin" class="login-error">
+              <i class="fas fa-exclamation-circle"></i> {{ errorLogin }}
             </div>
+          </div>
+
+          <div class="login-footer">
+            <span>Sistema de gestión interno &middot; v1.0</span>
           </div>
         </div>
       </div>
