@@ -1,0 +1,335 @@
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/VerificationController.php:8: warning: Compound App::Http::Controllers::Auth::VerificationController is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/LoginController.php:38: warning: documented symbol 'App\Http\Controllers\Auth\LoginController::string' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/VerificationController.php:26: warning: documented symbol 'App\Http\Controllers\Auth\VerificationController::string' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:166: warning: documented symbol 'App Models User App\Http\Controllers\ClienteController::$user' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:183: warning: documented symbol 'App Models User App\Http\Controllers\ClienteController::$user' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Mail/FacturaMail.php:28: warning: documented symbol 'App Models App\Mail\FacturaMail::Factura' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:13: warning: documented symbol 'int $id ID único del App::Models::cliente' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:14: warning: documented symbol 'string $cif Código de Identificación App::Models::Fiscal' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:15: warning: documented symbol 'string $nombre Nombre o razón App::Models::social' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:16: warning: documented symbol 'float $importe_cuota_mensual Importe base para las remesas App::Models::automáticas' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:17: warning: documented symbol 'string $pais Código ISO2 del país App::Models::vinculado' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:25: warning: documented symbol 'App\Models\Cliente::string' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:31: warning: documented symbol 'App\Models\Cliente::array' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:49: warning: documented symbol 'App\Models\Cliente::boolean' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:15: warning: documented symbol 'int $id ID único de la App::Models::cuota' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:16: warning: documented symbol 'int $cliente_id Relación con el cliente App::Models::deudor' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:17: warning: documented symbol 'float $importe Cuantía económica de la App::Models::cuota' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:18: warning: documented symbol 'string $tipo Tipo de App::Models::cuota' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:19: warning: documented symbol 'Carbon Carbon null $fecha_pago Fecha en la que el cliente abonó la App::Models::cuota' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:20: warning: documented symbol 'Carbon Carbon null $deleted_at Fecha de eliminación lógica del App::Models::registro' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:29: warning: documented symbol 'App\Models\Cuota::array' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:43: warning: documented symbol 'App\Models\Cuota::boolean' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:15: warning: documented symbol 'int $id ID único de la App::Models::factura' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:16: warning: documented symbol 'int $cuota_id ID de la cuota App::Models::origen' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:17: warning: documented symbol 'string $numero_factura Código único de App::Models::factura' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:18: warning: documented symbol 'string $cliente_nombre Nombre del cliente en el momento de la App::Models::emisión' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:19: warning: documented symbol 'string $cliente_cif CIF del cliente en el momento de la App::Models::emisión' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:20: warning: documented symbol 'string $ruta_pdf Ruta física del archivo generado en el almacenamiento App::Models::privado' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:21: warning: documented symbol 'bool $enviada Indica si el PDF ha sido enviado por correo al App::Models::cliente' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:29: warning: documented symbol 'App\Models\Factura::string' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:37: warning: documented symbol 'App\Models\Factura::array' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:17: warning: documented symbol 'int $id ID App::Models::interno' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:18: warning: documented symbol 'string $iso2 Código de dos App::Models::letras' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:19: warning: documented symbol 'string $iso3 Código de tres App::Models::letras' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:20: warning: documented symbol 'string $prefijo Prefijo App::Models::telefónico' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:21: warning: documented symbol 'string $nombre Nombre oficial del App::Models::país' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:22: warning: documented symbol 'string $iso_moneda Código de la App::Models::moneda' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:23: warning: documented symbol 'string $nombre_moneda Nombre de la App::Models::moneda' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:31: warning: documented symbol 'App\Models\Pais::string' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:37: warning: documented symbol 'App\Models\Pais::array' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:15: warning: documented symbol 'int $id ID de la App::Models::tarea' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:16: warning: documented symbol 'string $estado Código del App::Models::estado' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:17: warning: documented symbol 'int null $operario_id ID del usuario tipo operario App::Models::asignado' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:18: warning: documented symbol 'Carbon Carbon $fecha_realizacion Fecha prevista para la App::Models::intervención' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:26: warning: documented symbol 'App\Models\Tarea::string' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:34: warning: documented symbol 'App\Models\Tarea::array' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:54: warning: documented symbol 'App\Models\Tarea::boolean' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:15: warning: documented symbol 'int $id ID único del App::Models::usuario' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:16: warning: documented symbol 'string $name Nombre App::Models::completo' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:17: warning: documented symbol 'string $tipo Rol del App::Models::usuario' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:18: warning: documented symbol 'Carbon Carbon $fecha_alta Fecha en la que empezó en la App::Models::empresa' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:19: warning: documented symbol 'Carbon Carbon null $fecha_baja Fecha de cese si App::Models::existe' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:28: warning: documented symbol 'App\Models\User::list' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:44: warning: documented symbol 'App\Models\User::list' was not declared or defined.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:15: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:15: warning: Found unknown command '\Controllers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:15: warning: Found unknown command '\Auth'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:17: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:17: warning: Found unknown command '\Controllers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:19: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:19: warning: Found unknown command '\Middleware'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:21: warning: Found unknown command '\Mail'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:23: warning: Found unknown command '\Providers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:25: warning: Found unknown command '\Rules'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:300: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:300: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:300: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:247: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:247: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:247: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:279: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:279: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:227: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:227: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:73: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:73: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:30: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:30: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:31: warning: unexpected token TK_COMMAND_BS in comment block while parsing the argument of command throws
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:31: warning: Found unknown command '\Component'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:31: warning: Found unknown command '\HttpKernel'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:31: warning: Found unknown command '\Exception'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:31: warning: Found unknown command '\HttpException'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:148: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:148: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:95: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:95: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:95: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:228: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:228: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:56: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:56: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:247: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:247: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:247: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:170: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:170: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:129: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:129: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:129: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:30: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:30: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:272: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:272: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:293: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:293: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:293: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:76: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:76: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:76: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:190: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:190: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:190: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:30: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:30: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:119: warning: Found unknown command '\Symfony'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:119: warning: Found unknown command '\Component'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:119: warning: Found unknown command '\HttpFoundation'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:119: warning: Found unknown command '\StreamedResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:96: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:96: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:96: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:48: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:48: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:48: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/HomeController.php:33: warning: found documented return type for App\Http\Controllers\HomeController\__construct that does not return anything
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/HomeController.php:56: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/HomeController.php:56: warning: Found unknown command '\Contracts'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/HomeController.php:56: warning: Found unknown command '\Support'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/HomeController.php:56: warning: Found unknown command '\Renderable'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:514: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:514: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:514: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:491: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:491: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:455: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:455: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:183: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:183: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:588: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:588: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:472: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:472: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:472: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:93: warning: Found unknown command '\Symfony'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:93: warning: Found unknown command '\Component'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:93: warning: Found unknown command '\HttpFoundation'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:93: warning: Found unknown command '\BinaryFileResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:315: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:315: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:41: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:41: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:72: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:72: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:214: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:214: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:214: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:607: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:607: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:607: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:345: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:345: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:345: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:378: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:378: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:378: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:314: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:314: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:314: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:353: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:353: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:294: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:294: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:244: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:244: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:61: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:61: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:265: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:265: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:265: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:143: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:143: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:37: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:37: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:400: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:400: warning: Found unknown command '\View'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:84: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:84: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:84: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:165: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:165: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:165: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:415: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:415: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:415: warning: Found unknown command '\RedirectResponse'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/LoginController.php:40: warning: Member $redirectTo (variable) of class App::Http::Controllers::Auth::LoginController is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/LoginController.php:44: warning: found documented return type for App\Http\Controllers\Auth\LoginController\__construct that does not return anything
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/VerificationController.php:28: warning: Member $redirectTo (variable) of class App::Http::Controllers::Auth::VerificationController is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/VerificationController.php:31: warning: found documented return type for App\Http\Controllers\Auth\VerificationController\__construct that does not return anything
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Middleware/RolUsuario.php:48: warning: unexpected token TK_COMMAND_BS in comment block while parsing the argument of command exception
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Middleware/RolUsuario.php:48: warning: Found unknown command '\Component'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Middleware/RolUsuario.php:48: warning: Found unknown command '\HttpKernel'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Middleware/RolUsuario.php:48: warning: Found unknown command '\Exception'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Middleware/RolUsuario.php:48: warning: Found unknown command '\HttpException'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Mail/FacturaMail.php:30: warning: Member $factura (variable) of class App::Mail::FacturaMail is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Mail/FacturaMail.php:75: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Mail/FacturaMail.php:75: warning: Found unknown command '\Mail'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Mail/FacturaMail.php:75: warning: Found unknown command '\Mailables'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Mail/FacturaMail.php:75: warning: Found unknown command '\Attachment'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:51: warning: Member $timestamps (variable) of class App::Models::Cliente is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:27: warning: Member $table (variable) of class App::Models::Cliente is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:33: warning: Member $fillable (variable) of class App::Models::Cliente is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:77: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:77: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:77: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:77: warning: Found unknown command '\Relations'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:77: warning: Found unknown command '\HasMany'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:97: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:97: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:97: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:97: warning: Found unknown command '\Relations'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:97: warning: Found unknown command '\HasMany'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:87: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:87: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:87: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:87: warning: Found unknown command '\Relations'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:87: warning: Found unknown command '\BelongsTo'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:67: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:67: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:67: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:67: warning: Found unknown command '\Relations'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:67: warning: Found unknown command '\HasMany'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:45: warning: Member $timestamps (variable) of class App::Models::Cuota is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:31: warning: Member $fillable (variable) of class App::Models::Cuota is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:63: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:63: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:63: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:63: warning: Found unknown command '\Relations'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:63: warning: Found unknown command '\BelongsTo'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:73: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:73: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:73: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:73: warning: Found unknown command '\Relations'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:73: warning: Found unknown command '\HasOne'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:31: warning: Member $table (variable) of class App::Models::Factura is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:39: warning: Member $fillable (variable) of class App::Models::Factura is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:56: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:56: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:56: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:56: warning: Found unknown command '\Relations'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:56: warning: Found unknown command '\BelongsTo'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:33: warning: Member $table (variable) of class App::Models::Pais is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:39: warning: Member $fillable (variable) of class App::Models::Pais is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:68: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:68: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:68: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:68: warning: Found unknown command '\Builder'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:56: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:56: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:56: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:56: warning: Found unknown command '\Builder'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:56: warning: Member $timestamps (variable) of class App::Models::Tarea is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:28: warning: Member $table (variable) of class App::Models::Tarea is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:36: warning: Member $fillable (variable) of class App::Models::Tarea is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:71: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:71: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:71: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:71: warning: Found unknown command '\Relations'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:71: warning: Found unknown command '\BelongsTo'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:81: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:81: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:81: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:81: warning: Found unknown command '\Relations'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:81: warning: Found unknown command '\BelongsTo'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:30: warning: Member $fillable (variable) of class App::Models::User is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:46: warning: Member $hidden (variable) of class App::Models::User is not documented.
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:171: warning: Found unknown command '\Illuminate'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:171: warning: Found unknown command '\Database'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:171: warning: Found unknown command '\Eloquent'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:171: warning: Found unknown command '\Relations'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:171: warning: Found unknown command '\HasMany'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:21: warning: Found unknown command '\Models'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/User.php:21: warning: Found unknown command '\User'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Controller.php:9: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Controller.php:9: warning: Found unknown command '\Controllers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Controller.php:9: warning: Found unknown command '\Controller'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/LoginController.php:19: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/LoginController.php:19: warning: Found unknown command '\Controllers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/LoginController.php:19: warning: Found unknown command '\Auth'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/LoginController.php:19: warning: Found unknown command '\LoginController'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/VerificationController.php:8: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/VerificationController.php:8: warning: Found unknown command '\Controllers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/VerificationController.php:8: warning: Found unknown command '\Auth'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/Auth/VerificationController.php:8: warning: Found unknown command '\VerificationController'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:22: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:22: warning: Found unknown command '\Controllers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/ClienteController.php:22: warning: Found unknown command '\ClienteController'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:23: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:23: warning: Found unknown command '\Controllers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/CuotaController.php:23: warning: Found unknown command '\CuotaController'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:23: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:23: warning: Found unknown command '\Controllers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/FacturaController.php:23: warning: Found unknown command '\FacturaController'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/HomeController.php:28: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/HomeController.php:28: warning: Found unknown command '\Controllers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/HomeController.php:28: warning: Found unknown command '\HomeController'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:30: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:30: warning: Found unknown command '\Controllers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/TareaController.php:30: warning: Found unknown command '\TareaController'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:28: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:28: warning: Found unknown command '\Controllers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Controllers/UserController.php:28: warning: Found unknown command '\UserController'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Mail/FacturaMail.php:24: warning: Found unknown command '\Mail'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Mail/FacturaMail.php:24: warning: Found unknown command '\FacturaMail'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:19: warning: Found unknown command '\Models'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cliente.php:19: warning: Found unknown command '\Cliente'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:22: warning: Found unknown command '\Models'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Cuota.php:22: warning: Found unknown command '\Cuota'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:23: warning: Found unknown command '\Models'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Factura.php:23: warning: Found unknown command '\Factura'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:25: warning: Found unknown command '\Models'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Pais.php:25: warning: Found unknown command '\Pais'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:20: warning: Found unknown command '\Models'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Models/Tarea.php:20: warning: Found unknown command '\Tarea'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Middleware/RolUsuario.php:20: warning: Found unknown command '\Http'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Middleware/RolUsuario.php:20: warning: Found unknown command '\Middleware'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Http/Middleware/RolUsuario.php:20: warning: Found unknown command '\RolUsuario'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Providers/AppServiceProvider.php:17: warning: Found unknown command '\Providers'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Providers/AppServiceProvider.php:17: warning: Found unknown command '\AppServiceProvider'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:17: warning: Found unknown command '\Rules'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarCif.php:17: warning: Found unknown command '\ValidarCif'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarDni.php:14: warning: Found unknown command '\Rules'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarDni.php:14: warning: Found unknown command '\ValidarDni'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarTelefono.php:14: warning: Found unknown command '\Rules'
+C:/Users/ushca/OneDrive/Escritorio/Genesis/2DAW/htdocs/DAWES/laravel/2Trimestre/app-proyecto2/app/Rules/ValidarTelefono.php:14: warning: Found unknown command '\ValidarTelefono'
