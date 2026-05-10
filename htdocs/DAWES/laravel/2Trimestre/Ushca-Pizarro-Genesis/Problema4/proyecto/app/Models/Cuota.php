@@ -33,6 +33,7 @@ class Cuota extends Model
         'concepto',
         'fecha_emision',
         'importe',
+        'importe_euros',
         'fecha_pago',
         'tipo',
         'notas'
@@ -52,6 +53,7 @@ class Cuota extends Model
     protected $casts = [
         'fecha_emision' => 'date',
         'importe' => 'float',
+        'importe_euros' => 'float',
         'fecha_pago' => 'date',
         'deleted_at' => 'datetime',
     ];
