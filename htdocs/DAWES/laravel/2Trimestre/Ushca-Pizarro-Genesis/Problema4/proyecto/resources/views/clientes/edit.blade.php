@@ -19,6 +19,15 @@
             </div>
         </div>
     </div>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -35,21 +44,29 @@
                         </h5>
 
                         <div class="row g-3 mb-4">
-                            <div class="col-md-4">
+
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted text-uppercase">CIF</label>
+                                <input type="text" name="cif" class="form-control @error('cif') is-invalid @enderror"
+                                    value="{{ old('cif', $cliente->cif) }}" placeholder="CIF del cliente">
+                                @error('cif') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Nombre</label>
                                 <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror"
                                     value="{{ old('nombre', $cliente->nombre) }}" placeholder="Nombre del cliente">
                                 @error('nombre') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Teléfono</label>
                                 <input type="text" name="telefono" class="form-control @error('telefono') is-invalid @enderror"
                                     value="{{ old('telefono', $cliente->telefono) }}" placeholder="Teléfono del cliente">
                                 @error('telefono') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Correo electrónico</label>
                                 <input type="email" name="correo" class="form-control @error('correo') is-invalid @enderror"
                                     value="{{ old('correo', $cliente->correo) }}" placeholder="Correo electrónico del cliente">
@@ -65,46 +82,48 @@
                         <div class="row g-3 mb-4">
                             <div class="col-md-12">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Cuenta Bancaria</label>
-                                <input type="text" name="cuenta_bancaria" class="form-control @error('cuenta_bancaria') is-invalid @enderror"
-                                    value="{{ old('cuenta_bancaria', $cliente->cuenta_bancaria) }}" placeholder="Cuenta bancaria del cliente">
-                                @error('cuenta_bancaria') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <input type="text" name="cuenta_corriente" class="form-control @error('cuenta_corriente') is-invalid @enderror"
+                                    value="{{ old('cuenta_corriente', $cliente->cuenta_corriente) }}" placeholder="Cuenta corriente del cliente">
+                                @error('cuenta_corriente') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">País</label>
                                 <select name="pais" class="form-select @error('pais') is-invalid @enderror">
                                     <option value="" disabled>-- Selecciona un país --</option>
                                     @foreach ($paises as $pais)
                                     <option value="{{ $pais->iso2 }}" {{ old('pais', $cliente->pais) == $pais->iso2 ? 'selected' : '' }}>
-                                        {{ $pais->nombre }}
+                                        {{ $pais->nombre }} ({{ $pais->iso_moneda }})
                                     </option>
                                     @endforeach
                                 </select>
                                 @error('pais') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Importe de la cuota mensual</label>
                                 <input type="number" step="0.01" name="importe_cuota_mensual" class="form-control @error('importe_cuota_mensual') is-invalid @enderror"
                                     value="{{ old('importe_cuota_mensual', $cliente->importe_cuota_mensual) }}" placeholder="Importe de la cuota mensual">
                                 @error('importe_cuota_mensual') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Este cliente factura en <strong>{{ $cliente->moneda }}</strong>.
+                                El importe de la cuota mensual debe expresarse en dicha moneda.
+                            </div>
                         </div>
 
+                        {{-- SECCIÓN 3: Datos de actividad--}}
+                        <h5 class="fw-bold mb-4 text-success border-bottom pb-2">
+                            <i class="fas fa-calendar-check me-2"></i>Registro en el sistema
+                        </h5>
 
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-12">
+                        <div class="row g-3">
+                            <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Fecha de alta</label>
                                 <input type="date" name="fecha_alta" class="form-control @error('fecha_alta') is-invalid @enderror"
                                     value="{{ old('fecha_alta', $cliente->fecha_alta ? $cliente->fecha_alta->format('Y-m-d') : '') }}" placeholder="Fecha de alta">
                                 @error('fecha_alta') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                            </div>
-
-                            <div class="col-md-12">
-                                <label class="form-label small fw-bold text-muted text-uppercase">Fecha de baja</label>
-                                <input type="date" name="fecha_baja" class="form-control @error('fecha_baja') is-invalid @enderror"
-                                    value="{{ old('fecha_baja', $cliente->fecha_baja ? $cliente->fecha_baja->format('Y-m-d') : '') }}" placeholder="Fecha de baja">
-                                @error('fecha_baja') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
                     </div>

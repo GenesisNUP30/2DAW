@@ -102,7 +102,7 @@
                     {{-- Importe Cuota Mensual --}}
                     <td class="text-center">
                         <span class="fw-bold text-dark">
-                            {{ number_format($cliente->importe_cuota_mensual, 2, ',', '.') }}€
+                            {{ number_format($cliente->importe_cuota_mensual, 2, ',', '.') }} {{ $cliente->moneda }}
                         </span>
                     </td>
 

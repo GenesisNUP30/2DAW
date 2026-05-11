@@ -48,7 +48,10 @@
                             <div class="p-3 rounded border bg-light bg-opacity-50">
                                 <label class="text-muted small fw-bold text-uppercase d-block mb-1">Datos de Facturación</label>
                                 <div class="mb-2"><i class="fas fa-credit-card text-muted me-2"></i>{{ $cliente->cuenta_corriente }}</div>
-                                <div><i class="fas fa-coins text-muted me-2"></i>{{ $cliente->moneda }} - {{ number_format($cliente->importe_cuota_mensual, 2, ',', '.') }} {{ $cliente->moneda }} / mes</div>
+                                <div>
+                                    <i class="fas fa-coins text-muted me-2"></i>
+                                    {{ $cliente->moneda }} - {{ number_format($cliente->importe_cuota_mensual, 2, ',', '.') }} {{ $cliente->moneda }} / mes
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -96,7 +99,9 @@
                             @forelse($cliente->cuotas()->limit(5)->get() as $cuota)
                             <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
                                 <span class="small text-dark">{{ $cuota->concepto ?? 'Mensualidad' }}</span>
-                                <span class="fw-bold small text-dark">{{ number_format($cuota->importe, 2, ',', '.') }}€</span>
+                                <span class="fw-bold small text-dark">
+                                    {{ number_format($cuota->importe, 2, ',', '.') }} {{ $cliente->moneda }}
+                                </span>
                             </div>
                             @empty
                             <p class="text-muted small my-3 text-center">Sin cuotas registradas.</p>
@@ -120,7 +125,7 @@
                         <a href="{{ route('clientes.index') }}" class="btn btn-light border px-3">
                             <i class="fas fa-arrow-left me-1"></i> Volver al listado
                         </a>
-                        
+
                         @if($cliente->isActivo())
                         <a href="{{ route('clientes.confirmBaja', $cliente) }}" class="btn btn-outline-warning">
                             <i class="fas fa-user-minus me-2"></i> Dar de baja

@@ -187,14 +187,13 @@ class ClienteController extends Controller
         }
 
         $validated = $request->validate([
-            'cif' => 'required|string|max:20|unique:clientes,cif,' . $cliente->id,
+            'cif' => ['required', 'string', 'unique:clientes,cif,' . $cliente->id, new ValidarCif],
             'nombre' => 'required|string|max:100',
             'telefono' => 'required|string|max:20',
             'correo' => 'required|email|max:100',
-            'cuenta_bancaria' => 'required|string|max:50',
+            'cuenta_corriente' => 'required|string|max:50',
             'pais' => 'required|string|exists:paises,iso2',
-            'moneda' => 'required|exists:paises,iso_moneda',
-            'importe_cuota' => 'required|numeric|min:0',
+            'importe_cuota_mensual' => 'required|numeric|min:0',
         ], [
             'cif.required' => 'El CIF es obligatorio',
             'cif.unique' => 'Ya existe un cliente con ese CIF',
@@ -206,14 +205,19 @@ class ClienteController extends Controller
             'correo.required' => 'El correo electrónico es obligatorio',
             'correo.email' => 'El correo electrónico no es válido',
             'correo.max' => 'El correo electrónico no puede tener más de 100 caracteres',
-            'cuenta_bancaria.required' => 'La cuenta bancaria es obligatoria',
-            'cuenta_bancaria.max' => 'La cuenta bancaria no puede tener más de 50 caracteres',
+            'cuenta_corriente.required' => 'La cuenta bancaria es obligatoria',
+            'cuenta_corriente.max' => 'La cuenta bancaria no puede tener más de 50 caracteres',
             'pais.required' => 'El país es obligatorio',
             'pais.in' => 'El país seleccionado no es válido',
-            'importe_cuota.required' => 'El importe de la cuota es obligatorio',
-            'importe_cuota.numeric' => 'El importe de la cuota debe ser numérico',
-            'importe_cuota.min' => 'El importe de la cuota debe ser mayor o igual a 0',
+            'importe_cuota_mensual.required' => 'El importe de la cuota es obligatorio',
+            'importe_cuota_mensual.numeric' => 'El importe de la cuota debe ser numérico',
+            'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 0',
         ]);
+
+        $validated['cif'] = strtoupper(trim($validated['cif']));
+        
+        $pais = Pais::where('iso2', $validated['pais'])->first();
+        $validated['moneda'] = $pais->iso_moneda;
 
         $cliente->update($validated);
 
