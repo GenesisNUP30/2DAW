@@ -54,7 +54,7 @@
     </div>
 
     <div class="tab-content" id="cuotasTabsContent">
-        
+
         {{-- TAB: CUOTAS MENSUALES --}}
         <div class="tab-pane fade show active" id="mensuales" role="tabpanel">
             <div class="card border shadow-sm" style="border-color: #e5e7eb !important; border-radius: 12px; overflow: hidden;">
@@ -63,7 +63,9 @@
                         <tr class="text-uppercase fw-bold text-muted" style="font-size: 0.75rem; letter-spacing: .05em;">
                             <th class="ps-4 py-3 border-0">Cliente</th>
                             <th class="py-3 border-0">Concepto</th>
-                            <th class="py-3 border-0">Importe</th>
+                            <th class="py-3 border-0">Importe Original</th>
+                            <th class="py-3 border-0">Moneda</th>
+                            <th class="py-3 border-0">Importe en EUR</th>
                             <th class="py-3 border-0">Emisión</th>
                             <th class="py-3 border-0">Estado</th>
                             <th class="py-3 pe-4 border-0 text-end">Acciones</th>
@@ -77,17 +79,27 @@
                                 <div class="text-muted" style="font-size: 12px;">{{ $cuota->cliente->cif }}</div>
                             </td>
                             <td><span class="text-secondary">{{ $cuota->concepto }}</span></td>
-                            <td><span class="fw-bold text-dark">{{ number_format($cuota->importe, 2, ',', '.') }}€</span></td>
+                            <td><span class="fw-bold text-dark">{{ number_format($cuota->importe, 2, ',', '.') }}</span></td>
+                            <td>{{ $cuota->cliente->moneda ?? '' }}</td>
+                            <td>
+                                @if($cuota->importe)
+                                <span class="badge bg-success">
+                                    {{ number_format($cuota->importe_euros, 2) }} €
+                                </span>
+                                @else
+                                <span class="text-muted small italic">Pendiente de pago</span>
+                                @endif
+                            </td>
                             <td class="text-muted">{{ $cuota->fecha_emision->format('d/m/Y') }}</td>
                             <td>
                                 @if ($cuota->isPagada())
-                                    <span class="badge rounded-pill border bg-success bg-opacity-10 text-success px-3 py-2">
-                                        Pagada ({{ $cuota->fecha_pago->format('d/m/Y') }})
-                                    </span>
+                                <span class="badge rounded-pill border bg-success bg-opacity-10 text-success px-3 py-2">
+                                    Pagada ({{ $cuota->fecha_pago->format('d/m/Y') }})
+                                </span>
                                 @else
-                                    <span class="badge rounded-pill border bg-warning bg-opacity-10 text-warning px-3 py-2">
-                                        Pendiente
-                                    </span>
+                                <span class="badge rounded-pill border bg-warning bg-opacity-10 text-warning px-3 py-2">
+                                    Pendiente
+                                </span>
                                 @endif
                             </td>
                             <td class="pe-4 text-end">
@@ -146,9 +158,9 @@
                             <td class="text-muted">{{ $cuota->fecha_emision->format('d/m/Y') }}</td>
                             <td>
                                 @if ($cuota->isPagada())
-                                    <span class="badge rounded-pill border bg-success bg-opacity-10 text-success px-3 py-2">Pagada</span>
+                                <span class="badge rounded-pill border bg-success bg-opacity-10 text-success px-3 py-2">Pagada</span>
                                 @else
-                                    <span class="badge rounded-pill border bg-warning bg-opacity-10 text-warning px-3 py-2">Pendiente</span>
+                                <span class="badge rounded-pill border bg-warning bg-opacity-10 text-warning px-3 py-2">Pendiente</span>
                                 @endif
                             </td>
                             <td class="pe-4 text-end">

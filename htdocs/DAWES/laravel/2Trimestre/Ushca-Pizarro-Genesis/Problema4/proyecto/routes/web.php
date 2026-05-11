@@ -84,6 +84,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/clientes/crear', [ClienteController::class, 'create'])->name('clientes.create');
         Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
 
+        Route::get('/clientes/editar/{cliente}', [ClienteController::class, 'edit'])->name('clientes.edit');
+        Route::put('/clientes/{cliente}', [ClienteController::class, 'update'])->name('clientes.update');
+
         Route::get('/clientes/{cliente}/baja', [ClienteController::class, 'confirmBaja'])->name('clientes.confirmBaja');
         Route::post('/clientes/{cliente}/baja', [ClienteController::class, 'baja'])->name('clientes.baja');
 
