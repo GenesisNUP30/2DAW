@@ -43,6 +43,7 @@ class Factura extends Model
         'cliente_cif',
         'concepto',
         'importe',
+        'importe_euros',
         'moneda',
         'enviada',
         'ruta_pdf',

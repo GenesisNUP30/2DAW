@@ -102,7 +102,7 @@
                     {{-- Importe Cuota Mensual --}}
                     <td class="text-center">
                         <span class="fw-bold text-dark">
-                            {{ number_format($cliente->importe_cuota_mensual, 2, ',', '.') }}€
+                            {{ number_format($cliente->importe_cuota_mensual, 2, ',', '.') }} {{ $cliente->moneda }}
                         </span>
                     </td>
 
@@ -137,6 +137,14 @@
                                 style="width:34px; height:34px; display:flex; align-items:center; justify-content:center;"
                                 title="Dar de baja">
                                 <i class="fas fa-user-minus text-warning"></i>
+                            </a>
+
+                            {{-- Botón Editar --}}
+                            <a href="{{ route('clientes.edit', $cliente) }}"
+                                class="btn btn-sm btn-light border"
+                                style="width:34px; height:34px; display:flex; align-items:center; justify-content:center;"
+                                title="Editar">
+                                <i class="fas fa-pen text-warning"></i>
                             </a>
                             @else
                             {{-- Botón Alta/Reactivar --}}

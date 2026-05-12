@@ -1,23 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <style>
-        body { font-family: 'Helvetica', sans-serif; font-size: 14px; color: #333; line-height: 1.6; }
-        .container { padding: 20px; }
-        .header { border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 30px; text-align: center; }
-        .header h1 { margin: 0; color: #2c3e50; text-transform: uppercase; }
-        .section { margin-bottom: 20px; }
-        .datos-empresa { float: left; width: 50%; }
-        .datos-cliente { float: right; width: 40%; text-align: right; }
-        .clear { clear: both; }
-        table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-        th { background-color: #f8f9fa; border-bottom: 2px solid #dee2e6; padding: 12px; text-align: left; }
-        td { border-bottom: 1px solid #dee2e6; padding: 12px; }
-        .total { font-weight: bold; font-size: 18px; text-align: right; margin-top: 20px; }
-        .footer { position: fixed; bottom: 0; width: 100%; text-align: center; font-size: 10px; color: #777; }
+        body {
+            font-family: 'Helvetica', sans-serif;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .header {
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #2c3e50;
+            text-transform: uppercase;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .datos-empresa {
+            float: left;
+            width: 50%;
+        }
+
+        .datos-cliente {
+            float: right;
+            width: 40%;
+            text-align: right;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            border-bottom: 1px solid #dee2e6;
+            padding: 12px;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+            color: #777;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -57,7 +122,13 @@
         </table>
 
         <div class="total">
-            Total Factura: {{ number_format($factura->importe, 2, ',', '.') }} {{ $factura->moneda }}
+            Total: {{ number_format($factura->importe, 2, ',', '.') }} {{ $factura->moneda }}
+
+            @if($factura->moneda !== 'EUR' && $factura->importe_euros)
+            <div style="font-size: 14px; color: #666; margin-top: 5px;">
+                (Equivalente a: {{ number_format($factura->importe_euros, 2, ',', '.') }} €)
+            </div>
+            @endif
         </div>
 
         <div class="footer">
@@ -65,4 +136,5 @@
         </div>
     </div>
 </body>
+
 </html>

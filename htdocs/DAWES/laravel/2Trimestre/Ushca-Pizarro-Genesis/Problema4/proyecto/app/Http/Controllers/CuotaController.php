@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cuota;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @class CuotaController
@@ -190,9 +192,7 @@ class CuotaController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user->isAdmin()) {
-            abort(403);
-        }
+        if (!$user->isAdmin()) abort(403);
 
         $validated = $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
@@ -214,7 +214,45 @@ class CuotaController extends Controller
             'notas.max' => 'Las notas no pueden superar los 255 caracteres',
         ]);
 
-        $cuota->update($validated);
+        // DETECTAR SI ES EL MOMENTO DEL PAGO
+        $seAcabaDePagar = ($cuota->fecha_pago === null && $request->fecha_pago !== null);
+
+        // Actualizamos los datos
+        $cuota->fill($validated);
+
+        // LÓGICA DE CONVERSIÓN DE MONEDA (PROBLEMA 4.1)
+        if ($seAcabaDePagar) {
+            // Obtenemos la moneda del cliente a través de la relación
+            $monedaLocal = strtolower($cuota->cliente->moneda ?? 'eur');
+
+            if ($monedaLocal !== 'eur') {
+                try {
+                    // Consumo de API externa con HttpClient
+                    $url = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/{$monedaLocal}.json";
+                    $response = Http::get($url);
+
+                    if ($response->successful()) {
+                        $exchangeData = $response->json();
+                        $ratio = $exchangeData[$monedaLocal]['eur'];
+
+                        // Guardamos el importe convertido
+                        $cuota->importe_euros = $cuota->importe * $ratio;
+                    }
+                } catch (\Exception $e) {
+                    Log::error("Error en conversión de moneda: " . $e->getMessage());
+                }
+            } else {
+                // Si es EUR, el valor es idéntico
+                $cuota->importe_euros = $cuota->importe;
+            }
+        }
+
+        $cuota->save();
+
+        // ACTUALIZAR FACTURA SI EXISTE 
+        if ($cuota->factura) {
+            $cuota->factura->update(['importe_euros' => $cuota->importe_euros]);
+        }
 
         return redirect()->route('cuotas.index')->with('success', 'Cuota actualizada correctamente.');
     }

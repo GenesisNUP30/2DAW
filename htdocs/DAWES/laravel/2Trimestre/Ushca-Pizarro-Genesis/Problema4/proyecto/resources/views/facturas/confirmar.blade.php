@@ -76,17 +76,15 @@
                     @php $factura = \App\Models\Factura::where('cuota_id', $cuota->id)->first(); @endphp
 
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="{{ route('cuotas.index') }}" class="btn btn-outline-dark px-4 rounded-pill">
-                            <i class="fas fa-arrow-left me-1"></i> Volver al listado
-                        </a>
-                        @if(!$factura)
-                        <form action="{{ route('facturas.generar', $cuota->id) }}" method="POST" class="w-100">
+                        <form action="{{ route('facturas.generar', $cuota->id) }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn btn-primary btn-lg shadow-sm px-4 rounded-pill">
-                                <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Generar Factura Legal
+                            <button type="submit" class="btn {{ !$factura ? 'btn-primary' : 'btn-outline-primary' }} px-4 rounded-pill">
+                                <i class="fa-solid fa-sync me-2"></i>
+                                {{ !$factura ? 'Generar Factura Legal' : 'Regenerar/Actualizar Factura' }}
                             </button>
                         </form>
-                        @else
+
+                        @if($factura)
                         <a href="{{ route('facturas.descargar', $factura->id) }}" class="btn btn-outline-dark px-4 rounded-pill">
                             <i class="fa-solid fa-file-pdf me-2 text-danger"></i>Descargar PDF
                         </a>

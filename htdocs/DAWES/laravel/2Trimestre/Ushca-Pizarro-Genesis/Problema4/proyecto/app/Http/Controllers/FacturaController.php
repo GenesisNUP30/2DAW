@@ -57,14 +57,16 @@ class FacturaController extends Controller
         $numero = 'FAC-' . date('Y') . '-' . str_pad($cuota->id, 4, '0', STR_PAD_LEFT);
 
         // CREAR EL MODELO FACTURA (Congelamos datos legales)
-        $factura = Factura::create([
-            'cuota_id'       => $cuota->id,
+        $factura = Factura::updateOrCreate([
+            'cuota_id' => $cuota->id
+        ], [
             'numero_factura' => $numero,
             'cliente_nombre' => $cliente->nombre,
             'cliente_cif'    => $cliente->cif,
             'concepto'       => $cuota->concepto,
             'importe'        => $cuota->importe,
-            'moneda'         => $cliente->moneda ?? 'EUR',
+            'importe_euros'  => $cuota->importe_euros,
+            'moneda'         => $cliente->moneda ?? '--',
             'enviada'        => false,
         ]);
 

@@ -64,12 +64,24 @@
                         </h5>
 
                         <div class="row g-3 mb-4">
+                            <div class="col-md-12">
+                                {{-- Mensaje Informativo de Moneda --}}
+                                <div class="alert alert-info border-0">
+                                    <i class="fas fa-info-circle me-3 fs-5"></i>
+                                    <span class="text-dark">
+                                        Este cliente factura en <strong>{{ $cuota->cliente->moneda }}</strong>.
+                                        El importe de la cuota mensual debe expresarse en dicha moneda.
+                                    </span>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Importe</label>
                                 <div class="input-group">
                                     <input type="number" step="0.01" name="importe" class="form-control @error('importe') is-invalid @enderror"
                                         value="{{ old('importe', $cuota->importe) }}">
-                                    <span class="input-group-text bg-light fw-bold text-muted">€</span>
+                                    <span class="input-group-text bg-light fw-bold text-primary">
+                                        {{ $cuota->cliente->moneda ?? '--' }}
+                                    </span>
                                     @error('importe') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
                             </div>

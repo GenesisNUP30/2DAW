@@ -76,7 +76,7 @@
                                     <option value="" selected disabled>Selecciona un país...</option>
                                     @foreach ($paises as $pais)
                                     <option value="{{ $pais->iso2 }}" {{ old('pais') === $pais->iso2 ? 'selected' : '' }}>
-                                        {{ $pais->nombre }}
+                                        {{ $pais->nombre }} ({{ $pais->iso_moneda }})
                                     </option>
                                     @endforeach
                                 </select>
@@ -113,17 +113,18 @@
                             <div class="col-md-4">
                                 <label class="form-label small fw-bold text-muted text-uppercase">Importe de Cuota Mensual</label>
                                 <div class="input-group">
-                                    <input type="number" step="0.01" name="importe_cuota_mensual" class="form-control fw-bold @error('importe_cuota_mensual') is-invalid @enderror"
+                                    <input type="number" step="0.01" name="importe_cuota_mensual" id="importe_input"
+                                        class="form-control fw-bold @error('importe_cuota_mensual') is-invalid @enderror"
                                         value="{{ old('importe_cuota_mensual') }}" placeholder="0,00">
-                                    <span class="input-group-text bg-light text-muted small">€/mes</span>
                                     @error('importe_cuota_mensual') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="p-3 bg-light rounded border-start border-primary border-4 mt-2">
-                                    <p class="small text-muted mb-0">
+                                    <p class="text-muted mb-0">
                                         <i class="fas fa-info-circle me-1"></i> El importe de la cuota se utilizará para la generación automática de las remesas mensuales.
+                                        Además, se guardará con la moneda del país seleccionado por tanto, debe ser expresado en dicha moneda.
                                     </p>
                                 </div>
                             </div>
