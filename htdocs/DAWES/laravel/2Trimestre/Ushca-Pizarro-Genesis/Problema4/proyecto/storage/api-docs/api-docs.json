@@ -1,0 +1,222 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Servicio REST SiempreColgando S.L.",
+        "description": "API para la gestión de clientes y facturación internacional.",
+        "contact": {
+            "email": "admin@siemprecolgando.es"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Servidor Local de Desarrollo"
+        }
+    ],
+    "paths": {
+        "/api/clientes": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Obtener lista de clientes",
+                "operationId": "f8eafbc2e9500413091c7f84a4470b84",
+                "responses": {
+                    "200": {
+                        "description": "Lista de clientes obtenida correctamente"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Crear un nuevo cliente",
+                "operationId": "2a8a28c7aec782e1af95193a65053e68",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "cif",
+                                    "correo",
+                                    "pais",
+                                    "importe_cuota_mensual",
+                                    "fecha_alta"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Juan Perez"
+                                    },
+                                    "cif": {
+                                        "type": "string",
+                                        "example": "12345678Z"
+                                    },
+                                    "correo": {
+                                        "type": "string",
+                                        "example": "juan@correo.com"
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "example": "600000000"
+                                    },
+                                    "cuenta_corriente": {
+                                        "type": "string",
+                                        "example": "ES211234..."
+                                    },
+                                    "pais": {
+                                        "type": "string",
+                                        "example": "ES"
+                                    },
+                                    "fecha_alta": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-03-20"
+                                    },
+                                    "importe_cuota_mensual": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 150.5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cliente creado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/clientes/{id}": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Obtener detalle de un cliente",
+                "operationId": "7be647ff4c2ab71c5a1f042133b13428",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalle del cliente"
+                    },
+                    "404": {
+                        "description": "Cliente no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Actualizar un cliente",
+                "operationId": "1cc735d14964cb4b25557d546e807a9c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "cif": {
+                                        "type": "string"
+                                    },
+                                    "correo": {
+                                        "type": "string"
+                                    },
+                                    "telefono": {
+                                        "type": "string"
+                                    },
+                                    "cuenta_corriente": {
+                                        "type": "string"
+                                    },
+                                    "pais": {
+                                        "type": "string"
+                                    },
+                                    "importe_cuota_mensual": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cliente actualizado"
+                    },
+                    "404": {
+                        "description": "Cliente no encontrado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Eliminar un cliente",
+                "operationId": "fae533cf0841c3ece1414287d89ef42b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Cliente eliminado"
+                    },
+                    "404": {
+                        "description": "Cliente no encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Clientes",
+            "description": "Clientes"
+        }
+    ]
+}
