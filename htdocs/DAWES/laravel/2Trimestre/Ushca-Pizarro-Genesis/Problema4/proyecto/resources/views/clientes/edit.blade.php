@@ -106,11 +106,6 @@
                                     value="{{ old('importe_cuota_mensual', $cliente->importe_cuota_mensual) }}" placeholder="Importe de la cuota mensual">
                                 @error('importe_cuota_mensual') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
-                            <div class="alert alert-info">
-                                <i class="fas fa-info-circle me-2"></i>
-                                Este cliente factura en <strong>{{ $cliente->moneda }}</strong>.
-                                El importe de la cuota mensual debe expresarse en dicha moneda.
-                            </div>
                         </div>
 
                         {{-- SECCIÓN 3: Datos de actividad--}}
