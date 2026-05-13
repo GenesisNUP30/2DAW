@@ -8,4 +8,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('clientes', ClienteController::class);
+Route::apiResource('clientes', ClienteController::class)->names([
+    'index'   => 'api.clientes.index',
+    'store'   => 'api.clientes.store',
+    'show'    => 'api.clientes.show',
+    'update'  => 'api.clientes.update',
+    'destroy' => 'api.clientes.destroy',
+]);

@@ -46,13 +46,13 @@ class ClienteController extends Controller
             'fecha_alta.date' => 'La fecha de alta debe ser una fecha válida',
             'importe_cuota_mensual.required' => 'El importe de la cuota es obligatorio',
             'importe_cuota_mensual.numeric' => 'El importe de la cuota debe ser numérico',
-            'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 0',
+            'importe_cuota_mensual.min' => 'El importe de la cuota debe ser mayor o igual a 1',
         ];
     }
 
     #[OA\Get(
         path: "/api/clientes",
-        summary: "Obtener lista de clientes",
+        summary: "Obtener lista de clientes con sus países",
         tags: ["Clientes"],
         responses: [
             new OA\Response(response: 200, description: "Lista de clientes obtenida correctamente")
@@ -60,7 +60,7 @@ class ClienteController extends Controller
     )]
     public function index()
     {
-        $clientes = Cliente::all();
+        $clientes = Cliente::with('paisRelacion')->get();
         return response()->json($clientes, Response::HTTP_OK); // 200 OK
     }
 
@@ -99,7 +99,7 @@ class ClienteController extends Controller
             'cuenta_corriente' => 'required|string|max:100',
             'pais' => 'required|string|exists:paises,iso2',
             'fecha_alta' => 'required|date',
-            'importe_cuota_mensual' => 'required|numeric|min:0',
+            'importe_cuota_mensual' => 'required|numeric|min:1',
         ], $this->getMensajes());
 
         if ($validator->fails()) {
@@ -193,7 +193,7 @@ class ClienteController extends Controller
             'correo' => 'required|email|unique:clientes,correo,' . $cliente->id,
             'cuenta_corriente' => 'required|string|max:100',
             'pais' => 'required|string|exists:paises,iso2',
-            'importe_cuota_mensual' => 'required|numeric|min:0',
+            'importe_cuota_mensual' => 'required|numeric|min:1',
         ], $this->getMensajes());
 
         if ($validator->fails()) {

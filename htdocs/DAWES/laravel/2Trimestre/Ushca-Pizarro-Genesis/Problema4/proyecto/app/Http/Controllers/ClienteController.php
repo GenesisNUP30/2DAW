@@ -20,6 +20,12 @@ use App\Rules\ValidarCif;
  */
 class ClienteController extends Controller
 {
+    public function spa()
+    {
+        $paises = Pais::ordenadosPorNombre()->get();
+        return view('clientes_js.index', compact('paises'));
+    }
+
     /**
      * @brief Muestra el listado de clientes con soporte para filtrado y paginación.
      * * Permite filtrar la colección por:
@@ -215,7 +221,7 @@ class ClienteController extends Controller
         ]);
 
         $validated['cif'] = strtoupper(trim($validated['cif']));
-        
+
         $pais = Pais::where('iso2', $validated['pais'])->first();
         $validated['moneda'] = $pais->iso_moneda;
 
