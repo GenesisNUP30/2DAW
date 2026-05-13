@@ -1,41 +1,42 @@
 -- phpMyAdmin SQL Dump
--- Base de datos: `proyecto_2eval`
--- Usuario administrador: admin123@gmail.com / admin123
- 
+-- Versión adaptada con prefijo  en todas las tablas
+-- Tablas vacías excepto users (admin) y paises (datos completos)
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
- 
---
--- Estructura de tabla: `cache`
---
- 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+-- --------------------------------------------------------
+-- Tabla: cache
+-- --------------------------------------------------------
+
 CREATE TABLE `cache` (
   `key` varchar(255) NOT NULL,
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `cache_locks`
---
- 
+-- Tabla: cache_locks
+-- --------------------------------------------------------
+
 CREATE TABLE `cache_locks` (
   `key` varchar(255) NOT NULL,
   `owner` varchar(255) NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `clientes`
---
- 
+-- Tabla: clientes
+-- --------------------------------------------------------
+
 CREATE TABLE `clientes` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `cif` varchar(20) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `telefono` varchar(20) DEFAULT NULL,
@@ -47,32 +48,29 @@ CREATE TABLE `clientes` (
   `fecha_alta` date DEFAULT NULL,
   `fecha_baja` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `cuotas`
---
- 
+-- Tabla: cuotas
+-- --------------------------------------------------------
+
 CREATE TABLE `cuotas` (
-  `id` int(11) NOT NULL,
-  `cliente_id` int(11) NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cliente_id` bigint(20) UNSIGNED NOT NULL,
   `concepto` varchar(255) DEFAULT NULL,
   `fecha_emision` date DEFAULT NULL,
   `importe` decimal(10,2) DEFAULT NULL,
+  `importe_euros` decimal(10,2) DEFAULT NULL,
   `pagada` tinyint(1) DEFAULT 0,
   `fecha_pago` date DEFAULT NULL,
   `tipo` enum('mensual','excepcional') NOT NULL,
   `notas` text DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `facturas`
---
- 
+-- Tabla: facturas
+-- --------------------------------------------------------
+
 CREATE TABLE `facturas` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `cuota_id` int(11) NOT NULL,
@@ -81,19 +79,18 @@ CREATE TABLE `facturas` (
   `cliente_cif` varchar(255) NOT NULL,
   `concepto` varchar(255) NOT NULL,
   `importe` decimal(10,2) NOT NULL,
+  `importe_euros` decimal(10,2) DEFAULT NULL,
   `moneda` varchar(10) NOT NULL DEFAULT 'EUR',
   `enviada` tinyint(1) NOT NULL DEFAULT 0,
   `ruta_pdf` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `failed_jobs`
---
- 
+-- Tabla: failed_jobs
+-- --------------------------------------------------------
+
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `uuid` varchar(255) NOT NULL,
@@ -103,13 +100,11 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `jobs`
---
- 
+-- Tabla: jobs
+-- --------------------------------------------------------
+
 CREATE TABLE `jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `queue` varchar(255) NOT NULL,
@@ -119,13 +114,11 @@ CREATE TABLE `jobs` (
   `available_at` int(10) UNSIGNED NOT NULL,
   `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `job_batches`
---
- 
+-- Tabla: job_batches
+-- --------------------------------------------------------
+
 CREATE TABLE `job_batches` (
   `id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -138,25 +131,21 @@ CREATE TABLE `job_batches` (
   `created_at` int(11) NOT NULL,
   `finished_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `migrations`
---
- 
+-- Tabla: migrations
+-- --------------------------------------------------------
+
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `paises`
---
- 
+-- Tabla: paises (con datos completos)
+-- --------------------------------------------------------
+
 CREATE TABLE `paises` (
   `id` smallint(3) UNSIGNED ZEROFILL NOT NULL,
   `iso2` char(2) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -168,11 +157,7 @@ CREATE TABLE `paises` (
   `iso_moneda` varchar(3) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `nombre_moneda` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
- 
---
--- Datos para la tabla `paises`
---
- 
+
 INSERT INTO `paises` (`id`, `iso2`, `iso3`, `prefijo`, `nombre`, `continente`, `subcontinente`, `iso_moneda`, `nombre_moneda`) VALUES
 (004, 'AF', 'AFG', 93, 'Afganistán', 'Asia', NULL, 'AFN', 'Afgani afgano'),
 (008, 'AL', 'ALB', 355, 'Albania', 'Europa', NULL, 'ALL', 'Lek albanés'),
@@ -415,25 +400,21 @@ INSERT INTO `paises` (`id`, `iso2`, `iso3`, `prefijo`, `nombre`, `continente`, `
 (882, 'WS', 'WSM', 685, 'Samoa', 'Oceanía', NULL, 'WST', 'Tala samoana'),
 (887, 'YE', 'YEM', 967, 'Yemen', 'Asia', NULL, 'YER', 'Rial yemení (de Yemen)'),
 (894, 'ZM', 'ZMB', 260, 'Zambia', 'África', NULL, 'ZMK', 'Kwacha zambiano');
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `password_reset_tokens`
---
- 
+-- Tabla: password_reset_tokens
+-- --------------------------------------------------------
+
 CREATE TABLE `password_reset_tokens` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `sessions`
---
- 
+-- Tabla: sessions
+-- --------------------------------------------------------
+
 CREATE TABLE `sessions` (
   `id` varchar(255) NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -442,15 +423,13 @@ CREATE TABLE `sessions` (
   `payload` longtext NOT NULL,
   `last_activity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `tareas`
---
- 
+-- Tabla: tareas
+-- --------------------------------------------------------
+
 CREATE TABLE `tareas` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `cliente_id` int(11) NOT NULL,
   `persona_contacto` varchar(255) NOT NULL,
   `telefono_contacto` varchar(20) NOT NULL,
@@ -468,10 +447,8 @@ CREATE TABLE `tareas` (
   `anotaciones_posteriores` text DEFAULT NULL,
   `fichero_resumen` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
- 
---
--- Disparadores `tareas`
---
+
+-- Disparadores tareas
 DELIMITER $$
 CREATE TRIGGER `tareas_before_insert` BEFORE INSERT ON `tareas` FOR EACH ROW BEGIN
     SET NEW.fecha_creacion = NOW();
@@ -492,13 +469,11 @@ CREATE TRIGGER `tr_tareas_fecha_creacion_update` BEFORE UPDATE ON `tareas` FOR E
 END
 $$
 DELIMITER ;
- 
+
 -- --------------------------------------------------------
- 
---
--- Estructura de tabla: `users`
---
- 
+-- Tabla: users (con usuario admin)
+-- --------------------------------------------------------
+
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -515,160 +490,124 @@ CREATE TABLE `users` (
   `fecha_baja` date DEFAULT NULL,
   `tipo` enum('administrador','operario') NOT NULL DEFAULT 'operario'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
- 
---
--- Usuario administrador inicial
--- Contraseña: admin123 (hash bcrypt cost 12)
---
- 
+
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `dni`, `telefono`, `direccion`, `fecha_alta`, `fecha_baja`, `tipo`) VALUES
-(1, 'Administrador', 'admin123@gmail.com', NULL, '$2y$12$WaOXOdRfmptgdDsqR4V/OuAABQe.FhQ60ZdvqC7FIs0fso5666pm.', NULL, NOW(), NOW(), '00000000A', NULL, NULL, CURDATE(), NULL, 'administrador');
- 
--- --------------------------------------------------------
--- Índices
--- --------------------------------------------------------
- 
---
--- Índices de `cache`
---
+(1, 'admin', 'admin123@gmail.com', NULL, '$2y$12$3vBSSCUvWjf1BNrmgnlFT.nIFhaD7WkXJ3K2hFmOFCr7W1tFySx8G', NULL, NOW(), NOW(), '73504055B', NULL, NULL, CURDATE(), NULL, 'administrador');
+
+-- ========================================================
+-- ÍNDICES Y CLAVES PRIMARIAS
+-- ========================================================
+
 ALTER TABLE `cache`
   ADD PRIMARY KEY (`key`);
- 
---
--- Índices de `cache_locks`
---
+
 ALTER TABLE `cache_locks`
   ADD PRIMARY KEY (`key`);
- 
---
--- Índices de `clientes`
---
+
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `cif` (`cif`);
 
---
--- Índices de `cuotas`
---
 ALTER TABLE `cuotas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cliente_id` (`cliente_id`);
- 
---
--- Índices de `facturas`
---
+
 ALTER TABLE `facturas`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `facturas_numero_factura_unique` (`numero_factura`),
   ADD KEY `facturas_cuota_id_foreign` (`cuota_id`);
- 
---
--- Índices de `failed_jobs`
---
+
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
- 
---
--- Índices de `jobs`
---
+
 ALTER TABLE `jobs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `jobs_queue_index` (`queue`);
- 
---
--- Índices de `job_batches`
---
+
 ALTER TABLE `job_batches`
   ADD PRIMARY KEY (`id`);
- 
---
--- Índices de `migrations`
---
+
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
- 
---
--- Índices de `paises`
---
+
 ALTER TABLE `paises`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `iso2` (`iso2`),
   ADD UNIQUE KEY `iso3` (`iso3`);
- 
---
--- Índices de `password_reset_tokens`
---
+
 ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
- 
---
--- Índices de `sessions`
---
+
 ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sessions_user_id_index` (`user_id`),
   ADD KEY `sessions_last_activity_index` (`last_activity`);
- 
---
--- Índices de `tareas`
---
+
 ALTER TABLE `tareas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cliente_id` (`cliente_id`),
   ADD KEY `operario_id` (`operario_id`);
- 
---
--- Índices de `users`
---
+
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`),
   ADD UNIQUE KEY `users_dni_unique` (`dni`);
- 
--- --------------------------------------------------------
+
+-- ========================================================
 -- AUTO_INCREMENT
--- --------------------------------------------------------
- 
+-- ========================================================
+
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
- 
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `cuotas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
- 
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `facturas`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
- 
+
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
- 
+
 ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
- 
+
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
- 
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `tareas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
- 
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
- 
--- --------------------------------------------------------
--- Claves foráneas
--- --------------------------------------------------------
- 
+
+-- ========================================================
+-- CLAVES FORÁNEAS (FK)
+-- ========================================================
+
+-- cuotas -> clientes
 ALTER TABLE `cuotas`
-  ADD CONSTRAINT `cuotas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`);
- 
+  ADD CONSTRAINT `fk_cuotas_clientes` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE;
+
+-- facturas -> cuotas (cuota_id referencia el id de cuotas)
 ALTER TABLE `facturas`
-  ADD CONSTRAINT `facturas_cuota_id_fk` FOREIGN KEY (`cuota_id`) REFERENCES `cuotas` (`id`);
- 
+  ADD CONSTRAINT `fk_facturas_cuotas` FOREIGN KEY (`cuota_id`) REFERENCES `cuotas` (`id`) ON DELETE CASCADE;
+
+-- tareas -> clientes
 ALTER TABLE `tareas`
-  ADD CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`);
- 
+  ADD CONSTRAINT `fk_tareas_clientes` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE;
+
+-- tareas -> users (operario_id)
+ALTER TABLE `tareas`
+  ADD CONSTRAINT `fk_tareas_users` FOREIGN KEY (`operario_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+
+-- sessions -> users
+ALTER TABLE `sessions`
+  ADD CONSTRAINT `fk_sessions_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+
 COMMIT;
- 
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
