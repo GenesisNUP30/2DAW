@@ -1,6 +1,65 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    /* Botón siguiendo la guía de estilo de Google */
+    .btn-google {
+        background-color: #ffffff;
+        color: #3c4043;
+        border: 1px solid #dadce0;
+        font-family: 'Roboto', arial, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.25px;
+        padding: 10px 24px;
+        border-radius: 4px;
+        transition: background-color .218s, border-color .218s, box-shadow .218s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    .btn-google:hover {
+        background-color: #f8f9fa;
+        border-color: #d2e3fc;
+        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+        color: #3c4043;
+    }
+
+    .btn-google:active {
+        background-color: #eeeeee;
+    }
+
+    .btn-google img {
+        width: 18px;
+        height: 18px;
+        margin-right: 12px;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #70757a;
+        margin: 25px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #e8eaed;
+    }
+
+    .divider:not(:empty)::before {
+        margin-right: .75em;
+    }
+
+    .divider:not(:empty)::after {
+        margin-left: .75em;
+    }
+</style>
 <div class="container py-4">
 
     {{-- Mensaje de éxito --}}
@@ -79,10 +138,19 @@
                             </div>
                         </div>
 
-                        <div class="text-center mb-0">
+                        <div class="d-grid mb-3">
                             <button type="submit" class="btn btn-primary fw-bold py-2 shadow-sm">
                                 <i class="fas fa-sign-in-alt me-2"></i>{{ __('Entrar') }}
                             </button>
+                        </div>
+
+                        <div class="divider small fw-bold text-uppercase">O entrar con</div>
+
+                        <div class="d-grid">
+                            <a href="{{ route('auth.google') }}" class="btn-google shadow-sm">
+                                <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google Logo">
+                                Continuar con Google
+                            </a>
                         </div>
                     </form>
 
