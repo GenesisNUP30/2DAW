@@ -20,6 +20,12 @@ use App\Rules\ValidarCif;
  */
 class ClienteController extends Controller
 {
+    public function spa()
+    {
+        $paises = Pais::ordenadosPorNombre()->get();
+        return view('clientes_js.index', compact('paises'));
+    }
+
     /**
      * @brief Muestra el listado de clientes con soporte para filtrado y paginación.
      * * Permite filtrar la colección por:
@@ -106,7 +112,7 @@ class ClienteController extends Controller
             'nombre' => 'required|string|max:100',
             'telefono' => 'required|string|max:20',
             'correo' => 'required|email|max:100',
-            'cuenta_corriente' => 'required|string|max:50',
+            'cuenta_corriente' => 'required|string|max:100',
             'pais' => 'required|string|exists:paises,iso2',
             'fecha_alta' => 'required|date',
             'importe_cuota_mensual' => 'required|numeric|min:1',
@@ -121,7 +127,7 @@ class ClienteController extends Controller
             'correo.email' => 'El correo electrónico no es válido',
             'correo.max' => 'El correo electrónico no puede tener más de 100 caracteres',
             'cuenta_corriente.required' => 'La cuenta corriente es obligatoria',
-            'cuenta_corriente.max' => 'La cuenta corriente no puede tener más de 50 caracteres',
+            'cuenta_corriente.max' => 'La cuenta corriente no puede tener más de 100 caracteres',
             'pais.required' => 'El país es obligatorio',
             'pais.exists' => 'El país seleccionado no es válido',
             'fecha_alta.required' => 'La fecha de alta es obligatoria',
@@ -191,7 +197,7 @@ class ClienteController extends Controller
             'nombre' => 'required|string|max:100',
             'telefono' => 'required|string|max:20',
             'correo' => 'required|email|max:100',
-            'cuenta_corriente' => 'required|string|max:50',
+            'cuenta_corriente' => 'required|string|max:100',
             'pais' => 'required|string|exists:paises,iso2',
             'importe_cuota_mensual' => 'required|numeric|min:0',
         ], [
@@ -206,7 +212,7 @@ class ClienteController extends Controller
             'correo.email' => 'El correo electrónico no es válido',
             'correo.max' => 'El correo electrónico no puede tener más de 100 caracteres',
             'cuenta_corriente.required' => 'La cuenta bancaria es obligatoria',
-            'cuenta_corriente.max' => 'La cuenta bancaria no puede tener más de 50 caracteres',
+            'cuenta_corriente.max' => 'La cuenta bancaria no puede tener más de 100 caracteres',
             'pais.required' => 'El país es obligatorio',
             'pais.in' => 'El país seleccionado no es válido',
             'importe_cuota_mensual.required' => 'El importe de la cuota es obligatorio',
@@ -215,7 +221,7 @@ class ClienteController extends Controller
         ]);
 
         $validated['cif'] = strtoupper(trim($validated['cif']));
-        
+
         $pais = Pais::where('iso2', $validated['pais'])->first();
         $validated['moneda'] = $pais->iso_moneda;
 
