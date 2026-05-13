@@ -65,7 +65,7 @@
                             <select name="pais" id="pais" class="form-select">
                                 <option value="">Seleccione...</option>
                                 @foreach($paises as $p)
-                                <option value="{{ $p->iso2 }}">{{ $p->nombre }}</option>
+                                <option value="{{ $p->iso2 }}">{{ $p->nombre }} ({{ $p->iso_moneda }})</option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback" id="error-pais"></div>

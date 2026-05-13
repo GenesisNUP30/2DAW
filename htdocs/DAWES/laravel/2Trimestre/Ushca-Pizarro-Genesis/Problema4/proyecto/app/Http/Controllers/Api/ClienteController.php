@@ -52,10 +52,31 @@ class ClienteController extends Controller
 
     #[OA\Get(
         path: "/api/clientes",
-        summary: "Obtener lista de clientes con sus países",
+        summary: "Obtener lista de clientes",
+        description: "Devuelve todos los clientes con su país asociado.",
         tags: ["Clientes"],
         responses: [
-            new OA\Response(response: 200, description: "Lista de clientes obtenida correctamente")
+            new OA\Response(
+                response: 200,
+                description: "Lista de clientes obtenida correctamente",
+                content: new OA\JsonContent(
+                    type: "array",
+                    items: new OA\Items(
+                        properties: [
+                            new OA\Property(property: "id", type: "integer", example: 1),
+                            new OA\Property(property: "cif", type: "string", example: "Z6742090J"),
+                            new OA\Property(property: "nombre", type: "string", example: "Juan Perez"),
+                            new OA\Property(property: "correo", type: "string", example: "juan@gmail.com"),
+                            new OA\Property(property: "telefono", type: "string", example: "600000000"),
+                            new OA\Property(property: "cuenta_corriente", type: "string", example: "ES2114650100722030876293"),
+                            new OA\Property(property: "pais", type: "string", example: "ES"),
+                            new OA\Property(property: "moneda", type: "string", example: "EUR"),
+                            new OA\Property(property: "importe_cuota_mensual", type: "number", example: 150.50),
+                            new OA\Property(property: "fecha_alta", type: "string", format: "date", example: "2024-03-20"),
+                        ]
+                    )
+                )
+            )
         ]
     )]
     public function index()
@@ -67,17 +88,18 @@ class ClienteController extends Controller
     #[OA\Post(
         path: "/api/clientes",
         summary: "Crear un nuevo cliente",
+        description: "Crea un cliente nuevo. La moneda se asigna automáticamente según el país.",
         tags: ["Clientes"],
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
-                required: ["nombre", "cif", "correo", "pais", "importe_cuota_mensual", "fecha_alta"],
+                required: ["nombre", "cif", "correo", "telefono", "cuenta_corriente", "pais", "importe_cuota_mensual", "fecha_alta"],
                 properties: [
                     new OA\Property(property: "nombre", type: "string", example: "Juan Perez"),
                     new OA\Property(property: "cif", type: "string", example: "Z6742090J"),
                     new OA\Property(property: "correo", type: "string", example: "juan@gmail.com"),
                     new OA\Property(property: "telefono", type: "string", example: "600000000"),
-                    new OA\Property(property: "cuenta_corriente", type: "string", example: "ES211234..."),
+                    new OA\Property(property: "cuenta_corriente", type: "string", example: "ES2114650100722030876293"),
                     new OA\Property(property: "pais", type: "string", example: "ES"),
                     new OA\Property(property: "fecha_alta", type: "string", format: "date", example: "2024-03-20"),
                     new OA\Property(property: "importe_cuota_mensual", type: "number", format: "float", example: 150.50),
@@ -85,10 +107,48 @@ class ClienteController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 201, description: "Cliente creado"),
-            new OA\Response(response: 422, description: "Error de validación")
+            new OA\Response(
+                response: 201,
+                description: "Cliente creado correctamente",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "message", type: "string", example: "Cliente creado correctamente"),
+                        new OA\Property(
+                            property: "data",
+                            type: "object",
+                            properties: [
+                                new OA\Property(property: "id", type: "integer", example: 1),
+                                new OA\Property(property: "nombre", type: "string", example: "Juan Perez"),
+                                new OA\Property(property: "cif", type: "string", example: "Z6742090J"),
+                                new OA\Property(property: "correo", type: "string", example: "juan@gmail.com"),
+                                new OA\Property(property: "telefono", type: "string", example: "600000000"),
+                                new OA\Property(property: "cuenta_corriente", type: "string", example: "ES2114650100722030876293"),
+                                new OA\Property(property: "pais", type: "string", example: "ES"),
+                                new OA\Property(property: "moneda", type: "string", example: "EUR"),
+                                new OA\Property(property: "importe_cuota_mensual", type: "number", example: 150.50),
+                                new OA\Property(property: "fecha_alta", type: "string", format: "date", example: "2024-03-20"),
+                            ]
+                        ),
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: "Error de validación",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "errors",
+                            type: "object",
+                            example: ["cif" => ["El CIF es obligatorio"]]
+                        )
+                    ]
+                )
+            )
         ]
     )]
+
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -114,12 +174,16 @@ class ClienteController extends Controller
         $data['moneda'] = $pais->iso_moneda ?? '--';
 
         $cliente = Cliente::create($data);
-        return response()->json($cliente, Response::HTTP_CREATED); // 201 Created
+        return response()->json([
+            'message' => 'Cliente creado correctamente',
+            'data' => $cliente
+        ], Response::HTTP_CREATED); // 201 Created
     }
 
     #[OA\Get(
         path: "/api/clientes/{id}",
         summary: "Obtener detalle de un cliente",
+        description: "Devuelve los datos completos de un cliente por su ID.",
         tags: ["Clientes"],
         parameters: [
             new OA\Parameter(
@@ -127,12 +191,36 @@ class ClienteController extends Controller
                 in: "path",
                 required: true,
                 description: "ID del cliente",
-                schema: new OA\Schema(type: "integer")
+                schema: new OA\Schema(type: "integer", example: 1)
             )
         ],
         responses: [
-            new OA\Response(response: 200, description: "Detalle del cliente"),
-            new OA\Response(response: 404, description: "Cliente no encontrado")
+            new OA\Response(
+                response: 200,
+                description: "Detalle del cliente",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "id", type: "integer", example: 1),
+                        new OA\Property(property: "cif", type: "string", example: "Z6742090J"),
+                        new OA\Property(property: "nombre", type: "string", example: "Juan Perez"),
+                        new OA\Property(property: "correo", type: "string", example: "juan@gmail.com"),
+                        new OA\Property(property: "telefono", type: "string", example: "600000000"),
+                        new OA\Property(property: "pais", type: "string", example: "ES"),
+                        new OA\Property(property: "moneda", type: "string", example: "EUR"),
+                        new OA\Property(property: "importe_cuota_mensual", type: "number", example: 150.50),
+                        new OA\Property(property: "fecha_alta", type: "string", format: "date", example: "2024-03-20"),
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: "Cliente no encontrado",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "error", type: "string", example: "Cliente no encontrado")
+                    ]
+                )
+            )
         ]
     )]
     public function show(string $id)
@@ -149,33 +237,73 @@ class ClienteController extends Controller
     #[OA\Put(
         path: "/api/clientes/{id}",
         summary: "Actualizar un cliente",
+        description: "Actualiza los datos de un cliente existente. La moneda se recalcula automáticamente si cambia el país.",
         tags: ["Clientes"],
         parameters: [
             new OA\Parameter(
                 name: "id",
                 in: "path",
                 required: true,
-                schema: new OA\Schema(type: "integer")
+                description: "ID del cliente a actualizar",
+                schema: new OA\Schema(type: "integer", example: 1)
             )
         ],
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
+                required: ["nombre", "cif", "correo", "telefono", "cuenta_corriente", "pais", "importe_cuota_mensual"],
                 properties: [
-                    new OA\Property(property: "nombre", type: "string"),
-                    new OA\Property(property: "cif", type: "string"),
-                    new OA\Property(property: "correo", type: "string"),
-                    new OA\Property(property: "telefono", type: "string"),
-                    new OA\Property(property: "cuenta_corriente", type: "string"),
-                    new OA\Property(property: "pais", type: "string"),
-                    new OA\Property(property: "importe_cuota_mensual", type: "number"),
+                    new OA\Property(property: "nombre", type: "string", example: "Juan Perez"),
+                    new OA\Property(property: "cif", type: "string", example: "Z6742090J"),
+                    new OA\Property(property: "correo", type: "string", example: "juan@gmail.com"),
+                    new OA\Property(property: "telefono", type: "string", example: "600000000"),
+                    new OA\Property(property: "cuenta_corriente", type: "string", example: "ES2114650100722030876293"),
+                    new OA\Property(property: "pais", type: "string", example: "ES"),
+                    new OA\Property(property: "importe_cuota_mensual", type: "number", format: "float", example: 200.00),
                 ]
             )
         ),
         responses: [
-            new OA\Response(response: 200, description: "Cliente actualizado"),
-            new OA\Response(response: 404, description: "Cliente no encontrado"),
-            new OA\Response(response: 422, description: "Error de validación")
+            new OA\Response(
+                response: 200,
+                description: "Cliente actualizado correctamente",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "message", type: "string", example: "Cliente actualizado correctamente"),
+                        new OA\Property(
+                            property: "data",
+                            type: "object",
+                            properties: [
+                                new OA\Property(property: "id", type: "integer", example: 1),
+                                new OA\Property(property: "nombre", type: "string", example: "Juan Perez"),
+                                new OA\Property(property: "moneda", type: "string", example: "EUR"),
+                            ]
+                        ),
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: "Cliente no encontrado",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "error", type: "string", example: "Cliente no encontrado")
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: "Error de validación",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "errors",
+                            type: "object",
+                            example: ["cif" => ["El CIF es obligatorio"]]
+                        )
+                    ]
+                )
+            )
         ]
     )]
     public function update(Request $request, string $id)
@@ -211,24 +339,40 @@ class ClienteController extends Controller
 
         $cliente->update($data);
 
-        return response()->json($cliente, Response::HTTP_OK); // 200 OK
+        return response()->json([
+            'message' => 'Cliente actualizado correctamente',
+            'data' => $cliente
+        ], Response::HTTP_OK); // 200 OK
     }
 
     #[OA\Delete(
         path: "/api/clientes/{id}",
         summary: "Eliminar un cliente",
+        description: "Elimina permanentemente un cliente y todos sus datos asociados.",
         tags: ["Clientes"],
         parameters: [
             new OA\Parameter(
                 name: "id",
                 in: "path",
                 required: true,
-                schema: new OA\Schema(type: "integer")
+                description: "ID del cliente a eliminar",
+                schema: new OA\Schema(type: "integer", example: 1)
             )
         ],
         responses: [
-            new OA\Response(response: 204, description: "Cliente eliminado"),
-            new OA\Response(response: 404, description: "Cliente no encontrado")
+            new OA\Response(
+                response: 204,
+                description: "Cliente eliminado correctamente"
+            ),
+            new OA\Response(
+                response: 404,
+                description: "Cliente no encontrado",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "error", type: "string", example: "Cliente no encontrado")
+                    ]
+                )
+            )
         ]
     )]
     public function destroy(string $id)
@@ -240,6 +384,8 @@ class ClienteController extends Controller
         }
 
         $cliente->delete();
-        return response()->json(null, Response::HTTP_NO_CONTENT); // 204 No Content
+        return response()->json([
+            'message' => 'Cliente eliminado correctamente'
+        ], Response::HTTP_NO_CONTENT); // 204 No Content
     }
 }

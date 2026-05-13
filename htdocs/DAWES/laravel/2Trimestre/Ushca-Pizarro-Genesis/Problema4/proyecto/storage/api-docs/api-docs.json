@@ -21,10 +21,64 @@
                     "Clientes"
                 ],
                 "summary": "Obtener lista de clientes",
+                "description": "Devuelve todos los clientes con su país asociado.",
                 "operationId": "f8eafbc2e9500413091c7f84a4470b84",
                 "responses": {
                     "200": {
-                        "description": "Lista de clientes obtenida correctamente"
+                        "description": "Lista de clientes obtenida correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "cif": {
+                                                "type": "string",
+                                                "example": "Z6742090J"
+                                            },
+                                            "nombre": {
+                                                "type": "string",
+                                                "example": "Juan Perez"
+                                            },
+                                            "correo": {
+                                                "type": "string",
+                                                "example": "juan@gmail.com"
+                                            },
+                                            "telefono": {
+                                                "type": "string",
+                                                "example": "600000000"
+                                            },
+                                            "cuenta_corriente": {
+                                                "type": "string",
+                                                "example": "ES2114650100722030876293"
+                                            },
+                                            "pais": {
+                                                "type": "string",
+                                                "example": "ES"
+                                            },
+                                            "moneda": {
+                                                "type": "string",
+                                                "example": "EUR"
+                                            },
+                                            "importe_cuota_mensual": {
+                                                "type": "number",
+                                                "example": 150.5
+                                            },
+                                            "fecha_alta": {
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2024-03-20"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -33,6 +87,7 @@
                     "Clientes"
                 ],
                 "summary": "Crear un nuevo cliente",
+                "description": "Crea un cliente nuevo. La moneda se asigna automáticamente según el país.",
                 "operationId": "2a8a28c7aec782e1af95193a65053e68",
                 "requestBody": {
                     "required": true,
@@ -43,6 +98,8 @@
                                     "nombre",
                                     "cif",
                                     "correo",
+                                    "telefono",
+                                    "cuenta_corriente",
                                     "pais",
                                     "importe_cuota_mensual",
                                     "fecha_alta"
@@ -54,11 +111,11 @@
                                     },
                                     "cif": {
                                         "type": "string",
-                                        "example": "12345678Z"
+                                        "example": "Z6742090J"
                                     },
                                     "correo": {
                                         "type": "string",
-                                        "example": "juan@correo.com"
+                                        "example": "juan@gmail.com"
                                     },
                                     "telefono": {
                                         "type": "string",
@@ -66,7 +123,7 @@
                                     },
                                     "cuenta_corriente": {
                                         "type": "string",
-                                        "example": "ES211234..."
+                                        "example": "ES2114650100722030876293"
                                     },
                                     "pais": {
                                         "type": "string",
@@ -90,10 +147,86 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Cliente creado"
+                        "description": "Cliente creado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cliente creado correctamente"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nombre": {
+                                                    "type": "string",
+                                                    "example": "Juan Perez"
+                                                },
+                                                "cif": {
+                                                    "type": "string",
+                                                    "example": "Z6742090J"
+                                                },
+                                                "correo": {
+                                                    "type": "string",
+                                                    "example": "juan@gmail.com"
+                                                },
+                                                "telefono": {
+                                                    "type": "string",
+                                                    "example": "600000000"
+                                                },
+                                                "cuenta_corriente": {
+                                                    "type": "string",
+                                                    "example": "ES2114650100722030876293"
+                                                },
+                                                "pais": {
+                                                    "type": "string",
+                                                    "example": "ES"
+                                                },
+                                                "moneda": {
+                                                    "type": "string",
+                                                    "example": "EUR"
+                                                },
+                                                "importe_cuota_mensual": {
+                                                    "type": "number",
+                                                    "example": 150.5
+                                                },
+                                                "fecha_alta": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2024-03-20"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
-                        "description": "Error de validación"
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "cif": [
+                                                    "El CIF es obligatorio"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -104,6 +237,7 @@
                     "Clientes"
                 ],
                 "summary": "Obtener detalle de un cliente",
+                "description": "Devuelve los datos completos de un cliente por su ID.",
                 "operationId": "7be647ff4c2ab71c5a1f042133b13428",
                 "parameters": [
                     {
@@ -112,16 +246,76 @@
                         "description": "ID del cliente",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "example": 1
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Detalle del cliente"
+                        "description": "Detalle del cliente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "cif": {
+                                            "type": "string",
+                                            "example": "Z6742090J"
+                                        },
+                                        "nombre": {
+                                            "type": "string",
+                                            "example": "Juan Perez"
+                                        },
+                                        "correo": {
+                                            "type": "string",
+                                            "example": "juan@gmail.com"
+                                        },
+                                        "telefono": {
+                                            "type": "string",
+                                            "example": "600000000"
+                                        },
+                                        "pais": {
+                                            "type": "string",
+                                            "example": "ES"
+                                        },
+                                        "moneda": {
+                                            "type": "string",
+                                            "example": "EUR"
+                                        },
+                                        "importe_cuota_mensual": {
+                                            "type": "number",
+                                            "example": 150.5
+                                        },
+                                        "fecha_alta": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2024-03-20"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Cliente no encontrado"
+                        "description": "Cliente no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Cliente no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -130,14 +324,17 @@
                     "Clientes"
                 ],
                 "summary": "Actualizar un cliente",
+                "description": "Actualiza los datos de un cliente existente. La moneda se recalcula automáticamente si cambia el país.",
                 "operationId": "1cc735d14964cb4b25557d546e807a9c",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID del cliente a actualizar",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "example": 1
                         }
                     }
                 ],
@@ -146,27 +343,44 @@
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "nombre",
+                                    "cif",
+                                    "correo",
+                                    "telefono",
+                                    "cuenta_corriente",
+                                    "pais",
+                                    "importe_cuota_mensual"
+                                ],
                                 "properties": {
                                     "nombre": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "Juan Perez"
                                     },
                                     "cif": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "Z6742090J"
                                     },
                                     "correo": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "juan@gmail.com"
                                     },
                                     "telefono": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "600000000"
                                     },
                                     "cuenta_corriente": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "ES2114650100722030876293"
                                     },
                                     "pais": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "ES"
                                     },
                                     "importe_cuota_mensual": {
-                                        "type": "number"
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 200
                                     }
                                 },
                                 "type": "object"
@@ -176,13 +390,73 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Cliente actualizado"
+                        "description": "Cliente actualizado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cliente actualizado correctamente"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "nombre": {
+                                                    "type": "string",
+                                                    "example": "Juan Perez"
+                                                },
+                                                "moneda": {
+                                                    "type": "string",
+                                                    "example": "EUR"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Cliente no encontrado"
+                        "description": "Cliente no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Cliente no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
-                        "description": "Error de validación"
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "cif": [
+                                                    "El CIF es obligatorio"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -191,23 +465,39 @@
                     "Clientes"
                 ],
                 "summary": "Eliminar un cliente",
+                "description": "Elimina permanentemente un cliente y todos sus datos asociados.",
                 "operationId": "fae533cf0841c3ece1414287d89ef42b",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID del cliente a eliminar",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "example": 1
                         }
                     }
                 ],
                 "responses": {
                     "204": {
-                        "description": "Cliente eliminado"
+                        "description": "Cliente eliminado correctamente"
                     },
                     "404": {
-                        "description": "Cliente no encontrado"
+                        "description": "Cliente no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Cliente no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
