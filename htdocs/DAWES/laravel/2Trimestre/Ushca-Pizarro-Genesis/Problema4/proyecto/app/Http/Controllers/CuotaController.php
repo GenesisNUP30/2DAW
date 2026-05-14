@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
-use App\Models\User;
+use App\Mail\CuotaCreadaMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cuota;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * @class CuotaController
@@ -105,10 +106,18 @@ class CuotaController extends Controller
         ]);
 
         $validated['tipo'] = 'excepcional';
-        Cuota::create($validated);
+        $cuota = Cuota::create($validated);
 
+        // --- ENVIAR CORREO INFORMATIVO ---
+        try {
+            if ($cuota->cliente && $cuota->cliente->correo) {
+                Mail::to($cuota->cliente->correo)->send(new CuotaCreadaMail($cuota));
+            }
+        } catch (\Exception $e) {
+            Log::error("Error enviando correo de cuota excepcional: " . $e->getMessage());
+        }
 
-        return redirect()->route('cuotas.index')->with('success', 'Cuota creada correctamente.');
+        return redirect()->route('cuotas.index')->with('success', 'Cuota creada correctamente y correo de notificación enviado.');
     }
 
     /**
@@ -148,7 +157,7 @@ class CuotaController extends Controller
                 ->exists();
 
             if (!$existe) {
-                Cuota::create([
+                $cuota = Cuota::create([
                     'cliente_id' => $cliente->id,
                     'concepto' => "Cuota mes de " . \Carbon\Carbon::create($anio, $mes, 1)->format('d/m/Y'),
                     'fecha_emision' => \Carbon\Carbon::create($anio, $mes, 1),
@@ -158,6 +167,15 @@ class CuotaController extends Controller
                     'notas' => "Cuota generada automáticamente",
                 ]);
                 $cuotasCreadas++;
+
+                // --- ENVIAR CORREO INFORMATIVO ---
+                try {
+                    if ($cliente->correo) {
+                        Mail::to($cliente->correo)->send(new CuotaCreadaMail($cuota));
+                    }
+                } catch (\Exception $e) {
+                    Log::error("Error enviando correo en remesa para cliente {$cliente->id}: " . $e->getMessage());
+                }
             }
         }
         return redirect()->route('cuotas.index')->with('success', "Remesa mensual generada:  $cuotasCreadas cuotas mensuales");
