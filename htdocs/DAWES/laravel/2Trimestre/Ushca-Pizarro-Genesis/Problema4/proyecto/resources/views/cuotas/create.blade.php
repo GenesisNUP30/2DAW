@@ -43,7 +43,7 @@
                                     <option value="" selected disabled>-- Selecciona el cliente --</option>
                                     @foreach ($clientes as $cliente)
                                     <option value="{{ $cliente->id }}" {{ old('cliente_id') == $cliente->id ? 'selected' : '' }}>
-                                        {{ $cliente->nombre }} ({{ $cliente->cif }})
+                                        {{ $cliente->nombre }} (Moneda: {{ strtoupper($cliente->moneda ?? '--') }})
                                     </option>
                                     @endforeach
                                 </select>
@@ -91,13 +91,17 @@
                                 <div class="input-group">
                                     <input type="number" step="0.01" name="importe" class="form-control form-control-lg fw-bold @error('importe') is-invalid @enderror"
                                         value="{{ old('importe') }}" placeholder="0,00">
-                                    <span class="input-group-text bg-white fw-bold">€</span>
                                     @error('importe') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                </div>
+                                {{-- Mensaje Informativo --}}
+                                <div class="alert alert-info mt-2 p-2 border rounded">
+                                    <i class="fas fa-info-circle text-primary me-1"></i>
+                                    Recuerde: El importe debe expresarse en la <strong>moneda local</strong> indicada en el nombre del cliente seleccionado.
                                 </div>
                             </div>
 
                             <div class="col-md-8">
-                                <label class="form-label small fw-bold text-muted text-uppercase">Notas internas</label>
+                                <label class="form-label small fw-bold text-muted text-uppercase">Notas</label>
                                 <textarea name="notas" class="form-control @error('notas') is-invalid @enderror"
                                     rows="2" placeholder="Observaciones ...">{{ old('notas') }}</textarea>
                                 @error('notas') <div class="invalid-feedback">{{ $message }}</div> @enderror
