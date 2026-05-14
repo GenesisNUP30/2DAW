@@ -110,8 +110,8 @@ class CuotaController extends Controller
 
         // --- ENVIAR CORREO INFORMATIVO ---
         try {
-            if ($cuota->cliente && $cuota->cliente->email) {
-                Mail::to($cuota->cliente->email)->send(new CuotaCreadaMail($cuota));
+            if ($cuota->cliente && $cuota->cliente->correo) {
+                Mail::to($cuota->cliente->correo)->send(new CuotaCreadaMail($cuota));
             }
         } catch (\Exception $e) {
             Log::error("Error enviando correo de cuota excepcional: " . $e->getMessage());
@@ -170,8 +170,8 @@ class CuotaController extends Controller
 
                 // --- ENVIAR CORREO INFORMATIVO ---
                 try {
-                    if ($cliente->email) {
-                        Mail::to($cliente->email)->send(new CuotaCreadaMail($cuota));
+                    if ($cliente->correo) {
+                        Mail::to($cliente->correo)->send(new CuotaCreadaMail($cuota));
                     }
                 } catch (\Exception $e) {
                     Log::error("Error enviando correo en remesa para cliente {$cliente->id}: " . $e->getMessage());
