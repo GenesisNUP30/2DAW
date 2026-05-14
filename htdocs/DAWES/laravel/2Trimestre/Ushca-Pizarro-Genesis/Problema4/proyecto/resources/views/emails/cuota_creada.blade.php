@@ -26,7 +26,7 @@
 
         <p>Este correo es meramente informativo. No es necesario realizar ninguna acción si tiene sus pagos domiciliados.</p>
         
-        <p>Atentamente,<br>El equipo de {{ config('app.name') }}</p>
+        <p>Atentamente,<br>El equipo de  <strong>SiempreColgando</strong>.</p>
 
         <div class="footer">
             Este es un mensaje automático, por favor no responda a este correo.
