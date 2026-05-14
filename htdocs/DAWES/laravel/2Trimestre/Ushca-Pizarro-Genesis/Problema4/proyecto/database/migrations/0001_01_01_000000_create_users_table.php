@@ -11,14 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+        Schema::create('users', function (Blueprint $blueprint) {
+            $blueprint->id();
+            $blueprint->string('name', 255);
+            $blueprint->string('email', 255)->unique();
+            $blueprint->string('google_id', 255)->nullable()->unique();
+            $blueprint->string('twitter_id', 255)->nullable()->unique();
+            $blueprint->string('provider', 50)->nullable();
+            $blueprint->string('avatar', 255)->nullable();
+            $blueprint->timestamp('email_verified_at')->nullable();
+            $blueprint->string('password', 255)->nullable();
+            $blueprint->rememberToken();
+            $blueprint->timestamps(); 
+            $blueprint->timestamp('last_login')->nullable();
+            $blueprint->string('status', 50)->default('Active');
+            $blueprint->string('dni', 255)->nullable()->unique();
+            $blueprint->string('telefono', 255)->nullable();
+            $blueprint->string('direccion', 255)->nullable();
+            $blueprint->date('fecha_alta')->nullable();
+            $blueprint->date('fecha_baja')->nullable();
+            $blueprint->enum('tipo', ['administrador', 'operario'])->default('operario');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
