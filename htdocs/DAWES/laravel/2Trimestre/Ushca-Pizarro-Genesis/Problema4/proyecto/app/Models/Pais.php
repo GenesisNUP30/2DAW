@@ -25,6 +25,8 @@ use Illuminate\Testing\Fluent\Concerns\Has;
 class Pais extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
     
     /**
      * @brief Tabla asociada en la base de datos.
