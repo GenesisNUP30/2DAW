@@ -61,7 +61,7 @@ class GoogleController extends Controller
             Auth::login($user);
 
             // Redirige a tu SPA de clientes
-            return redirect()->route('clientes.js');
+            return redirect('/');
         } catch (\Exception $e) {
             Log::error('Error en Google Auth: ' . $e->getMessage());
             return redirect()->route('login')->withErrors('La autenticación falló. Revisa los logs.');

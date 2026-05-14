@@ -2,39 +2,56 @@
 
 @section('content')
 <style>
-    /* Botón siguiendo la guía de estilo de Google */
-    .btn-google {
-        background-color: #ffffff;
-        color: #3c4043;
-        border: 1px solid #dadce0;
+    /* Estilos comunes para botones sociales */
+    .btn-google,
+    .btn-twitter {
         font-family: 'Roboto', arial, sans-serif;
         font-size: 14px;
         font-weight: 500;
         letter-spacing: 0.25px;
         padding: 10px 24px;
         border-radius: 4px;
-        transition: background-color .218s, border-color .218s, box-shadow .218s;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         text-decoration: none;
+        transition: all .218s;
+        margin-bottom: 10px;
+    }
+
+    /* Estilo Google */
+    .btn-google {
+        background-color: #ffffff;
+        color: #3c4043;
+        border: 1px solid #dadce0;
     }
 
     .btn-google:hover {
         background-color: #f8f9fa;
         border-color: #d2e3fc;
         box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
-        color: #3c4043;
     }
 
-    .btn-google:active {
-        background-color: #eeeeee;
+    /* Estilo Twitter (X) */
+    .btn-twitter {
+        background-color: #000000;
+        color: #ffffff;
+        border: 1px solid #000000;
     }
 
-    .btn-google img {
+    .btn-twitter:hover {
+        background-color: #222222;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .30);
+    }
+
+    .btn-google img,
+    .btn-twitter i {
         width: 18px;
         height: 18px;
         margin-right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .divider {
@@ -42,7 +59,7 @@
         align-items: center;
         text-align: center;
         color: #70757a;
-        margin: 25px 0;
+        margin: 20px 0;
     }
 
     .divider::before,
@@ -147,9 +164,16 @@
                         <div class="divider small fw-bold text-uppercase">O entrar con</div>
 
                         <div class="d-grid">
+                            {{-- Botón Google --}}
                             <a href="{{ route('auth.google') }}" class="btn-google shadow-sm">
                                 <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google Logo">
                                 Continuar con Google
+                            </a>
+
+                            {{-- Botón Twitter --}}
+                            <a href="{{ route('auth.twitter') }}" class="btn-twitter shadow-sm">
+                                <i class="fab fa-x-twitter text-white"></i>
+                                Continuar con Twitter
                             </a>
                         </div>
                     </form>

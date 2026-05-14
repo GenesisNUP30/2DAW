@@ -33,6 +33,7 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id',
+        'twitter_id',
         'provider',
         'avatar',
         'status',
@@ -109,7 +110,7 @@ class User extends Authenticatable
 
      // ==================== SCOPES (MÉTODOS DE CONSULTA) ====================
 
-   /**
+    /**
      * @brief Filtra la consulta para obtener solo usuarios activos.
      * * Uso: `User::activos()->get()`
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -157,7 +158,7 @@ class User extends Authenticatable
         return $query->orderBy('name');
     }
 
-   /**
+    /**
      * @brief Excluye a un usuario por ID de la consulta actual.
      * * Muy útil para listados de "asignar a otros compañeros" donde no quieres que aparezca el usuario actual.
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -183,7 +184,7 @@ class User extends Authenticatable
 
     // ==================== MÉTODOS AUXILIARES ====================
 
-   /**
+    /**
      * @brief Obtiene la fecha y hora de la última actividad del usuario en el sistema.
      * * Consulta la tabla nativa de sesiones de Laravel, ajustando la zona horaria a España.
      * @return string Retorna la fecha formateada o 'Nunca' si no hay registro de sesión.
