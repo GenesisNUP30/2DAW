@@ -131,18 +131,27 @@
                 <aside class="col-md-3 col-lg-2 sidebar d-none d-md-block">
                     <nav class="nav flex-column">
                         <div class="sidebar-heading">Navegación</div>
+
+                        {{-- Visible para Administrador (Dashboard) y Operario (si tienes lógica de inicio para él) --}}
+                        @if(Auth::user()->isAdmin())
                         <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
                             <i class="fas fa-home me-2"></i>Inicio
                         </a>
+                        @endif
+
+                        {{-- Visible para TODOS (Admin y Operario) --}}
                         <a class="nav-link {{ request()->routeIs('tareas.*') ? 'active' : '' }}" href="{{ route('tareas.index') }}">
                             <i class="fas fa-tasks me-2"></i>Tareas
                         </a>
 
+                        {{-- BLOQUE EXCLUSIVO PARA ADMINISTRADORES --}}
                         @if(Auth::user()->isAdmin())
                         <div class="sidebar-heading">Gestión</div>
+
                         <a class="nav-link {{ request()->routeIs('empleados.*') ? 'active' : '' }}" href="{{ route('empleados.index') }}">
                             <i class="fas fa-users me-2"></i>Empleados
                         </a>
+
                         <a class="nav-link {{ request()->routeIs('clientes.*') ? 'active' : '' }}" href="{{ route('clientes.index') }}">
                             <i class="fas fa-user-tie me-2"></i>Clientes
                         </a>
@@ -162,7 +171,6 @@
                                 <a class="nav-link small {{ request()->routeIs('clientes_js.index') ? 'active' : '' }}" href="{{ route('clientes_js.index') }}">
                                     <i class="fas fa-code me-2"></i>CRUD JavaScript
                                 </a>
-                                
                             </div>
                         </div>
 
