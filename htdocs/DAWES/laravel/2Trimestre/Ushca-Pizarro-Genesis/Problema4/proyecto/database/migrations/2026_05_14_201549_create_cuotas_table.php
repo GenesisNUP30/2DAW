@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('cuotas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained('clientes');
-            $table->string('concepto');
-            $table->decimal('importe', 10, 2);
-            $table->string('tipo')->default('mensual'); // mensual o excepcional
-            $table->timestamp('fecha_emision');
-            $table->timestamp('fecha_pago')->nullable();
+            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->string('concepto')->nullable();
+            $table->date('fecha_emision')->nullable();
+            $table->decimal('importe', 10, 2)->nullable();
+            $table->decimal('importe_euros', 10, 2)->nullable();
+            $table->boolean('pagada')->default(0);
+            $table->date('fecha_pago')->nullable();
+            $table->enum('tipo', ['mensual', 'excepcional']); 
             $table->text('notas')->nullable();
-            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

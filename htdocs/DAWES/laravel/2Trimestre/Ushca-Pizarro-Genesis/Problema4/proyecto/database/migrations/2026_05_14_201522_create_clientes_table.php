@@ -12,19 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->id(); // bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT
-            $table->string('cif', 20)->unique();
-            $table->string('nombre', 100);
-            $table->string('telefono', 20)->nullable();
-            $table->string('correo', 100)->nullable();
-            $table->string('cuenta_corriente', 50)->nullable();
-            $table->string('pais', 50)->nullable();
-            $table->string('moneda', 10)->nullable();
+            $table->id();
+            $table->string('cif')->unique();
+            $table->string('nombre');
+            $table->string('telefono')->nullable();
+            $table->string('correo')->nullable();
+            $table->string('cuenta_corriente')->nullable();
+            $table->string('pais')->nullable();
+            $table->string('moneda')->nullable();
             $table->decimal('importe_cuota_mensual', 10, 2)->nullable();
             $table->date('fecha_alta')->nullable();
             $table->date('fecha_baja')->nullable();
-            // Si no usas timestamps en tu SQL original, no los pongas aquí
-            // $table->timestamps(); 
         });
     }
 

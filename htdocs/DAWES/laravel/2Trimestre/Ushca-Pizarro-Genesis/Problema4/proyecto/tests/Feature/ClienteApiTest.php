@@ -18,12 +18,11 @@ class ClienteApiTest extends TestCase
     {
         parent::setUp();
         
-        // IMPORTANTE: Aquí usamos 'email' que es como se llama en tu tabla users
         $this->admin = User::create([
             'name' => 'Admin User',
             'email' => 'admin@test.com', 
             'password' => bcrypt('password'),
-            'tipo' => 'administrador' // Asegúrate de que tu modelo User permita 'tipo' en fillable
+            'tipo' => 'administrador'
         ]);
     }
 
@@ -31,7 +30,6 @@ class ClienteApiTest extends TestCase
     public function un_admin_puede_obtener_lista_de_clientes()
     {
         // Creamos un cliente de prueba
-        // Nota: En la tabla clientes sí usamos 'correo'
         Cliente::create([
             'nombre' => 'Cliente A',
             'cif' => '12345678A',
