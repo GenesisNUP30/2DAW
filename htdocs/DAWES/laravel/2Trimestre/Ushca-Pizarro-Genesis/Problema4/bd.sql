@@ -478,11 +478,17 @@ CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `google_id` varchar(255) DEFAULT NULL,
+  `twitter_id` varchar(255) DEFAULT NULL,
+  `provider` varchar(50) DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `last_login` timestamp NULL DEFAULT NULL,
+  `status` varchar(50) DEFAULT 'Active',
   `dni` varchar(255) NOT NULL,
   `telefono` varchar(255) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
@@ -491,9 +497,8 @@ CREATE TABLE `users` (
   `tipo` enum('administrador','operario') NOT NULL DEFAULT 'operario'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `dni`, `telefono`, `direccion`, `fecha_alta`, `fecha_baja`, `tipo`) VALUES
-(1, 'admin', 'admin123@gmail.com', NULL, '$2y$12$3vBSSCUvWjf1BNrmgnlFT.nIFhaD7WkXJ3K2hFmOFCr7W1tFySx8G', NULL, NOW(), NOW(), '73504055B', NULL, NULL, CURDATE(), NULL, 'administrador');
-
+INSERT INTO `users` (`id`, `name`, `email`, `google_id`, `twitter_id`, `provider`, `avatar`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `last_login`, `status`, `dni`, `telefono`, `direccion`, `fecha_alta`, `fecha_baja`, `tipo`) VALUES
+(1, 'admin', 'admin123@gmail.com', NULL, NULL, NULL, NULL, NULL, '$2y$12$3vBSSCUvWjf1BNrmgnlFT.nIFhaD7WkXJ3K2hFmOFCr7W1tFySx8G', NULL, NOW(), NOW(), NULL, 'Active', '73504055B', NULL, NULL, CURDATE(), NULL, 'administrador');
 -- ========================================================
 -- ÍNDICES Y CLAVES PRIMARIAS
 -- ========================================================
@@ -552,7 +557,10 @@ ALTER TABLE `tareas`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD UNIQUE KEY `users_dni_unique` (`dni`);
+  ADD UNIQUE KEY `users_dni_unique` (`dni`),
+  ADD UNIQUE KEY `users_dni_unique` (`dni`),
+  ADD UNIQUE KEY `google_id` (`google_id`),
+  ADD UNIQUE KEY `twitter_id` (`twitter_id`);
 
 -- ========================================================
 -- AUTO_INCREMENT
